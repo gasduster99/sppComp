@@ -1,0 +1,93 @@
+<h2 id="abstract">Abstract</h2>
+<p>In order to effectively manage exploited populations, accurate estimates of commercial fisheries catches are necessary to inform monitoring and assessment efforts. In California, the high degree of heterogeneity in the species composition of many groundfish fisheries, particularly those targeting rockfish (<em>Sebastes</em>), leads to challenges in sampling all market categories, or species, adequately. Limited resources and increasingly complex stratification of the sampling system inevitably leads to gaps in sample data. In the presence of sampling gaps, ad-hoc point estimation is currently obtained according to historically derived &quot;data borrowing&quot; protocols which do not allow for tractable uncertainty estimation. In order to move from the current, but admittedly rigid sampling design, we have continued previous exploratory efforts to develop, and apply, Bayesian hierarchical models of the landing data to estimate species compositions. Furthermore, we introduce a formalized method for discovering consistent &quot;borrowing&quot; strategies across overstratified data. Our results indicate that this approach is likely to be more robust than the current system, particularly in the face of sparse sampling. Additionally, our method should also help inform, and prioritize, future sampling efforts. Perhaps more significantly, this approach provides estimates of uncertainty around species-specific catch estimates.</p>
+<!-- 
+pandoc -o methodsPaper.html methodsPaper.md --webtex
+pandoc -o methodsPaper.pdf methodsPaper.md --webtex
+pandoc -o methodsPaper.docx methodsPaper.md --webtex
+-->
+
+<h1 id="introduction">Introduction</h1>
+<ul>
+<li>Data</li>
+<li>Stratification Pictures</li>
+</ul>
+<p><img src="./pictures/sampleNumCrop.png" title="nSampleTime" /> <embed src="./pictures/stratAvgSamp.pdf" title="sampleSizeTime" /></p>
+<h1 id="methods">Methods</h1>
+<p>Given the complexity of these data, and thus the complexity of the modeling<br />challenge that they present, it is neccisary to define a few notational conventions for representing such a model. In an attempt to conserve symbols, and hopefully reveal structure,<img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cleft.%5Cright.%5E%7B%28.%29%7D" alt="\left.\right.^{(.)}" title="\left.\right.^{(.)}" /> is used as a superscript on variable, or index, symbols to indicate a new symbol of the sort. For example, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a%5E%7B%281%29%7D" alt="a^{(1)}" title="a^{(1)}" /> represents the first subclass of a class of <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a" alt="a" title="a" /> variables, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j%5E%7B%281%29%7D" alt="j^{(1)}" title="j^{(1)}" /> represents a the first of a class of <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j" alt="j" title="j" /> indecies, and thus <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a%5E%7B%281%29%7D_%7Bj%5E%7B%281%29%7D%7D" alt="a^{(1)}_{j^{(1)}}" title="a^{(1)}_{j^{(1)}}" /> represents the <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%7Bj%5E%7B%281%29%7D%7D%5E%7Bth%7D" alt="{j^{(1)}}^{th}" title="{j^{(1)}}^{th}" /> variable of the first subclass of <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a" alt="a" title="a" /> variables. Additionally, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5C%7B.%5C%7D_%5COmega" alt="\{.\}_\Omega" title="\{.\}_\Omega" /> is used as notation for condensing repeated structures within<br />the overall model, where <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5COmega" alt="\Omega" title="\Omega" /> represents indexing directions over some set. For example: <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5CBigg%5C%7Bx%5E%7B%28k%29%7D_%7Bj%5E%7B%28k%29%7D%7D%20%5Csim%20N%5CBig%280%2C%20v%5E%7B%28k%29%7D%5CBig%29%5CBigg%5C%7D_%7Bk%5Cin%5C%7B1%2C%20...%2C%20m%5C%7D%7D%20%3D%20x%5E%7B%281%29%7D_%7Bj%5E%7B%281%29%7D%7D%20%5Csim%20N%5CBig%280%2C%20v%5E%7B%281%29%7D%5CBig%29%2C...%2C~%20x%5E%7B%28m%29%7D_%7Bj%5E%7B%28m%29%7D%7D%20%5Csim%20N%5CBig%280%2C%20v%5E%7B%28m%29%7D%5CBig%29" alt="\Bigg\{x^{(k)}_{j^{(k)}} \sim N\Big(0, v^{(k)}\Big)\Bigg\}_{k\in\{1, ..., m\}} = x^{(1)}_{j^{(1)}} \sim N\Big(0, v^{(1)}\Big),...,~ x^{(m)}_{j^{(m)}} \sim N\Big(0, v^{(m)}\Big)" title="\Bigg\{x^{(k)}_{j^{(k)}} \sim N\Big(0, v^{(k)}\Big)\Bigg\}_{k\in\{1, ..., m\}} = x^{(1)}_{j^{(1)}} \sim N\Big(0, v^{(1)}\Big),...,~ x^{(m)}_{j^{(m)}} \sim N\Big(0, v^{(m)}\Big)" /><br /></p>
+<p>Introduce model. Check hyperprior values. maybe use c notiation?</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">Species</td>
+<td align="left"><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j%5E%7B%281%29%7D%20%5Cin%20%5C%7B1%2C%20...%2C%20J%5E%7B%281%29%7D%5C%7D" alt="j^{(1)} \in \{1, ..., J^{(1)}\}" title="j^{(1)} \in \{1, ..., J^{(1)}\}" /></td>
+</tr>
+<tr class="even">
+<td align="left">Gear</td>
+<td align="left"><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j%5E%7B%282%29%7D%20%5Cin%20%5C%7B1%2C%20...%2C%20J%5E%7B%282%29%7D%5C%7D" alt="j^{(2)} \in \{1, ..., J^{(2)}\}" title="j^{(2)} \in \{1, ..., J^{(2)}\}" /></td>
+</tr>
+<tr class="odd">
+<td align="left">Port</td>
+<td align="left"><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j%5E%7B%283%29%7D%20%5Cin%20%5C%7B1%2C%20...%2C%20J%5E%7B%283%29%7D%5C%7D" alt="j^{(3)} \in \{1, ..., J^{(3)}\}" title="j^{(3)} \in \{1, ..., J^{(3)}\}" /></td>
+</tr>
+<tr class="even">
+<td align="left">Quarter</td>
+<td align="left"><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j%5E%7B%284%29%7D%20%5Cin%20%5C%7B1%2C%20...%2C%20J%5E%7B%284%29%7D%5C%7D" alt="j^{(4)} \in \{1, ..., J^{(4)}\}" title="j^{(4)} \in \{1, ..., J^{(4)}\}" /></td>
+</tr>
+<tr class="odd">
+<td align="left">Year</td>
+<td align="left"><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=j%5E%7B%285%29%7D%20%5Cin%20%5C%7B1%2C%20...%2C%20J%5E%7B%285%29%7D%5C%7D" alt="j^{(5)} \in \{1, ..., J^{(5)}\}" title="j^{(5)} \in \{1, ..., J^{(5)}\}" /></td>
+</tr>
+</tbody>
+</table>
+<p><br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=y_%7Bij%5E%7B%281%29%7Dj%5E%7B%282%29%7Dj%5E%7B%283%29%7Dj%5E%7B%284%29%7Dj%5E%7B%285%29%7D%7D%20%5Csim%20NB%5CBig%28%5Cexp%28%5Cboldsymbol%7B%5Ctheta%7D%29%2C~%5Cexp%28%5Cpsi%29%5CBig%29" alt="y_{ij^{(1)}j^{(2)}j^{(3)}j^{(4)}j^{(5)}} \sim NB\Big(\exp(\boldsymbol{\theta}),~\exp(\psi)\Big)" title="y_{ij^{(1)}j^{(2)}j^{(3)}j^{(4)}j^{(5)}} \sim NB\Big(\exp(\boldsymbol{\theta}),~\exp(\psi)\Big)" /><br /> <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cboldsymbol%7B%5Ctheta%7D%20%3D%20%5Cbeta_0%20%2B%20%5Csum_%7Bk%3D1%7D%5E%7B5%7Da%5E%7B%28k%29%7D_%7Bj%5E%7B%28k%29%7D%7D%20%2B%20%5Csum_%7B%5Csubstack%7Bk%5Cin%5C%7B3%2C%204%5C%7D%5C%5Cl%5Cin%5C%7B1%2C%202%2C%203%2C%204%2C%205%5C%7D%5C%5C%20l%5Cneq%20k%7D%7D%20b%5E%7B%28k%2C%20l%29%7D_%7Bj%5E%7B%28k%29%7Dj%5E%7B%28l%29%7D%7D" alt="\boldsymbol{\theta} = \beta_0 + \sum_{k=1}^{5}a^{(k)}_{j^{(k)}} + \sum_{\substack{k\in\{3, 4\}\\l\in\{1, 2, 3, 4, 5\}\\ l\neq k}} b^{(k, l)}_{j^{(k)}j^{(l)}}" title="\boldsymbol{\theta} = \beta_0 + \sum_{k=1}^{5}a^{(k)}_{j^{(k)}} + \sum_{\substack{k\in\{3, 4\}\\l\in\{1, 2, 3, 4, 5\}\\ l\neq k}} b^{(k, l)}_{j^{(k)}j^{(l)}}" /><br /></p>
+<p>Sampled Catch. Better graphical model???</p>
+<div class="figure">
+<img src="./pictures/modelGraphTrimCap.png" title="modelGraph" />
+</div>
+<p><br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cpsi%20%5Csim%20N%5CBig%280%2C~10%5E4%5CBig%29" alt="\psi \sim N\Big(0,~10^4\Big)" title="\psi \sim N\Big(0,~10^4\Big)" /><br /> <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta_0%20%5Csim%20N%5CBig%280%2C~10%5E4%5CBig%29" alt="\beta_0 \sim N\Big(0,~10^4\Big)" title="\beta_0 \sim N\Big(0,~10^4\Big)" /><br /> <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5CBigg%5C%7Ba%5E%7B%28k%29%7D_%7Bj%5E%7B%28k%29%7D%7D%20%5Csim%20N%5CBig%280%2C~10%5E4%5CBig%29%5CBigg%5C%7D_%7Bk%3D%5C%7B1%2C%202%2C%203%5C%7D%7D" alt="\Bigg\{a^{(k)}_{j^{(k)}} \sim N\Big(0,~10^4\Big)\Bigg\}_{k=\{1, 2, 3\}}" title="\Bigg\{a^{(k)}_{j^{(k)}} \sim N\Big(0,~10^4\Big)\Bigg\}_{k=\{1, 2, 3\}}" /><br /> <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5CBigg%5C%7Ba%5E%7B%28k%29%7D_%7Bj%5E%7B%28k%29%7D%7D%20%5Csim%20N%5CBig%280%2C~v%5E%7B%28k%29%7D%5CBig%29%5CBigg%5C%7D_%7Bk%3D%5C%7B4%2C%205%5C%7D%7D" alt="\Bigg\{a^{(k)}_{j^{(k)}} \sim N\Big(0,~v^{(k)}\Big)\Bigg\}_{k=\{4, 5\}}" title="\Bigg\{a^{(k)}_{j^{(k)}} \sim N\Big(0,~v^{(k)}\Big)\Bigg\}_{k=\{4, 5\}}" /><br /> <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5CBigg%5C%7Bb%5E%7B%28k%2C%20l%29%7D_%7Bj%5E%7B%28k%29%7Dj%5E%7B%28l%29%7D%7D%20%5Csim%20N%5CBig%280%2C~v%5E%7B%28k%2C%20l%29%7D%5CBig%29%5CBigg%5C%7D_%7B%5Csubstack%7Bk%5Cin%5C%7B3%2C%204%5C%7D%5C%5Cl%5Cin%5C%7B1%2C%202%2C%203%2C%204%2C%205%5C%7D%5C%5C%20l%5Cneq%20k%7D%7D" alt="\Bigg\{b^{(k, l)}_{j^{(k)}j^{(l)}} \sim N\Big(0,~v^{(k, l)}\Big)\Bigg\}_{\substack{k\in\{3, 4\}\\l\in\{1, 2, 3, 4, 5\}\\ l\neq k}}" title="\Bigg\{b^{(k, l)}_{j^{(k)}j^{(l)}} \sim N\Big(0,~v^{(k, l)}\Big)\Bigg\}_{\substack{k\in\{3, 4\}\\l\in\{1, 2, 3, 4, 5\}\\ l\neq k}}" /><br /> <br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=v%5Csim%20IG%281%2C~10%5E5%29%20~~~%20%5Cforall%20~~~%20v" alt="v\sim IG(1,~10^5) ~~~ \forall ~~~ v" title="v\sim IG(1,~10^5) ~~~ \forall ~~~ v" /><br /></p>
+<ul>
+<li>Model (likelyhood/prior)
+<ul>
+<li>Overdispersion (Poisson Ole paper)</li>
+<li>notaion explaintion</li>
+<li>model</li>
+<li>How did we arrive at this model (prior likelihood)</li>
+<li>Heirarchy (sharing)
+<ul>
+<li>??<img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=v%5E%7B-1%2F2%7D%5Csim%20Unif%280%2C~Big%29%20~~~%20%5Cforall%20~~~%20v" alt="v^{-1/2}\sim Unif(0,~Big) ~~~ \forall ~~~ v" title="v^{-1/2}\sim Unif(0,~Big) ~~~ \forall ~~~ v" />??</li>
+<li>??<img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=v%5E%7B-1%2F2%7D%5Csim%20Half-Cauchy%20~~~%20%5Cforall%20~~~%20v" alt="v^{-1/2}\sim Half-Cauchy ~~~ \forall ~~~ v" title="v^{-1/2}\sim Half-Cauchy ~~~ \forall ~~~ v" />??</li>
+</ul></li>
+<li>Graphical Model</li>
+<li>INLA</li>
+</ul></li>
+<li>Predictive
+<ul>
+<li>species composition</li>
+<li>species landing expansion</li>
+</ul></li>
+<li>Model Selection (Borrowing)
+<ul>
+<li>Port/??Qtr??
+<ul>
+<li>??Combinatorics??Abstract</li>
+</ul></li>
+<li>WAIC/MSE
+<ul>
+<li>predictive performance</li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=MSE%28%5Chat%5Ctheta%29%20%3D%20Var%28%5Chat%5Ctheta%29%5E2%20%2B%20Bias%28%5Chat%5Ctheta%2C%20%5Ctheta%29%5E2" alt="MSE(\hat\theta) = Var(\hat\theta)^2 + Bias(\hat\theta, \theta)^2" title="MSE(\hat\theta) = Var(\hat\theta)^2 + Bias(\hat\theta, \theta)^2" /></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="results">Results</h1>
+<ul>
+<li>Bar plot picture</li>
+<li>Predictive Performance</li>
+<li>Sample/sample generating structure availiablity ??abstract??</li>
+</ul>
+<h1 id="discussion">Discussion</h1>
+<ul>
+<li>The Good</li>
+<li>The Bad</li>
+<li>The Ugly</li>
+<li>Moving Forward</li>
+</ul>
