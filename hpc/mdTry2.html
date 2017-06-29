@@ -1,0 +1,57 @@
+<!-- 
+pandoc -o mdTry2.pdf mdTry.md --webtex
+pandoc -o mdTry2.html mdTry.md --webtex
+pandoc -o mdTry2.docx mdTry.md --webtex 
+-->
+
+<h1 id="header">Header</h1>
+<p><a href="http://daringfireball.net/projects/downloads/Markdown_1.0.1.zip">Markdown 1.0.1</a> (18 KB) -- 17 Dec 2004</p>
+<h2 id="hheader">HHeader</h2>
+<p>Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).</p>
+<p>Thus, &quot;Markdown&quot; is two things: (1) a plain text formatting syntax; and (2) a software tool, written in Perl, that converts the plain text formatting to HTML. See the page for details pertaining to Markdown's formatting syntax. You can try it out, right now, using the online.</p>
+<p>The overriding design goal for Markdown's formatting syntax is to make it as readable as possible. The idea is that a Markdown-formatted document should be publishable as-is, as plain text, without looking like it's been marked up with tags or formatting instructions. While Markdown's syntax has been influenced by several existing text-to-HTML filters, the single biggest source of inspiration for Markdown's syntax is the format of plain text email.</p>
+<h3 id="hhheader">HHHeader</h3>
+<!--Comment???-->
+<p>bullet list:</p>
+<ol style="list-style-type: decimal">
+<li>foo fighter
+<ul>
+<li>Foo
+<ul>
+<li>Foo Bar <a href="https://en.wikipedia.org/wiki/Foobar">links</a></li>
+</ul></li>
+<li>Fluff I</li>
+</ul></li>
+<li>Lists in a list item:
+<ul>
+<li>Indented four spaces.
+<ul>
+<li>indented eight spaces.
+<ol start="2" style="list-style-type: decimal">
+<li>indent number
+<ul>
+<li>flooof
+<ol style="list-style-type: lower-roman">
+<li>uses four spaces not tabs</li>
+</ol></li>
+</ul></li>
+</ol></li>
+</ul></li>
+<li>Four spaces again.</li>
+</ul></li>
+</ol>
+<h4 id="hhhheader">HHHHeader</h4>
+<pre class="sourceCode Markdown"><code class="sourceCode markdown">bullet list:
+
+* <span class="fl">Foo</span>
+<span class="bn">    * Foo Bar [links](https://en.wikipedia.org/wiki/Foobar)</span>
+<span class="bn">    * Fluff I</span></code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">{i**<span class="dv">2</span> <span class="kw">for</span> i in <span class="dt">xrange</span>(<span class="dv">10</span>**<span class="dv">6</span>)}</code></pre>
+<h5 id="hhhhheader">HHHHHeader</h5>
+<p><br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=f%28x%7C%5Cmu%2C%20%5Csigma%29%3Dx%5E2" alt="f(x|\mu, \sigma)=x^2" title="f(x|\mu, \sigma)=x^2" /><br /></p>
+<p>This is an inline <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=f%28x%7C%5Cmu%2C%20%5Csigma%29%3Dx%5E2" alt="f(x|\mu, \sigma)=x^2" title="f(x|\mu, \sigma)=x^2" /> equation</p>
+<div class="figure">
+<img src="http://static1.squarespace.com/static/532602ede4b09e655908a4e6/53262d3ce4b0c5c3326b0ce6/5635400fe4b06c8363eca3c5/1446330385723/Hollental-full-art-1440.jpg" alt="Caption" /><p class="caption">Caption</p>
+</div>
+<p><em>ITALICS</em></p>
+<p><strong>BOLD</strong></p>
