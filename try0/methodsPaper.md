@@ -32,30 +32,6 @@ pandoc -o methodsPaper.pdf methodsPaper.md --webtex
 pandoc -o methodsPaper.docx methodsPaper.md --webtex
 -->
 
-#The Goodness
-In the realm of statistical modeling, biologists face a conflated set of 
-expectations.
-Of primary theoretical concern the role of the biologist it to come to an 
-understanding of biological truth, and rightfully so they have turned to 
-statistical methods to discern truth in the face of uncertainty.
-However, the modern applied biologist must not only face the challenge of 
-developing a model for understanding the truth stucture of a given biological 
-system, but must also be willing to be pragmatic practicioners of statistical 
-methods to produce statistical models with the goal of producing accurate 
-prediction.
-Both roles are important, and often these goals may align, however it is 
-important to understand that mathmatically these goals are not the same.
-It is certainly possible that the most effective first step for producing 
-a pragmatic predictor is to model a system with the admission that possible 
-theoretical knowlege may not be well represented in a particular dataset.
-Approaching problems with this pragmatic perspective allows for the design of 
-modeling approaches which better model observed uncertainty and thus result in 
-models which are capable of making better predictions than an otherwise 
-biologically theoretically sound model.
-Differences between two such models represent sub-ideal sampling conditions 
-or experimental design, and still the pragmatic applied biologist is often 
-confronted with making decisions in the light of such data.  
-
 #Introduction
 * Data
 * Stratification Pictures
