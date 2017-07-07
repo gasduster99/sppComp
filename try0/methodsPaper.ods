@@ -1,0 +1,95 @@
+<h2 id="abstract">Abstract</h2>
+<p>In order to effectively manage exploited populations, accurate estimates of commercial fisheries catches are necessary to inform monitoring and assessment efforts. In California, the high degree of heterogeneity in the species composition of many groundfish fisheries, particularly those targeting rockfish (<em>Sebastes</em>), leads to challenges in sampling all market categories, or species, adequately. Limited resources and increasingly complex stratification of the sampling system inevitably leads to gaps in sample data. In the presence of sampling gaps, ad-hoc point estimation is currently obtained according to historically derived &quot;data borrowing&quot; protocols which do not allow for tractable uncertainty estimation. In order to move from the current, but admittedly rigid sampling design, we have continued previous exploratory efforts to develop, and apply, Bayesian hierarchical models of the landing data to estimate species compositions. Furthermore, we introduce a formalized method for discovering consistent &quot;borrowing&quot; strategies across overstratified data. Our results indicate that this approach is likely to be more robust than the current system, particularly in the face of sparse sampling. Additionally, our method should also help inform, and prioritize, future sampling efforts. Perhaps more significantly, this approach provides estimates of uncertainty around species-specific catch estimates.</p>
+<!-- 
+pandoc -o methodsPaper.html methodsPaper.md --webtex
+pandoc -o methodsPaper.pdf methodsPaper.md --webtex
+pandoc -o methodsPaper.docx methodsPaper.md --webtex
+-->
+<h1 id="introduction">Introduction</h1>
+<ul>
+<li>Data</li>
+<li>Stratification Pictures</li>
+</ul>
+<p><img src="./pictures/sampleNumCrop.png" title="nSampleTime" /> <embed src="./pictures/stratAvgSamp.pdf" title="sampleSizeTime" /></p>
+<h1 id="methods">Methods</h1>
+<p>Given the complexity of these data, and thus the complexity of the modeling<br />
+challenge that they present, it is neccisary to define a few notational conventions for representing such a model. In an attempt to conserve symbols, and hopefully reveal structure,<span class="math inline"><sup>(.)</sup></span> is used as a superscript on variable, or index, symbols to indicate a new symbol of the sort. For example, <span class="math inline"><em>a</em><sup>(1)</sup></span> represents the first subclass of a class of <span class="math inline"><em>a</em></span> variables, <span class="math inline"><em>j</em><sup>(1)</sup></span> represents a the first of a class of <span class="math inline"><em>j</em></span> indecies, and thus <span class="math inline"><em>a</em><sub><em>j</em><sup>(1)</sup></sub><sup>(1)</sup></span> represents the <span class="math inline"><em>j</em><sup>(1)</sup><sup><em>t</em><em>h</em></sup></span> variable of the first subclass of <span class="math inline"><em>a</em></span> variables. Additionally, <span class="math inline">{.}<sub><em>Ω</em></sub></span> is used as notation for condensing repeated structures within<br />
+the overall model, where <span class="math inline"><em>Ω</em></span> represents indexing directions over some set. For example: <br /><span class="math display">{<em>x</em><sub><em>j</em><sup>(<em>k</em>)</sup></sub><sup>(<em>k</em>)</sup> ∼ <em>N</em>(0, <em>v</em><sup>(<em>k</em>)</sup>)}<sub><em>k</em> ∈ {1, ..., <em>m</em>}</sub> = <em>x</em><sub><em>j</em><sup>(1)</sup></sub><sup>(1)</sup> ∼ <em>N</em>(0, <em>v</em><sup>(1)</sup>), ...,  <em>x</em><sub><em>j</em><sup>(<em>m</em>)</sup></sub><sup>(<em>m</em>)</sup> ∼ <em>N</em>(0, <em>v</em><sup>(<em>m</em>)</sup>)</span><br /></p>
+<p>Introduce model. Check hyperprior values. maybe use c notiation?</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">Species</td>
+<td align="left"><span class="math inline"><em>j</em><sup>(1)</sup> ∈ {1, ..., <em>J</em><sup>(1)</sup>}</span></td>
+</tr>
+<tr class="even">
+<td align="left">Gear</td>
+<td align="left"><span class="math inline"><em>j</em><sup>(2)</sup> ∈ {1, ..., <em>J</em><sup>(2)</sup>}</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Port</td>
+<td align="left"><span class="math inline"><em>j</em><sup>(3)</sup> ∈ {1, ..., <em>J</em><sup>(3)</sup>}</span></td>
+</tr>
+<tr class="even">
+<td align="left">Quarter</td>
+<td align="left"><span class="math inline"><em>j</em><sup>(4)</sup> ∈ {1, ..., <em>J</em><sup>(4)</sup>}</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Year</td>
+<td align="left"><span class="math inline"><em>j</em><sup>(5)</sup> ∈ {1, ..., <em>J</em><sup>(5)</sup>}</span></td>
+</tr>
+</tbody>
+</table>
+<p>Ole Poisson paper(cite). Build case for Overdispersion(cite). As <span class="math inline"><em>ψ</em> → ∞</span>, <span class="math inline"><em>N</em><em>B</em> → <em>P</em><em>o</em><em>i</em><em>s</em><em>s</em><em>o</em><em>n</em></span></p>
+<p><br /><span class="math display"><em>y</em><sub><em>i</em><em>j</em><sup>(1)</sup><em>j</em><sup>(2)</sup><em>j</em><sup>(3)</sup><em>j</em><sup>(4)</sup><em>j</em><sup>(5)</sup></sub> ∼ <em>N</em><em>B</em>(exp(<strong>θ</strong>), exp(<em>ψ</em>))</span><br /> <br /><span class="math display">$$\boldsymbol{\theta} = \beta_0 + \sum_{k=1}^{5}a^{(k)}_{j^{(k)}} + \sum_{\substack{k\in\{3, 4\}\\l\in\{1, 2, 3, 4, 5\}\\ l\neq k}} b^{(k, l)}_{j^{(k)}j^{(l)}}$$</span><br /></p>
+<p>Talk about Model, linear predictor (unpack it piece by piece),</p>
+<p><br /><span class="math display"><em>ψ</em> ∼ <em>N</em>(0,  10<sup>4</sup>)</span><br /> <br /><span class="math display"><em>β</em><sub>0</sub> ∼ <em>N</em>(0,  10<sup>4</sup>)</span><br /> <br /><span class="math display">{<em>a</em><sub><em>j</em><sup>(<em>k</em>)</sup></sub><sup>(<em>k</em>)</sup> ∼ <em>N</em>(0,  10<sup>4</sup>)}<sub><em>k</em> = {1, 2, 3}</sub></span><br /> <br /><span class="math display">{<em>a</em><sub><em>j</em><sup>(<em>k</em>)</sup></sub><sup>(<em>k</em>)</sup> ∼ <em>N</em>(0,  <em>v</em><sup>(<em>k</em>)</sup>)}<sub><em>k</em> = {4, 5}</sub></span><br /> <br /><span class="math display">$$\Bigg\{b^{(k, l)}_{j^{(k)}j^{(l)}} \sim N\Big(0,~v^{(k, l)}\Big)\Bigg\}_{\substack{k\in\{3, 4\}\\l\in\{1, 2, 3, 4, 5\}\\ l\neq k}}$$</span><br /> <br /><span class="math display"><em>v</em> ∼ <em>I</em><em>G</em>(1,  10<sup>5</sup>)   ∀   <em>v</em></span><br /></p>
+<p>Sampled Catch. Better graphical model???</p>
+<p><embed src="./pictures/graphicalModel.pdf" title="modelGraph" /> <embed src="./pictures/graphicalModelTwo.pdf" title="modelGraphTwo" /></p>
+<p>Explain process for arriving at this structure. Rational for including interactions (also latent heirarchy). How exactly does this ``share'' (which strata, in what sense).</p>
+<ul>
+<li>Model (likelyhood/prior)
+<ul>
+<li>Overdispersion (Poisson Ole paper)</li>
+<li>notaion explaintion</li>
+<li>model</li>
+<li>How did we arrive at this model (prior likelihood)</li>
+<li>Heirarchy (sharing)
+<ul>
+<li>??<span class="math inline"><em>v</em><sup>−1/2</sup> ∼ <em>U</em><em>n</em><em>i</em><em>f</em>(0,  <em>B</em><em>i</em><em>g</em>)   ∀   <em>v</em></span>??</li>
+<li>??<span class="math inline"><em>v</em><sup>−1/2</sup> ∼ <em>H</em><em>a</em><em>l</em><em>f</em> − <em>C</em><em>a</em><em>u</em><em>c</em><em>h</em><em>y</em>   ∀   <em>v</em></span>??</li>
+</ul></li>
+<li>Graphical Model</li>
+<li>INLA</li>
+</ul></li>
+<li>Predictive
+<ul>
+<li>species composition</li>
+<li>species landing expansion</li>
+</ul></li>
+<li>Model Selection (Borrowing)
+<ul>
+<li>Port/??Qtr??
+<ul>
+<li>??Combinatorics??Abstract</li>
+</ul></li>
+<li>WAIC/MSE
+<ul>
+<li>predictive performance</li>
+<li><span class="math inline">$MSE(\hat\theta) = Var(\hat\theta)^2 + Bias(\hat\theta, \theta)^2$</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="results">Results</h1>
+<ul>
+<li>Bar plot picture</li>
+<li>Predictive Performance</li>
+<li>Sample/sample generating structure availiablity ??abstract??</li>
+</ul>
+<h1 id="discussion">Discussion</h1>
+<ul>
+<li>The Good</li>
+<li>The Bad</li>
+<li>The Ugly</li>
+<li>Moving Forward</li>
+</ul>
