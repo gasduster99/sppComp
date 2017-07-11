@@ -1,7 +1,7 @@
 rm(list=ls())
 
 #
-library(h5)
+library(rhdf5)
 
 #
 #MAKE DATA
@@ -10,8 +10,8 @@ library(h5)
 #
 set.seed(42)
 #
-m = 100000
-M = matrix(NA, nrows=m, ncols=10)
+m = 1000000
+M = matrix(NA, nrow=m, ncol=10)
 for(i in 1:10){
 	M[,i] = rnorm(m, 0, 1)
 }
@@ -21,4 +21,6 @@ for(i in 1:10){
 #
 
 #
-file = h5file("test.h5")
+h5createFile("hdf5Test6.h5")
+h5createGroup("hdf5Test6.h5","testGroup")
+h5write(M, "hdf5Test6.h5","testGroup/M")
