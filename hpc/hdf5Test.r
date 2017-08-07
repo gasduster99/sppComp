@@ -2,6 +2,8 @@ rm(list=ls())
 
 
 #https://stackoverflow.com/questions/15974643/how-to-deal-with-hdf5-files-in-r
+	#source("http://bioconductor.org/biocLite.R")
+	#biocLite("rhdf5")
 library(rhdf5)
 
 #

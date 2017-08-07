@@ -1,6 +1,6 @@
 rm(list=ls())
 
-library(RJDBC)
+#library(RJDBC)
 library(RMySQL)
 
 #
@@ -10,7 +10,7 @@ library(RMySQL)
 #
 set.seed(42)
 #
-m = 100000
+m = 1000000
 M = matrix(NA, nrow=m, ncol=10)
 for(i in 1:10){
 	M[,i] = rnorm(m, 0, 1)
@@ -22,9 +22,9 @@ for(i in 1:10){
 
 #
 #connection
-ch = dbConnect(MySQL(), user='nick', password='Nmfsswfsc2017', dbname='testdb')
-#write table
-dbWriteTable(ch, "hdf5Test", M)
+ch = dbConnect(MySQL(), user='root', password='pass', dbname='hdf5test', host="127.0.0.1")
+#write M to the table "test" in the connected DB
+dbWriteTable(ch, "test", as.data.frame(M), overwrite=T)
 
 ##
 ##driver
