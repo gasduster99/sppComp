@@ -131,13 +131,29 @@ R-INLA package (Rue et al., 2013).
 
 ## Species Composition
 
-Trasformation
+Applying the bayesian predictive framework to the posterior distribution of 
+the above model gives the following expressions for predicted weight in 
+each stratum,
+$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}.$$
+$p(y^*_{jklm\eta}|y)$ is computed via monte carlo integration and represents 
+the model's full predictive distribution for the $j^{th}$ species' weight, in 
+the $k^{th}$ port, caught with the $l^{th}$ gear, in the $\eta^{th}$ quarter, 
+of year $m$.
+Considering the same type of prediction across all species in a particular 
+stratum allows for the calculation of predictive species composistions.
+The following joint transformation of the species' predictive weights result 
+in predictive species compositions, 
+$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.$$
+$\pi^*$ is a random variable, sinceas it is simply a transformation of the $y^*$ 
+random variables. 
+Furthermore once inference is complete, we can easily sample these 
+distributions and compute any desired moments from those samples. 
+
+<!--Trasformation-->
 <!--$$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$-->
 <!--$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$-->
 
-$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
-
-$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$
+<!--$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$-->
 
 
 Integrations
