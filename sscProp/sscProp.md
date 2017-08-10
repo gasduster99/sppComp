@@ -126,15 +126,14 @@ similarity is not specified, rather the degree of similarity among time
 parameters is itself a parameter to be estimated from the data.
 In recent years, inference on these models has become faster and easier to 
 compute through the use of computational Laplace approximations 
-(Rue et al., 2009); here we compute inferences on the above model using the 
-R-INLA package (Rue et al., 2013). 
+(Rue et al., 2009); we compute inferences on the above model in R 
+(R Core Team, 2015) using the R-INLA package (Rue et al., 2013). 
 
 ## Species Composition
 
-Applying the bayesian predictive framework to the posterior distribution of 
-the above model gives the following expressions for predicted weight in 
-each stratum,
-$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}.$$
+Applying the bayesian predictive framework to the above model gives the 
+following expressions for predicted weight in each stratum,
+$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\theta_{jklm\eta}, \rho \Big) P\Big(\theta_{jklm\eta}, \rho | y\Big) d\theta_{jklm\eta} d\rho.$$
 $p(y^*_{jklm\eta}|y)$ is computed via monte carlo integration and represents 
 the model's full predictive distribution for the $j^{th}$ species' weight, in 
 the $k^{th}$ port, caught with the $l^{th}$ gear, in the $\eta^{th}$ quarter, 
@@ -144,10 +143,10 @@ stratum allows for the calculation of predictive species composistions.
 The following joint transformation of the species' predictive weights result 
 in predictive species compositions, 
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.$$
-$\pi^*$ is a random variable, sinceas it is simply a transformation of the $y^*$ 
-random variables. 
+Because the $y^*$ are random variables, and $\pi^*$ is nothing more than a 
+transformation of the $y^*$, $\pi^*$ is too a random variable. 
 Furthermore once inference is complete, we can easily sample these 
-distributions and compute any desired moments from those samples. 
+distributions and compute any desired moments from these samples. 
 
 <!--Trasformation-->
 <!--$$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$-->
@@ -156,8 +155,8 @@ distributions and compute any desired moments from those samples.
 <!--$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$-->
 
 
-Integrations
 <!--
+Integrations
 \begin{align*}
         \lambda^*_{jklm\eta\omega} &=\lambda_{\cdot k l m \eta \omega}\pi^*_{jklm\eta\omega}\\[10pt]
         \lambda^*_{jklm\eta\cdot} &=\sum_{\omega}\lambda^*_{jklm\eta\omega}\\
@@ -176,6 +175,18 @@ the space of pooled models to obtain quantitative evidence of optimal pooling be
 %other difficult modeling decisions which may represent significant
 %sources of model uncertainty. 
 -->
+
+The straight-forward spatial model implied by the categorical port complex 
+variables do not adequatly resolve in-sample prediction at the observed 
+sample sizes. 
+Presently these deminishingly small within stratum sample sizes are managed 
+by an ad-hoc "borrowing" protocol outlined by Pearson and Erwin (1997).
+We aim to formalize this "borrowing" idea via an exhaustive search of spatially 
+pooled models, combined with the formalized process of Bayesian Model 
+Averaging (BMA) to appropriatly integrate port-complex pooling model 
+uncertainty into species composition estimates (Hoeting et al. , 1999).
+
+
 The space of possible pooled models is well defined in terms of the size of 
 the set of items to be partitioned, $K$, as described by the Bell numbers 
 ($B_K$), 
@@ -231,6 +242,9 @@ $\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, \mathbb{M}_\mu).$
 \bibitem{pearsonErwin} Pearson, D.E., and Erwin, B. (1997). Documentation of California’s commercial market sampling data entry and expansion programs. NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
 
 %
+\bibitem{rCoreTeam} R Core Team (2015). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+%
 \bibitem{inlaPackage} Rue H., Martino S., Lindgren F., Simpson D., Riebler A. (2013). R-INLA:
 Approximate Bayesian Inference using Integrated Nested Laplace
 Approximations. Trondheim, Norway. URL http://www.r-inla.org/.
@@ -249,6 +263,7 @@ approximations. Journal of the royal statistical society: Series b
 
 %
 \bibitem{sheltonEtAl} Shelton, A. O., Dick, E. J., Pearson, D. E., Ralston, S., \& Mangel, M. (2012). Estimating species composition and quantifying uncertainty in multispecies fisheries: hierarchical Bayesian models for stratified sampling protocols with missing data. Canadian Journal of Fisheries and Aquatic Sciences, 69(2), 231-246.
+
 \end{thebibliography}
 
 
