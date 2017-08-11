@@ -9,7 +9,7 @@ date: Aug 15, 2017
 Effective management of exploited fish populations, requires accurate estimates
 of commercial fisheries catches to inform monitoring and assessment efforts. In
 California, the high degree of heterogeneity in the species composition of many
-groundfish fisheries, particularly those targeting rockfish (genus Sebastes),
+groundfish fisheries, particularly those targeting rockfish (genus $Sebastes$),
 leads to challenges in sampling all potential strata, or species, adequately.
 Limited resources and increasingly complex stratification of the sampling
 system inevitably leads to gaps in sample data. In the presence of sampling

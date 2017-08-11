@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 %
 \usepackage{graphicx}
-\usepackage[margin=0.85in,footskip=0.2in]{geometry}%big footskip brings number down, small footskip br
+\usepackage[margin=0.8in,footskip=0.2in]{geometry}%big footskip brings number down, small footskip br
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[T1]{fontenc}
@@ -139,7 +139,7 @@ Our priors are largely diffuse, representing relatively little prior
 information, producing behavior similar to classical fixed effect models
 on species (\(\beta^{(s)}_{j}\)), port (\(\beta^{(p)}_{k}\)), and gear
 (\(\beta^{(g)}_{l}\)) parameters. Our priors on time parameters
-(\(\beta^{(y:q)}_{m\eta}\)) are normal distributions centered at zero
+(\(\beta^{(y:q)}_{m\eta}\)) are normal distributions cenetered at zero
 with a hierarchical variance shared among all year-quarter interaction
 terms. In recent years, inference on these models has become faster and
 easier to compute through the use of computational Laplace
@@ -214,7 +214,7 @@ Boccaccio landings, in each of the modeled gears, for the years from 1983 to
 
 Preliminary results from this exercise were presented at the historical catch
 reconstruction workshop in November of 2016 (see workshop report under agenda item I.2 at \\
-\href{http://www.pcouncil.org/resources/archives/briefing-books/march-2017-briefing-book/#gfMar2017}{\mbox{http://www.pcouncil.org/resources/archives/briefing-books/march-2017-briefing-book/\#gfMar2017}}).
+\href{http://www.pcouncil.org/resources/archives/briefing-books/march-i2017-briefing-book/#gfMar2017}{\mbox{http://www.pcouncil.org/resources/archives/briefing-books/march-2017-briefing-book/\#gfMar2017}}).
 The workshop report concluded that these methods would likely represent "a
 significant improvement over the existing data borrowing procedures."  A more
 comprehensive methodology review was subsequently recommended by the
@@ -241,7 +241,7 @@ best available data and served as data streams in a consistent manner.
         \includegraphics[width=0.8\textwidth]{sampleComplex.png}
         \caption{
                 The $top$ $panel$ shows the total number of samples, from 1978 to 2015, in the major groundfish market categories.
-                The $middle$ $panel$ shows the average sample size, per stratum, decreasing through time, as the number of market categories increases, over the same period, in the $bottom$ $panel$.
+                The $middle$ $panel$ shows the average sample size, per statum, decreasing through time, as the number of market categories increases, over the same period, in the $bottom$ $panel$.
         }
 \end{figure}
 
