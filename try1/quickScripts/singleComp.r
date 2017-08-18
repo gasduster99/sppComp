@@ -25,7 +25,7 @@ who = head(bp$names[o], howMany)
 D = pThing[pThing$species%in%who, c('weight', 'species')]
 
 #fit poisson, binomial, negative binomial, beta-binomial
-pOut  = inla(weight~species, data=D, family='poisson')
+pOut  = inla(weight~species, data=D, family='poisson', control.compute=list(config=T))
 #bOut  = inla(weight~species, data=D, family='binomial')
 #nbOut = inla(weight~species, data=D, family='nbinomial')
 #bbOut = inla(weight~species, data=D, family='betabinomial')
