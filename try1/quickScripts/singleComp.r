@@ -3,6 +3,8 @@ rm(list=ls())
 #
 library(INLA)
 library(boot)
+library(HDInterval)
+library(KernSmooth)
 
 #
 #CLEAN DATA
@@ -77,7 +79,8 @@ bp = boxplot(as.numeric(D$weight)~D$species, plot=F)
 o = order(bp$stats[5,], decreasing=T)
 #
 off = 0.5
-howMany = 6#7
+howMany = 7
+all = bp$names[o]
 who = head(bp$names[o], howMany)
 DAT = D[D$species%in%who, c('weight', 'species', 'clustSize')]
 DAT$weight = as.numeric(DAT$weight)
@@ -101,8 +104,8 @@ M = 10^4
 pHype = inla.hyperpar.sample(M, pOut)
 pPost = inla.posterior.sample(M, pOut)
 #
-pBox = matrix(NA, nrow=howMany, ncol=8)
-colnames(pBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper')
+pBox = matrix(NA, nrow=howMany, ncol=12)
+colnames(pBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian', 'pLower', 'pUpper')
 rownames(pBox) = who
 for(w in rev(who)){
 	#
@@ -116,6 +119,7 @@ for(w in rev(who)){
 	})
 	#
 	pred = rpois(M, wSam)
+	#spIntHDI = HDInterval:::hdi.density(bkde(sp[,s], range.x=c(0,1), canonical=T), credMass=prob, allowSplit=T)
 	pBox[w,] = c(   
 			mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975), 
 			mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
@@ -234,22 +238,24 @@ for(i in 1:howMany){
 	#beta binomial
 	bbx = i-0.25+0.5/3*3
 	segments(bbx, bbBox[i,'lower'], bbx, bbBox[i,'upper'], lwd=4, col='darkorange')
-	points(bbx, bbBox[i, 'mean'], pch=19, col='darkorange')
+	points(bbx, bbBox[i, 'mean'], pch=19, col='darkorange')	
 }
+#legend
+legend('topright', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
 
-##
-##PLOT PROPS
-##
 #
-##
-#dev.new()
-#plot(0, 0, ylim=c(0, 60), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
-#axis(1, at=1:howMany, labels=who
-#for(i in 1:howMany){
-#       #data
-#       weights = D$weight[D$species==who[i]]
-#       points(rep(i, length(weights)), weights, pch='_', cex=4)
+#PLOT PROPS
+#
 
+#
+dev.new()
+plot(0, 0, ylim=c(0, 1), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
+axis(1, at=1:howMany, labels=who)
+for(i in 1:howMany){
+       #make spp comp
+       comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+       points(rep(i, length(comps)), comps, pch='_', cex=4)
+}
 
 
 
