@@ -69,7 +69,7 @@ for(id in unique(D$id)){
 		D = rbind(D, add)
 	}
 }
-#unobserved data
+#UNOBSERVED DATA
 
 
 #
@@ -83,35 +83,12 @@ DAT = D[D$species%in%who, c('weight', 'species', 'clustSize')]
 DAT$weight = as.numeric(DAT$weight)
 DAT$clustSize = as.numeric(DAT$clustSize)
 #
-cores = 48
+cores = 4#8
 #fit poisson, binomial, negative binomial, beta-binomial
-pOut  = inla(weight~species, data=DAT, family='poisson', num.threads=cores, control.compute=list(config=T))
-bOut  = inla(weight~species, data=DAT, family='binomial', num.thread=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
-nbOut = inla(weight~species, data=DAT, family='nbinomial', num.thread=cores, control.compute=list(config=T))
-bbOut = inla(weight~species, data=DAT, family='betabinomial', num.thread=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
-
-#out = inla(model, family="betabinomial", data=D, Ntrials=D$off, num.threads=cores,
-#                control.inla=list(
-#                        int.strategy='ccd',
-#                        tolerance=1e-10,
-#                        h=1e-10,
-#                        lincomb.derived.only=F
-#                ),
-#                control.compute=list(
-#                        config=T,
-#                        mlik=T,
-#                        dic=T,
-#                        waic=T
-#                ),
-#                control.fixed = list(
-#                        expand.factor.strategy='inla'
-#                ),
-#                control.mode = list(
-#                        result=starter,
-#                        restart=T
-#                )
-#        )
-#
+pOut  = inla(weight~species, data=DAT, family='poisson'     , num.threads=cores, control.compute=list(config=T))
+nbOut = inla(weight~species, data=DAT, family='nbinomial'   , num.threads=cores, control.compute=list(config=T)) #, offset=DAT$clustSize)
+bOut  = inla(weight~species, data=DAT, family='binomial'    , num.threads=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
+bbOut = inla(weight~species, data=DAT, family='betabinomial', num.threads=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
 
 #
 #SAMPLE
@@ -119,6 +96,7 @@ bbOut = inla(weight~species, data=DAT, family='betabinomial', num.thread=cores, 
 
 #
 M = 10^4
+
 #poisson
 pHype = inla.hyperpar.sample(M, pOut)
 pPost = inla.posterior.sample(M, pOut)
@@ -143,6 +121,7 @@ for(w in rev(who)){
 			mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
 	)	
 }
+
 #binomial
 bHype = inla.hyperpar.sample(M, bOut)
 bPost = inla.posterior.sample(M, bOut)
@@ -168,49 +147,69 @@ for(w in rev(who)){
                         mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
 	)	
 }
-##negative binomial
-#nbHype = inla.hyperpar.sample(M, nbOut)
-#nbPost = inla.posterior.sample(M, nbOut)
-##
-#nbBox = matrix(NA, nrow=howMany, ncol=4)
-#colnames(nbBox) = c('mean', 'median', 'lower', 'upper')
-#rownames(nbBox) = who
-#for(w in rev(who)){
-#	#
-#	where = which(DAT$species==w)[1]
-#	wSam = sapply(nbPost, function(logSam){
-#		#
-#		idxStr = sprintf('Predictor:%03d', where)
-#		sam = log( logSam[['latent']][idxStr,] )
-#		#
-#		return( sam )
-#	})
-#	#NOTE: FIX THIS HACK
-#	nbBox[w,] = c(mean(wSam[!is.na(wSam)]), median(wSam[!is.na(wSam)]), quantile(wSam[!is.na(wSam)], 0.025), quantile(wSam[!is.na(wSam)], 0.975))	
-#}
-##beta binomial
-#bbHype = inla.hyperpar.sample(M, bbOut)
-#bbPost = inla.posterior.sample(M, bbOut)
-##
-#bbBox = matrix(NA, nrow=howMany, ncol=4)
-#colnames(bbBox) = c('mean', 'median', 'lower', 'upper')
-#rownames(bbBox) = who
-#for(w in rev(who)){
-#	#
-#	where = which(DAT$species==w)[1]
-#	wSam = sapply(bbPost, function(logSam){
-#		#
-#		idxStr = sprintf('Predictor:%03d', where)
-#		sam = log( logSam[['latent']][idxStr,] )
-#		#
-#		return( sam )
-#	})
-#	#NOTE: FIX THIS HACK
-#	bbBox[w,] = c(mean(wSam[!is.na(wSam)]), median(wSam[!is.na(wSam)]), quantile(wSam[!is.na(wSam)], 0.025), quantile(wSam[!is.na(wSam)], 0.975))	
-#}
+
+#negative binomial
+nbHype = inla.hyperpar.sample(M, nbOut)
+nbPost = inla.posterior.sample(M, nbOut)
+#
+nbBox = matrix(NA, nrow=howMany, ncol=8)
+colnames(nbBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper')
+rownames(nbBox) = who
+for(w in rev(who)){
+	#
+	where = which(DAT$species==w)[1]
+	nbSam = sapply(nbPost, function(logSam){
+		#
+		idxStr = sprintf('Predictor:%03d', where)
+		sam = exp( logSam[['latent']][idxStr,] )
+		#
+		return( sam )
+	})
+	#
+	n = exp(nbHype) #log(nbHype)
+	p = 1/(nbSam/n+1)
+	nbpred = rnbinom(M, n, p)
+	#
+	nbBox[w,] = c(
+			mean(nbpred), median(nbpred), quantile(nbpred, 0.025), quantile(nbpred, 0.975), 
+                        mean(nbSam) , median(nbSam) , quantile(nbSam, 0.025) , quantile(nbSam, 0.975)
+	)	
+}
+
+#beta binomial
+bbHype = inla.hyperpar.sample(M, bbOut)
+bbPost = inla.posterior.sample(M, bbOut)
+#
+bbBox = matrix(NA, nrow=howMany, ncol=8)
+colnames(bbBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper')
+rownames(bbBox) = who
+for(w in rev(who)){
+	#
+	where = which(DAT$species==w)[1]
+	wSam = sapply(bbPost, function(logSam){
+		#
+		idxStr = sprintf('Predictor:%03d', where)
+		sam = inv.logit( logSam[['latent']][idxStr,] )
+		#
+		return( sam )
+	})
+	#
+	mup   = wSam #inv.logit(bbSam[,1:P+1])
+	rho   = inv.logit(bbHype) #inv.logit(bbSam[,1])
+	alpha = mup*(1-rho)/rho
+	beta  = (1-mup)/rho
+	#
+	p = rbeta(M, alpha, beta)
+        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+	#
+	bbBox[w,] = c(
+			mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975), 
+                        mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
+	)	
+}
 
 #
-#PLOT
+#PLOT COUNTS
 #
 
 dev.new()
@@ -222,17 +221,67 @@ for(i in 1:howMany){
 	points(rep(i, length(weights)), weights, pch='_', cex=4)
 	#poisson
 	px = i-0.25
-	segments(px, pBox[i,'lower'], px, pBox[i,'upper'], lwd=3, col='blue')
-	points(px, pBox[i, 'mean'], pch=20, col='blue')
+	segments(px, pBox[i,'lower'], px, pBox[i,'upper'], lwd=4, col='blue')
+	points(px, pBox[i, 'mean'], pch=19, col='blue')
 	#binomial
 	bx = i-0.25+0.5/3*1
-	segments(bx, bBox[i,'lower'], bx, bBox[i,'upper'], lwd=3, col='red')
-	points(bx, bBox[i, 'mean'], pch=20, col='red')
-	##negative binomial
-	#nbx = i-0.25+0.5/3*2
-	#segments(nbx, nbBox[i,'lower'], nbx, nbBox[i,'upper'], lwd=3, col='darkorange')
-	#points(nbx, nbBox[i, 'mean'], pch=20, col='darkorange')
+	segments(bx, bBox[i,'lower'], bx, bBox[i,'upper'], lwd=4, col='red')
+	points(bx, bBox[i, 'mean'], pch=19, col='red')
+	#negative binomial
+	nbx = i-0.25+0.5/3*2
+	segments(nbx, nbBox[i,'lower'], nbx, nbBox[i,'upper'], lwd=4, col='forestgreen')
+	points(nbx, nbBox[i, 'mean'], pch=19, col='forestgreen')
+	#beta binomial
+	bbx = i-0.25+0.5/3*3
+	segments(bbx, bbBox[i,'lower'], bbx, bbBox[i,'upper'], lwd=4, col='darkorange')
+	points(bbx, bbBox[i, 'mean'], pch=19, col='darkorange')
 }
+
+##
+##PLOT PROPS
+##
+#
+##
+#dev.new()
+#plot(0, 0, ylim=c(0, 60), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
+#axis(1, at=1:howMany, labels=who
+#for(i in 1:howMany){
+#       #data
+#       weights = D$weight[D$species==who[i]]
+#       points(rep(i, length(weights)), weights, pch='_', cex=4)
+
+
+
+
+
+
+
+
+
+
+#out = inla(model, family="betabinomial", data=D, Ntrials=D$off, num.threads=cores,
+#                control.inla=list(
+#                        int.strategy='ccd',
+#                        tolerance=1e-10,
+#                        h=1e-10,
+#                        lincomb.derived.only=F
+#                ),
+#                control.compute=list(
+#                        config=T,
+#                        mlik=T,
+#                        dic=T,
+#                        waic=T
+#                ),
+#                control.fixed = list(
+#                        expand.factor.strategy='inla'
+#                ),
+#                control.mode = list(
+#                        result=starter,
+#                        restart=T
+#                )
+#        )
+#
+
 ###
 ###where = D$species%in%head(bp$names[o], 10)
 ###dev.new();
