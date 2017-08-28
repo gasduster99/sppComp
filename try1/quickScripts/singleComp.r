@@ -3,6 +3,7 @@ rm(list=ls())
 #
 library(INLA)
 library(boot)
+library(parallel)
 library(HDInterval)
 library(KernSmooth)
 
@@ -46,7 +47,7 @@ for(id in unique(D$id)){
         wid = which(D$id==id)
         #
         clst = D$clustSize[wid[1]]
-        port = D$port[wid[1]]
+        port = D$portComplex[wid[1]]
         gear = D$gear[wid[1]]
         year = D$year[wid[1]]
         qtr  = D$qtr[wid[1]]
@@ -72,14 +73,65 @@ for(id in unique(D$id)){
 	}
 }
 #UNOBSERVED DATA
-
+fill = 100 #prediction size for unobserves strata
+#
+mcOut = mclapply( qtrEff, FUN = function(q){
+#for(p in portEff){
+	add = numeric(0)
+	#for(g in gearEff){
+	#for(q in qtrEff ){
+	#for(y in yearEff){
+	for(s in sppEff ){
+	        #D$portComplex==p       	&
+	        #D$gear==g       	&
+	        #D$year==y       	&
+	        wJoint = which(
+	                D$qtr==q     	&
+	                D$species==s
+	        )
+	        #
+	        if( length(wJoint)==0 ){
+	                #data grows by a single row with 0 weight
+	                #end = end + 1
+	                ##
+	                #D$id[end]     = NA
+	                #D$weight[end] = NA 
+	                #D$gear[end]   = g
+	                #D$year[end]   = y
+	                #D$qtr[end]    = q
+	                #D$species[end] = s
+			#D$portComplex[end] = p
+			#D$clustSize[end] = fill 
+			##
+			addd = matrix(NA, ncol=10, nrow=1)
+	                colnames(addd) = c('id', 'species', 'year', 'qtr', 'portComplex', 'gear', 'mcat', 'isLive', 'weight', 'clustSize')
+			#
+	                addd[,'id'] = NA
+	                addd[,'species'] = s
+	                addd[,'year'] = yer
+	                addd[,'qtr']  = q
+	                addd[,'portComplex'] = plc
+	                addd[,'gear'] = ger
+	                addd[,'mcat'] = mct
+	                addd[,'isLive'] = 'N'
+	                addd[,'weight'] = NA
+	                addd[,'clustSize'] = fill
+			#
+	                add = rbind(add, addd)
+	        }
+	}#}}}
+	return( add )
+}, #D=D, gearEff=gearEff, yearEff=yearEff, qtrEff=qtrEff, sppEff=sppEff,
+mc.cores=4)
+mcOut = do.call(rbind, mcOut)
+D = rbind(D, mcOut)
 
 #
 bp = boxplot(as.numeric(D$weight)~D$species, plot=F)
 o = order(bp$stats[5,], decreasing=T)
 #
 off = 0.5
-howMany = 7
+howMany = 6 # 7
 all = bp$names[o]
 who = head(bp$names[o], howMany)
 DAT = D[D$species%in%who, c('weight', 'species', 'clustSize')]
@@ -92,6 +144,11 @@ pOut  = inla(weight~species, data=DAT, family='poisson'     , num.threads=cores,
 nbOut = inla(weight~species, data=DAT, family='nbinomial'   , num.threads=cores, control.compute=list(config=T)) #, offset=DAT$clustSize)
 bOut  = inla(weight~species, data=DAT, family='binomial'    , num.threads=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
 bbOut = inla(weight~species, data=DAT, family='betabinomial', num.threads=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
+#
+pOut  = inla.hyperpar(pOut) 
+bOut  = inla.hyperpar(bOut)
+nbOut = inla.hyperpar(nbOut)
+bbOut = inla.hyperpar(bbOut)
 
 #
 #SAMPLE
@@ -101,12 +158,17 @@ bbOut = inla(weight~species, data=DAT, family='betabinomial', num.threads=cores,
 M = 10^4
 
 #poisson
-pHype = inla.hyperpar.sample(M, pOut)
+#pHype = inla.hyperpar.sample(M, pOut)
 pPost = inla.posterior.sample(M, pOut)
 #
-pBox = matrix(NA, nrow=howMany, ncol=12)
-colnames(pBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian', 'pLower', 'pUpper')
+pDist = matrix(NA, nrow=M, ncol=howMany)
+colnames(pDist) = who
+pHDI = list()
+#
+pBox = matrix(NA, nrow=howMany, ncol=10)#12)
+colnames(pBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')#, 'pLower', 'pUpper')
 rownames(pBox) = who
+#
 for(w in rev(who)){
 	#
 	where = which(DAT$species==w)[1]
@@ -119,20 +181,36 @@ for(w in rev(who)){
 	})
 	#
 	pred = rpois(M, wSam)
+	pDist[,w] = pred
 	#spIntHDI = HDInterval:::hdi.density(bkde(sp[,s], range.x=c(0,1), canonical=T), credMass=prob, allowSplit=T)
-	pBox[w,] = c(   
+	pBox[w,1:8] = c(   
 			mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975), 
 			mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
-	)	
+	)
+}
+pDist = pDist/rowSums(pDist)
+for(w in who){ 
+	#
+	pBox[w,9:10] = c(mean(pDist[,w]), median(pDist[,w]))#, quantile(pDist[,w], 0.025), quantile(pDist[,w], 0.975)) 
+	#spIntHDI = HDInterval:::hdi.density(bkde(bDist[,w], range.x=c(0,1), canonical=T), credMass=0.95, allowSplit=T)
+        spIntHDI = HDInterval:::hdi.density(density(pDist[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+        pHDI[[w]] = matrix(spIntHDI[,], ncol=2)
+        colnames(pHDI[[w]]) = c('begin', 'end')
 }
 
+
 #binomial
-bHype = inla.hyperpar.sample(M, bOut)
+#bHype = inla.hyperpar.sample(M, bOut)
 bPost = inla.posterior.sample(M, bOut)
 #
-bBox = matrix(NA, nrow=howMany, ncol=8)
-colnames(bBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper')
+bDist = matrix(NA, nrow=M, ncol=howMany)
+colnames(bDist) = who
+bHDI = list()
+#
+bBox = matrix(NA, nrow=howMany, ncol=10)#12)
+colnames(bBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')#, 'pLower', 'pUpper')
 rownames(bBox) = who
+#
 for(w in rev(who)){
 	#
 	where = which(DAT$species==w)[1]
@@ -146,19 +224,35 @@ for(w in rev(who)){
 	})
 	#
 	pred = rbinom(M, DAT$clustSize[where], wSam)
-	bBox[w,] = c(
+	bDist[,w] = pred 
+	bBox[w,1:8] = c(
 			mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975), 
                         mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
 	)	
 }
+bDist = bDist/rowSums(bDist)
+for(w in who){
+        #
+	bBox[w,9:10] = c(mean(bDist[,w]), median(bDist[,w]))#, quantile(bDist[,w], 0.025), quantile(bDist[,w], 0.975))
+	#spIntHDI = HDInterval:::hdi.density(bkde(bDist[,w], range.x=c(0,1), canonical=T), credMass=0.95, allowSplit=T)
+	spIntHDI = HDInterval:::hdi.density(density(bDist[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+	bHDI[[w]] = matrix(spIntHDI[,], ncol=2)
+	colnames(bHDI[[w]]) = c('begin', 'end')
+}
 
 #negative binomial
-nbHype = inla.hyperpar.sample(M, nbOut)
+#nbHype = inla.hyperpar.sample(M, nbOut)
 nbPost = inla.posterior.sample(M, nbOut)
+nbHype = sapply(nbPost, function(x){x[[1]]})
 #
-nbBox = matrix(NA, nrow=howMany, ncol=8)
-colnames(nbBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper')
+nbDist = matrix(NA, nrow=M, ncol=howMany)
+colnames(nbDist) = who
+nbHDI = list()
+#
+nbBox = matrix(NA, nrow=howMany, ncol=10)#12)
+colnames(nbBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')#, 'pLower', 'pUpper')
 rownames(nbBox) = who
+#
 for(w in rev(who)){
 	#
 	where = which(DAT$species==w)[1]
@@ -170,23 +264,39 @@ for(w in rev(who)){
 		return( sam )
 	})
 	#
-	n = exp(nbHype) #log(nbHype)
+	n = exp(nbHype)
 	p = 1/(nbSam/n+1)
 	nbpred = rnbinom(M, n, p)
+	nbDist[,w] = nbpred
 	#
-	nbBox[w,] = c(
+	nbBox[w,1:8] = c(
 			mean(nbpred), median(nbpred), quantile(nbpred, 0.025), quantile(nbpred, 0.975), 
                         mean(nbSam) , median(nbSam) , quantile(nbSam, 0.025) , quantile(nbSam, 0.975)
 	)	
 }
+nbDist = nbDist/rowSums(nbDist)
+nbDist = nbDist[!is.na(nbDist[,1]),]
+for(w in who){
+        nbBox[w,9:10] = c(mean(nbDist[,w]), median(nbDist[,w])) #, quantile(nbDist[,w], 0.025), quantile(nbDist[,w], 0.975))
+	#spIntHDI = HDInterval:::hdi.density(bkde(nbDist[,w], range.x=c(0,1), canonical=T), credMass=0.95, allowSplit=T)
+	spIntHDI = HDInterval:::hdi.density(density(nbDist[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+	nbHDI[[w]] = matrix(spIntHDI[,], ncol=2)
+	colnames(nbHDI[[w]]) = c('begin', 'end')	
+}
 
 #beta binomial
-bbHype = inla.hyperpar.sample(M, bbOut)
+#bbHype = inla.hyperpar.sample(M, bbOut)
 bbPost = inla.posterior.sample(M, bbOut)
+bbHype = sapply(bbPost, function(x){x[[1]]})
 #
-bbBox = matrix(NA, nrow=howMany, ncol=8)
-colnames(bbBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper')
+bbDist = matrix(NA, nrow=M, ncol=howMany)
+colnames(bbDist) = who
+bbHDI = list()
+#
+bbBox = matrix(NA, nrow=howMany, ncol=10)#12)
+colnames(bbBox) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')#, 'pLower', 'pUpper')
 rownames(bbBox) = who
+#
 for(w in rev(who)){
 	#
 	where = which(DAT$species==w)[1]
@@ -205,18 +315,35 @@ for(w in rev(who)){
 	#
 	p = rbeta(M, alpha, beta)
         pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+	bbDist[,w] = pred
 	#
-	bbBox[w,] = c(
+	bbBox[w,1:8] = c(
 			mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975), 
                         mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(wSam, 0.975)
 	)	
 }
+bbDist = bbDist/rowSums(bbDist)
+bbDist = bbDist[!is.na(bbDist[,1]),]
+for(w in who){
+        bbBox[w,9:10] = c(mean(bbDist[,w]), median(bbDist[,w])) #, quantile(nbDist[,w], 0.025), quantile(nbDist[,w], 0.975))
+	#plot(bkde(bbDist[,w], range.x=c(0,1), canonical=T))
+	#spIntHDI = HDInterval:::hdi.density(bkde(bbDist[,w], range.x=c(0,1), canonical=T, bandwidth=0.1), credMass=0.95, allowSplit=T)
+	spIntHDI = HDInterval:::hdi.density(density(bbDist[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+	bbHDI[[w]] = matrix(spIntHDI[,], ncol=2)
+	colnames(bbHDI[[w]]) = c('begin', 'end')
+	#	nbBox[w,9:12] = c(mean(nbDist[,w]), median(nbDist[,w]), spIntHDI[1], spIntHDI[2])
+	#	print(spIntHDI)
+}
+#for(w in who){
+#        bbBox[w,9:12] = c(mean(bbDist[,w]), median(bbDist[,w]), quantile(bbDist[,w], 0.025), quantile(bbDist[,w], 0.975))
+#}
 
 #
 #PLOT COUNTS
 #
 
-dev.new()
+#dev.new()
+pdf('weightPlot.pdf')
 plot(0, 0, ylim=c(0, 60), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
 axis(1, at=1:howMany, labels=who)
 for(i in 1:howMany){
@@ -242,20 +369,52 @@ for(i in 1:howMany){
 }
 #legend
 legend('topright', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
+dev.off()
 
 #
 #PLOT PROPS
 #
 
 #
-dev.new()
-plot(0, 0, ylim=c(0, 1), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
+#dev.new()
+pdf('compPlot.pdf')
+plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
 axis(1, at=1:howMany, labels=who)
 for(i in 1:howMany){
-       #make spp comp
-       comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
-       points(rep(i, length(comps)), comps, pch='_', cex=4)
+       	#make spp comp
+       	comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+       	points(rep(i, length(comps)), comps, pch='_', cex=4)
+	#poisson
+        px = i-0.25
+        #segments(px, pBox[i,'pLower'], px, pBox[i,'pUpper'], lwd=4, col='blue')
+        for(j in 1:dim(pHDI[[who[i]]])[1]){
+		segments(px, pHDI[[who[i]]][j,'begin'], px, pHDI[[who[i]]][j,'end'], lwd=4, col='blue')
+	}
+	points(px, pBox[i, 'pMean'], pch=19, col='blue')
+	#binomial
+	bx = i-0.25+0.5/3*1
+	#segments(bx, bBox[i,'pLower'], bx, bBox[i,'pUpper'], lwd=4, col='red')
+	for(j in 1:dim(bHDI[[who[i]]])[1]){
+		segments(bx, bHDI[[who[i]]][j,'begin'], bx, bHDI[[who[i]]][j,'end'], lwd=4, col='red')
+	}
+	points(bx, bBox[i, 'pMean'], pch=19, col='red')
+	#negative binomial
+	nbx = i-0.25+0.5/3*2
+	for(j in 1:dim(nbHDI[[who[i]]])[1]){
+		segments(nbx, nbHDI[[who[i]]][j,'begin'], nbx, nbHDI[[who[i]]][j,'end'], lwd=4, col='forestgreen')
+	}
+	points(nbx, nbBox[i, 'pMean'], pch=19, col='forestgreen')
+	#beta binomial
+	bbx = i-0.25+0.5/3*3
+	for(j in 1:dim(bbHDI[[who[i]]])[1]){
+		segments(bbx, bbHDI[[who[i]]][j,'begin'], bbx, bbHDI[[who[i]]][j,'end'], lwd=4, col='darkorange')
+	}
+	points(bbx, bbBox[i, 'pMean'], pch=19, col='darkorange')
 }
+#legend
+#legend(4.5, 0.75, legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
+legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
+dev.off()
 
 
 
@@ -264,7 +423,12 @@ for(i in 1:howMany){
 
 
 
-
+	#dz=1,           #default=0.75
+        #diff.logdens=1  #default=10
+        #h=1e-10#,
+        ##keep=T,
+        #restart=T      
+#)
 #out = inla(model, family="betabinomial", data=D, Ntrials=D$off, num.threads=cores,
 #                control.inla=list(
 #                        int.strategy='ccd',
