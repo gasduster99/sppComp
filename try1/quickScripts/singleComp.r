@@ -138,13 +138,41 @@ who = head(bp$names[o], howMany)
 DAT = D[D$species%in%who, c('weight', 'species', 'clustSize')]
 DAT$weight = as.numeric(DAT$weight)
 DAT$clustSize = as.numeric(DAT$clustSize)
-#
-cores = 4#8
 #fit poisson, binomial, negative binomial, beta-binomial
-pOut  = inla(weight~species, data=DAT, family='poisson'     , num.threads=cores, control.compute=list(config=T))
-nbOut = inla(weight~species, data=DAT, family='nbinomial'   , num.threads=cores, control.compute=list(config=T)) #, offset=DAT$clustSize)
-bOut  = inla(weight~species, data=DAT, family='binomial'    , num.threads=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
-bbOut = inla(weight~species, data=DAT, family='betabinomial', num.threads=cores, Ntrials=DAT$clustSize, control.compute=list(config=T))
+cores = 4#8
+#DIC, WAIC, MLIK
+#5675.25, 5840.56, -2864.01
+pOut = inla(weight~species, data=DAT, family='poisson', num.threads=cores, 
+	control.compute=list(
+		config=T,
+		waic=T,
+		dic=T
+	)
+)
+#1301.51, 1302.19, -688.19
+nbOut = inla(weight~species, data=DAT, family='nbinomial', num.threads=cores, 
+	control.compute=list(
+		config=T,
+		waic=T,
+		dic=T
+	)
+)
+#6759.86, 6939.74, -3406.01
+bOut  = inla(weight~species, data=DAT, family='binomial', Ntrials=DAT$clustSize, num.threads=cores, 
+	control.compute=list(
+		config=T,
+		waic=T,
+		dic=T
+	)
+)
+#1261.00, 1261.30, -650.49
+bbOut = inla(weight~species, data=DAT, family='betabinomial', Ntrials=DAT$clustSize, num.threads=cores,
+	control.compute=list(
+		config=T,
+		waic=T,
+		dic=T
+	)
+)
 #
 pOut  = inla.hyperpar(pOut) 
 bOut  = inla.hyperpar(bOut)
@@ -335,17 +363,14 @@ for(w in who){
 	#	nbBox[w,9:12] = c(mean(nbDist[,w]), median(nbDist[,w]), spIntHDI[1], spIntHDI[2])
 	#	print(spIntHDI)
 }
-#for(w in who){
-#        bbBox[w,9:12] = c(mean(bbDist[,w]), median(bbDist[,w]), quantile(bbDist[,w], 0.025), quantile(bbDist[,w], 0.975))
-#}
 
+##
+##PLOT COUNTS
+##
 #
-#PLOT COUNTS
-#
-
 ##dev.new()
 #pdf('weightPlot.pdf')
-#plot(0, 0, ylim=c(0, 60), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
+#plot(0, 0, ylim=c(0, 60), xlim=c(1-off, howMany+off), xlab='', ylab='Weight', xaxt='n', main='95% Predictive HDI Model Comparison')
 #axis(1, at=1:howMany, labels=who)
 #for(i in 1:howMany){
 #	#data
@@ -379,7 +404,7 @@ for(w in who){
 ##
 ##dev.new()
 #pdf('compPlot.pdf')
-#plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='', xaxt='n')
+#plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='Proportion', xaxt='n', main='95% Predictive HDI Model Comparison')
 #axis(1, at=1:howMany, labels=who)
 #for(i in 1:howMany){
 #       	#make spp comp
@@ -416,15 +441,20 @@ for(w in who){
 ##legend(4.5, 0.75, legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
 #legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
 #dev.off()
-
 #
-vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
-	names=colnames(bbDist),
-	ylim=c(0, 1.15),
-	col='grey',
-	drawRect=F
-)
-
+##
+#pdf('compVioplot.pdf')
+#vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
+#	names=colnames(bbDist),
+#	ylim=c(0, 1.15),
+#	col='grey',
+#	drawRect=F
+#)
+#title(
+#	main='Beta-Binomial Posterior Predictive Species Compositions',
+#        ylab='Proportion'
+#)
+#dev.off()
 
 
 

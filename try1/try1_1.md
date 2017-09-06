@@ -7,6 +7,7 @@ author: Nick Grunloh, Edward Dick, Don Pearson, John Field, Marc Mangel
 http://www.nrcresearchpress.com/page/cjfas/authors#page
 -->
 
+<!--
 # Abstract
 
 Effective management of exploited fish populations, requires accurate estimates 
@@ -70,23 +71,83 @@ samples, we hope to standardize any necessary pooling through an exhaustive
 search of the space (possible configurations) of pooled models. Pooling (and 
 partial pooling) among strata is achieved using Bayesian hierarchical 
 statistical models and model averaging (Gelman et al., 2014).
+-->
+
+# Abstract
+
+# Introduction
+## Context
+<!--##Data, Sampling, \& Prep-->
+## Data
+	* Collection issues
+		* funding => nature of sparcity
+	* Lay down goal modeling goal
+		* mean
+		* uncertainty
 
 # Methods
-##Data, Sampling, \& Prep
+## Data Generating Model
+<!--simple form experiment explain-->
 
-## Model
+For the purposes of accuratly modeling not only species composition means, but
+also higher moments, such as species composition variances, it is neccisary to 
+recognize model limitations with respect to over-disperse data. Amoung the 
+simplest models for count data are the poisson and binomial models. Both 
+models are typically specificed with a single degree of freedom for 
+modeling the mean, and thus rely heavily on their respective data generating 
+processes to accuratly represent higher moments in the data. This is a well 
+understood issue with modeling count data of the sort 
+(McCullagh & Nelder, 1989, pg. 124). 
+
+<!--
+writes, ``Over-dispersion is not uncommon in practice. In fact, 
+some would maintain that over-dispersion is the norm in practice and nominal 
+dispersion the exception.''
+McCullagh P. & Nelder, J.A. (1989) Generalized Linear Models, 2nd ed. London: Chapman and Hall.
+https://onlinecourses.science.psu.edu/stat504/node/162
+page 124
+-->
+
+![overdisp box](./pictures/compPlot.pdf)
+![overdisp vio](./pictures/compVioplot.pdf)
+
+<!--general form-->
+	* maths stuffs
+		* mean function
+		* variance; introduct $\rho$
+	* justify linear predictor/transistion to priors
+
+## Heirarchical Priors
+## Prediction 
+## Model Exploration \& Averaging
+
+# Results
+## Prediction Experiment
+
+# Conclusions
+## General Math/Science
+## Database Stuff
+## Looking Forward	
+	* forcasting/hindcasting
+		* simple
+		* timeseries models
+	* more computation faster
+		* broader model exploration
+		* broader spatial expansion
 
 <!--data talk-->
+<!--
 For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
 the $j^{th}$ species' weight, in the $k^{th}$ port, caught with the $l^{th}$ 
 gear, in the $\eta^{th}$ quarter, of year $m$. The $y_{ijklm\eta}$ are modeled 
 as observations from a Beta-Binomial distribution ($BB$) conditional on 
 parameters $\theta$ and $\rho$.
-
+-->
 <!--$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\bm{\theta}, \rho).$$-->
-$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\theta, \rho).$$
+<!--$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\theta, \rho).$$-->
 
 <!--Justify: single stratum poisson v. binomial v. negative binomial v. beta-binomial-->
+<!--
 Given observed overdispersion relative to the Poisson and Binomial 
 distributions, the Beta-Binomial model makes use of a correlation parameter, 
 $\rho$, to better model uncertainties, while maintaining a flexible model on 
@@ -129,6 +190,7 @@ Because the $y^*$ are random variables, and $\pi^*$ is nothing more than a
 transformation of the $y^*$, $\pi^*$ is too a random variable. 
 Furthermore once inference is complete, we can easily sample these 
 distributions and compute any desired moments from these samples. 
+-->
 
 <!--Trasformation-->
 <!--$$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$-->
@@ -148,7 +210,7 @@ Integrations
 \end{align*}
 -->
 
-## Model Exploration \& Averaging
+
 
 <!-- 
 With the added ability to automate Bayesian model exploration, we will explore
@@ -158,6 +220,7 @@ the space of pooled models to obtain quantitative evidence of optimal pooling be
 %sources of model uncertainty. 
 -->
 
+<!--
 The straight-forward spatial model implied by the categorical port complex 
 variables do not adequatly resolve in-sample prediction at the observed 
 sample sizes. 
@@ -209,7 +272,7 @@ data generating model of the data, conditional on the subspace of candidate
 models and the observed data. $\omega_\mu$ is then straightforwardly used to 
 average together the posteriors of all of the candidate models, as follows
 $\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, \mathbb{M}_\mu).$
-
+-->
 
 
 \begin{thebibliography}{1}
