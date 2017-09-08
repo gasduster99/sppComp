@@ -114,17 +114,31 @@ written as an infite mixture of poisson distributions. While the beta-binomial
 model is typically used to as an over-dispersed extension of the binomial 
 model.
 
+##An Example
+
+<!--m=0;for(id in unique(Dat[Dat$mcat==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gear==ger,]$id)){m=m+max(Dat[Dat$mcat==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gear==ger & Dat$id==id,]$clust)}-->
 To discern between these models we consider a small scale example of the 
 Poisson, binomial, negative binomial, and beta-binomial models fit to the port 
 sampling integer weight data from market category 250, in the Montery port 
-complex trawl fishery in 1990. (any will work). This stratum was visited XX 
-times by port samplers, collecting a total of YY cluster samples, resulting in 
-ZZ observations, from each of the described models. These data contain  21 (at 
-least; URCK) unique species, although for brevity we only consider for the top 
-6 species here. 
+complex trawl fishery in 1990. $(any will work)$ This stratum was visited 38 
+times by port samplers, collecting a total of 67 cluster samples, resulting in 
+344 model observations across 21 $(at least; URCK)$ unique species. For brevity 
+we only consider for the top six species here (CLPR, BCAC, WDOW, BLGL, ARRA, 
+BANK). These data are serially fit by each of the Poisson, binomial, negative binomial, 
+and beta-binomial models, predictive species compositions are then derived from 
+each model, plotted along side the observed species compositions, and metrics 
+of model fits are compared.
 
 ![overdisp box](./pictures/compPlot.pdf)
 ![overdisp vio](./pictures/compVioplot.pdf)
+
+---------------------------------------------------------------------
+               Poisson   Binomial   Negative-Binomial   Beta-binomial  
+-------------- --------- ---------- ------------------- -------------
+DIC            5675.25   6759.86    1301.51             1261.00
+WAIC           5840.56	 6939.74    1302.19             1261.30
+log $p(y|M)$   -2864.01	 -3406.01   -688.19             -650.49
+---------------------------------------------------------------------
 
 * describe picture
 * notice overdispersion
