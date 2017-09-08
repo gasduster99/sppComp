@@ -73,67 +73,102 @@ partial pooling) among strata is achieved using Bayesian hierarchical
 statistical models and model averaging (Gelman et al., 2014).
 -->
 
+
+
+
+
 # Abstract
 
 # Introduction
 ## Context
 <!--##Data, Sampling, \& Prep-->
 ## Data
-	* Collection issues
-		* funding => nature of sparcity
-	* Lay down goal modeling goal
-		* mean
-		* uncertainty
+* Collection issues
+	* funding => nature of sparcity
+* Lay down goal modeling goal
+	* mean
+	* uncertainty
 
 # Methods
 ## Data Generating Model
 <!--simple form experiment explain-->
 
-For the purposes of accuratly modeling not only species composition means, but
-also higher moments, such as species composition variances, it is neccisary to 
-recognize model limitations with respect to over-disperse data. Amoung the 
-simplest models for count data are the poisson and binomial models. Both 
-models are typically specificed with a single degree of freedom for 
-modeling the mean, and thus rely heavily on their respective data generating 
-processes to accuratly represent higher moments in the data. This is a well 
-understood issue with modeling count data of the sort 
-(McCullagh & Nelder, 1989, pg. 124). 
+Something something heirarchical poisson model. Something something (Shelton, 2012).
 
-<!--
-writes, ``Over-dispersion is not uncommon in practice. In fact, 
-some would maintain that over-dispersion is the norm in practice and nominal 
-dispersion the exception.''
-McCullagh P. & Nelder, J.A. (1989) Generalized Linear Models, 2nd ed. London: Chapman and Hall.
-https://onlinecourses.science.psu.edu/stat504/node/162
-page 124
--->
+For the purposes of accuratly modeling not only species composition means, but
+also higher moments of the data, such as species composition variances, it is 
+neccisary to recognize model limitations with respect to over-dispersed data. 
+Amoung the simplest models for count data are the poisson and binomial models. 
+Both models are typically specificed with a single degree of freedom for 
+modeling all of the moments of the data, and thus they rely heavily on their 
+respective data generating processes to accuratly represent higher moments in 
+the data. McCullagh and Nelder (1989, pg. 124) commiserate about the 
+prevalence of over-dispersed data in cluster sampling, and explain the 
+numerious ways in which cluster sampling may result in over-dispersion.
+
+Extending the Poisson and binomial models to deal with over-dispersion, 
+typically involves adding additional parameters for the purpose of modeling 
+higher moments of the data. The negative binomial distribution is often used as 
+an over-dispersed extension of the poisson model, since it can be expressly 
+written as an infite mixture of poisson distributions. While the beta-binomial 
+model is typically used to as an over-dispersed extension of the binomial 
+model.
+
+To discern between these models we consider a small scale example of the 
+Poisson, binomial, negative binomial, and beta-binomial models fit to the port 
+sampling integer weight data from market category 250, in the Montery port 
+complex trawl fishery in 1990. (any will work). This stratum was visited XX 
+times by port samplers, collecting a total of YY cluster samples, resulting in 
+ZZ observations, from each of the described models. These data contain  21 (at 
+least; URCK) unique species, although for brevity we only consider for the top 
+6 species here. 
 
 ![overdisp box](./pictures/compPlot.pdf)
 ![overdisp vio](./pictures/compVioplot.pdf)
 
-<!--general form-->
-	* maths stuffs
-		* mean function
-		* variance; introduct $\rho$
-	* justify linear predictor/transistion to priors
+* describe picture
+* notice overdispersion
+* impropper variance model biases mean, beta-binomial is flexible to disentagles these effects.
+
+
+* maths stuffs
+	* mean function
+	* variance; introduct $\rho$
+* justify linear predictor/transistion to priors
 
 ## Heirarchical Priors
 ## Prediction 
 ## Model Exploration \& Averaging
 
 # Results
-## Prediction Experiment
+* General Products
+* Degree of smoothing (heirarchical parameters)
+* Posterior v. Current
+	* Report degree of similarity
+* Prediction v. Data
+	* Report predictive accuracy
 
 # Conclusions
-## General Math/Science
-## Database Stuff
-## Looking Forward	
+* General Math/Science
+* Database Stuff
+* Looking Forward	
 	* forcasting/hindcasting
 		* simple
 		* timeseries models
 	* more computation faster
 		* broader model exploration
 		* broader spatial expansion
+
+
+
+
+
+
+
+
+
+
+
 
 <!--data talk-->
 <!--
@@ -275,6 +310,14 @@ $\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, \mathbb{M}_\mu).$
 -->
 
 
+<!--
+writes, ``Over-dispersion is not uncommon in practice. In fact, 
+some would maintain that over-dispersion is the norm in practice and nominal 
+dispersion the exception.''
+McCullagh P. & Nelder, J.A. (1989) Generalized Linear Models, 2nd ed. London: Chapman and Hall.
+https://onlinecourses.science.psu.edu/stat504/node/162
+page 124
+-->
 \begin{thebibliography}{1}
 
 %
@@ -282,6 +325,9 @@ $\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, \mathbb{M}_\mu).$
 
 %
 \bibitem{bma} Hoeting, J. A., Madigan, D., Raftery, A. E., \& Volinsky, C. T. (1999). Bayesian model averaging: a tutorial. Statistical science, 382-401.
+
+%
+\bibitem{glmBook} McCullagh P. \& Nelder, J.A. (1989). Generalized Linear Models, 2nd ed. London: Chapman and Hall.
 
 %
 \bibitem{pearsonErwin} Pearson, D.E., and Erwin, B. (1997). Documentation of California’s commercial market sampling data entry and expansion programs. NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
