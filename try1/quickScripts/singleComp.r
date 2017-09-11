@@ -9,6 +9,37 @@ library(HDInterval)
 library(KernSmooth)
 
 #
+#FUNCTIONS
+#
+
+#
+goodRatios = function( loggedStuff ){
+        #loggedStuff: the log(x) of the values (x) to compute the following ratio
+        #       r_i = x_i       /sum(x)
+
+        #
+        c = max(loggedStuff) #mean(loggedStuff)
+        stand = exp(loggedStuff-c)
+        sStand = sum(stand)
+        out = stand/sStand
+        #
+        return( out )
+}
+
+getMSE = function(data, means){
+	#data: list of length length(means)
+	#means: mean for each element of data
+	
+	#
+	N = sum(sapply(data, length))
+	M = length(means)
+	out = c() 
+	for(i in 1:M){ out=c(out, (data[[i]]-means[i])^2) } #mean(XX)*length(data[[i]])/N
+	#
+	return( mean(out) )
+}
+
+#
 #CLEAN DATA
 #
 
@@ -363,6 +394,28 @@ for(w in who){
 	#	nbBox[w,9:12] = c(mean(nbDist[,w]), median(nbDist[,w]), spIntHDI[1], spIntHDI[2])
 	#	print(spIntHDI)
 }
+
+#MSE
+comps = list()
+pM = c()
+bM = c()
+nbM = c()
+bbM = c()
+for(i in 1:howMany){ 
+	#
+	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
+	#
+	pM  = rbind(pM, pBox[i, 'pMean'])
+	bM  = rbind(bM, bBox[i, 'pMean'])
+	nbM = rbind(nbM, nbBox[i, 'pMean'])
+	bbM = rbind(bbM, bbBox[i, 'pMean'])
+}
+#
+pMSE = getMSE(comps, pM)
+bMSE = getMSE(comps, bM)
+nbMSE = getMSE(comps, nbM)
+bbMSE = getMSE(comps, bbM)
 
 ##
 ##PLOT COUNTS

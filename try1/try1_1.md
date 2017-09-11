@@ -108,42 +108,82 @@ numerious ways in which cluster sampling may result in over-dispersion.
 
 Extending the Poisson and binomial models to deal with over-dispersion, 
 typically involves adding additional parameters for the purpose of modeling 
-higher moments of the data. The negative binomial distribution is often used as 
-an over-dispersed extension of the poisson model, since it can be expressly 
-written as an infite mixture of poisson distributions. While the beta-binomial 
-model is typically used to as an over-dispersed extension of the binomial 
-model.
+higher moments of the data. The negative binomial (NB) distribution is often 
+used as an over-dispersed extension of the poisson model, since it can be 
+expressly written as an infite mixture of poisson distributions. While the 
+beta-binomial model is typically used to as an over-dispersed extension of the 
+binomial model.
 
-##An Example
+###An Example
 
 <!--m=0;for(id in unique(Dat[Dat$mcat==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gear==ger,]$id)){m=m+max(Dat[Dat$mcat==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gear==ger & Dat$id==id,]$clust)}-->
 To discern between these models we consider a small scale example of the 
 Poisson, binomial, negative binomial, and beta-binomial models fit to the port 
 sampling integer weight data from market category 250, in the Montery port 
 complex trawl fishery in 1990. $(any will work)$ This stratum was visited 38 
-times by port samplers, collecting a total of 67 cluster samples, resulting in 
-344 model observations across 21 $(at least; URCK)$ unique species. For brevity 
-we only consider for the top six species here (CLPR, BCAC, WDOW, BLGL, ARRA, 
-BANK). These data are serially fit by each of the Poisson, binomial, negative binomial, 
-and beta-binomial models, predictive species compositions are then derived from 
-each model, plotted along side the observed species compositions, and metrics 
-of model fits are compared.
+times by port samplers, <!--in 1990,--> collecting a total of 67 cluster samples, 
+resulting in 344 model observations across 21 $(at least; URCK)$ unique 
+species. Each of the above models are fit to these data. <!--The posteriors from each model imply different predictive species composition distributions.-->
+The predictive species composition distributions from each model are 
+visualized in Figure (1) as 95% Highest Density Intervals (HDI), plotted on top 
+of the predictive means for each model and the observed species compositions 
+from the data in Figure(1). For brevity we only consider the most prevalent six 
+species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, BANK). Additionally, the 
+MSE, DIC, WAIC, and marginal likelyhood ratio model probabilities are computed for each model 
+as measures of model fit as seen in Table(1).
 
 ![overdisp box](./pictures/compPlot.pdf)
+
+           Poisson        Binomial      NB              BB  
+--------- -------------  ------------- --------------  -------------
+MSE         0.05286        0.05683      0.05188         0.05170
+DIC         5675.25        6759.86      1301.51         1261.00
+WAIC        5840.56        6939.74      1302.19         1261.30
+$pr(M|y)$   $\approx0$     $\approx0$   $<10^{-10}$     $\approx1$   
+					 
+<!--NB pr(M|y)=5.175555e-17-->
+
+The large spread of the observed species compositions seen in Figure(1) 
+demonstrate the degree of overdispersion present in port sampling data. The 
+Poisson and binomial models attempt to model both the mean and residual 
+variances with a single parameter for each species. This can tend to biase 
+mean estimates in overdispersed stratum toward larger values, for the sake of 
+estimating larger residual variances. Similarly variance estimates may tend to 
+be biased toward smaller values for the sake of estimating smaller means. In 
+contrast, the negative binomial and beta-binomial models estimate an additional 
+parameter which disentangles the mean and residual variance estimates. Thus the 
+negative binomial and beta-binomial models are able to produce more accurate 
+estimates of both the mean and residual variance.
+
+All of the measures in Table(1) consistently agree that the negative binomial 
+and beta-binomial models out perform the overdispersed Poisson and binomial 
+models. Furthermore, all of the metrics in Table(1) are also able to discern 
+that the beta-binomial model outperforms the negative binomial model. Depending 
+on the users value system toward model selection (ex. predictive or 
+inferential), the support for the beta-binomial model over the negative 
+binomial model may vary, but it is worth noting that all of the measures 
+considered here tell the same story indicating preferance for beta-binomial 
+model. 
+
+<!--Due to the beta-binomial's ability to model residual variance in the data,-->
+The split beta-binomial interval seen in Figure(1) is the consequence of 
+confining a large amount of residual variability to the unit interval. The 
+beta-binomial is the only model considered here, which includes such a 
+large degree of variablility and thus it is the only model that produces 
+predictive species composition distributions of the sort. Figure(2) shows the 
+beta-binomial predictive distributions as a violin plot demonstrating how the
+beta-binomial model arranges predictive density over the unit interval. The 
+intervals in Figure(1) are the smallest possible regions on these densities so 
+that the intervals contain 95% of the predictive density. For the cases of 
+Aurora and Bank rockfish, the empty upper regions seen in Figure(1) are 
+understandable in terms of the relatively low density region of the posterior 
+seen in Figure(2).
+
 ![overdisp vio](./pictures/compVioplot.pdf)
 
----------------------------------------------------------------------
-               Poisson   Binomial   Negative-Binomial   Beta-binomial  
--------------- --------- ---------- ------------------- -------------
-DIC            5675.25   6759.86    1301.51             1261.00
-WAIC           5840.56	 6939.74    1302.19             1261.30
-log $p(y|M)$   -2864.01	 -3406.01   -688.19             -650.49
----------------------------------------------------------------------
+###Operationalized Model
 
-* describe picture
-* notice overdispersion
-* impropper variance model biases mean, beta-binomial is flexible to disentagles these effects.
-
+See proposals...
 
 * maths stuffs
 	* mean function
@@ -183,7 +223,37 @@ log $p(y|M)$   -2864.01	 -3406.01   -688.19             -650.49
 
 
 
+<!--
+  
+The data's suggestion that species compositions are quite variable 
+it respondes to the data's suggestion that species compositions are quite 
+variable. When large variablity is confined to the exist within the unit 
+interval, such as species compositions, 
 
+
+, not only from a predictive standpoint. 
+definative to slight. 
+
+
+in agreement about 
+discerning between the negative binomial and beta-binomial models.  
+beta-binomial model outperforms the negative binomial model as well
+discerning between the negative binomial and beta-binomial models as well 
+although depending on which metric the 
+
+The MSE scores in Table(1) demonstrate that teh  that both the negative binomial and 
+beta-binomial models are able to consistently out performnot only is this pattern visually true, but allmetric
+
+
+
+  In the most overdispersed 
+casesDue to the presence of
+overdispersion in  
+
+* describe picture
+* notice overdispersion
+* impropper variance model biases mean, beta-binomial is flexible to disentagles these effects.
+-->
 <!--data talk-->
 <!--
 For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
