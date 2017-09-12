@@ -125,14 +125,15 @@ times by port samplers, <!--in 1990,--> collecting a total of 67 cluster samples
 resulting in 344 model observations across 21 $(at least; URCK)$ unique 
 species. Each of the above models are fit to these data. <!--The posteriors from each model imply different predictive species composition distributions.-->
 The predictive species composition distributions from each model are 
-visualized in Figure (1) as 95% Highest Density Intervals (HDI), plotted on top 
-of the predictive means for each model and the observed species compositions 
-from the data in Figure(1). For brevity we only consider the most prevalent six 
-species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, BANK). Additionally, the 
-MSE, DIC, WAIC, and marginal likelyhood ratio model probabilities are computed for each model 
-as measures of model fit as seen in Table(1).
+visualized in Figure (1) as 95% Highest Density Intervals (HDI) $(citations)$, 
+plotted on top of the predictive means for each model and the observed species 
+compositions from the data in Figure(1). For brevity we only consider the most 
+prevalent six species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, BANK). 
+Additionally, the 
+MSE, DIC, WAIC, and Bayesian marginal likelyhood model probabilities are 
+computed for each model as measures of model fit as seen in Table(1).
 
-![overdisp box](./pictures/compPlot.pdf)
+![Interval Plot](./pictures/compPlot.pdf)
 
            Poisson        Binomial      NB              BB  
 --------- -------------  ------------- --------------  -------------
@@ -144,44 +145,91 @@ $pr(M|y)$   $\approx0$     $\approx0$   $<10^{-10}$     $\approx1$
 <!--NB pr(M|y)=5.175555e-17-->
 
 The large spread of the observed species compositions seen in Figure(1) 
-demonstrate the degree of overdispersion present in port sampling data. The 
-Poisson and binomial models attempt to model both the mean and residual 
-variances with a single parameter for each species. This can tend to biase 
-mean estimates in overdispersed stratum toward larger values, for the sake of 
-estimating larger residual variances. Similarly variance estimates may tend to 
-be biased toward smaller values for the sake of estimating smaller means. In 
-contrast, the negative binomial and beta-binomial models estimate an additional 
-parameter which disentangles the mean and residual variance estimates. Thus the 
-negative binomial and beta-binomial models are able to produce more accurate 
-estimates of both the mean and residual variance.
+visually demonstrate the degree of overdispersion present in port sampling 
+data. The Poisson and binomial models disregaurd this overdispersion to 
+prioritize fitting the data mean.
+<!--
+The Poisson and binomial models attempt to model both the mean and 
+residual variances with a single parameter for each species. This can tend to 
+biase mean estimates, in overdispersed stratum, toward larger values, for the 
+sake of estimating larger residual variances. Similarly variance estimates may 
+tend to be biased toward smaller values for the sake of estimating smaller 
+means.
+-->
+In contrast, the negative binomial and beta-binomial models estimate an 
+additional parameter which is intended to disentangle the mean and residual 
+variance estimates. Thus the negative binomial and beta-binomial models are 
+able to produce more accurate estimates of both the mean and residual 
+variance.
 
 All of the measures in Table(1) consistently agree that the negative binomial 
 and beta-binomial models out perform the overdispersed Poisson and binomial 
-models. Furthermore, all of the metrics in Table(1) are also able to discern 
+models. Furthermore, all of the metrics in Table(1) indicate <!--are also able to discern-->
 that the beta-binomial model outperforms the negative binomial model. Depending 
-on the users value system toward model selection (ex. predictive or 
+on the users value system toward model selection (e.g. predictive or 
 inferential), the support for the beta-binomial model over the negative 
-binomial model may vary, but it is worth noting that all of the measures 
-considered here tell the same story indicating preferance for beta-binomial 
-model. 
+binomial model may vary, but it is worth noting that the more robust model 
+selction tools show stronger support for the beta-binomial model, with Bayesian 
+model probabilities indicating practically conclusive support for the 
+beta-binomial model. 
 
-<!--Due to the beta-binomial's ability to model residual variance in the data,-->
-The split beta-binomial interval seen in Figure(1) is the consequence of 
+The split beta-binomial intervals seen in Figure(1) are the consequence of 
 confining a large amount of residual variability to the unit interval. The 
-beta-binomial is the only model considered here, which includes such a 
+beta-binomial is the only model considered here, which estimates such a 
 large degree of variablility and thus it is the only model that produces 
 predictive species composition distributions of the sort. Figure(2) shows the 
 beta-binomial predictive distributions as a violin plot demonstrating how the
 beta-binomial model arranges predictive density over the unit interval. The 
-intervals in Figure(1) are the smallest possible regions on these densities so 
-that the intervals contain 95% of the predictive density. For the cases of 
-Aurora and Bank rockfish, the empty upper regions seen in Figure(1) are 
-understandable in terms of the relatively low density region of the posterior 
-seen in Figure(2).
+predictive intervals in Figure(1) are the smallest possible regions on each 
+density so that the intervals contain 95% of the predictive density (i.e. 
+these regions represent the densest packing of 95% probbaility under each 
+predictive distribution). For the cases of Aurora and Bank rockfish, the 
+empty upper regions seen in Figure(1) are understandable in terms of the 
+relatively low density region of the posterior they represent, as seen in 
+Figure(2).
 
-![overdisp vio](./pictures/compVioplot.pdf)
+![Violin Plot](./pictures/compVioplot.pdf)
 
 ###Operationalized Model
+
+For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
+the $j^{th}$ species' weight, in the $k^{th}$ port, caught with the $l^{th}$
+gear, in the $\eta^{th}$ quarter, of year $m$. The $y_{ijklm\eta}$ are modeled 
+as observations from a beta-binomial distribution conditional on parameters 
+$\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$,
+
+<!--$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\bm{\theta}, \rho).$$-->
+$$y_{ijklm\eta} \sim BB(\mu_{jklm\eta},~\sigma^2_{jklm\eta}).$$
+
+Where $\mu_{jklm\eta}$ is the stratum level beta-binomial mean weight and 
+$\sigma^2_{jklm\eta}$ is the stratum level residual variance. $\mu_{jklm\eta}$ 
+is related to a linear predictor, $\theta_{jklm\eta}$, via the mean function,
+
+<!--$$\mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})$$-->
+$$\mu_{jklm\eta} = n\frac{\exp(\theta_{jklm\eta})}{1+\exp(\theta_{jklm\eta})}.$$
+
+Here $n$ is the known cluster size for each sample. Additionally, 
+$\sigma^2_{jklm\eta}$ is related to $\mu_{jklm\eta}$ and the overdispersion 
+parameter, $\rho$, via the following equation,
+
+$$\sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n}\Big)\Big(1+(n-1)~\rho\Big).$$
+
+<!--https://www.healthknowledge.org.uk/public-health-textbook/research-methods/1a-epidemiology/clustered-data-->
+$\rho$ is the within cluster correlation. The situation where 
+$\rho\rightarrow1$ represents identical information content amoung replicates 
+within a cluster, with maximal overdispersion relative to the binomial 
+distribution. The situation where $\rho\rightarrow0$ represents totally 
+independent information content amoung replicates within a cluster, and the 
+beta-binomial model approaches the binomial model. $\rho$ explicitly models 
+overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the model 
+flexiblity at the stratum level through 
+
+$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$
+
+predictor 
+parameters, $\theta$, are then factored as follows among the many strata,
+
+
 
 See proposals...
 
