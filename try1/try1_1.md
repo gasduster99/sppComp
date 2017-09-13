@@ -259,6 +259,10 @@ WAIC       NA             NA            NA
 $pr(M|y)$  NA             NA            NA   
 
 
+![Prior Prediction](./pictures/priorPredict.pdf)
+
+
+
 ## Prediction 
 <!--
 $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2\Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
