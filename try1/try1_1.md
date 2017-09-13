@@ -206,13 +206,13 @@ $\sigma^2_{jklm\eta}$ is the stratum level residual variance. $\mu_{jklm\eta}$
 is related to a linear predictor, $\theta_{jklm\eta}$, via the mean function,
 
 <!--$$\mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})$$-->
-$$\mu_{jklm\eta} = n\frac{\exp(\theta_{jklm\eta})}{1+\exp(\theta_{jklm\eta})}.$$
+$$\mu_{jklm\eta} = n_{ijklm\eta}\frac{\exp(\theta_{jklm\eta})}{1+\exp(\theta_{jklm\eta})}.$$
 
-Here $n$ is the known cluster size for each sample. Additionally, 
+Here $n_{ijklm\eta}$ is the known cluster size for each sample. Additionally, 
 $\sigma^2_{jklm\eta}$ is related to $\mu_{jklm\eta}$ and the overdispersion 
 parameter, $\rho$, via the following equation,
 
-$$\sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n}\Big)\Big(1+(n-1)~\rho\Big).$$
+$$\sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n_{ijklm\eta}}\Big)\Big(1+(n_{ijklm\eta}-1)~\rho\Big).$$
 
 <!--https://www.healthknowledge.org.uk/public-health-textbook/research-methods/1a-epidemiology/clustered-data-->
 $\rho$ is the within cluster correlation. The situation where 
@@ -221,13 +221,16 @@ within a cluster, with maximal overdispersion relative to the binomial
 distribution. The situation where $\rho\rightarrow0$ represents totally 
 independent information content amoung replicates within a cluster, and the 
 beta-binomial model approaches the binomial model. $\rho$ explicitly models 
-overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the model 
-flexiblity at the stratum level through 
+average overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the 
+model flexiblity at the stratum level through through it's linear predictor,
 
 $$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$
 
-predictor 
-parameters, $\theta$, are then factored as follows among the many strata,
+$\theta$ is factored among the many strata by simple additive offsets for each 
+of the species, port complexes and gear groups. We consider year-quarter 
+interactions partly as a means of modeling differing seasonalities from year to 
+year, but also as a means to partially pool data amoung these time periods via 
+a heirarchical prior discussed later in Section(XX).
 
 
 
