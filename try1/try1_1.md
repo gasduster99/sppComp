@@ -206,7 +206,7 @@ $\sigma^2_{jklm\eta}$ is the stratum level residual variance. $\mu_{jklm\eta}$
 is related to a linear predictor, $\theta_{jklm\eta}$, via the mean function,
 
 <!--$$\mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})$$-->
-$$\mu_{jklm\eta} = n_{ijklm\eta}\frac{\exp(\theta_{jklm\eta})}{1+\exp(\theta_{jklm\eta})}.$$
+$$\mu_{jklm\eta} = n_{ijklm\eta}\frac{\exp(\theta_{jklm\eta})}{1+\exp(\theta_{jklm\eta})}=n~\text{expit}(\theta_{jklm\eta})=n~\text{logit}^{-1}(\theta_{jklm\eta}).$$
 
 Here $n_{ijklm\eta}$ is the known cluster size for each sample. Additionally, 
 $\sigma^2_{jklm\eta}$ is related to $\mu_{jklm\eta}$ and the overdispersion 
@@ -219,30 +219,54 @@ $\rho$ is the within cluster correlation. The situation where
 $\rho\rightarrow1$ represents identical information content amoung replicates 
 within a cluster, with maximal overdispersion relative to the binomial 
 distribution. The situation where $\rho\rightarrow0$ represents totally 
-independent information content amoung replicates within a cluster, and the 
+independent information content amoug replicates within a cluster, and the 
 beta-binomial model approaches the binomial model. $\rho$ explicitly models 
 average overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the 
 model flexiblity at the stratum level through through it's linear predictor,
 
 $$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$
 
-$\theta$ is factored among the many strata by simple additive offsets for each 
-of the species, port complexes and gear groups. We consider year-quarter 
-interactions partly as a means of modeling differing seasonalities from year to 
-year, but also as a means to partially pool data amoung these time periods via 
-a heirarchical prior discussed later in Section(XX).
+Firstly, $\theta$ includes an intercept ($\beta_0$) shared among all strata. 
+Secondly, $\theta$ is factored among the many strata by simple additive offsets 
+for each of the species ($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and 
+gear-group ($\beta^{(g)}_l$) categories. Finally, a year-quarter interaction 
+($\beta^{(y:q)}_{m\eta}$) is included to give this model the flexibility 
+to model differing seasonality from year to year. In addition to offering 
+flexibility in modeling seasonalities, the year-quarter interaction provides 
+an ideal structure for partially pooling data through time via a heirarchical 
+prior discussed later in $Section(XX)/the following section$.
 
-
-
-See proposals...
-
-* maths stuffs
-	* mean function
-	* variance; introduct $\rho$
 * justify linear predictor/transistion to priors
 
-## Heirarchical Priors
+## A Heirarchical Prior
+$$\text{logit}(\rho) \sim N(0, 2^2)$$
+$$\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)$$
+$$\beta_0 \propto 1$$
+
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
+-or-
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
+-or-
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v)$$
+
+$$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
+
+           $v_m$          $v_\eta$      $v$           
+--------- -------------  ------------- -------------- 
+MSE        NA             NA            NA       
+DIC        NA             NA            NA       
+WAIC       NA             NA            NA       
+$pr(M|y)$  NA             NA            NA   
+
+
 ## Prediction 
+<!--
+$$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2\Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
+$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$
+-->
+$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
+$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$
+
 ## Model Exploration \& Averaging
 
 # Results
@@ -307,6 +331,12 @@ overdispersion in
 -->
 <!--data talk-->
 <!--
+See proposals...
+
+* maths stuffs
+	* mean function
+	* variance; introduct $\rho$
+
 For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
 the $j^{th}$ species' weight, in the $k^{th}$ port, caught with the $l^{th}$ 
 gear, in the $\eta^{th}$ quarter, of year $m$. The $y_{ijklm\eta}$ are modeled 
