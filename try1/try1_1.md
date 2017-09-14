@@ -251,12 +251,25 @@ $$\beta^{(y:q)}_{m\eta} \sim N(0, v)$$
 
 $$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
 
+
+
+### Simple
+           $v_m$          $v_\eta$      $v$           
+--------- -------------  ------------- -------------- 
+MSE        NA             NA            NA       
+DIC        -259421.18     -262477.62    -259338.34       
+WAIC       625910.06      623015.65     623938.31     
+$pr(M|y)$  0.1956109      0.2831926     0.5211966   
+<!-- -6968.01, -6967.64, -6967.03-->
+
+### Real
            $v_m$          $v_\eta$      $v$           
 --------- -------------  ------------- -------------- 
 MSE        NA             NA            NA       
 DIC        NA             NA            NA       
 WAIC       NA             NA            NA       
 $pr(M|y)$  NA             NA            NA   
+
 
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
