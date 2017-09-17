@@ -44,7 +44,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 8 #4
+cores = 30 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -246,6 +246,48 @@ outQy = inla(weight~species + portComplex + gear + f(qGiven1985) + f(qGiven1986)
 	)
 )
 
+##try year:qtr
+#writeLines('FIXED INTERACTION MODEL\n')
+#outFI = inla(weight~species + portComplex + gear + QGivenY, 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+
+#try year + qtr
+writeLines('FIXED MODEL\n')
+outF = inla(weight~species + portComplex + gear + year + qtr, 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+
+#try f(year) + f(qtr)
+writeLines('RANDOM MODEL\n')
+outR = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+
 #
 #SAMPLE
 #
@@ -257,117 +299,117 @@ M = 10^4
 writeLines('FULL SAMPLE\n')
 postQY = inla.posterior.sample(M, outQY)
 hypeQY = sapply(postQY, function(x){x[[1]]})
+##
+#distQY = matrix(NA, nrow=M, ncol=howMany)
+#colnames(distQY) = who
+#hdiQY = list()
+##
+#boxQY = matrix(NA, nrow=howMany, ncol=10)
+#colnames(boxQY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
+#rownames(boxQY) = who
+##
+#for(w in rev(who)){
+#       	#
+#       	where = which(DAT$species==w)[1]
+#       	wSam = sapply(postQY, function(logSam){
+#       	        #
+#       	        idxStr = sprintf('Predictor:%03d', where)
+#       	        sam = inv.logit( logSam[['latent']][idxStr,] )
+#       	        #
+#       	        return( sam )
+#       	})
+#       	#
+#       	mup   = wSam
+#       	rho   = inv.logit(hypeQY)
+#       	alpha = mup*(1-rho)/rho
+#       	beta  = (1-mup)/rho
+#       	#
+#	p = rbeta(M, alpha, beta)
+#        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+#	distQY[,w] = pred
+#	#
+#	boxQY[w,1:8] = c(
+#		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
+#		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
+#	)
+#}
+#distQY = distQY/rowSums(distQY)
+#distQY = distQY[!is.na(distQY[,1]),]
+#for(w in who){
+#	boxQY[w,9:10] = c(mean(distQY[,w]), median(distQY[,w]))	
+#	spIntHDI = HDInterval:::hdi.density(density(distQY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+#	hdiQY[[w]] = matrix(spIntHDI[,], ncol=2)
+#	colnames(hdiQY[[w]]) = c('begin', 'end')
+#}
 #
-distQY = matrix(NA, nrow=M, ncol=howMany)
-colnames(distQY) = who
-hdiQY = list()
+##
+#writeLines('eta SAMPLE\n')
+#postqY = inla.posterior.sample(M, outqY)
+#hypeqY = sapply(postqY, function(x){x[[1]]})
+##
+#distqY = matrix(NA, nrow=M, ncol=howMany)
+#colnames(distqY) = who
+#hdiqY = list()
+##
+#boxqY = matrix(NA, nrow=howMany, ncol=10)
+#colnames(boxqY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
+#rownames(boxqY) = who
+##
+#for(w in rev(who)){
+#       	#
+#       	where = which(DAT$species==w)[1]
+#       	wSam = sapply(postsY, function(logSam){
+#       	        #
+#       	        idxStr = sprintf('Predictor:%03d', where)
+#       	        sam = inv.logit( logSam[['latent']][idxStr,] )
+#       	        #
+#       	        return( sam )
+#       	})
+#       	#
+#       	mup   = wSam
+#       	rho   = inv.logit(hypeqY)
+#       	alpha = mup*(1-rho)/rho
+#       	beta  = (1-mup)/rho
+#       	#
+#	p = rbeta(M, alpha, beta)
+#        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+#	distqY[,w] = pred
+#	#
+#	boxqY[w,1:8] = c(
+#		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
+#		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
+#	)
+#}
+#distqY = distqY/rowSums(distqY)
+#distqY = distqY[!is.na(distqY[,1]),]
+#for(w in who){
+#	boxqY[w,9:10] = c(mean(distqY[,w]), median(distqY[,w]))	
+#	spIntHDI = HDInterval:::hdi.density(density(distqY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+#	hdiqY[[w]] = matrix(spIntHDI[,], ncol=2)
+#	colnames(hdiqY[[w]]) = c('begin', 'end')
+#}
 #
-boxQY = matrix(NA, nrow=howMany, ncol=10)
-colnames(boxQY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
-rownames(boxQY) = who
+##
+##MSE
+##
 #
-for(w in rev(who)){
-       	#
-       	where = which(DAT$species==w)[1]
-       	wSam = sapply(postQY, function(logSam){
-       	        #
-       	        idxStr = sprintf('Predictor:%03d', where)
-       	        sam = inv.logit( logSam[['latent']][idxStr,] )
-       	        #
-       	        return( sam )
-       	})
-       	#
-       	mup   = wSam
-       	rho   = inv.logit(hypeQY)
-       	alpha = mup*(1-rho)/rho
-       	beta  = (1-mup)/rho
-       	#
-	p = rbeta(M, alpha, beta)
-        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-	distQY[,w] = pred
-	#
-	boxQY[w,1:8] = c(
-		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
-		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
-	)
-}
-distQY = distQY/rowSums(distQY)
-distQY = distQY[!is.na(distQY[,1]),]
-for(w in who){
-	boxQY[w,9:10] = c(mean(distQY[,w]), median(distQY[,w]))	
-	spIntHDI = HDInterval:::hdi.density(density(distQY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
-	hdiQY[[w]] = matrix(spIntHDI[,], ncol=2)
-	colnames(hdiQY[[w]]) = c('begin', 'end')
-}
-
-#
-writeLines('eta SAMPLE\n')
-postqY = inla.posterior.sample(M, outqY)
-hypeqY = sapply(postqY, function(x){x[[1]]})
-#
-distqY = matrix(NA, nrow=M, ncol=howMany)
-colnames(distqY) = who
-hdiqY = list()
-#
-boxqY = matrix(NA, nrow=howMany, ncol=10)
-colnames(boxqY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
-rownames(boxqY) = who
-#
-for(w in rev(who)){
-       	#
-       	where = which(DAT$species==w)[1]
-       	wSam = sapply(postsY, function(logSam){
-       	        #
-       	        idxStr = sprintf('Predictor:%03d', where)
-       	        sam = inv.logit( logSam[['latent']][idxStr,] )
-       	        #
-       	        return( sam )
-       	})
-       	#
-       	mup   = wSam
-       	rho   = inv.logit(hypeqY)
-       	alpha = mup*(1-rho)/rho
-       	beta  = (1-mup)/rho
-       	#
-	p = rbeta(M, alpha, beta)
-        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-	distqY[,w] = pred
-	#
-	boxqY[w,1:8] = c(
-		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
-		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
-	)
-}
-distqY = distqY/rowSums(distqY)
-distqY = distqY[!is.na(distqY[,1]),]
-for(w in who){
-	boxqY[w,9:10] = c(mean(distqY[,w]), median(distqY[,w]))	
-	spIntHDI = HDInterval:::hdi.density(density(distqY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
-	hdiqY[[w]] = matrix(spIntHDI[,], ncol=2)
-	colnames(hdiqY[[w]]) = c('begin', 'end')
-}
-
-#
-#MSE
-#
-
-comps = list()
-mQY = c()
-mqY = c()
-#mQy = c()
-for(i in 1:howMany){ 
-       	#
-       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
-	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
-	#
-	mQY = rbind(mQY, boxQY[i, 'pMean'])
-	mqY = rbind(mqY, boxqY[i, 'pMean'])
-	#mQy = rbind(mQy, boxQy[i, 'pMean'])
-}
-#
-mseQY = getMSE(comps, mQY)
-#mseqY = getMSE(comps, mqY)
-#mseQy = getMSE(comps, mQy)
+#comps = list()
+#mQY = c()
+#mqY = c()
+##mQy = c()
+#for(i in 1:howMany){ 
+#       	#
+#       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+#	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
+#	#
+#	mQY = rbind(mQY, boxQY[i, 'pMean'])
+#	mqY = rbind(mqY, boxqY[i, 'pMean'])
+#	#mQy = rbind(mQy, boxQy[i, 'pMean'])
+#}
+##
+#mseQY = getMSE(comps, mQY)
+##mseqY = getMSE(comps, mqY)
+##mseQy = getMSE(comps, mQy)
 
 
 
