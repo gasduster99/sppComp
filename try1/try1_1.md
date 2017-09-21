@@ -135,12 +135,12 @@ computed for each model as measures of model fit as seen in Table(1).
 
 ![Interval Plot](./pictures/compPlot.pdf)
 
-           Poisson        Binomial      NB              BB  
---------- -------------  ------------- --------------  -------------
-MSE         0.05286        0.05683      0.05188         0.05170
-DIC         5675.25        6759.86      1301.51         1261.00
-WAIC        5840.56        6939.74      1302.19         1261.30
-$pr(M|y)$   $\approx0$     $\approx0$   $<10^{-10}$     $\approx1$   
+           Poisson        Binomial      NB                 BB  
+--------- -------------  ------------- ------------------ -------------
+MSE         0.05286        0.05683      0.05188            0.05170
+DIC         5675.25        6759.86      1301.51            1261.00
+WAIC        5840.56        6939.74      1302.19            1261.30
+$pr(M|y)$   $\approx0$     $\approx0$   $\approx10^{-16}$  $\approx1$   
 					 
 <!--NB pr(M|y)=5.175555e-17-->
 
@@ -227,92 +227,193 @@ model flexiblity at the stratum level through through it's linear predictor,
 <!--$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$-->
 $$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\eta}.$$
 
-Frstly, $\theta$ includes an intercept ($\beta_0$) representing a shared mean 
-among all strata. Secondly, $\theta$ is factored among the many strata by 
-additive offsets from the grand mean for each of the species 
-($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and gear-group 
-($\beta^{(g)}_l$) categories. Finally year and quarter parameters are 
-indicated generally here inside the $\beta^{(t)}_{m\eta}$ term. Several forms 
-for $\beta^{(t)}_{m\eta}$ are explored each implying a different prior and 
-partial pooling strategy as described in the following section(XX).
+Firstly, $\theta$ includes a reference level intercept ($\beta_0$). Secondly, 
+$\theta$ is factored among the many strata by additive offsets from $\beta_0$ 
+for each of the species ($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and 
+gear-group ($\beta^{(g)}_l$) categories. Finally year and quarter parameters 
+are indicated generally here inside the $\beta^{(t)}_{m\eta}$ term. Several 
+forms for $\beta^{(t)}_{m\eta}$ are explored each implying a different prior 
+and partial pooling strategy as described in the following section(XX).
 
-<!--
-Finally, a year-quarter interaction 
-($\beta^{(y:q)}_{m\eta}$) is included to give this model the flexibility 
-to model differing seasonality from year to year. In addition to offering 
-flexibility in modeling seasonalities, the year-quarter interaction provides 
-an ideal structure for partially pooling data through time via a heirarchical 
-prior discussed later in $Section(XX)/the following section$.
--->
-<!--
-* justify linear predictor/transistion to priors
--->
+## Priors
 
-## A Heirarchical Prior
-$$\text{logit}(\rho) \sim N(0, 2^2)$$
-$$\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)$$
+To complete the bayesian formulation of this model priors are expressed in a 
+largly diffuse manner. 
+
 $$\beta_0 \propto 1$$
+$$\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)$$
 
-###M1
+Since the $\beta_0$ reference level is choosen arbitarily, no restrictions are 
+placed on the value of the intercept. The species ($\beta^{(s)}_j$), 
+port-complex ($\beta^{(p)}_k$), and gear-group ($\beta^{(g)}_l$) offests 
+are assigned diffuse normal priors. The large fixed values of the prior 
+variance hyperparameters produces behavior similar to classical fixed effect 
+models for species, port-complex, and gear-group parameters.
+
+Returning to the model on time parameters, $\beta^{(t)}_{m\eta}$, we consider
+the following models.
+
+###(M1)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, 32^2)$$
 $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 
-###M2
+(M1) represents a fixed effects model for additive year and quarter parameters. 
+
+###(M2)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, 32^2)$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+
+(M2) represents a fixed effects model for year parameters, but estimates a 
+single heirarchical variance parameter, $v^{(q)}$, among the 
+$\beta^{(q)}_{\eta}$. $v^{(q)}$ has the effect of partially pooling 
+information among the quarters, with the actual degree of pooling determined 
+from the data, through the posterior of $v^{(q)}$. 
 
 ###M3
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 
-###M4
+(M3) represents a fixed effects model for quarter parameters, but estimates a 
+single heirarchical variance parameter, $v^{(y)}$, among the 
+$\beta^{(y)}_{m}$. $v^{(y)}$ has the effect of partially pooling 
+information among years but not quarters.
+
+###(M4)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 
-###M5
+(M4) estimates two heirarchical variance parameters, $v^{(y)}$ and $v^{(q)}$.
+$v^{(y)}$ partially pools information among the $\beta^{(y)}_{m}$, and 
+separately $v^{(q)}$ partially pools information among the $\beta^{(q)}_{\eta}$. 
+
+###(M5)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v)$$
 
-###M6
-$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
-$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
-$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
-$$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
+(M5) functions similarly as (M4), in that it has heirarchical partial pooling 
+among both the $\beta^{(y)}_{m}$ and $\beta^{(q)}_{\eta}$ parameters, except 
+that it intoduces a two-way interaction term between year and quarter. This 
+interaction term allows estimates for particular quarters to differ from 
+year to year, as opposed to the previous models in which quarters 
+within a year are assumed to be identical from year to year. 
 
-###M7
+Furthermore the $\beta^{(y:q)}_{m\eta}$ is also modeled with a single 
+heirarchical variance parameter $v$ shared among all of the $m\eta$ categories. 
+Although the interaction term adds many parameters to the model, the shared 
+$v$ parameter functions to shrink extranious $\beta^{(y:q)}_{m\eta}$ estimates 
+back toward the common stratum mean. 
+
+###M6
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
 
+(M6) is largely the same as (M5), but it represents slightly less potential
+partial pooling through its heirarchical prior variances $v_\eta$ on
+$\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool
+interactions across years, within a common quarter, but since each quarter is 
+assigned a separate variance parameter no pooling is possible between quarters.
+
+<!--
+ not between
+quarters.within a common , across the quarters of that year, but since
+each year is assigned a separate variance parameter no pooling is possible
+between years.
+
+ however here interaction terms are allowed 
+to partially pool across years, within a common quarter, but not between 
+quarters. (M7) involves fitting slightly more parameters than (M6) because 
+in this setting we model more than 4 years of data, however it offers the 
+potential to decrease estimate biases if data within quarters is more similar 
+than data within years.
+-->
+
+###M7
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
+$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
+
+(M7) is largely the same as (M6), however here interaction terms are allowed 
+to partially pool interactions within a common year, across the quarters of 
+that year, but not between years. (M7) involves fitting slightly more 
+parameters than (M6) because in this setting we model more than 4 years of 
+data at once.
+
+<!--
+however it offers the potential to decrease estimate biases if 
+data across quarters of each year are more similar than data across years 
+within each quarter.
+-->
+
+<!--
+interaction terms are allowed
+to partially pool across quarters, within a common quarter, but not between
+quarters. 
+
+
+but it represents slightly less potential 
+partial pooling through its heirarchical prior variances $v_m$ on 
+$\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool 
+interactions within a common year, across the quarters of that year, but since 
+each year is assigned a separate variance parameter no pooling is possible 
+between years.
+-->
+
+
+
+<!-- but it represents even less potential for 
+partial pooling through its heirarchical prior variance on 
+$\beta^{(y:q)}_{m\eta}$, sin . 
+
+
+
 $$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
+
+$$\text{logit}(\rho) \sim N(0, 2^2)$$
+
 
 
 ### Real <!-- Random Year    Both Random   Random Plus $v$   Plus $v_m$     Plus $v_\eta$ -->            
 
-           M1             M2            M3             M4            M5            M6             M7
---------- -------------  ------------- -------------  ------------- ------------- -------------- -------------
-MSE        NA	          NA            NA             NA            NA                NA             NA             
-DIC        103182.45	  102373.85     102332.46      101743.90     101238.84     101247.95      101241.41             
-WAIC       103127.61	  102318.63     102277.24      101688.38     101172.87     101181.99      101175.44             
-$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$    2.083286e-17   5.357171e-11            
+           M1          M2                  M3                  M4                  M5            M6                 M7                
+--------- ----------- ------------------- ------------------- -------------------  ------------ ------------------ -------------------
+MSE        NA	       NA                  NA                  NA                  NA           NA                      NA            
+DIC        103182.45   102373.85           102332.46           101743.90           101238.84    101241.41           101247.95             
+WAIC       103127.61   102318.63           102277.24           101688.38           101172.87    101175.44           101181.99             
+$pr(M|y)$  $\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}$  $\approx1$   $\approx10^{-10}$   $\approx10^{-17}$ 
 
-<!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68072.43, -68057.67-->
-
-
-
+<!--$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$ 5.357171e-11 2.083286e-17-->
+<!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
 
 
+### Port Trick            
+
+           M1          M2                  M3                  M4                   M5           M6                  M7
+--------- ----------- ------------------- ------------------- -------------------  ------------ ------------------- ------------------
+MSE        NA	       NA                  NA                  NA                   NA           NA                  NA             
+DIC        NA	       103029.86           NA                  NA                   NA           NA                  NA
+WAIC       NA          102979.78           NA                  NA                   NA           NA                  NA
+$pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                  NA
 
 
+<!-- , -69088.91, , , , , -->
 
 
+$$\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}$$
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 <!--
@@ -393,11 +494,22 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\e
 
 
 
-
-
-
 <!--
-  
+Finally, a year-quarter interaction 
+($\beta^{(y:q)}_{m\eta}$) is included to give this model the flexibility 
+to model differing seasonality from year to year. In addition to offering 
+flexibility in modeling seasonalities, the year-quarter interaction provides 
+an ideal structure for partially pooling data through time via a heirarchical 
+prior discussed later in $Section(XX)/the following section$.
+-->
+<!--
+* justify linear predictor/transistion to priors
+-->
+
+
+
+
+<!--  
 The data's suggestion that species compositions are quite variable 
 it respondes to the data's suggestion that species compositions are quite 
 variable. When large variablity is confined to the exist within the unit 
