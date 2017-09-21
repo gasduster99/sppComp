@@ -365,13 +365,12 @@ $\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool
 interactions within a common year, across the quarters of that year, but since 
 each year is assigned a separate variance parameter no pooling is possible 
 between years.
--->
 
 
-
-<!-- but it represents even less potential for 
+but it represents even less potential for 
 partial pooling through its heirarchical prior variance on 
 $\beta^{(y:q)}_{m\eta}$, sin . 
+-->
 
 
 
