@@ -476,7 +476,7 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\e
 * Prediction v. Data
 	* Report predictive accuracy
 
-# Conclusions
+# Discussion
 * General Math/Science
 * Database Stuff
 * Looking Forward	
