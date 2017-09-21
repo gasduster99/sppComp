@@ -44,7 +44,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 30 #15 #8 #4
+cores = 25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -206,49 +206,96 @@ for(y in yearEff){
 #MODEL
 #
 
-#try f(year:qtr)
-writeLines('FULL MODEL\n')
-outQY = inla(weight~species + portComplex + gear + f(QGivenY), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-#try f(year:1) + f(year:2) + f(year:3) + f(year:4)
-writeLines('eta MODEL\n')
-outqY = inla(weight~species + portComplex + gear + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-#try f(1985:qtr) + f(1986:qtr) + f(1987:qtr) + f(1988:qtr) + f(1989:qtr) + f(1990:qtr)
-writeLines('m MODEL\n')
-outQy = inla(weight~species + portComplex + gear + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
+#dic, waic, mlik
 
-##try year:qtr
-#writeLines('FIXED INTERACTION MODEL\n')
-#outFI = inla(weight~species + portComplex + gear + QGivenY, 
+
+
+#try year + f(qtr)
+writeLines('RANDOM QTR MODEL\n')
+outRQ = inla(weight~species + gear + year + f(qtr), 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+outRQ = inla.hyperpar(outRQ)
+print(summary(outRQ))
+
+#try f(year) + qtr
+writeLines('RANDOM YEAR MODEL\n')
+outRY = inla(weight~species + gear + f(year) + qtr, 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+outRY = inla.hyperpar(outRY)
+print(summary(outRY))
+
+#
+writeLines('BOTH RANDOM PLUS V MODEL\n')
+outRQY = inla(weight~species + gear + f(year) + f(qtr) + f(QGivenY), 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+outRQY = inla.hyperpar(outRQY)
+print(summary(outRQY))
+
+#
+writeLines('BOTH RANDOM PLUS Vm MODEL\n')
+outRQy = inla(weight~species + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+outRQy = inla.hyperpar(outRQy)
+print(summary(outRQy))
+
+#
+writeLines('BOTH RANDOM PLUS Veta MODEL\n')
+outRqY = inla(weight~species + gear + f(year) + f(qtr) + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4),
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+outRqY = inla.hyperpar(outRqY)
+print(summary(outRqY))
+
+
+
+##try f(year:qtr)
+##weight~species + portComplex + gear + f(QGivenY): 103261.82, 103200.98, -69360.58
+#writeLines('FULL MODEL\n')
+#outQY = inla(weight~species + f(QGivenY), 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -260,45 +307,88 @@ outQy = inla(weight~species + portComplex + gear + f(qGiven1985) + f(qGiven1986)
 #	)
 #)
 
-#try year + qtr
-writeLines('FIXED MODEL\n')
-outF = inla(weight~species + portComplex + gear + year + qtr, 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
+##try f(year:1) + f(year:2) + f(year:3) + f(year:4)
+#writeLines('eta MODEL\n')
+#outqY = inla(weight~species + portComplex + gear + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4), 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
 
-#try f(year) + f(qtr)
-writeLines('RANDOM MODEL\n')
-outR = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
+##try f(1985:qtr) + f(1986:qtr) + f(1987:qtr) + f(1988:qtr) + f(1989:qtr) + f(1990:qtr)
+#writeLines('m MODEL\n')
+#outQy = inla(weight~species + portComplex + gear + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990), 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
 
-#
-#SAMPLE
-#
+###try year:qtr
+##writeLines('FIXED INTERACTION MODEL\n')
+##outFI = inla(weight~species + portComplex + gear + QGivenY, 
+##	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+##       	control.compute=list(
+##        	config=T,
+##               	waic=T,
+##               	dic=T
+##       	),
+##	control.mode = list(
+##        	restart=T
+##	)
+##)
 
-#
-M = 10^4
+##try year + qtr
+#writeLines('FIXED MODEL\n')
+#outF = inla(weight~species + portComplex + gear + year + qtr, 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
 
+##try f(year) + f(qtr)
+##weight~species + portComplex + gear + f(year) + f(qtr): 102214.97, 102164.61, -68632.82
+#writeLines('RANDOM MODEL\n')
+#outR = inla(weight~species + f(year) + f(qtr), 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+
+##
+##SAMPLE
+##
 #
-writeLines('FULL SAMPLE\n')
-postQY = inla.posterior.sample(M, outQY)
-hypeQY = sapply(postQY, function(x){x[[1]]})
+##
+#M = 10^4
+#
+##
+#writeLines('FULL SAMPLE\n')
+#postQY = inla.posterior.sample(M, outQY)
+#hypeQY = sapply(postQY, function(x){x[[1]]})
 ##
 #distQY = matrix(NA, nrow=M, ncol=howMany)
 #colnames(distQY) = who
