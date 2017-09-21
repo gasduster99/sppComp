@@ -488,6 +488,12 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\e
 		* broader spatial expansion
 
 
+# Draft 2
+* Orthodox scientific method restructure
+	* methods
+	* results
+	* discussion
+* Add MSE biase variance premonition/forshadowing
 
 
 
