@@ -224,35 +224,98 @@ beta-binomial model approaches the binomial model. $\rho$ explicitly models
 average overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the 
 model flexiblity at the stratum level through through it's linear predictor,
 
-$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$
+<!--$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$-->
+$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\eta}.$$
 
-Firstly, $\theta$ includes an intercept ($\beta_0$) shared among all strata. 
-Secondly, $\theta$ is factored among the many strata by simple additive offsets 
-for each of the species ($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and 
-gear-group ($\beta^{(g)}_l$) categories. Finally, a year-quarter interaction 
+Frstly, $\theta$ includes an intercept ($\beta_0$) representing a shared mean 
+among all strata. Secondly, $\theta$ is factored among the many strata by 
+additive offsets from the grand mean for each of the species 
+($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and gear-group 
+($\beta^{(g)}_l$) categories. Finally year and quarter parameters are 
+indicated generally here inside the $\beta^{(t)}_{m\eta}$ term. Several forms 
+for $\beta^{(t)}_{m\eta}$ are explored each implying a different prior and 
+partial pooling strategy as described in the following section(XX).
+
+<!--
+Finally, a year-quarter interaction 
 ($\beta^{(y:q)}_{m\eta}$) is included to give this model the flexibility 
 to model differing seasonality from year to year. In addition to offering 
 flexibility in modeling seasonalities, the year-quarter interaction provides 
 an ideal structure for partially pooling data through time via a heirarchical 
 prior discussed later in $Section(XX)/the following section$.
-
+-->
+<!--
 * justify linear predictor/transistion to priors
+-->
 
 ## A Heirarchical Prior
 $$\text{logit}(\rho) \sim N(0, 2^2)$$
 $$\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)$$
 $$\beta_0 \propto 1$$
 
-$$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
--or-
-$$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
--or-
+###M1
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, 32^2)$$
+$$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
+
+###M2
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, 32^2)$$
+$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+
+###M3
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
+$$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
+
+###M4
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
+$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+
+###M5
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
+$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v)$$
+
+###M6
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
+$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
+
+###M7
+$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
+$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
+$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
 
 $$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
 
 
+### Real <!-- Random Year    Both Random   Random Plus $v$   Plus $v_m$     Plus $v_\eta$ -->            
 
+           M1             M2            M3             M4            M5            M6             M7
+--------- -------------  ------------- -------------  ------------- ------------- -------------- -------------
+MSE        NA	          NA            NA             NA            NA                NA             NA             
+DIC        103182.45	  102373.85     102332.46      101743.90     101238.84     101247.95      101241.41             
+WAIC       103127.61	  102318.63     102277.24      101688.38     101172.87     101181.99      101175.44             
+$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$    2.083286e-17   5.357171e-11            
+
+<!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68072.43, -68057.67-->
+
+
+
+
+
+
+
+
+
+
+
+<!--
 ### Simple
            $v_m$          $v_\eta$      $v$           
 --------- -------------  ------------- -------------- 
@@ -260,20 +323,35 @@ MSE        NA             NA            NA
 DIC        -259421.18     -262477.62    -259338.34       
 WAIC       625910.06      623015.65     623938.31     
 $pr(M|y)$  0.1956109      0.2831926     0.5211966   
-
+-->
 <!-- -6968.01, -6967.64, -6967.03-->
 
-### Real
-           $v_m$          $v_\eta$      $v$           
---------- -------------  ------------- -------------- 
-MSE        NA             NA            NA       
-DIC        102547.81      102546.62     102540.74       
-WAIC       102481.96      102480.77     102474.90       
-$pr(M|y)$  $<10^{-18}$    $<10^{-10}$   $\approx1$
 
-<!-- -68904.18, -68887.87, -68862.01-->
+<!--
+           Fixed     	   Random       $v_m$          $v_\eta$      $v$           
+--------- -------------  ------------- -------------  ------------- -------------- 
+MSE        NA	          NA            NA             NA            NA       
+DIC        103182.45	  101743.90     102547.81      102546.62     102540.74       
+WAIC       103127.61	  101688.38     102481.96      102480.77     102474.90       
+$pr(M|y)$  $\approx0$     $\approx1$    $\approx0$     $\approx0$    $\approx0$
+
+-->
+<!-- -69074.74, -68320.26, -68904.18, -68887.87, -68862.01-->
 <!-- 4.850670e-19 5.876851e-12 1.000000e+00-->
 
+
+
+<!--
+### Simple
+                     
+--------- 
+MSE       
+DIC       
+WAIC      
+$pr(M|y)$ 
+-->
+
+<!-- -69074.74, -68320.26-->
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
