@@ -398,12 +398,12 @@ $pr(M|y)$  $\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}
            M1          M2                  M3                  M4                   M5           M6                  M7
 --------- ----------- ------------------- ------------------- -------------------  ------------ ------------------- ------------------
 MSE        NA	       NA                  NA                  NA                   NA           NA                  NA             
-DIC        NA	       103029.86           NA                  NA                   NA           NA                  NA
-WAIC       NA          102979.78           NA                  NA                   NA           NA                  NA
+DIC        NA	       103029.86           102987.13           NA                   NA           NA                  NA
+WAIC       NA          102979.78           102937.06           NA                   NA           NA                  NA
 $pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                  NA
 
 
-<!-- , -69088.91, , , , , -->
+<!-- , -69088.91, -69064.35, , , , -->
 
 
 $$\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}$$
