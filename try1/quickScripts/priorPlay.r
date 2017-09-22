@@ -210,37 +210,37 @@ for(y in yearEff){
 
 
 
-#try year + f(qtr)
-writeLines('RANDOM QTR MODEL\n')
-outRQ = inla(weight~species + gear + year + f(qtr), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-outRQ = inla.hyperpar(outRQ)
-print(summary(outRQ))
-
-#try f(year) + qtr
-writeLines('RANDOM YEAR MODEL\n')
-outRY = inla(weight~species + gear + f(year) + qtr, 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-outRY = inla.hyperpar(outRY)
-print(summary(outRY))
+##try year + f(qtr)
+#writeLines('RANDOM QTR MODEL\n')
+#outRQ = inla(weight~species + gear + year + f(qtr), 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+#outRQ = inla.hyperpar(outRQ)
+#print(summary(outRQ))
+#
+##try f(year) + qtr
+#writeLines('RANDOM YEAR MODEL\n')
+#outRY = inla(weight~species + gear + f(year) + qtr, 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+#outRY = inla.hyperpar(outRY)
+#print(summary(outRY))
 
 #
 writeLines('BOTH RANDOM PLUS V MODEL\n')
