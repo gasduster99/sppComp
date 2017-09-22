@@ -243,15 +243,16 @@ largly diffuse manner.
 $$\beta_0 \propto 1$$
 $$\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)$$
 
-Since the $\beta_0$ reference level is choosen arbitarily, no restrictions are 
-placed on the value of the intercept. The species ($\beta^{(s)}_j$), 
-port-complex ($\beta^{(p)}_k$), and gear-group ($\beta^{(g)}_l$) offests 
-are assigned diffuse normal priors. The large fixed values of the prior 
-variance hyperparameters produces behavior similar to classical fixed effect 
-models for species, port-complex, and gear-group parameters.
+Since the $\beta_0$ reference level is choosen arbitarily, with no conception 
+of which values it may take, no restrictions are placed on the value of the 
+intercept. The species ($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and 
+gear-group ($\beta^{(g)}_l$) offests are assigned diffuse normal priors. The 
+large fixed values of the prior variance hyperparameters produce behavior 
+similar to classical fixed effect models for species, port-complex, and gear-
+group parameters.
 
-Returning to the model on time parameters, $\beta^{(t)}_{m\eta}$, we consider
-the following models.
+Returning to the time parameter model, $\beta^{(t)}_{m\eta}$, we consider
+the following forms.
 
 ###(M1)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -266,10 +267,10 @@ $$\beta^{(y)}_{m} \sim N(0, 32^2)$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 
 (M2) represents a fixed effects model for year parameters, but estimates a 
-single heirarchical variance parameter, $v^{(q)}$, among the 
+single heirarchical variance parameter, $v^{(q)}$, shared among the 
 $\beta^{(q)}_{\eta}$. $v^{(q)}$ has the effect of partially pooling 
-information among the quarters, with the actual degree of pooling determined 
-from the data, through the posterior of $v^{(q)}$. 
+information among all quarters. The actual degree of pooling is determined 
+from the data, through the way it shapes the $v^{(q)}$ posterior. 
 
 ###M3
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -277,7 +278,7 @@ $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 
 (M3) represents a fixed effects model for quarter parameters, but estimates a 
-single heirarchical variance parameter, $v^{(y)}$, among the 
+single heirarchical variance parameter, $v^{(y)}$, shared among the 
 $\beta^{(y)}_{m}$. $v^{(y)}$ has the effect of partially pooling 
 information among years but not quarters.
 
@@ -304,7 +305,7 @@ year to year, as opposed to the previous models in which quarters
 within a year are assumed to be identical from year to year. 
 
 Furthermore the $\beta^{(y:q)}_{m\eta}$ is also modeled with a single 
-heirarchical variance parameter $v$ shared among all of the $m\eta$ categories. 
+heirarchical variance parameter, $v$, shared among all of the $m\eta$ categories. 
 Although the interaction term adds many parameters to the model, the shared 
 $v$ parameter functions to shrink extranious $\beta^{(y:q)}_{m\eta}$ estimates 
 back toward the common stratum mean. 
@@ -316,7 +317,7 @@ $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
 
 (M6) is largely the same as (M5), but it represents slightly less potential
-partial pooling through its heirarchical prior variances $v_\eta$ on
+partial pooling through its heirarchical prior variances, $v_\eta$, on
 $\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool
 interactions across years, within a common quarter, but since each quarter is 
 assigned a separate variance parameter no pooling is possible between quarters.
@@ -341,7 +342,7 @@ $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
 
-(M7) is largely the same as (M6), however here interaction terms are allowed 
+(M7) follows the same idea as (M6), however here interaction terms are allowed 
 to partially pool interactions within a common year, across the quarters of 
 that year, but not between years. (M7) involves fitting slightly more 
 parameters than (M6) because in this setting we model more than 4 years of 
@@ -372,12 +373,40 @@ partial pooling through its heirarchical prior variance on
 $\beta^{(y:q)}_{m\eta}$, sin . 
 -->
 
+Heirarchical variance parameters are estimated from the data. As the above 
+models learn the posteriors of the hierarchical variance parameters, it effects 
+the degree of shrinkage as well as the effective number of parameters held 
+within the respective heirarchies (Gelman, 2014). To achieve this, each 
+variance parameter must itself be assigned a prior to be estimated. For all of 
+the heirarchical variance parameters included in the above models $v$ is 
+assigned a diffuse and heavy tailed $v \sim IG(1,~2\times10^{3})$ prior.
+ 
+Finally the overdispersion parameter, $\rho$, is first logit transformed to 
+have values spanning the entire real number line and assigned the prior 
+$\text{logit}(\rho) \sim N(0, 2^2)$. The $N(0, 2^2)$ prior is indeed a 
+symmetric, and far reaching, prior when back transformed to the unit interval. 
+To notice this, it is helpful to realize that the central 95% inverval for a 
+$N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety of the domain 
+when back transformed to exist in the unit interval (i.e. $0.5\pm0.48$).
 
+<!--0.01948392 0.98055003--> 
+
+<!--
+$$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$.  
+
+the model applies to 
+stratum contained within each heriarchy
+ depending on 
+the posteriors of these variance parameters the each model learns  stratum contained within each heriarchy maybe
+
+Any and all heirarchical variance 
+parameters are estimated from the data and thus distributed 
 
 $$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
-
+-->
+<!--
 $$\text{logit}(\rho) \sim N(0, 2^2)$$
-
+-->
 
 
 ### Real <!-- Random Year    Both Random   Random Plus $v$   Plus $v_m$     Plus $v_\eta$ -->            

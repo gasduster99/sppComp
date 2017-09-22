@@ -44,7 +44,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 25 #15 #8 #4
+cores = 30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -243,20 +243,36 @@ for(y in yearEff){
 #print(summary(outRY))
 
 #
-writeLines('BOTH RANDOM PLUS V MODEL\n')
-outRQY = inla(weight~species + gear + f(year) + f(qtr) + f(QGivenY), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
+writeLines('BOTH RANDOM MODEL\n')
+outRQRY = inla(weight~species + gear + f(year) + f(qtr), 
+       Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+               control.compute=list(
+               config=T,
+                       waic=T,
+                       dic=T
+               ),
+       control.mode = list(
+               restart=T
+       )
 )
-outRQY = inla.hyperpar(outRQY)
-print(summary(outRQY))
+outRQRY = inla.hyperpar(outRQRY)
+print(summary(outRQRY))
+
+##
+#writeLines('BOTH RANDOM PLUS V MODEL\n')
+#outRQY = inla(weight~species + gear + f(year) + f(qtr) + f(QGivenY), 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+#outRQY = inla.hyperpar(outRQY)
+#print(summary(outRQY))
 
 #
 writeLines('BOTH RANDOM PLUS Vm MODEL\n')
