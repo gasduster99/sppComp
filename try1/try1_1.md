@@ -103,8 +103,8 @@ Both models are typically specificed with a single degree of freedom for
 modeling all of the moments of the data, and thus they rely heavily on their 
 respective data generating processes to accuratly represent higher moments in 
 the data. McCullagh and Nelder (1989, pg. 124) commiserate about the 
-prevalence of over-dispersed data in cluster sampling, and explain the 
-numerious ways in which cluster sampling may result in over-dispersion.
+prevalence of over-dispersed data in cluster sampling, and explain ways in 
+which cluster sampling itself may result in over-dispersion.
 
 Extending the Poisson and binomial models to deal with over-dispersion, 
 typically involves adding additional parameters for the purpose of modeling 
@@ -251,8 +251,31 @@ large fixed values of the prior variance hyperparameters produce behavior
 similar to classical fixed effect models for species, port-complex, and gear-
 group parameters.
 
-Returning to the time parameter model, $\beta^{(t)}_{m\eta}$, we consider
-the following forms.
+In returning to the time parameter model, $\beta^{(t)}_{m\eta}$, it is useful 
+to consider how the inclusion of predictively superfluous parameters may cause 
+overfitting and weaken model performance. This principle is the basis for 
+modern model selection criteria (cite/Janyes?). As a simple example consider 
+the structure of the MSE metric for evaluating a predictor, 
+$\hat \theta$, with respect to some true parameter $\theta$,
+
+$$\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}$$
+
+Including additional model parameters is a great way to decrease model bias, 
+however it is appearent from the structure of the MSE that decreasing model 
+bias alone is not a good way of arriving at a well performing model. Models 
+with good MSEs jointly minimize the bias of their parameter estimates, in 
+addition to estimation uncertainty of their parameters. 
+
+A model can mimimize biase, without reguard for estimation uncertainty, 
+by including one model parameter to be fit to each observation. These 
+parameter estimates are totally unbiased, however such a model is also 
+predictively usless since each estimated parameter is bound to their 
+respective observations, and thus such a model has no information for which to 
+base predictions on future data.
+
+For modeling $\beta^{(t)}_{m\eta}$ we consider a spectrum of models which span 
+a wide range of possible number of parameters and several different predictive 
+structures as seen below.
 
 ###(M1)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -260,6 +283,7 @@ $$\beta^{(y)}_{m} \sim N(0, 32^2)$$
 $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 
 (M1) represents a fixed effects model for additive year and quarter parameters. 
+Here each year and quarter receive totally independent and diffuse priors. 
 
 ###(M2)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -270,7 +294,7 @@ $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 single heirarchical variance parameter, $v^{(q)}$, shared among the 
 $\beta^{(q)}_{\eta}$. $v^{(q)}$ has the effect of partially pooling 
 information among all quarters. The actual degree of pooling is determined 
-from the data, through the way it shapes the $v^{(q)}$ posterior. 
+from the data, through the way the data shapes the $v^{(q)}$ posterior. 
 
 ###M3
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -389,24 +413,6 @@ To notice this, it is helpful to realize that the central 95% inverval for a
 $N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety of the domain 
 when back transformed to exist in the unit interval (i.e. $0.5\pm0.48$).
 
-<!--0.01948392 0.98055003--> 
-
-<!--
-$$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$.  
-
-the model applies to 
-stratum contained within each heriarchy
- depending on 
-the posteriors of these variance parameters the each model learns  stratum contained within each heriarchy maybe
-
-Any and all heirarchical variance 
-parameters are estimated from the data and thus distributed 
-
-$$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
--->
-<!--
-$$\text{logit}(\rho) \sim N(0, 2^2)$$
--->
 
 
 ### Real <!-- Random Year    Both Random   Random Plus $v$   Plus $v_m$     Plus $v_\eta$ -->            
@@ -422,79 +428,48 @@ $pr(M|y)$  $\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}
 <!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
 
 
-### Port Trick            
+### Port Trick - TWL
 
            M1          M2                  M3                  M4                   M5           M6                  M7
 --------- ----------- ------------------- ------------------- -------------------  ------------ ------------------- ------------------
 MSE        NA	       NA                  NA                  NA                   NA           NA                  NA             
-DIC        NA	       103029.86           102987.13           NA                   NA           NA                  NA
-WAIC       NA          102979.78           102937.06           NA                   NA           NA                  NA
+DIC        -649216.99  NA                  NA                  NA                   NA           NA                  NA
+WAIC       686481.53   NA                  NA                  NA                   NA           NA                  NA
 $pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                  NA
 
-
-<!-- , -69088.91, -69064.35, , , , -->
-
-
-$$\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}$$
- 
- 
- 
- 
- 
- 
-
-
-<!--
-### Simple
-           $v_m$          $v_\eta$      $v$           
---------- -------------  ------------- -------------- 
-MSE        NA             NA            NA       
-DIC        -259421.18     -262477.62    -259338.34       
-WAIC       625910.06      623015.65     623938.31     
-$pr(M|y)$  0.1956109      0.2831926     0.5211966   
--->
-<!-- -6968.01, -6967.64, -6967.03-->
-
-
-<!--
-           Fixed     	   Random       $v_m$          $v_\eta$      $v$           
---------- -------------  ------------- -------------  ------------- -------------- 
-MSE        NA	          NA            NA             NA            NA       
-DIC        103182.45	  101743.90     102547.81      102546.62     102540.74       
-WAIC       103127.61	  101688.38     102481.96      102480.77     102474.90       
-$pr(M|y)$  $\approx0$     $\approx1$    $\approx0$     $\approx0$    $\approx0$
-
--->
-<!-- -69074.74, -68320.26, -68904.18, -68887.87, -68862.01-->
-<!-- 4.850670e-19 5.876851e-12 1.000000e+00-->
+<!-- -34834.60, , , , , , --> 
 
 
 
-<!--
-### Simple
-                     
---------- 
-MSE       
-DIC       
-WAIC      
-$pr(M|y)$ 
--->
-
-<!-- -69074.74, -68320.26-->
+* Interpret chart and pick a model
+* consider prior prediction to transition into prediction stuff
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
 
 
-## Prediction 
+## Species Composition
 <!--
 $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2\Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$
 -->
+
+* how to calculate species compositions from model
+	* prediction
+	* full sampled distributions
+	* species composition transformation
+
+
 $$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$
 
 ## Model Exploration \& Averaging
+
+* how to deal with ports
+	* model uncertainty around port
+	* bell number for exploration
+	* constrained exploration
+	* bayesian model averaging
 
 # Results
 * General Products
@@ -527,6 +502,24 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\e
 
 
 
+<!--0.01948392 0.98055003--> 
+
+<!--
+$$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$.  
+
+the model applies to 
+stratum contained within each heriarchy
+ depending on 
+the posteriors of these variance parameters the each model learns  stratum contained within each heriarchy maybe
+
+Any and all heirarchical variance 
+parameters are estimated from the data and thus distributed 
+
+$$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$
+-->
+<!--
+$$\text{logit}(\rho) \sim N(0, 2^2)$$
+-->
 
 <!--
 Finally, a year-quarter interaction 
