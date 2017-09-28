@@ -44,7 +44,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 30 #48 #25 #15 #8 #4
+cores = 10 #25 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -77,11 +77,12 @@ sppEff  = unique(dat$species)
 ##subset data
 mct = '250'
 #plc = 'MNT'
-#ger = 'TWL'
+ger = 'TWL'
 #yer = '1990'
 ##zero data
 #D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger,]
 #D = dat[dat$mcat==mct & dat$portComplex==plc & dat$gear==ger,]
+#D = dat[dat$mcat==mct & dat$gear==ger,]
 D = dat[dat$mcat==mct,]
 end = length(D$id)
 #for(id in unique(D$id)){
@@ -128,48 +129,48 @@ mcOut = mclapply( luid, FUN = function(vid){
 }, mc.cores=cores)
 mcOut = do.call(rbind, mcOut)
 D = rbind(D, mcOut)
-##UNOBSERVED DATA
-#fill = 100 #prediction size for unobserves strata
-##mcOut = mclapply( qtrEff, FUN = function(q){	
-#mcOut = mclapply( portEff, FUN = function(p){
-#	add = numeric(0)
-#	#for(p in portEff){
-#	for(g in gearEff){
-#	for(q in qtrEff ){
-#	for(y in yearEff){
-#	for(s in sppEff ){
-#		wJoint = which(
-#	        	D$portComplex==p       	&
-#	        	D$gear==g       	&
-#	        	D$year==y		&
-#	        #wJoint = which(
-#	                D$qtr==q		&
-#	                D$species==s
-#	        )
-#	        #
-#	        if( length(wJoint)==0 ){
-#			#
-#			addd = matrix(NA, ncol=10, nrow=1)
-#	                colnames(addd) = c('id', 'species', 'year', 'qtr', 'portComplex', 'gear', 'mcat', 'isLive', 'weight', 'clustSize')
-#			#
-#	                addd[,'id'] = NA
-#	                addd[,'species'] = s
-#	                addd[,'year'] = y #yer
-#	                addd[,'qtr']  = q
-#	                addd[,'portComplex'] = p #plc
-#	                addd[,'gear'] = g #ger
-#	                addd[,'mcat'] = mct
-#	                addd[,'isLive'] = 'N'
-#	                addd[,'weight'] = NA
-#	                addd[,'clustSize'] = fill
-#			#
-#	                add = rbind(add, addd)
-#	        }
-#	}}}}#}
-#	return( add )
-#}, mc.cores=cores)
-#mcOut = do.call(rbind, mcOut)
-#D = rbind(D, mcOut)
+#UNOBSERVED DATA
+fill = 100 #prediction size for unobserves strata
+#mcOut = mclapply( qtrEff, FUN = function(q){	
+mcOut = mclapply( portEff, FUN = function(p){
+	add = numeric(0)
+	#for(p in portEff){
+	for(g in gearEff){
+	for(q in qtrEff ){
+	for(y in yearEff){
+	for(s in sppEff ){
+		wJoint = which(
+	        	D$portComplex==p       	&
+	        	D$gear==g       	&
+	        	D$year==y		&
+	        #wJoint = which(
+	                D$qtr==q		&
+	                D$species==s
+	        )
+	        #
+	        if( length(wJoint)==0 ){
+			#
+			addd = matrix(NA, ncol=10, nrow=1)
+	                colnames(addd) = c('id', 'species', 'year', 'qtr', 'portComplex', 'gear', 'mcat', 'isLive', 'weight', 'clustSize')
+			#
+	                addd[,'id'] = NA
+	                addd[,'species'] = s
+	                addd[,'year'] = y #yer
+	                addd[,'qtr']  = q
+	                addd[,'portComplex'] = p #plc
+	                addd[,'gear'] = g #ger
+	                addd[,'mcat'] = mct
+	                addd[,'isLive'] = 'N'
+	                addd[,'weight'] = NA
+	                addd[,'clustSize'] = fill
+			#
+	                add = rbind(add, addd)
+	        }
+	}}}}#}
+	return( add )
+}, mc.cores=cores)
+mcOut = do.call(rbind, mcOut)
+D = rbind(D, mcOut)
 
 #
 bp = boxplot(as.numeric(D$weight)~D$species, plot=F)
@@ -208,11 +209,25 @@ for(y in yearEff){
 
 #dic, waic, mlik
 
-
+#try year + qtr
+writeLines('FIXED MODEL\n')
+out = inla(weight~species + portComplex + gear + year + qtr, 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+out = inla.hyperpar(out)
+print(summary(out))
 
 ##try year + f(qtr)
 #writeLines('RANDOM QTR MODEL\n')
-#outRQ = inla(weight~species + gear + year + f(qtr), 
+#outRQ = inla(weight~species + portComplex + gear + year + f(qtr), 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -228,7 +243,7 @@ for(y in yearEff){
 #
 ##try f(year) + qtr
 #writeLines('RANDOM YEAR MODEL\n')
-#outRY = inla(weight~species + gear + f(year) + qtr, 
+#outRY = inla(weight~species + portComplex + gear + f(year) + qtr, 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -241,28 +256,65 @@ for(y in yearEff){
 #)
 #outRY = inla.hyperpar(outRY)
 #print(summary(outRY))
-
 #
-writeLines('BOTH RANDOM MODEL\n')
-outRQRY = inla(weight~species + gear + f(year) + f(qtr), 
-       Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-               control.compute=list(
-               config=T,
-                       waic=T,
-                       dic=T
-               ),
-       control.mode = list(
-               restart=T
-       )
-)
-outRQRY = inla.hyperpar(outRQRY)
-print(summary(outRQRY))
-
+##
+#writeLines('BOTH RANDOM MODEL\n')
+#outRQRY = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
+#       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#	#control.inla=list(
+#	#	strategy='gaussian',
+#        #        int.strategy='eb',
+#        #        tolerance=1e-10,
+#        #        h=1e-10,
+#        #        lincomb.derived.only=F
+#	#),
+#	control.compute=list(
+#        	config=T,
+#                waic=T,
+#                dic=T
+#       	),
+#       	control.mode = list(
+#               restart=T
+#       	)
+#)
+#outRQRY = inla.hyperpar(outRQRY)
+#print(summary(outRQRY))
+#
 ##
 #writeLines('BOTH RANDOM PLUS V MODEL\n')
-#outRQY = inla(weight~species + gear + f(year) + f(qtr) + f(QGivenY), 
+#outRQY = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
+#       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#	#control.inla=list(
+#	#	 strategy='gaussian',
+#        #        int.strategy='eb',
+#        #        tolerance=1e-10,
+#        #        h=1e-10,
+#        #        lincomb.derived.only=F
+#	#),
+#	control.compute=list(
+#        	config=T,
+#                waic=T,
+#                dic=T
+#       	),
+#       	control.mode = list(
+#               restart=T
+#       	)
+#)
+#outRQY = inla.hyperpar(outRQY)
+#print(summary(outRQY))
+#
+##
+#writeLines('BOTH RANDOM PLUS Vm MODEL\n')
+#outRQy = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-#       	control.compute=list(
+#       	#control.inla=list(
+#        #        strategy='gaussian',
+#        #        int.strategy='eb',
+#        #        tolerance=1e-10,
+#        #        h=1e-10,
+#        #        lincomb.derived.only=F
+#        #),
+#	control.compute=list(
 #        	config=T,
 #               	waic=T,
 #               	dic=T
@@ -271,40 +323,182 @@ print(summary(outRQRY))
 #        	restart=T
 #	)
 #)
-#outRQY = inla.hyperpar(outRQY)
-#print(summary(outRQY))
+#outRQy = inla.hyperpar(outRQy)
+#print(summary(outRQy))
+#
+##
+#writeLines('BOTH RANDOM PLUS Veta MODEL\n')
+#outRqY = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4),
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#	#control.inla=list(
+#        #        strategy='gaussian',
+#        #        int.strategy='eb',
+#        #        tolerance=1e-10,
+#        #        h=1e-10,
+#        #        lincomb.derived.only=F
+#        #),
+#	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+#outRqY = inla.hyperpar(outRqY)
+#print(summary(outRqY))
 
 #
-writeLines('BOTH RANDOM PLUS Vm MODEL\n')
-outRQy = inla(weight~species + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-outRQy = inla.hyperpar(outRQy)
-print(summary(outRQy))
+#SAMPLE
+#
 
 #
-writeLines('BOTH RANDOM PLUS Veta MODEL\n')
-outRqY = inla(weight~species + gear + f(year) + f(qtr) + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4),
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-outRqY = inla.hyperpar(outRqY)
-print(summary(outRqY))
+M = 10^4
+
+#
+writeLines('SAMPLE\n')
+postQY = inla.posterior.sample(M, out)
+hypeQY = sapply(postQY, function(x){x[[1]]})
+#
+distQY = matrix(NA, nrow=M, ncol=howMany)
+colnames(distQY) = who
+#hdiQY = list()
+##
+#boxQY = matrix(NA, nrow=howMany, ncol=10)
+#colnames(boxQY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
+#rownames(boxQY) = who
+##
+for(w in rev(who)){
+       	#
+       	where = which(DAT$species==w)[1]
+       	wSam = sapply(postQY, function(logSam){
+       	        #
+       	        idxStr = sprintf('Predictor:%03d', where)
+       	        sam = inv.logit( logSam[['latent']][idxStr,] )
+       	        #
+       	        return( sam )
+       	})
+       	#
+       	mup   = wSam
+       	rho   = inv.logit(hypeQY)
+       	alpha = mup*(1-rho)/rho
+       	beta  = (1-mup)/rho
+       	#
+	p = rbeta(M, alpha, beta)
+        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+	distQY[,w] = pred
+	##
+	#boxQY[w,1:8] = c(
+	#	mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
+	#	mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
+	#)
+}
+distQY = distQY/rowSums(distQY)
+distQY = distQY[!is.na(distQY[,1]),]
+#for(w in who){
+#	boxQY[w,9:10] = c(mean(distQY[,w]), median(distQY[,w]))	
+#	spIntHDI = HDInterval:::hdi.density(density(distQY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+#	hdiQY[[w]] = matrix(spIntHDI[,], ncol=2)
+#	colnames(hdiQY[[w]]) = c('begin', 'end')
+#}
+
+#
+#MSE
+#
+
+comps = list()
+mQY = c()
+#mqY = c()
+#mQy = c()
+for(i in 1:howMany){ 
+       	#
+       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
+	#
+	mQY = rbind(mQY, mean(distQY[,i]))
+	#mqY = rbind(mqY, boxqY[i, 'pMean'])
+	#mQy = rbind(mQy, boxQy[i, 'pMean'])
+}
+#
+mseQY = getMSE(comps, mQY)
+#mseqY = getMSE(comps, mqY)
+#mseQy = getMSE(comps, mQy)
+
+
+
+##
+#writeLines('eta SAMPLE\n')
+#postqY = inla.posterior.sample(M, outqY)
+#hypeqY = sapply(postqY, function(x){x[[1]]})
+##
+#distqY = matrix(NA, nrow=M, ncol=howMany)
+#colnames(distqY) = who
+#hdiqY = list()
+##
+#boxqY = matrix(NA, nrow=howMany, ncol=10)
+#colnames(boxqY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
+#rownames(boxqY) = who
+##
+#for(w in rev(who)){
+#       	#
+#       	where = which(DAT$species==w)[1]
+#       	wSam = sapply(postsY, function(logSam){
+#       	        #
+#       	        idxStr = sprintf('Predictor:%03d', where)
+#       	        sam = inv.logit( logSam[['latent']][idxStr,] )
+#       	        #
+#       	        return( sam )
+#       	})
+#       	#
+#       	mup   = wSam
+#       	rho   = inv.logit(hypeqY)
+#       	alpha = mup*(1-rho)/rho
+#       	beta  = (1-mup)/rho
+#       	#
+#	p = rbeta(M, alpha, beta)
+#        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+#	distqY[,w] = pred
+#	#
+#	boxqY[w,1:8] = c(
+#		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
+#		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
+#	)
+#}
+#distqY = distqY/rowSums(distqY)
+#distqY = distqY[!is.na(distqY[,1]),]
+#for(w in who){
+#	boxqY[w,9:10] = c(mean(distqY[,w]), median(distqY[,w]))	
+#	spIntHDI = HDInterval:::hdi.density(density(distqY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+#	hdiqY[[w]] = matrix(spIntHDI[,], ncol=2)
+#	colnames(hdiqY[[w]]) = c('begin', 'end')
+#}
+#
+##
+##MSE
+##
+#
+#comps = list()
+#mQY = c()
+#mqY = c()
+##mQy = c()
+#for(i in 1:howMany){ 
+#       	#
+#       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+#	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
+#	#
+#	mQY = rbind(mQY, boxQY[i, 'pMean'])
+#	mqY = rbind(mqY, boxqY[i, 'pMean'])
+#	#mQy = rbind(mQy, boxQy[i, 'pMean'])
+#}
+##
+#mseQY = getMSE(comps, mQY)
+##mseqY = getMSE(comps, mqY)
+##mseQy = getMSE(comps, mQy)
+
+
+
+
 
 
 
@@ -393,135 +587,6 @@ print(summary(outRqY))
 #        	restart=T
 #	)
 #)
-
-##
-##SAMPLE
-##
-#
-##
-#M = 10^4
-#
-##
-#writeLines('FULL SAMPLE\n')
-#postQY = inla.posterior.sample(M, outQY)
-#hypeQY = sapply(postQY, function(x){x[[1]]})
-##
-#distQY = matrix(NA, nrow=M, ncol=howMany)
-#colnames(distQY) = who
-#hdiQY = list()
-##
-#boxQY = matrix(NA, nrow=howMany, ncol=10)
-#colnames(boxQY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
-#rownames(boxQY) = who
-##
-#for(w in rev(who)){
-#       	#
-#       	where = which(DAT$species==w)[1]
-#       	wSam = sapply(postQY, function(logSam){
-#       	        #
-#       	        idxStr = sprintf('Predictor:%03d', where)
-#       	        sam = inv.logit( logSam[['latent']][idxStr,] )
-#       	        #
-#       	        return( sam )
-#       	})
-#       	#
-#       	mup   = wSam
-#       	rho   = inv.logit(hypeQY)
-#       	alpha = mup*(1-rho)/rho
-#       	beta  = (1-mup)/rho
-#       	#
-#	p = rbeta(M, alpha, beta)
-#        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-#	distQY[,w] = pred
-#	#
-#	boxQY[w,1:8] = c(
-#		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
-#		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
-#	)
-#}
-#distQY = distQY/rowSums(distQY)
-#distQY = distQY[!is.na(distQY[,1]),]
-#for(w in who){
-#	boxQY[w,9:10] = c(mean(distQY[,w]), median(distQY[,w]))	
-#	spIntHDI = HDInterval:::hdi.density(density(distQY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
-#	hdiQY[[w]] = matrix(spIntHDI[,], ncol=2)
-#	colnames(hdiQY[[w]]) = c('begin', 'end')
-#}
-#
-##
-#writeLines('eta SAMPLE\n')
-#postqY = inla.posterior.sample(M, outqY)
-#hypeqY = sapply(postqY, function(x){x[[1]]})
-##
-#distqY = matrix(NA, nrow=M, ncol=howMany)
-#colnames(distqY) = who
-#hdiqY = list()
-##
-#boxqY = matrix(NA, nrow=howMany, ncol=10)
-#colnames(boxqY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
-#rownames(boxqY) = who
-##
-#for(w in rev(who)){
-#       	#
-#       	where = which(DAT$species==w)[1]
-#       	wSam = sapply(postsY, function(logSam){
-#       	        #
-#       	        idxStr = sprintf('Predictor:%03d', where)
-#       	        sam = inv.logit( logSam[['latent']][idxStr,] )
-#       	        #
-#       	        return( sam )
-#       	})
-#       	#
-#       	mup   = wSam
-#       	rho   = inv.logit(hypeqY)
-#       	alpha = mup*(1-rho)/rho
-#       	beta  = (1-mup)/rho
-#       	#
-#	p = rbeta(M, alpha, beta)
-#        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-#	distqY[,w] = pred
-#	#
-#	boxqY[w,1:8] = c(
-#		mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
-#		mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
-#	)
-#}
-#distqY = distqY/rowSums(distqY)
-#distqY = distqY[!is.na(distqY[,1]),]
-#for(w in who){
-#	boxqY[w,9:10] = c(mean(distqY[,w]), median(distqY[,w]))	
-#	spIntHDI = HDInterval:::hdi.density(density(distqY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
-#	hdiqY[[w]] = matrix(spIntHDI[,], ncol=2)
-#	colnames(hdiqY[[w]]) = c('begin', 'end')
-#}
-#
-##
-##MSE
-##
-#
-#comps = list()
-#mQY = c()
-#mqY = c()
-##mQy = c()
-#for(i in 1:howMany){ 
-#       	#
-#       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
-#	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
-#	#
-#	mQY = rbind(mQY, boxQY[i, 'pMean'])
-#	mqY = rbind(mqY, boxqY[i, 'pMean'])
-#	#mQy = rbind(mQy, boxQy[i, 'pMean'])
-#}
-##
-#mseQY = getMSE(comps, mQY)
-##mseqY = getMSE(comps, mqY)
-##mseQy = getMSE(comps, mQy)
-
-
-
-
-
-
 
 ##1261.00, 1261.30, -650.49
 #bbOut = inla(weight~species, data=DAT, family='betabinomial', Ntrials=DAT$clustSize, num.threads=cores,

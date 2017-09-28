@@ -372,31 +372,6 @@ that year, but not between years. (M7) involves fitting slightly more
 parameters than (M6) because in this setting we model more than 4 years of 
 data at once.
 
-<!--
-however it offers the potential to decrease estimate biases if 
-data across quarters of each year are more similar than data across years 
-within each quarter.
--->
-
-<!--
-interaction terms are allowed
-to partially pool across quarters, within a common quarter, but not between
-quarters. 
-
-
-but it represents slightly less potential 
-partial pooling through its heirarchical prior variances $v_m$ on 
-$\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool 
-interactions within a common year, across the quarters of that year, but since 
-each year is assigned a separate variance parameter no pooling is possible 
-between years.
-
-
-but it represents even less potential for 
-partial pooling through its heirarchical prior variance on 
-$\beta^{(y:q)}_{m\eta}$, sin . 
--->
-
 Heirarchical variance parameters are estimated from the data. As the above 
 models learn the posteriors of the hierarchical variance parameters, it effects 
 the degree of shrinkage as well as the effective number of parameters held 
@@ -415,9 +390,9 @@ when back transformed to exist in the unit interval (i.e. $0.5\pm0.48$).
 
 
 
-### Real <!-- Random Year    Both Random   Random Plus $v$   Plus $v_m$     Plus $v_\eta$ -->            
+<!--      Both Fixed  Random Qtr          Random Year         Both Random          Random Plus $v$    Plus $v_m$   Plus $v_\eta$ -->            
 
-           M1          M2                  M3                  M4                  M5            M6                 M7                
+           M1          M2                  M3                  M4                   M5           M6                 M7                
 --------- ----------- ------------------- ------------------- -------------------  ------------ ------------------ -------------------
 MSE        NA	       NA                  NA                  NA                  NA           NA                      NA            
 DIC        103182.45   102373.85           102332.46           101743.90           101238.84    101241.41           101247.95             
@@ -427,32 +402,42 @@ $pr(M|y)$  $\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}
 <!--$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$ 5.357171e-11 2.083286e-17-->
 <!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
 
+Table(XX) displays the relative support for the model structure on the 
+$\beta^{(t)}_{m\eta}$ time parameters. From M1 to M4 the models represent a 
+spectrum of models which decrease in the possible number of implied parameters. 
+Models M5, M6, and M7 represent models which build in complexity, from M4, via the 
+inclusion of heirarchical interaction terms.
 
-### Port Trick - TWL
+From M1 to M4 all model selection criterion consistently support the 
+inclusion of heirarchical main effects on both year and quarter parmeters. 
+As various model forms for interaction term are added in M5, M6, and M7 the 
+data seem to support prior structures which involve the potential for a higher 
+degree of partial pooling while still supporting the inclusion of year-quarter 
+interactions. All moddel selection criterion agree that M5 shows the highest 
+degree of support. Presumably M5 strikes a balance between maximal potential for 
+heirarchical pooling, while still maintaing the ability to model differences in 
+seasonality from year to year.
 
-           M1          M2                  M3                  M4                   M5           M6                  M7
---------- ----------- ------------------- ------------------- -------------------  ------------ ------------------- ------------------
-MSE        NA	       NA                  NA                  NA                   NA           NA                  NA             
-DIC        -649216.99  -649153.95          -648895.47          NA                   NA           NA                  NA
-WAIC       686481.53   696181.06           709841.59           NA                   NA           NA                  NA
-$pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                  NA
-
-<!-- -34834.60, -34823.29, -34804.38, , , , --> 
-
-
-
-* Interpret chart and pick a model
-* consider prior prediction to transition into prediction stuff
+As a final check of the model structure and the implied prior information the 
+prior predictive is considered. The prior predictive distribution summarizes 
+the information is intrinsic to the model structure itself, in the absense 
+of data. The prior predictive of modeled weight is considered over the nominal 
+100 pound cluster as described in the the sampling protocal (cite). 
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
+As seen in Figure(XX) the prior predictive of M5 is both symmetric and quite 
+diffuse over the 100 pound domain. The U shape of the distribution is a side 
+effect of the diffusion of the selected prior. As data are added to the model 
+the indecisive U shape of this distribution collapses toward the data. 
 
-
-## Species Composition
+## Species Composition Prediction
 <!--
 $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2\Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$
 -->
+
+
 
 * how to calculate species compositions from model
 	* prediction
@@ -500,6 +485,46 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\e
 
 
 
+
+<!--
+### Port Trick - TWL
+
+           M1          M2                  M3                  M4                   M5           M6                  M7
+--------- ----------- ------------------- ------------------- -------------------  ------------ ------------------- ------------------
+MSE        NA	       NA                  NA                  NA                   NA           NA                  NA             
+DIC        -649216.99  -649153.95          -648895.47          NA                   NA           NA                  NA
+WAIC       686481.53   696181.06           709841.59           NA                   NA           NA                  NA
+$pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                  NA
+
+-->
+<!-- -34834.60, -34823.29, -34804.38, , , , --> 
+
+
+
+<!--
+however it offers the potential to decrease estimate biases if 
+data across quarters of each year are more similar than data across years 
+within each quarter.
+-->
+
+<!--
+interaction terms are allowed
+to partially pool across quarters, within a common quarter, but not between
+quarters. 
+
+
+but it represents slightly less potential 
+partial pooling through its heirarchical prior variances $v_m$ on 
+$\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool 
+interactions within a common year, across the quarters of that year, but since 
+each year is assigned a separate variance parameter no pooling is possible 
+between years.
+
+
+but it represents even less potential for 
+partial pooling through its heirarchical prior variance on 
+$\beta^{(y:q)}_{m\eta}$, sin . 
+-->
 
 
 <!--0.01948392 0.98055003--> 
