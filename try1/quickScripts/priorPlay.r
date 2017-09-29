@@ -209,25 +209,9 @@ for(y in yearEff){
 
 #dic, waic, mlik
 
-#try year + qtr
-writeLines('FIXED MODEL\n')
-out = inla(weight~species + portComplex + gear + year + qtr, 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-out = inla.hyperpar(out)
-print(summary(out))
-
-##try year + f(qtr)
-#writeLines('RANDOM QTR MODEL\n')
-#outRQ = inla(weight~species + portComplex + gear + year + f(qtr), 
+##try year + qtr
+#writeLines('FIXED MODEL\n')
+#out = inla(weight~species + portComplex + gear + year + qtr, 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -238,9 +222,25 @@ print(summary(out))
 #        	restart=T
 #	)
 #)
-#outRQ = inla.hyperpar(outRQ)
-#print(summary(outRQ))
-#
+#out = inla.hyperpar(out)
+#print(summary(out))
+
+#try year + f(qtr)
+writeLines('RANDOM QTR MODEL\n')
+out = inla(weight~species + portComplex + gear + year + f(qtr), 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+outRQ = inla.hyperpar(outRQ)
+print(summary(outRQ))
+
 ##try f(year) + qtr
 #writeLines('RANDOM YEAR MODEL\n')
 #outRY = inla(weight~species + portComplex + gear + f(year) + qtr, 
@@ -360,21 +360,22 @@ M = 10^4
 writeLines('SAMPLE\n')
 postQY = inla.posterior.sample(M, out)
 hypeQY = sapply(postQY, function(x){x[[1]]})
-#
-distQY = matrix(NA, nrow=M, ncol=howMany)
-colnames(distQY) = who
+##
+#distQY = matrix(NA, nrow=M, ncol=howMany)
+#colnames(distQY) = who
 #hdiQY = list()
 ##
 #boxQY = matrix(NA, nrow=howMany, ncol=10)
 #colnames(boxQY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
 #rownames(boxQY) = who
 ##
-for(w in rev(who)){
+##for(w in rev(who)){
+distQY = mclapply( rev(who), FUN = function(w){
        	#
        	where = which(DAT$species==w)[1]
-       	wSam = sapply(postQY, function(logSam){
+       	wSam  = sapply(postQY, function(logSam){
        	        #
-       	        idxStr = sprintf('Predictor:%03d', where)
+       	        idxStr = sprintf('Predictor:%06d', where)
        	        sam = inv.logit( logSam[['latent']][idxStr,] )
        	        #
        	        return( sam )
@@ -387,13 +388,17 @@ for(w in rev(who)){
        	#
 	p = rbeta(M, alpha, beta)
         pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-	distQY[,w] = pred
+	#distQY[,w] = pred
 	##
 	#boxQY[w,1:8] = c(
 	#	mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
 	#	mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
 	#)
-}
+#}
+	return( pred )
+}, mc.cores=cores)
+distQY = do.call(cbind, distQY)
+#
 distQY = distQY/rowSums(distQY)
 distQY = distQY[!is.na(distQY[,1]),]
 #for(w in who){
