@@ -437,16 +437,46 @@ $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\m
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$
 -->
 
+Estimating model M5 in a fully Bayesain way gives access to the full posterior 
+distribution of all of the parameters of the model. It is useful to emphasise 
+that in the Bayesain setting these parameters are themselves full 
+distributions, and they are typically handeled as a large number of samples 
+from the joint posterior distribution of the parameters. Once the posterior 
+sampling is complete, this simplifies parameter mean and variance estimation 
+since the required moments are simply obtainted by computing the desired 
+moments from the posterior samples. Additionally the fact that the parameters 
+are full distributions, means that any functions which contain, or are derived 
+from, parameters are themselves random variables with the function 
+representing a random variable transformation.
 
+<!--Model M5 is a model on sampled weight; -->
+To obtain predicted species compositions from this model, first consider the 
+posterior predictive distribition of sampled weight for a particular stratum.
 
-* how to calculate species compositions from model
-	* prediction
-	* full sampled distributions
-	* species composition transformation
+$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}.$$
 
+Here BB is the data generating beta-binomial distribution and 
+$P(\mu_{jklm\eta}, \sigma^2_{jklm\eta}|y)$ is the posterior distribution of the 
+parameters given the observed data. Integration of the parameters, 
+$\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$, is done by monte carlo integration 
+to obtain samples of the $p(y^*_{jklm\eta}|y)$ predictive distribution for 
+sampled weights in the $jklm\eta^th$ stratum. 
 
-$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
-$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$
+Obtaining predictive species compositions from predictive weights amounts to 
+computing the following transformation,
+
+$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.$$ 
+
+Here $\pi^*_{jklm\eta}$ is the models representation of the observation level 
+species composition for species $j$ in the $k^{th}$ port, caught with the 
+$l^{th}$ gear, in the $\eta^{th}$ quarter, of year $m$. 
+<!--
+The constraint 
+$y^*_{klm\eta}\neq 0$ is added to exclude the predictive situations where no 
+sampling occurs in a stratum. In these predictive situations predictions are 
+not capable of providing species composition information, and the stratum is 
+simply resampled.
+-->
 
 ## Model Exploration \& Averaging
 
@@ -485,6 +515,21 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\e
 
 
 
+
+
+
+<!--
+* how to calculate species compositions from model
+	* prediction
+	* full sampled distributions
+	* species composition transformation
+
+
+$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
+$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$
+
+
+-->
 
 <!--
 ### Port Trick - TWL

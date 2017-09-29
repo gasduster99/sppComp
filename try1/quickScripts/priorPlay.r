@@ -44,7 +44,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 10 #25 #30 #48 #25 #15 #8 #4
+cores = 25 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -427,6 +427,7 @@ for(i in 1:howMany){
 }
 #
 mseQY = getMSE(comps, mQY)
+writeLines(sprintf('MSE: %f\n', mseQY))
 #mseqY = getMSE(comps, mqY)
 #mseQy = getMSE(comps, mQy)
 
