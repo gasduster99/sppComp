@@ -394,13 +394,13 @@ when back transformed to exist in the unit interval (i.e. $0.5\pm0.48$).
 
            M1          M2                  M3                  M4                   M5           M6                 M7                
 --------- ----------- ------------------- ------------------- -------------------  ------------ ------------------ -------------------
-MSE        0.0083986   NA                  NA                  NA                  NA           NA                  NA            
-DIC        103182.45   102373.85           102332.46           101743.90           101238.84    101241.41           101247.95             
-WAIC       103127.61   102318.63           102277.24           101688.38           101172.87    101175.44           101181.99             
-$pr(M|y)$  $\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}$  $\approx1$   $\approx10^{-10}$   $\approx10^{-17}$ 
+MSE        NA          NA                  NA                  NA                   NA           NA                 NA                  <!--0.008399    0.008524            0.008391            0.008443            NA           NA                  NA           --> 
+DIC        NA          NA                  NA                  NA                   NA           NA                 NA                  <!--103182.45   102373.85           102332.46           101743.90            101238.84    101241.41          101247.95    -->         
+WAIC       NA          NA                  NA                  NA                   NA           NA                 NA                  <!--103127.61   102318.63           102277.24           101688.38            101172.87    101175.44          101181.99    --> 
+$pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                 NA                  <!--$\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}$   $\approx1$   $\approx10^{-10}$  $\approx10^{-17}$--> 
 
-<!--$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$ 5.357171e-11 2.083286e-17-->
-<!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
+<!--mlik , , , , , , -->                        <!--$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$ 5.357171e-11 2.083286e-17-->
+<!--prob , , , , , , -->                        <!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
 
 Table(XX) displays the relative support for the model structure on the 
 $\beta^{(t)}_{m\eta}$ time parameters. From M1 to M4 the models represent a 
@@ -455,12 +455,12 @@ posterior predictive distribition of sampled weight for a particular stratum.
 
 $$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}.$$
 
-Here BB is the data generating beta-binomial distribution and 
-$P(\mu_{jklm\eta}, \sigma^2_{jklm\eta}|y)$ is the posterior distribution of the 
-parameters given the observed data. Integration of the parameters, 
-$\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$, is done by monte carlo integration 
-to obtain samples of the $p(y^*_{jklm\eta}|y)$ predictive distribution for 
-sampled weights in the $jklm\eta^th$ stratum. 
+Here BB is the data generating beta-binomial distribution for a predictive 
+observation and $P(\mu_{jklm\eta}, \sigma^2_{jklm\eta}|y)$ is the posterior 
+distribution of the parameters given the observed data. Integration of the 
+parameters, $\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$, is done by monte carlo 
+integration to obtain samples from the predictive distribution, 
+$p(y^*_{jklm\eta}|y)$, for sampled weights in the $jklm\eta^th$ stratum. 
 
 Obtaining predictive species compositions from predictive weights amounts to 
 computing the following transformation,
@@ -479,6 +479,38 @@ simply resampled.
 -->
 
 ## Model Exploration \& Averaging
+
+Despite efforts to pool data through time via the heirarchical priors described 
+in section (XX), port sampling data still remains sparce.
+
+Presently, stratum with deminishingly small within stratum sample sizes are 
+managed by an ad-hoc "borrowing" protocol, outlined in Pearson and Erwin 
+(1997). Their protocol for pooling data across port complexes only calls for 
+spatial pooling to fill holes brought about by unsampled sampled strata. 
+Naturally such a protocol introduces a biase which depends on the availiabilty 
+of data and thus makes comparisions between periods of pooled and unpooled 
+data inconsistent.
+
+Given the degree of sparcity in these data it is certainly possible that 
+models pooling data between port complexes may offer predictive benefits, 
+however port complex pooling schemes should minimize any inconsistency brought 
+about by the pooling scheme itself. 
+
+To achieve consistency in pooling schemes, the protocol for pooling   
+
+
+consider 
+We aim to formalize the fundamental model uncertainty around port complex, while 
+enjoying any possible predictive benefits from the exploration of data pooling 
+across port complex boundaries.
+
+Rather than only considering spacially pooled models when data become 
+prohibitively sparce, we open that possibility that pooling may benefit
+
+
+In the absence of Citation employes exploring pooling 
+options in space  are extrordinarily sparce. 
+
 
 * how to deal with ports
 	* model uncertainty around port
