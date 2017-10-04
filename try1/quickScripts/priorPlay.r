@@ -44,20 +44,21 @@ getMSE = function(data, means){
 #
 
 #
-cores = 25 #30 #48 #25 #15 #8 #4
+cores = 20 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
 #
 
 #dat = read.table('1985_trwl_mcat250.csv', header=T, sep=',')
-Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
-colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
+#Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
+Dat = read.table('data1983To1990.csv', header=T, sep=',', stringsAsFactors=F)
+#colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
 #aggregate categories
-dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gear, Dat$mcat, Dat$isLive), by=list(Dat$id, Dat$species), FUN=unique )
+dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gearGroup, Dat$marketCategory, Dat$live), by=list(Dat$sampleNumber, Dat$species), FUN=unique )
 colnames(dat) = c('id', 'species', 'year', 'qtr', 'portComplex', 'gear', 'mcat', 'isLive')
 #aggregate add weights such that there is one weight per species per sample (aggregate cluster samples)
-dat = cbind(dat, aggregate(data.frame(Dat$weight), by=list(Dat$id, Dat$species), FUN=sum)[,3])
+dat = cbind(dat, aggregate(data.frame(Dat$weight), by=list(Dat$sampleNumber, Dat$species), FUN=sum)[,3])
 colnames(dat)[9] = 'weight'
 #preallocate for cluster size
 dat = cbind( dat, rep(NA, dim(dat)[1]) )
@@ -180,7 +181,7 @@ off = 0.5
 howMany = length(sppEff) #6 # 7
 all = bp$names[o]
 who = head(bp$names[o], howMany)
-DAT = D[D$species%in%who, c('weight', 'species', 'portComplex', 'gear', 'year', 'qtr', 'clustSize')]
+DAT = D[D$species%in%who, c('id', 'weight', 'species', 'portComplex', 'gear', 'year', 'qtr', 'clustSize')]
 DAT$weight = as.numeric(DAT$weight)
 DAT$clustSize = as.numeric(DAT$clustSize)
 #build qtr|year & year|qtr
@@ -209,9 +210,25 @@ for(y in yearEff){
 
 #dic, waic, mlik
 
-##try year + qtr
-#writeLines('FIXED MODEL\n')
-#out = inla(weight~species + portComplex + gear + year + qtr, 
+#try year + qtr
+writeLines('FIXED MODEL')
+out = inla(weight~species + portComplex + gear + year + qtr, 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+out = inla.hyperpar(out)
+print(summary(out))
+
+##try year + f(qtr)
+#writeLines('RANDOM QTR MODEL')
+#out = inla(weight~species + portComplex + gear + year + f(qtr), 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -225,25 +242,9 @@ for(y in yearEff){
 #out = inla.hyperpar(out)
 #print(summary(out))
 
-#try year + f(qtr)
-writeLines('RANDOM QTR MODEL\n')
-out = inla(weight~species + portComplex + gear + year + f(qtr), 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-outRQ = inla.hyperpar(outRQ)
-print(summary(outRQ))
-
 ##try f(year) + qtr
-#writeLines('RANDOM YEAR MODEL\n')
-#outRY = inla(weight~species + portComplex + gear + f(year) + qtr, 
+#writeLines('RANDOM YEAR MODEL')
+#out = inla(weight~species + portComplex + gear + f(year) + qtr, 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -254,12 +255,12 @@ print(summary(outRQ))
 #        	restart=T
 #	)
 #)
-#outRY = inla.hyperpar(outRY)
-#print(summary(outRY))
-#
+#out = inla.hyperpar(out)
+#print(summary(out))
+
 ##
-#writeLines('BOTH RANDOM MODEL\n')
-#outRQRY = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
+#writeLines('BOTH RANDOM MODEL')
+#out = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
 #       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #	#control.inla=list(
 #	#	strategy='gaussian',
@@ -277,12 +278,12 @@ print(summary(outRQ))
 #               restart=T
 #       	)
 #)
-#outRQRY = inla.hyperpar(outRQRY)
-#print(summary(outRQRY))
-#
+#out = inla.hyperpar(out)
+#print(summary(out))
+
 ##
-#writeLines('BOTH RANDOM PLUS V MODEL\n')
-#outRQY = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
+#writeLines('BOTH RANDOM PLUS V MODEL')
+#out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
 #       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #	#control.inla=list(
 #	#	 strategy='gaussian',
@@ -300,12 +301,12 @@ print(summary(outRQ))
 #               restart=T
 #       	)
 #)
-#outRQY = inla.hyperpar(outRQY)
-#print(summary(outRQY))
-#
+#out = inla.hyperpar(out)
+#print(summary(out))
+
 ##
-#writeLines('BOTH RANDOM PLUS Vm MODEL\n')
-#outRQy = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
+#writeLines('BOTH RANDOM PLUS Vm MODEL')
+#out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	#control.inla=list(
 #        #        strategy='gaussian',
@@ -323,12 +324,12 @@ print(summary(outRQ))
 #        	restart=T
 #	)
 #)
-#outRQy = inla.hyperpar(outRQy)
-#print(summary(outRQy))
+#out = inla.hyperpar(out)
+#print(summary(out))
 #
 ##
-#writeLines('BOTH RANDOM PLUS Veta MODEL\n')
-#outRqY = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4),
+#writeLines('BOTH RANDOM PLUS Veta MODEL')
+#out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4),
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #	#control.inla=list(
 #        #        strategy='gaussian',
@@ -346,8 +347,8 @@ print(summary(outRQ))
 #        	restart=T
 #	)
 #)
-#outRqY = inla.hyperpar(outRqY)
-#print(summary(outRqY))
+#out = inla.hyperpar(out)
+#print(summary(out))
 
 #
 #SAMPLE
@@ -360,76 +361,202 @@ M = 10^4
 writeLines('SAMPLE\n')
 postQY = inla.posterior.sample(M, out)
 hypeQY = sapply(postQY, function(x){x[[1]]})
-##
-#distQY = matrix(NA, nrow=M, ncol=howMany)
-#colnames(distQY) = who
+rho    = inv.logit(hypeQY)
+#
+distQY = matrix(NA, nrow=M, ncol=howMany)
+colnames(distQY) = who
 #hdiQY = list()
-##
+#
 #boxQY = matrix(NA, nrow=howMany, ncol=10)
 #colnames(boxQY) = c('mean', 'median', 'lower', 'upper', 'mMean', 'mMedian', 'mLower', 'mUpper', 'pMean', 'pMedian')
 #rownames(boxQY) = who
 ##
-##for(w in rev(who)){
-distQY = mclapply( rev(who), FUN = function(w){
-       	#
-       	where = which(DAT$species==w)[1]
-       	wSam  = sapply(postQY, function(logSam){
-       	        #
-       	        idxStr = sprintf('Predictor:%06d', where)
-       	        sam = inv.logit( logSam[['latent']][idxStr,] )
-       	        #
-       	        return( sam )
-       	})
-       	#
-       	mup   = wSam
-       	rho   = inv.logit(hypeQY)
-       	alpha = mup*(1-rho)/rho
-       	beta  = (1-mup)/rho
-       	#
-	p = rbeta(M, alpha, beta)
-        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-	#distQY[,w] = pred
-	##
-	#boxQY[w,1:8] = c(
-	#	mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
-	#	mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
-	#)
-#}
-	return( pred )
-}, mc.cores=cores)
-distQY = do.call(cbind, distQY)
-#
-distQY = distQY/rowSums(distQY)
-distQY = distQY[!is.na(distQY[,1]),]
-#for(w in who){
-#	boxQY[w,9:10] = c(mean(distQY[,w]), median(distQY[,w]))	
-#	spIntHDI = HDInterval:::hdi.density(density(distQY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
-#	hdiQY[[w]] = matrix(spIntHDI[,], ncol=2)
-#	colnames(hdiQY[[w]]) = c('begin', 'end')
-#}
-
-#
-#MSE
 #
 
-comps = list()
-mQY = c()
-#mqY = c()
-#mQy = c()
-for(i in 1:howMany){ 
-       	#
-       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
-	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
-	#
-	mQY = rbind(mQY, mean(distQY[,i]))
-	#mqY = rbind(mqY, boxqY[i, 'pMean'])
-	#mQy = rbind(mQy, boxQy[i, 'pMean'])
+writeLines('MSE')
+
+#registerDoParallel(cores=length(portEff))
+#preds = foreach( p=portEff )%dopar%{
+preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric())
+for(p in portEff){
+        ##
+        #end  = 1 
+        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric()) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
+        ##
+        for(g in gearEff){#[1]){
+        for(q in qtrEff ){#[1] ){
+        for(y in yearEff){#[1]){
+                #observations
+		W = DAT[DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y,]
+                #avoid the case where no data exists
+                if( dim(W)[1]>0 ){
+			#cluster info
+			#aggregate(W$weight, by=list(W$sampleNumber, W$clusterNumber)
+                        clustSize = aggregate(W$weight, by=list(W$id), FUN=sum)
+                        #colnames(clustSize) = c('sampleNumber', 'clusterNumber', 'size')
+                        colnames(clustSize) = c('sampleNumber', 'size')
+			#predictive distribution samples by species in the p, g, q, y stratum
+			distQY = matrix(NA, nrow=M, ncol=howMany)
+			colnames(distQY) = who
+			#make predictive distributions
+			for(w in rev(who)){
+			        #
+			        where = which( 
+					DAT$portComplex==p 	& 
+					DAT$gear==g 		& 
+					DAT$qtr==q 		& 
+					DAT$year==y 		& 
+					DAT$species==w
+				)[1]
+			        mup   = sapply(postQY, function(logSam){
+			                #
+			                idxStr = sprintf('Predictor:%06d', where)
+			                sam = inv.logit( logSam[['latent']][idxStr,] )
+			                #
+			                return( sam )
+			        })
+			        #mup   = wSam 
+			        alpha = mup*(1-rho)/rho
+			        beta  = (1-mup)/rho
+			        #
+			        p = rbeta(M, alpha, beta)
+			        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+			        distQY[,w] = pred
+			}
+			distQY = distQY/rowSums(distQY)
+			distQY = distQY[!is.na(distQY[,1]),]
+			predM  = colMeans(distQY) 
+                        #
+                        for(s in rev(who)){
+                                #print(s)
+                                #spIntHDI = hdi(sp[,s], credMass=prob)  
+                                #spIntHDI = hdi(density(sp[,s], from=0, to=1), credMass=prob, allowSplit=T)
+                                #spIntHDI = HDInterval:::hdi.density(bkde(sp[,s], range.x=c(0,1), canonical=T), credMass=prob, allowSplit=T)
+                                #spIntCI = t(quantile(sp[,s], c((1-prob)/2, prob+(1-prob)/2)))
+                                #
+                                #lpIntHDI = HDInterval:::hdi.density(bkde(lp[,s], range.x=c(0,max(lp[,s])), canonical=T), credMass=prob, allowSplit=T)
+                                #lpIntHDI = hdi(density(lp[,s], from=0, to=max(lp[,s])), credMass=prob, allowSplit=T)
+                                #lpIntCI = t(quantile(lp[,s], c((1-prob)/2, prob+(1-prob)/2)))
+                                #
+                                WS = W[W$species==s,]
+                                #print( gridSize )
+                                if( dim(WS)[1]>0 ){
+                                        #make comps
+                                        cp = c()
+                                        #wp = c()
+                                        for(sam in WS$sampleNumber){
+						cp = c(cp, WS[WS$sampleNumber==sam, 'weight']/clustSize[clustSize$sampleNumber==sam,'size'])
+                                                #for(clust in WS[WS$sampleNumber==sam, 'clusterNumber']){
+                                                #               cp = c(cp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight']/clustSize[clustSize$sampleNumber==sam & clustSize$clusterNumber==clust,'size'])
+                                                #               wp = c(wp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight'])
+                                                #       }
+                                        }
+                                       	#
+					mSqErr = mean( (cp-predM[s])^2 )
+					##spHDI
+                                        #inOut = rep(0, length(cp))    #check if in interval, convert to proper bool, and unite with other intervals
+                                        #for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(cp, spIntHDI[i,])==1 | inOut }
+                                        #cpHdiMean = mean(inOut)
+                                        ##
+                                        ##spCI
+                                        #inOut = rep(0, length(cp))   #check if in interval, convert to proper bool, and unite with other intervals
+                                        #for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(cp, spIntCI[i,])==1 | inOut }
+                                        #cpCiMean = mean(inOut)
+                                        ##
+                                        ##lpHDI
+                                        #inOut = rep(0, length(wp))    #check if in interval, convert to proper bool, and unite with other intervals
+                                        #for(i in 1:dim(lpIntHDI)[1]){ inOut=findInterval(wp, lpIntHDI[i,])==1 | inOut }
+                                        #wpHdiMean = mean(inOut)
+                                        ##wpHdiMean = 0
+                                        ###
+                                        ##lpCI
+                                        #inOut = rep(0, length(wp))    #check if in interval, convert to proper bool, and unite with other intervals
+                                        #for(i in 1:dim(lpIntCI)[1]){ inOut=findInterval(wp, lpIntCI[i,])==1 | inOut }
+                                        #wpCiMean = mean(inOut)
+                                        ##
+                                        pred[end,] = c(p, g, q, y, s, mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
+                                        end = end+1
+                                }
+                        }
+                }
+        }}}
+        #return(pred)
 }
+##
+#preds = do.call(rbind, preds)
+#preds$mse = as.numeric(preds$mse)
+#preds$n   = as.numeric(preds$n)
+##
+mse = sum(preds$mse*preds$n)/sum(preds$n)
+writeLines(sprintf('MSE: %1.7f\n', mseQY))
+
+
+
+##for(p in portEff){
+##for(g in gearEff){
+##for(q in qtrEff ){
+##for(y in yearEff){
+#for(w in rev(who)){
+##distQY = mclapply( rev(who), FUN = function(w){
+#       	#
+#       	where = which(DAT$species==w)[1]
+#       	wSam  = sapply(postQY, function(logSam){
+#       	        #
+#       	        idxStr = sprintf('Predictor:%06d', where)
+#       	        sam = inv.logit( logSam[['latent']][idxStr,] )
+#       	        #
+#       	        return( sam )
+#       	})
+#       	#
+#       	mup   = wSam
+#       	rho   = inv.logit(hypeQY)
+#       	alpha = mup*(1-rho)/rho
+#       	beta  = (1-mup)/rho
+#       	#
+#	p = rbeta(M, alpha, beta)
+#        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+#	distQY[,w] = pred
+#	##
+#	#boxQY[w,1:8] = c(
+#	#	mean(pred), median(pred), quantile(pred, 0.025), quantile(pred, 0.975),
+#	#	mean(wSam), median(wSam), quantile(wSam, 0.025), quantile(pred, 0.975)
+#	#)
+#}
+##	return( pred )
+##}, mc.cores=cores)
+##distQY = do.call(cbind, distQY)
+##
+#distQY = distQY/rowSums(distQY)
+#distQY = distQY[!is.na(distQY[,1]),]
+##for(w in who){
+##	boxQY[w,9:10] = c(mean(distQY[,w]), median(distQY[,w]))	
+##	spIntHDI = HDInterval:::hdi.density(density(distQY[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+##	hdiQY[[w]] = matrix(spIntHDI[,], ncol=2)
+##	colnames(hdiQY[[w]]) = c('begin', 'end')
+##}
 #
-mseQY = getMSE(comps, mQY)
-writeLines(sprintf('MSE: %f\n', mseQY))
-#mseqY = getMSE(comps, mqY)
-#mseQy = getMSE(comps, mQy)
+##
+##MSE
+##
+#
+#comps = list()
+#mQY = c()
+##mqY = c()
+##mQy = c()
+#for(i in 1:howMany){ 
+#       	#
+#       	comps[[i]] = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+#	comps[[i]] = comps[[i]][!is.na(comps[[i]])]
+#	#
+#	mQY = rbind(mQY, mean(distQY[,i]))
+#	#mqY = rbind(mqY, boxqY[i, 'pMean'])
+#	#mQy = rbind(mQy, boxQy[i, 'pMean'])
+#}
+##
+#mseQY = getMSE(comps, mQY)
+#writeLines(sprintf('MSE: %f\n', mseQY))
+##mseqY = getMSE(comps, mqY)
+##mseQy = getMSE(comps, mQy)
 
 
 
