@@ -1,0 +1,10 @@
+#!/bin/sh
+ 
+#PBS -l nodes=7:ppn=20,walltime=48:00:00:00
+#PBS -N priorPlay.r
+ 
+cd ${PBS_O_WORKDIR}
+
+Rscript ${PBS_JOBNAME}
+ 
+exit 0;

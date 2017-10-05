@@ -210,25 +210,9 @@ for(y in yearEff){
 
 #dic, waic, mlik
 
-#try year + qtr
-writeLines('FIXED MODEL')
-out = inla(weight~species + portComplex + gear + year + qtr, 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-out = inla.hyperpar(out)
-print(summary(out))
-
-##try year + f(qtr)
-#writeLines('RANDOM QTR MODEL')
-#out = inla(weight~species + portComplex + gear + year + f(qtr), 
+##try year + qtr
+#writeLines('FIXED MODEL')
+#out = inla(weight~species + portComplex + gear + year + qtr, 
 #	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 #       	control.compute=list(
 #        	config=T,
@@ -241,6 +225,22 @@ print(summary(out))
 #)
 #out = inla.hyperpar(out)
 #print(summary(out))
+
+#try year + f(qtr)
+writeLines('RANDOM QTR MODEL')
+out = inla(weight~species + portComplex + gear + year + f(qtr), 
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+out = inla.hyperpar(out)
+print(summary(out))
 
 ##try f(year) + qtr
 #writeLines('RANDOM YEAR MODEL')

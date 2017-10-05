@@ -210,21 +210,21 @@ for(y in yearEff){
 
 #dic, waic, mlik
 
-#try year + qtr
-writeLines('FIXED MODEL')
-out = inla(weight~species + portComplex + gear + year + qtr, 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-out = inla.hyperpar(out)
-print(summary(out))
+##try year + qtr
+#writeLines('FIXED MODEL')
+#out = inla(weight~species + portComplex + gear + year + qtr, 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+#out = inla.hyperpar(out)
+#print(summary(out))
 
 ##try year + f(qtr)
 #writeLines('RANDOM QTR MODEL')
@@ -304,29 +304,29 @@ print(summary(out))
 #out = inla.hyperpar(out)
 #print(summary(out))
 
-##
-#writeLines('BOTH RANDOM PLUS Vm MODEL')
-#out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
-#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-#       	#control.inla=list(
-#        #        strategy='gaussian',
-#        #        int.strategy='eb',
-#        #        tolerance=1e-10,
-#        #        h=1e-10,
-#        #        lincomb.derived.only=F
-#        #),
-#	control.compute=list(
-#        	config=T,
-#               	waic=T,
-#               	dic=T
-#       	),
-#	control.mode = list(
-#        	restart=T
-#	)
-#)
-#out = inla.hyperpar(out)
-#print(summary(out))
 #
+writeLines('BOTH RANDOM PLUS Vm MODEL')
+out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(qGiven1985) + f(qGiven1986) + f(qGiven1987) + f(qGiven1988) + f(qGiven1989) + f(qGiven1990),
+	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+       	#control.inla=list(
+        #        strategy='gaussian',
+        #        int.strategy='eb',
+        #        tolerance=1e-10,
+        #        h=1e-10,
+        #        lincomb.derived.only=F
+        #),
+	control.compute=list(
+        	config=T,
+               	waic=T,
+               	dic=T
+       	),
+	control.mode = list(
+        	restart=T
+	)
+)
+out = inla.hyperpar(out)
+print(summary(out))
+
 ##
 #writeLines('BOTH RANDOM PLUS Veta MODEL')
 #out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(yGiven1) + f(yGiven2) + f(yGiven3) + f(yGiven4),
