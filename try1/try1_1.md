@@ -483,19 +483,123 @@ simply resampled.
 Despite efforts to pool data through time via the heirarchical priors described 
 in section (XX), port sampling data still remains sparce.
 
-Presently, stratum with deminishingly small within stratum sample sizes are 
-managed by an ad-hoc "borrowing" protocol, outlined in Pearson and Erwin 
-(1997). Their protocol for pooling data across port complexes only calls for 
-spatial pooling to fill holes brought about by unsampled sampled strata. 
-Naturally such a protocol introduces a biase which depends on the availiabilty 
-of data and thus makes comparisions between periods of pooled and unpooled 
-data inconsistent.
+Presently, stratum with deminishingly small sample sizes are managed by an ad-
+hoc "borrowing" protocol, outlined in Pearson and Erwin (1997). Their protocol 
+for pooling data across port complexes only calls for spatial pooling to fill 
+holes brought about by unsampled strata. Naturally such a protocol introduces 
+a biase which depends on the availiabilty of data in each stratum and thus 
+makes comparisions between periods with pooled and unpooled data inconsistent 
+with eah other. Furthermore, the current ad-hoc "borrowing" protocol makes it 
+difficult to know exactly when "borrowing" has occured.  
 
 Given the degree of sparcity in these data it is certainly possible that 
 models pooling data between port complexes may offer predictive benefits, 
 however port complex pooling schemes should minimize any inconsistency brought 
 about by the pooling scheme itself. 
 
+To formalize the idea of port pooling we only consider pooling strategies 
+which remain consistent within the modeled period and explicitely outline 
+state-wide pooling strategies, rather than protocols that change from stratum 
+to stratum. That is to say, for a particular market category and modeling time 
+period, port pooling is defined as some partion of the set of port complexes in 
+california. This formulation does not make it clear which ports should be 
+pooled together in the partitioning of the state, however this formulation does 
+acheive consistency amoung port pooling within market categories and modeled time 
+periods, while providiving a mathematical structure for considering the space 
+of possible pooled models.  
+
+The space of possible pooled models is well defined in terms of the size of
+the set of items to be partitioned, $K$, as described by the Bell numbers
+($B_K$),
+
+$$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\hat k -j} \left(\substack{\hat k \\ j}\right) j^K \right).$$
+
+In this setting the set of items to be partitioned is the set of port 
+complexes in California, of which there are $K=10$, implying a grad total of 
+XXXXX ways of partitioning the port complex in California in each market 
+category and modeled time period. The brute force model selection strategy of 
+computing all XXXXX of these partitionings strategies is computationally 
+infeasible. However, maybe not all pooling schemes represent biologically 
+relevant models. For example, perhaps it is reasonable to pool only among 
+adjacent ports, or to assert that biologically similar regions can only extend 
+across a small number of ports (if so, how many
+?).
+
+
+<!--
+The most straight-forward solution in the presence of this type of model
+uncertainty is to compute all $B_K$ possible pooling schemes.
+However, maybe not all pooling schemes represent biologically relevant models.
+For example, perhaps it is reasonable to pool only among adjacent ports, or to
+assert that biologically similar regions can only extend across a small number
+of ports (if so, how many?).
+-->
+
+
+<!--
+The straight-forward spatial model implied by the categorical port complex 
+variables do not adequatly resolve in-sample prediction at the observed 
+sample sizes. 
+Presently these deminishingly small within stratum sample sizes are managed 
+by an ad-hoc "borrowing" protocol outlined by Pearson and Erwin (1997).
+We aim to formalize this "borrowing" idea via an exhaustive search of spatially 
+pooled models, combined with the formalized process of Bayesian Model 
+Averaging (BMA) to appropriatly integrate port-complex pooling model 
+uncertainty into species composition estimates (Hoeting et al. , 1999).
+
+
+The space of possible pooled models is well defined in terms of the size of 
+the set of items to be partitioned, $K$, as described by the Bell numbers 
+($B_K$), 
+$$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\hat k -j} \left(\substack{\hat k \\ j}\right) j^K \right).$$
+The most straight-forward solution in the presence of this type of model 
+uncertainty is to compute all $B_K$ possible pooling schemes.
+However, maybe not all pooling schemes represent biologically relevant models.
+For example, perhaps it is reasonable to pool only among adjacent ports, or to 
+assert that biologically similar regions can only extend across a small number
+of ports (if so, how many?).
+
+Each of these hypotheses are easily represented as subsets of the total model 
+space, $B_K$, as seen in Figure (2). An exhaustive search of the models in 
+these subspaces, and a comparison of the relative predictive accuracy of each 
+model, provides concrete quantitative support for, or against, each of these 
+hypotheses. Through this technique of exhaustive search and measuring relative 
+predictive accuracy, we are able to understand the system to a greater degree 
+than before possible. Furthermore such an exhaustive search of these model 
+spaces allows for even more accurate estimates of species composition, and 
+uncertainty, through the use of Bayesian Model Averaging (BMA) among the 
+candidate models.
+Bayesian model averaging allows us to account for model uncertainty around 
+these difficult modeling decisions, while combining the respective predictive 
+capabilities of each model of a given subset of model space 
+(Hoeting et al., 1999). 
+Once all of the models of a given model space are computed, combining them to 
+account for model uncertainty, through BMA, requires trivial computation time, 
+but adds substantial robustness to our predictions.
+
+BMA
+
+Bayesian model averaging is straight forward. For the $\mu^{th}$ model, of 
+model space $\mathbb{M}$, a straight forward implementation of Bayes theorem 
+gives, 
+$$Pr(\mathbb{M}_\mu|y) = \frac{ p(y|\mathbb{M}_\mu)p(\mathbb{M}_\mu) }{ \sum_\mu p(y|\mathbb{M}_\mu)p(\mathbb{M}_\mu) } = \omega_\mu$$
+Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true 
+data generating model of the data, conditional on the subspace of candidate 
+models and the observed data. $\omega_\mu$ is then straightforwardly used to 
+average together the posteriors of all of the candidate models, as follows
+$\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, \mathbb{M}_\mu).$
+-->
+
+
+
+
+
+
+
+
+
+
+<!--
 To achieve consistency in pooling schemes, the protocol for pooling   
 
 
@@ -510,7 +614,7 @@ prohibitively sparce, we open that possibility that pooling may benefit
 
 In the absence of Citation employes exploring pooling 
 options in space  are extrordinarily sparce. 
-
+-->
 
 * how to deal with ports
 	* model uncertainty around port

@@ -223,7 +223,7 @@ out = inla(weight~species + portComplex + gear + year + qtr,
         	restart=T
 	)
 )
-out = inla.hyperpar(out)
+#out = inla.hyperpar(out)
 print(summary(out))
 
 ##try year + f(qtr)
@@ -377,11 +377,12 @@ writeLines('MSE')
 
 #registerDoParallel(cores=length(portEff))
 #preds = foreach( p=portEff )%dopar%{
-preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric())
+preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
 for(p in portEff){
         ##
         #end  = 1 
-        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric()) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
+        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
         ##
         for(g in gearEff){#[1]){
         for(q in qtrEff ){#[1] ){
@@ -419,8 +420,8 @@ for(p in portEff){
 			        alpha = mup*(1-rho)/rho
 			        beta  = (1-mup)/rho
 			        #
-			        p = rbeta(M, alpha, beta)
-			        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+			        pp = rbeta(M, alpha, beta)
+			        pred = rbinom(M, size=DAT$clustSize[where], prob=pp)
 			        distQY[,w] = pred
 			}
 			distQY = distQY/rowSums(distQY)
@@ -440,12 +441,13 @@ for(p in portEff){
                                 #
                                 WS = W[W$species==s,]
                                 #print( gridSize )
-                                if( dim(WS)[1]>0 ){
+                                #if( dim(WS)[1]>0 ){
+				if( !all(is.na(WS$id)) ){
                                         #make comps
                                         cp = c()
                                         #wp = c()
-                                        for(sam in WS$sampleNumber){
-						cp = c(cp, WS[WS$sampleNumber==sam, 'weight']/clustSize[clustSize$sampleNumber==sam,'size'])
+                                        for(sam in WS$id[!is.na(WS$id)]){
+						cp = c(cp, WS[WS$id==sam, 'weight']/clustSize[clustSize$sampleNumber==sam,'size'])
                                                 #for(clust in WS[WS$sampleNumber==sam, 'clusterNumber']){
                                                 #               cp = c(cp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight']/clustSize[clustSize$sampleNumber==sam & clustSize$clusterNumber==clust,'size'])
                                                 #               wp = c(wp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight'])
@@ -474,8 +476,9 @@ for(p in portEff){
                                         #for(i in 1:dim(lpIntCI)[1]){ inOut=findInterval(wp, lpIntCI[i,])==1 | inOut }
                                         #wpCiMean = mean(inOut)
                                         ##
-                                        pred[end,] = c(p, g, q, y, s, mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
-                                        end = end+1
+                                        p = c(as.character(p), as.character(g), q, y, as.character(s), mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
+	                                pred[end,] = p        
+					end = end+1
                                 }
                         }
                 }
@@ -487,7 +490,8 @@ for(p in portEff){
 #preds$mse = as.numeric(preds$mse)
 #preds$n   = as.numeric(preds$n)
 ##
-mse = sum(preds$mse*preds$n)/sum(preds$n)
+#mse = sum(preds$mse*preds$n)/sum(preds$n)
+mse = sum(pred$mse*pred$n)/sum(pred$n)
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'mse')
@@ -504,7 +508,7 @@ write.csv(format(metrics, scientific=T, digits=10), file="./metrics.csv", row.na
 ##distQY = mclapply( rev(who), FUN = function(w){
 #       	#
 #       	where = which(DAT$species==w)[1]
-#       	wSam  = sapply(postQY, function(logSam){
+#       	wSam  i sapply(postQY, function(logSam){
 #       	        #
 #       	        idxStr = sprintf('Predictor:%06d', where)
 #       	        sam = inv.logit( logSam[['latent']][idxStr,] )
