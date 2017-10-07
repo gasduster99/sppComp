@@ -1,9 +1,9 @@
 #!/bin/sh
  
 #PBS -N priorPlay.r
-#PBS -t 0-6
+#PBS -t 3,4,5
 #PBS -l mem=30GB
-#PBS -l nodes=1:ppn=1
+#PBS -l nodes=1:ppn=5
 #PBS -l walltime=48:00:00
 
  

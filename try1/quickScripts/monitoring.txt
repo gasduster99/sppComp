@@ -1,0 +1,5 @@
+pbsnodes -a
+
+watch "pbsnodes -a | grep compute-0-1[3456789]"
+
+qsub -t

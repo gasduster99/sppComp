@@ -46,7 +46,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 20 #30 #48 #25 #15 #8 #4
+cores = 1 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -303,7 +303,7 @@ out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY),
                restart=T
        	)
 )
-out = inla.hyperpar(out)
+#out = inla.hyperpar(out)
 print(summary(out))
 
 ##

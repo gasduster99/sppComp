@@ -419,8 +419,8 @@ for(p in portEff){
 			        alpha = mup*(1-rho)/rho
 			        beta  = (1-mup)/rho
 			        #
-			        p = rbeta(M, alpha, beta)
-			        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
+			        pp = rbeta(M, alpha, beta)
+			        pred = rbinom(M, size=DAT$clustSize[where], prob=pp)
 			        distQY[,w] = pred
 			}
 			distQY = distQY/rowSums(distQY)
