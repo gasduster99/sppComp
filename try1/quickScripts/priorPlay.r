@@ -421,8 +421,7 @@ for(p in portEff){
 			        beta  = (1-mup)/rho
 			        #
 			        pp = rbeta(M, alpha, beta)
-			        pred = rbinom(M, size=DAT$clustSize[where], prob=pp)
-			        distQY[,w] = pred
+			        distQY[,w] = rbinom(M, size=DAT$clustSize[where], prob=pp)
 			}
 			distQY = distQY/rowSums(distQY)
 			distQY = distQY[!is.na(distQY[,1]),]
@@ -476,8 +475,8 @@ for(p in portEff){
                                         #for(i in 1:dim(lpIntCI)[1]){ inOut=findInterval(wp, lpIntCI[i,])==1 | inOut }
                                         #wpCiMean = mean(inOut)
                                         ##
-                                        p = c(as.character(p), as.character(g), q, y, as.character(s), mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
-	                                pred[end,] = p        
+                                        hand = c(as.character(p), as.character(g), q, y, as.character(s), mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
+	                                pred[end,] = hand        
 					end = end+1
                                 }
                         }
@@ -491,7 +490,11 @@ for(p in portEff){
 #preds$n   = as.numeric(preds$n)
 ##
 #mse = sum(preds$mse*preds$n)/sum(preds$n)
-mse = sum(pred$mse*pred$n)/sum(pred$n)
+pred$mse = as.numeric(pred$mse)
+pred$n = as.numeric(pred$n)
+#mse = sum(pred$mse*pred$n)/sum(pred$n)
+mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na(pred$mse)])
+
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'mse')
