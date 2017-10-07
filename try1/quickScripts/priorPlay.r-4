@@ -7,8 +7,6 @@ library(vioplot)
 library(parallel)
 library(HDInterval)
 library(KernSmooth)
-#
-INLA:::inla.dynload.workaround() 
 
 #
 #FUNCTIONS
@@ -46,7 +44,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 1 #30 #48 #25 #15 #8 #4
+cores = 10 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -225,7 +223,7 @@ for(y in yearEff){
 #        	restart=T
 #	)
 #)
-#out = inla.hyperpar(out)
+##out = inla.hyperpar(out)
 #print(summary(out))
 
 ##try year + f(qtr)
@@ -241,7 +239,7 @@ for(y in yearEff){
 #        	restart=T
 #	)
 #)
-#out = inla.hyperpar(out)
+##out = inla.hyperpar(out)
 #print(summary(out))
 
 ##try f(year) + qtr
@@ -257,7 +255,7 @@ for(y in yearEff){
 #        	restart=T
 #	)
 #)
-#out = inla.hyperpar(out)
+##out = inla.hyperpar(out)
 #print(summary(out))
 
 ##
@@ -280,7 +278,7 @@ for(y in yearEff){
 #               restart=T
 #       	)
 #)
-#out = inla.hyperpar(out)
+##out = inla.hyperpar(out)
 #print(summary(out))
 
 #
@@ -379,11 +377,12 @@ writeLines('MSE')
 
 #registerDoParallel(cores=length(portEff))
 #preds = foreach( p=portEff )%dopar%{
-preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric())
+preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
 for(p in portEff){
         ##
         #end  = 1 
-        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric()) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
+        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
         ##
         for(g in gearEff){#[1]){
         for(q in qtrEff ){#[1] ){
@@ -421,9 +420,8 @@ for(p in portEff){
 			        alpha = mup*(1-rho)/rho
 			        beta  = (1-mup)/rho
 			        #
-			        p = rbeta(M, alpha, beta)
-			        pred = rbinom(M, size=DAT$clustSize[where], prob=p)
-			        distQY[,w] = pred
+			        pp = rbeta(M, alpha, beta)
+			        distQY[,w] = rbinom(M, size=DAT$clustSize[where], prob=pp)
 			}
 			distQY = distQY/rowSums(distQY)
 			distQY = distQY[!is.na(distQY[,1]),]
@@ -442,12 +440,13 @@ for(p in portEff){
                                 #
                                 WS = W[W$species==s,]
                                 #print( gridSize )
-                                if( dim(WS)[1]>0 ){
+                                #if( dim(WS)[1]>0 ){
+				if( !all(is.na(WS$id)) ){
                                         #make comps
                                         cp = c()
                                         #wp = c()
-                                        for(sam in WS$sampleNumber){
-						cp = c(cp, WS[WS$sampleNumber==sam, 'weight']/clustSize[clustSize$sampleNumber==sam,'size'])
+                                        for(sam in WS$id[!is.na(WS$id)]){
+						cp = c(cp, WS[WS$id==sam, 'weight']/clustSize[clustSize$sampleNumber==sam,'size'])
                                                 #for(clust in WS[WS$sampleNumber==sam, 'clusterNumber']){
                                                 #               cp = c(cp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight']/clustSize[clustSize$sampleNumber==sam & clustSize$clusterNumber==clust,'size'])
                                                 #               wp = c(wp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight'])
@@ -476,8 +475,9 @@ for(p in portEff){
                                         #for(i in 1:dim(lpIntCI)[1]){ inOut=findInterval(wp, lpIntCI[i,])==1 | inOut }
                                         #wpCiMean = mean(inOut)
                                         ##
-                                        pred[end,] = c(p, g, q, y, s, mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
-                                        end = end+1
+                                        hand = c(as.character(p), as.character(g), q, y, as.character(s), mSqErr, length(cp)) #wpHdiMean, wpCiMean, cpHdiMean, cpCiMean, length(cp))
+	                                pred[end,] = hand        
+					end = end+1
                                 }
                         }
                 }
@@ -489,11 +489,16 @@ for(p in portEff){
 #preds$mse = as.numeric(preds$mse)
 #preds$n   = as.numeric(preds$n)
 ##
-mse = sum(preds$mse*preds$n)/sum(preds$n)
+#mse = sum(preds$mse*preds$n)/sum(preds$n)
+pred$mse = as.numeric(pred$mse)
+pred$n = as.numeric(pred$n)
+#mse = sum(pred$mse*pred$n)/sum(pred$n)
+mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na(pred$mse)])
+
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'mse')
-write.csv(format(metrics, scientific=T, digits=10), file="./metrics.csv", row.names=F, quote=F)
+write.csv(format(metrics, scientific=T, digits=10), file="./metrics.csv-4", row.names=F, quote=F)
 
 
 
@@ -506,7 +511,7 @@ write.csv(format(metrics, scientific=T, digits=10), file="./metrics.csv", row.na
 ##distQY = mclapply( rev(who), FUN = function(w){
 #       	#
 #       	where = which(DAT$species==w)[1]
-#       	wSam  = sapply(postQY, function(logSam){
+#       	wSam  i sapply(postQY, function(logSam){
 #       	        #
 #       	        idxStr = sprintf('Predictor:%06d', where)
 #       	        sam = inv.logit( logSam[['latent']][idxStr,] )
