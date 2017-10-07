@@ -375,15 +375,15 @@ colnames(distQY) = who
 
 writeLines('MSE')
 
-#registerDoParallel(cores=length(portEff))
-#preds = foreach( p=portEff )%dopar%{
-preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
-pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
-for(p in portEff){
-        ##
-        #end  = 1 
-        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
-        ##
+#preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+#pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+#for(p in portEff){
+registerDoParallel(cores=length(portEff))
+preds = foreach( p=portEff )%dopar%{
+        #
+        end  = 1 
+        pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
+        #
         for(g in gearEff){#[1]){
         for(q in qtrEff ){#[1] ){
         for(y in yearEff){#[1]){
@@ -482,17 +482,13 @@ for(p in portEff){
                         }
                 }
         }}}
-        #return(pred)
+        return(pred)
 }
-##
-#preds = do.call(rbind, preds)
-#preds$mse = as.numeric(preds$mse)
-#preds$n   = as.numeric(preds$n)
-##
+#
+preds = do.call(rbind, preds)
+preds$mse = as.numeric(preds$mse)
+preds$n   = as.numeric(preds$n)
 #mse = sum(preds$mse*preds$n)/sum(preds$n)
-pred$mse = as.numeric(pred$mse)
-pred$n = as.numeric(pred$n)
-#mse = sum(pred$mse*pred$n)/sum(pred$n)
 mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na(pred$mse)])
 
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
