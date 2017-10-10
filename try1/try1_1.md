@@ -480,24 +480,63 @@ simply resampled.
 
 ## Model Exploration \& Averaging
 
-Despite efforts to pool data through time via the heirarchical priors described 
-in section (XX), port sampling data still remains sparce.
-
 Presently, stratum with deminishingly small sample sizes are managed by an ad-
-hoc "borrowing" protocol, outlined in Pearson and Erwin (1997). Their protocol 
+hoc "borrowing" protocol, outlined in Pearson and Erwin (1997). The protocol 
 for pooling data across port complexes only calls for spatial pooling to fill 
-holes brought about by unsampled strata. Naturally such a protocol introduces 
-a biase which depends on the availiabilty of data in each stratum and thus 
-makes comparisions between periods with pooled and unpooled data inconsistent 
-with eah other. Furthermore, the current ad-hoc "borrowing" protocol makes it 
-difficult to know exactly when "borrowing" has occured.  
+holes brought about by unsampled strata. Naturally, such a protocol introduces 
+a biase in sppecies compositions which depends on the availiabilty of data in 
+each stratum and thus makes comparisions between periods with pooled and 
+unpooled data inconsistent with eah other. Furthermore, the current ad-hoc 
+"borrowing" protocol makes it difficult to know exactly when "borrowing" has 
+occured.
 
-Given the degree of sparcity in these data it is certainly possible that 
-models pooling data between port complexes may offer predictive benefits, 
-however port complex pooling schemes should minimize any inconsistency brought 
-about by the pooling scheme itself. 
+Handeling these data as heirarchical models through time allows the models 
+described in section (XX) to avoid the ad-hoc "borrowing" protocol used in 
+Pearson and Erwin (1997). The heirarchical structure of the model, in 
+combination with the Bayesian predictive framework, allows holes in the data 
+to be filled with posterior predictive distributions for any unobserved strata. 
 
-To formalize the idea of port pooling we only consider pooling strategies 
+<!-- %efforts to pool data through time via the heirarchical priors described in section (XX) -->
+Despite the benefits of modeling these data as Bayesian heirarchical models 
+partially pooled through time, port sampling data still remains sparce. Given 
+the degree of sparcity in these data it is certainly possible that models 
+which consider an additional degree of data pooling between port complexes may 
+offer predictive benefits. In exploring strategies for pooling data across 
+space we aim to formalize the port complex pooling scheme and minimize issues 
+of inconsistent comparisions between statum.
+
+<!--
+within a modeled period, brought about by the pooling scheme itself.
+ by framing it as a model uncertainty problem.
+This has the benefit that  represents  it minimizes inconsistenty within model periods
+
+a model  so as to minimize any 
+inconsistency brought about by the pooling scheme itself. 
+-->
+
+Given the categorical nature of port complex variables, the typical 
+heirarchical regularization priors amoung port complexes are not appropriate.
+Rather, port complex pooling is framed as a model uncertainty problem, in 
+which it is assumed that some degree of port complex pooling is appropriate, 
+but the exact degree of pooling, and particular partitioning of the pooled 
+port complexes are not known. 
+
+Port complex pooling is achieved by repeatedly fitting model M5 with different 
+partitionings of the port complex variables within a particular market category 
+and modeling time period. This model exploration excersize explores the 
+possible ways to produce groupings of the existing port complexes so as to 
+discover predictively useful partionings of the port complexes. Insisting 
+that the port complex groupings be partitions of all of the port complexes in 
+California, within a particular market category and modeling time period, 
+provides more consistency amoung the modeled period than previously available. 
+Additionally his formulation of port complex pooling provides a mathematical 
+structure for considering the space of possible pooled models. 
+
+<!--
+it is unknown which ports are appropriate to pool and how the     
+To formalize the idea of port pooling 
+
+We only consider pooling strategies 
 which remain consistent within the modeled period and explicitely outline 
 state-wide pooling strategies, rather than protocols that change from stratum 
 to stratum. That is to say, for a particular market category and modeling time 
@@ -507,26 +546,67 @@ pooled together in the partitioning of the state, however this formulation does
 acheive consistency amoung port pooling within market categories and modeled time 
 periods, while providiving a mathematical structure for considering the space 
 of possible pooled models.  
+-->
 
 The space of possible pooled models is well defined in terms of the size of
-the set of items to be partitioned, $K$, as described by the Bell numbers
+the set of items to be partitioned, $K$, by the Bell numbers
 ($B_K$),
 
 $$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\hat k -j} \left(\substack{\hat k \\ j}\right) j^K \right).$$
 
 In this setting the set of items to be partitioned is the set of port 
 complexes in California, of which there are $K=10$, implying a grad total of 
-XXXXX ways of partitioning the port complex in California in each market 
+$B_10=XXXXX$ ways of partitioning the port complex in California in each market 
 category and modeled time period. The brute force model selection strategy of 
 computing all XXXXX of these partitionings strategies is computationally 
-infeasible. However, maybe not all pooling schemes represent biologically 
+infeasible. However, not all pooling schemes represent biologically 
 relevant models. For example, perhaps it is reasonable to pool only among 
 adjacent ports, or to assert that biologically similar regions can only extend 
-across a small number of ports (if so, how many
-?).
+across a small number of ports (if so, how many?).
+
+Here all adjacent port poolings are considered such that the maximum size of a 
+port complex grouping spans three port complexes. No additional biogeographic 
+information about which particular ports may be pooled is encoded so as to 
+test each partition angainst each other based solely on relative model 
+performance. 
+
+An exhaustive search of the models in this subspace of B_10, allows for a 
+concrete comparison of the relative predictive accuracy of each
+model, as well as the basis for an ensamble model. Once these models have been 
+computed the parameter posteriors and posterior predictive distributions may 
+be combined through the use of Bayesian Model Averaging (BMA) among the
+candidate models. Bayesian model averaging used in this setting accounts for 
+model uncertainty around the port partitioning decision. and when all relavant models have 
+been computed 
+these difficult mo while combining the respective predictive
+capabilities of each model of a given subset of model space
+(Hoeting et al., 1999).
+
+ 
+
+<!--, provides concrete quantitative support for, or against, each of these
+hypotheses. Through this technique of exhaustive search and measuring relative
+predictive accuracy, we are able to understand the system to a greater degree
+than before possible. Furthermore such an exhaustive search of these model
+spaces allows for even more accurate estimates of species composition, and
+uncertainty, through the use of Bayesian Model Averaging (BMA) among the
+candidate models.
+Bayesian model averaging allows us to account for model uncertainty around
+these difficult modeling decisions, while combining the respective predictive
+capabilities of each model of a given subset of model space
+(Hoeting et al., 1999).
+
+
+combined with the formalized process of Bayesian Model
+Averaging (BMA) to appropriatly integrate port-complex pooling model
+uncertainty into species composition estimates (Hoeting et al. , 1999). 
+
+
+
 
 
 <!--
+
 The most straight-forward solution in the presence of this type of model
 uncertainty is to compute all $B_K$ possible pooling schemes.
 However, maybe not all pooling schemes represent biologically relevant models.

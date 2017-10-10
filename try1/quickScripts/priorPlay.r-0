@@ -4,7 +4,9 @@ rm(list=ls())
 library(INLA)
 library(boot)
 library(vioplot)
+library(foreach)
 library(parallel)
+library(doParallel)
 library(HDInterval)
 library(KernSmooth)
 
@@ -375,20 +377,25 @@ colnames(distQY) = who
 
 writeLines('MSE')
 
-#preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+#
+##DAT0 = DAT[!is.na(DAT$id),]
+#end = 1
 #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+##preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
 #for(p in portEff){
-registerDoParallel(cores=length(portEff))
+registerDoParallel(cores=round(length(portEff)/2))
 preds = foreach( p=portEff )%dopar%{
         #
         end  = 1 
         pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
         #
-        for(g in gearEff){#[1]){
-        for(q in qtrEff ){#[1] ){
-        for(y in yearEff){#[1]){
+        for(g in gearEff){ print(g)
+        for(q in qtrEff ){
+        for(y in yearEff){
                 #observations
-		W = DAT[DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y,]
+		wwhere = which(DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y)
+		W = cbind(DAT[wwhere,], wwhere) #DAT[DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y,]
+		colnames(W)[length(colnames(W))] = 'wwhere'
                 #avoid the case where no data exists
                 if( dim(W)[1]>0 ){
 			#cluster info
@@ -401,14 +408,15 @@ preds = foreach( p=portEff )%dopar%{
 			colnames(distQY) = who
 			#make predictive distributions
 			for(w in rev(who)){
-			        #
-			        where = which( 
-					DAT$portComplex==p 	& 
-					DAT$gear==g 		& 
-					DAT$qtr==q 		& 
-					DAT$year==y 		& 
-					DAT$species==w
-				)[1]
+			        ##
+			        #where = which( 
+				#	DAT$portComplex==p 	& 
+				#	DAT$gear==g 		& 
+				#	DAT$qtr==q 		& 
+				#	DAT$year==y 		& 
+				#	DAT$species==w
+				#)[1]
+				where = W[ which(W$species==w)[1], 'wwhere' ]
 			        mup   = sapply(postQY, function(logSam){
 			                #
 			                idxStr = sprintf('Predictor:%06d', where)
@@ -488,7 +496,7 @@ preds = foreach( p=portEff )%dopar%{
 preds = do.call(rbind, preds)
 preds$mse = as.numeric(preds$mse)
 preds$n   = as.numeric(preds$n)
-#mse = sum(preds$mse*preds$n)/sum(preds$n)
+##mse = sum(preds$mse*preds$n)/sum(preds$n)
 mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na(pred$mse)])
 
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
