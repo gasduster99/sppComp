@@ -556,7 +556,7 @@ $$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\ha
 
 In this setting the set of items to be partitioned is the set of port 
 complexes in California, of which there are $K=10$, implying a grad total of 
-$B_10=XXXXX$ ways of partitioning the port complex in California in each market 
+$B_{10}=XXXXX$ ways of partitioning the port complex in California in each market 
 category and modeled time period. The brute force model selection strategy of 
 computing all XXXXX of these partitionings strategies is computationally 
 infeasible. However, not all pooling schemes represent biologically 
@@ -570,10 +570,47 @@ information about which particular ports may be pooled is encoded so as to
 test each partition angainst each other based solely on relative model 
 performance. 
 
-An exhaustive search of the models in this subspace of B_10, allows for a 
-concrete comparison of the relative predictive accuracy of each
-model, as well as the basis for an ensamble model. Once these models have been 
-computed the parameter posteriors and posterior predictive distributions may 
+An exhaustive search of the models in this subspace of $B_{10}$, allows for a 
+concrete comparison of the relative predictive accuracy of each partitioning. 
+Additionally the partitioned models provide a set of candidate models for 
+Bayesian Model Averaging (BMA) (Hoeting et al., 1999). That is to say, if 
+$M_\mu$ is the model usisng the $\mu^{th}$ partitioning scheme, then the BMA 
+weight for $M_\mu$ follows directly out of Bayes Theorem as follows, 
+
+<!--\mathbb{M}-->
+$$\omega_\mu = Pr(M_\mu|y) = \frac{ p(y|M_\mu)p(M_\mu) }{ \sum_\mu p(y|M_\mu)p(M_\mu) }$$
+
+Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true
+data generating model of the data, conditional on the subspace of candidate
+models and the observed data. $\omega_\mu$ is then straightforwardly used to
+average together the posteriors of all of the candidate models, as follows
+
+$$\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, M_\mu).$$
+
+
+<!--
+In this 
+setting BMA accounts for model uncertainty around the port partitioning 
+decision. As used here BMA effectively integrates across the possible 
+biologially relavent modeling descisions with to port complex pooling. 
+
+ For the $\mu^{th}$ model, of
+model space $\mathbb{M}$, a straight forward implementation of Bayes theorem
+gives,
+$$Pr(\mathbb{M}_\mu|y) = \frac{ p(y|\mathbb{M}_\mu)p(\mathbb{M}_\mu) }{ \sum_\mu p(y|\mathbb{M}_\mu)p(\mathbb{M}_\mu) } = \omega_\mu$$
+Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true
+data generating model of the data, conditional on the subspace of candidate
+models and the observed data. $\omega_\mu$ is then straightforwardly used to
+average together the posteriors of all of the candidate models, as follows
+$\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, \mathbb{M}_\mu).$
+
+
+Since set partitioning is finite and scales in a well understood way number of ways to partition port 
+complexes BMA amounts to a discrete approximation of integrating 
+
+Once the models have been 
+computed the posteriors and posterior predictive distributions from each model 
+ 
 be combined through the use of Bayesian Model Averaging (BMA) among the
 candidate models. Bayesian model averaging used in this setting accounts for 
 model uncertainty around the port partitioning decision. and when all relavant models have 
@@ -581,7 +618,7 @@ been computed
 these difficult mo while combining the respective predictive
 capabilities of each model of a given subset of model space
 (Hoeting et al., 1999).
-
+-->
  
 
 <!--, provides concrete quantitative support for, or against, each of these
