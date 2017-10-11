@@ -482,28 +482,29 @@ simply resampled.
 
 Presently, stratum with deminishingly small sample sizes are managed by an ad-
 hoc "borrowing" protocol, outlined in Pearson and Erwin (1997). The protocol 
-for pooling data across port complexes only calls for spatial pooling to fill 
-holes brought about by unsampled strata. Naturally, such a protocol introduces 
-a biase in sppecies compositions which depends on the availiabilty of data in 
-each stratum and thus makes comparisions between periods with pooled and 
-unpooled data inconsistent with eah other. Furthermore, the current ad-hoc 
-"borrowing" protocol makes it difficult to know exactly when "borrowing" has 
-occured.
+for pooling data across port complexes calls for spatial pooling only when 
+forced to fill holes brought about by unsampled strata. Naturally, such a 
+protocol introduces a biase in speecies compositions which depends on the 
+availiability of data in each stratum and thus makes comparisions between 
+periods with pooled and unpooled data inconsistent with eah other. 
+Furthermore, the current ad-hoc "borrowing" protocol makes it difficult to 
+know exactly when "borrowing" has occured.
 
-Handeling these data as heirarchical models through time allows the models 
-described in section (XX) to avoid the ad-hoc "borrowing" protocol used in 
-Pearson and Erwin (1997). The heirarchical structure of the model, in 
-combination with the Bayesian predictive framework, allows holes in the data 
-to be filled with posterior predictive distributions for any unobserved strata. 
+Handeling these data as heirarchical models allows the models described in 
+section (XX) to avoid the ad-hoc "borrowing" protocol used in Pearson and 
+Erwin (1997). The heirarchical structure of the model, in combination with the 
+Bayesian predictive framework, allows holes in the data to be filled with 
+posterior predictive distributions for any unobserved strata. 
 
 <!-- %efforts to pool data through time via the heirarchical priors described in section (XX) -->
-Despite the benefits of modeling these data as Bayesian heirarchical models 
-partially pooled through time, port sampling data still remains sparce. Given 
-the degree of sparcity in these data it is certainly possible that models 
-which consider an additional degree of data pooling between port complexes may 
-offer predictive benefits. In exploring strategies for pooling data across 
-space we aim to formalize the port complex pooling scheme and minimize issues 
-of inconsistent comparisions between statum.
+Despite the benefits of modeling these data as Bayesian heirarchical models, 
+port sampling data still remains sparce. Given the degree of sparcity in these 
+data it is certainly possible that models which consider an additional degree 
+of data pooling between port complexes may offer predictive benefits. In 
+exploring strategies for pooling data across space it is necessary to formalize 
+the port complex pooling scheme in a way which provides a mathematically 
+understandable and scalable structure to build upon while minimizes issues of 
+inconsistent comparisions between statum.
 
 <!--
 within a modeled period, brought about by the pooling scheme itself.
@@ -516,23 +517,30 @@ inconsistency brought about by the pooling scheme itself.
 
 Given the categorical nature of port complex variables, the typical 
 heirarchical regularization priors amoung port complexes are not appropriate.
-Rather, port complex pooling is framed as a model uncertainty problem, in 
-which it is assumed that some degree of port complex pooling is appropriate, 
-but the exact degree of pooling, and particular partitioning of the pooled 
-port complexes are not known. 
+Rather, we frame port complex pooling as a model uncertainty problem, in which 
+it is assumed that some degree of port complex pooling is appropriate, but the 
+exact degree of pooling, and particular partitioning of the pooled port 
+complexes are not known. 
 
 Port complex pooling is achieved by repeatedly fitting model M5 with different 
 partitionings of the port complex variables within a particular market category 
-and modeling time period. This model exploration excersize explores the 
+and modeling time period. This model exploration exercise explores the 
 possible ways to produce groupings of the existing port complexes so as to 
-discover predictively useful partionings of the port complexes. Insisting 
-that the port complex groupings be partitions of all of the port complexes in 
+discover predictively useful partionings of the port complexes. Insisting that 
+the port complex groupings be partitions of the availiable port complexes 
+provides a well defined mathematical structure for exploring the space of 
+pooled port complexes, additionally due to the fact that partitions are 
+stationary in time provides consistency within the modeled period.
+
+
+
+
+<!--
 California, within a particular market category and modeling time period, 
 provides more consistency amoung the modeled period than previously available. 
 Additionally his formulation of port complex pooling provides a mathematical 
 structure for considering the space of possible pooled models. 
 
-<!--
 it is unknown which ports are appropriate to pool and how the     
 To formalize the idea of port pooling 
 
@@ -548,42 +556,57 @@ periods, while providiving a mathematical structure for considering the space
 of possible pooled models.  
 -->
 
-The space of possible pooled models is well defined in terms of the size of
-the set of items to be partitioned, $K$, by the Bell numbers
-($B_K$),
+The size of the space of possible pooled models is in the setting is well 
+defined in terms of the size of the set of items to be partitioned, $K$, as 
+given by the Bell numbers ($B_K$),
 
 $$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\hat k -j} \left(\substack{\hat k \\ j}\right) j^K \right).$$
 
-In this setting the set of items to be partitioned is the set of port 
-complexes in California, of which there are $K=10$, implying a grad total of 
-$B_{10}=XXXXX$ ways of partitioning the port complex in California in each market 
-category and modeled time period. The brute force model selection strategy of 
-computing all XXXXX of these partitionings strategies is computationally 
-infeasible. However, not all pooling schemes represent biologically 
-relevant models. For example, perhaps it is reasonable to pool only among 
-adjacent ports, or to assert that biologically similar regions can only extend 
-across a small number of ports (if so, how many?).
+In the case of California the set of items to be partitioned is the set of 
+port complexes in California, of which there are $K=10$, implying a grad total of 
+$B_{10}=115975$ ways of partitioning the port complexs in California in each 
+market category and modeled time period. The brute force model selection 
+strategy of computing all 115975 of these partitionings strategies is 
+computationally infeasible. However, not all pooling schemes represent 
+biologically relevant models. For example, perhaps it is reasonable to pool 
+only among adjacent ports (i.e. no disontinuities between port complex in 
+space), or perhaps it is reasonable to assert that biologically similar 
+regions can only extend across a small number of ports.
 
-Here all adjacent port poolings are considered such that the maximum size of a 
-port complex grouping spans three port complexes. No additional biogeographic 
+Here only adjacent port poolings are considered, such that the maximum size of 
+a port complex grouping is three port complexes. These are the only 
+constraints that are enforced on port complex partitions here, although many 
+other constraints may in theory be chosen. These constraints were chosen so as to 
+mirror the currently accepted protocols in Pearson and Erwin (1997) within the 
+context of this framework. When these two simple constraints are applied, the 
+number of models to explore in each modeled period from is reduced to a much 
+more manageable XXX models. 
+
+<!--
+ best as possble No additional biogeographic 
 information about which particular ports may be pooled is encoded so as to 
 test each partition angainst each other based solely on relative model 
 performance. 
+-->
 
-An exhaustive search of the models in this subspace of $B_{10}$, allows for a 
-concrete comparison of the relative predictive accuracy of each partitioning. 
-Additionally the partitioned models provide a set of candidate models for 
-Bayesian Model Averaging (BMA) (Hoeting et al., 1999). That is to say, if 
-$M_\mu$ is the model usisng the $\mu^{th}$ partitioning scheme, then the BMA 
-weight for $M_\mu$ follows directly out of Bayes Theorem as follows, 
+An exhaustive search of the models in the biologically constrained subspace of 
+$B_{10}$, allows for a concrete comparison of the relative predictive accuracy 
+of each partitioning. Additionally the partitioned models provide a set of 
+candidate models for use in Bayesian Model Averaging (BMA) 
+(Hoeting et al., 1999). BMA averaging, as applied here, essetially allows the 
+model exploration strategy to average across all realavent port complex partionings
+and adds robustness to the end species composition estimates.
+
+For the $\mu^{th}$ model in a set of candidate models $M$, then the BMA weight 
+for $M_\mu$ follows directly from Bayes Theorem as follows, 
 
 <!--\mathbb{M}-->
 $$\omega_\mu = Pr(M_\mu|y) = \frac{ p(y|M_\mu)p(M_\mu) }{ \sum_\mu p(y|M_\mu)p(M_\mu) }$$
 
-Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true
+$??model priors??$ Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true
 data generating model of the data, conditional on the subspace of candidate
 models and the observed data. $\omega_\mu$ is then straightforwardly used to
-average together the posteriors of all of the candidate models, as follows
+average together whichever posterior quantites desired, as follows
 
 $$\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, M_\mu).$$
 
