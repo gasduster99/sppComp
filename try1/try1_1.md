@@ -579,8 +579,8 @@ constraints that are enforced on port complex partitions here, although many
 other constraints may in theory be chosen. These constraints were chosen so as to 
 mirror the currently accepted protocols in Pearson and Erwin (1997) within the 
 context of this framework. When these two simple constraints are applied, the 
-number of models to explore in each modeled period from is reduced to a much 
-more manageable XXX models. 
+number of models to explore in each modeled period is reduced to a much more 
+manageable 274 models. 
 
 <!--
  best as possble No additional biogeographic 
