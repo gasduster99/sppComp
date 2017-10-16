@@ -70,6 +70,13 @@ clustWeight = aggregate( data.frame(dat$weight), by=list(dat$id), FUN=sum )
 for(cw in 1:dim(clustWeight)[1]){ dat[dat[,1]==clustWeight[cw, 1], dim(dat)[2]]=clustWeight[cw, 2] }
 colnames(dat)[10] = 'clustSize'
 dat$portComplex = as.character(dat$portComplex)
+dat$gear = as.character(dat$gear)
+
+#aggregate gear to OTH=UNK+FPT; TWL=TWL+MDT; HKL; NET
+dat$gear[dat$gear=='MDT'] = 'TWL'
+dat$gear[dat$gear=='FPT'] = 'OTH'
+dat$gear[dat$gear=='UNK'] = 'OTH'
+dat$gear[dat$gear=='GFT'] = 'OTH'
 
 #add zeros/account for clusters
 yearEff = unique(dat$year)
