@@ -71,8 +71,9 @@ mct = '250'
 plc = 'MNT'
 ger = 'TWL'
 yer = '1990'
+qtr = '4'
 #zero data
-D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger,]
+D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger & dat$qtr==qtr,]
 end = length(D$id)
 for(id in unique(D$id)){
 	#
@@ -449,65 +450,65 @@ bbMSE = getMSE(comps, bbM)
 ##legend
 #legend('topright', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
 #dev.off()
+
 #
-##
-##PLOT PROPS
-##
+#PLOT PROPS
 #
-##
-##dev.new()
-#pdf('compPlot.pdf')
-#plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='Proportion', xaxt='n', main='95% Predictive HDI Model Comparison')
-#axis(1, at=1:howMany, labels=who)
-#for(i in 1:howMany){
-#       	#make spp comp
-#       	comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
-#       	points(rep(i, length(comps)), comps, pch='_', cex=4)
-#	#poisson
-#        px = i-0.25
-#        #segments(px, pBox[i,'pLower'], px, pBox[i,'pUpper'], lwd=4, col='blue')
-#        for(j in 1:dim(pHDI[[who[i]]])[1]){
-#		segments(px, pHDI[[who[i]]][j,'begin'], px, pHDI[[who[i]]][j,'end'], lwd=4, col='blue')
-#	}
-#	points(px, pBox[i, 'pMean'], pch=19, col='blue')
-#	#binomial
-#	bx = i-0.25+0.5/3*1
-#	#segments(bx, bBox[i,'pLower'], bx, bBox[i,'pUpper'], lwd=4, col='red')
-#	for(j in 1:dim(bHDI[[who[i]]])[1]){
-#		segments(bx, bHDI[[who[i]]][j,'begin'], bx, bHDI[[who[i]]][j,'end'], lwd=4, col='red')
-#	}
-#	points(bx, bBox[i, 'pMean'], pch=19, col='red')
-#	#negative binomial
-#	nbx = i-0.25+0.5/3*2
-#	for(j in 1:dim(nbHDI[[who[i]]])[1]){
-#		segments(nbx, nbHDI[[who[i]]][j,'begin'], nbx, nbHDI[[who[i]]][j,'end'], lwd=4, col='forestgreen')
-#	}
-#	points(nbx, nbBox[i, 'pMean'], pch=19, col='forestgreen')
-#	#beta binomial
-#	bbx = i-0.25+0.5/3*3
-#	for(j in 1:dim(bbHDI[[who[i]]])[1]){
-#		segments(bbx, bbHDI[[who[i]]][j,'begin'], bbx, bbHDI[[who[i]]][j,'end'], lwd=4, col='darkorange')
-#	}
-#	points(bbx, bbBox[i, 'pMean'], pch=19, col='darkorange')
-#}
-##legend
-##legend(4.5, 0.75, legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
-#legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
-#dev.off()
+
 #
-##
-#pdf('compVioplot.pdf')
-#vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
-#	names=colnames(bbDist),
-#	ylim=c(0, 1.15),
-#	col='grey',
-#	drawRect=F
-#)
-#title(
-#	main='Beta-Binomial Posterior Predictive Species Compositions',
-#        ylab='Proportion'
-#)
-#dev.off()
+#dev.new()
+pdf(sprintf('compPlotQtr%s.pdf', qtr))
+plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='Proportion', xaxt='n', main='95% Predictive HDI Model Comparison')
+axis(1, at=1:howMany, labels=who)
+for(i in 1:howMany){
+       	#make spp comp
+       	comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+       	points(rep(i, length(comps)), comps, pch='_', cex=4)
+	#poisson
+        px = i-0.25
+        #segments(px, pBox[i,'pLower'], px, pBox[i,'pUpper'], lwd=4, col='blue')
+        for(j in 1:dim(pHDI[[who[i]]])[1]){
+		segments(px, pHDI[[who[i]]][j,'begin'], px, pHDI[[who[i]]][j,'end'], lwd=4, col='blue')
+	}
+	points(px, pBox[i, 'pMean'], pch=19, col='blue')
+	#binomial
+	bx = i-0.25+0.5/3*1
+	#segments(bx, bBox[i,'pLower'], bx, bBox[i,'pUpper'], lwd=4, col='red')
+	for(j in 1:dim(bHDI[[who[i]]])[1]){
+		segments(bx, bHDI[[who[i]]][j,'begin'], bx, bHDI[[who[i]]][j,'end'], lwd=4, col='red')
+	}
+	points(bx, bBox[i, 'pMean'], pch=19, col='red')
+	#negative binomial
+	nbx = i-0.25+0.5/3*2
+	for(j in 1:dim(nbHDI[[who[i]]])[1]){
+		segments(nbx, nbHDI[[who[i]]][j,'begin'], nbx, nbHDI[[who[i]]][j,'end'], lwd=4, col='forestgreen')
+	}
+	points(nbx, nbBox[i, 'pMean'], pch=19, col='forestgreen')
+	#beta binomial
+	bbx = i-0.25+0.5/3*3
+	for(j in 1:dim(bbHDI[[who[i]]])[1]){
+		segments(bbx, bbHDI[[who[i]]][j,'begin'], bbx, bbHDI[[who[i]]][j,'end'], lwd=4, col='darkorange')
+	}
+	points(bbx, bbBox[i, 'pMean'], pch=19, col='darkorange')
+}
+#legend
+#legend(4.5, 0.75, legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
+legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
+dev.off()
+
+#
+pdf(sprintf('compVioplotQtr%s.pdf', qtr))
+vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
+	names=colnames(bbDist),
+	ylim=c(0, 1.15),
+	col='grey',
+	drawRect=F
+)
+title(
+	main='Beta-Binomial Posterior Predictive Species Compositions',
+        ylab='Proportion'
+)
+dev.off()
 
 
 
