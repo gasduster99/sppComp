@@ -30,7 +30,9 @@ computationally robust system of inference and model exploration, allows us to
 start to understand the effect of the highly stratified, and sparse, sampling 
 system on the kinds of inference possible, while simultaneously making the 
 most from the available data. 
+-->
 
+<!--
 # Significance
 
 In order to understand how fish populations respond to fishing, it is critical 
@@ -131,47 +133,14 @@ Montery port complex trawl fishery in 1990. $(any will work)$ This stratum was
 visited 38 times by port samplers, <!--in 1990,--> collecting a total of 67 
 cluster samples, resulting in 344 model observations across 21 $(at least; URCK
 )$ unique species. Each of the above models are fit to these data. 
-<!--The posteriors from each model imply different predictive species composition distributions.-->
-<!--
-The predictive species composition distributions from each model are 
-visualized in Figure (1) as 95% Highest Density Intervals (HDI) $(citations)$, 
-plotted on top of the predictive means for each model and the observed species 
-compositions from the data in Figure(1). For brevity we only consider the most 
-prevalent six species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, BANK). 
-Additionally, the 
-MSE, DIC, WAIC, and Bayesian marginal likelyhood model probabilities are 
-computed for each model as measures of model fit as seen in Table(1).
--->
-<!--
-![Interval Plot](./pictures/compPlot.pdf)
-
-           Poisson        Binomial      NB                 BB  
---------- -------------  ------------- ------------------ -------------
-MSE         0.05286        0.05683      0.05188            0.05170
-DIC         5675.25        6759.86      1301.51            1261.00
-WAIC        5840.56        6939.74      1302.19            1261.30
-$pr(M|y)$   $\approx0$     $\approx0$   $\approx10^{-16}$  $\approx1$   
--->					 
-<!--NB pr(M|y)=5.175555e-17-->
-<!--
-The large spread of the observed species compositions seen in Figure(1) 
-visually demonstrate the degree of overdispersion present in port sampling 
-data. The Poisson and binomial models disregaurd this overdispersion to 
-prioritize fitting the data mean.
--->
 
 The Poisson and binomial models attempt to model both the mean and 
 residual variance of the data with a single parameter for each species. By 
 definition these models have residual varinces which are tied to the species 
 means. Simply estimating the mean parameters in these cases may not be 
 sufficient to produce models which predict well.
-<!--
- can tend to 
-biase mean estimates, in overdispersed stratum, toward larger values, for the 
-sake of estimating larger residual variances. Similarly variance estimates may 
-tend to be biased toward smaller values for the sake of estimating smaller 
-means. 
--->
+
+
 In contrast, the negative binomial and beta-binomial models estimate an 
 additional parameter which is intended to disentangle the mean and residual 
 variance estimates. Thus it is possible that the negative binomial and 
@@ -179,51 +148,26 @@ beta-binomial models may produce more accurate estimates of both the mean and
 residual variance.
 
 For each of the above mentioned models The predictive species composition 
-distributions are visualized in Figure (1) as 95% Highest Density Intervals 
+distributions are visualized in Figure(1) as 95% Highest Density Intervals 
 (HDI) $(citations)$, plotted on top of the predictive means for each model and 
 the observed species compositions from the data in Figure(1). For brevity we 
 only consider the most prevalent six species in this example 
 (CLPR, BCAC, WDOW, BLGL, ARRA, BANK). Additionally, the MSE, DIC, WAIC, and 
 Bayesian marginal likelyhood model probabilities are computed for each model 
-as measures of model fit as seen in Table(1).
+as measures of model fit as seen in Table(1). 
 
-
-<!--
-All of the measures in Table(1) consistently agree that the negative binomial 
-and beta-binomial models out perform the overdispersed Poisson and binomial 
-models. Furthermore, all of the metrics in Table(1) indicate that the beta-binomial model outperforms the negative binomial model. Depending 
-on the users value system toward model selection (e.g. predictive or 
-inferential), the support for the beta-binomial model over the negative 
-binomial model may vary, but it is worth noting that the more robust model 
-selction tools show stronger support for the beta-binomial model, with Bayesian 
-model probabilities indicating practically conclusive support for the 
-beta-binomial model. 
-
-The split beta-binomial intervals seen in Figure(1) are the consequence of 
-confining a large amount of residual variability to the unit interval. The 
-beta-binomial is the only model considered here, which estimates such a 
-large degree of variablility and thus it is the only model that produces 
-predictive species composition distributions of the sort. Figure(2) shows the 
-beta-binomial predictive distributions as a violin plot demonstrating how the
-beta-binomial model arranges predictive density over the unit interval. The 
-predictive intervals in Figure(1) are the smallest possible regions on each 
-density so that the intervals contain 95% of the predictive density (i.e. 
-these regions represent the densest packing of 95% probbaility under each 
-predictive distribution). For the cases of Aurora and Bank rockfish, the 
-empty upper regions seen in Figure(1) are understandable in terms of the 
-relatively low density region of the posterior they represent, as seen in 
-Figure(2).
-
-![Violin Plot](./pictures/compVioplot.pdf)
--->
+Table(1) show a clear prefernce for the overdispersed models, with the most 
+overall support for the beta-binomial model. This initial result guides the 
+use of the beta-binomial data generating model.
 
 ###Operationalized Model
 
 For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
 the $j^{th}$ species' weight, in the $k^{th}$ port, caught with the $l^{th}$
-gear, in the $\eta^{th}$ quarter, of year $m$. The $y_{ijklm\eta}$ are modeled 
-as observations from a beta-binomial distribution conditional on parameters 
-$\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$,
+gear, in the $\eta^{th}$ quarter, of year $m$. As supported by the results in 
+Figure(1) and Table(1), the $y_{ijklm\eta}$ are modeled as observations from a 
+beta-binomial distribution conditional on parameters $\mu_{jklm\eta}$ and 
+$\sigma^2_{jklm\eta}$,
 
 <!--$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\bm{\theta}, \rho).$$-->
 $$y_{ijklm\eta} \sim BB(\mu_{jklm\eta},~\sigma^2_{jklm\eta}).$$
@@ -249,7 +193,8 @@ distribution. The situation where $\rho\rightarrow0$ represents totally
 independent information content amoug replicates within a cluster, and the 
 beta-binomial model approaches the binomial model. $\rho$ explicitly models 
 average overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the 
-model flexiblity at the stratum level through through it's linear predictor,
+model flexiblity at the stratum level through the $\theta$ linear 
+predictors,
 
 <!--$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$-->
 $$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\eta}.$$
@@ -260,7 +205,7 @@ for each of the species ($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and
 gear-group ($\beta^{(g)}_l$) categories. Finally year and quarter parameters 
 are indicated generally here inside the $\beta^{(t)}_{m\eta}$ term. Several 
 forms for $\beta^{(t)}_{m\eta}$ are explored each implying a different prior 
-and partial pooling strategy as described in the following section(XX).
+and partial pooling strategies as described in the following section(XX).
 
 ## Priors
 
@@ -280,14 +225,15 @@ group parameters.
 
 In returning to the time parameter model, $\beta^{(t)}_{m\eta}$, it is useful 
 to consider how the inclusion of predictively superfluous parameters may cause 
-overfitting and weaken model performance (cite). Simply put, the biase-variance 
-dilemma means that model formulation is not simply a biase reduction task, but 
-rather the goal is to formulate models which reduce biase, while jointly 
-minimizing uncertainty. Janyes (date) describes how model formulation 
-strategies which allow for the inclusion of biase may dramatically reduce 
-uncertainty, and produce better overall models. As a simple example consider 
-how the MSE metric can be explicitly written to value both estimator biase and 
-variance. 
+overfitting and weaken model performance through the bias-variance dilemma 
+(Ramasubramanian, K., \& Singh, A., 2016). Simply put, the bias-variance dilemma means that model formulation is 
+not simply a bias reduction task, but rather the goal is to formulate models 
+which reduce bias, while jointly minimizing uncertainty. Janyes (2003, pg. 511) 
+describes how the inclusion of estimation bias via the Bayesian methodolgy may 
+produce better performing estimates, more quickly, than unbiased counterparts.   
+Amoung the simlest ways to see the principle is in the structure of the MSE 
+performance metric, and how it can be explicitly written to value both 
+estimator bias and variance, as follows. 
 
 $$\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}$$
 
@@ -299,7 +245,7 @@ with good MSEs jointly minimize the bias of their parameter estimates, in
 addition to estimation uncertainty of their parameters. 
 -->
 
-Furthermore a model can mimimize biase, without reguard for estimation uncertainty, 
+Furthermore a model can mimimize bias, without reguard for estimation uncertainty, 
 by including one model parameter to be fit to each observation. These 
 parameter estimates are totally unbiased, however such a model is also 
 predictively usless since each estimated parameter is specifically bound to a  
@@ -425,15 +371,17 @@ $Choose Model M4-M5$
 As a final check of the model structure and the implied prior information the 
 prior predictive is considered. The prior predictive distribution summarizes 
 the information is intrinsic to the model structure itself, in the absense 
-of data. The prior predictive of modeled weight is considered over the nominal 
-100 pound cluster as described in the the sampling protocal (cite). 
+of data. The prior predictive of modeled weight is considered over a 100 pound 
+cluster size, which is consistent with aggregating the two nominal 50 pound 
+cluster samples described by Sen (1984) in the original sampling protocol. 
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
 As seen in Figure(XX) the prior predictive of M5 is both symmetric and quite 
 diffuse over the 100 pound domain. The U shape of the distribution is a side 
 effect of the diffusion of the selected prior. As data are added to the model 
-the indecisive U shape of this distribution collapses toward the data. 
+the indecisive U shape of this distribution collapses toward the data in the 
+posterior. 
 
 ## Species Composition Prediction
 <!--
@@ -488,7 +436,7 @@ Presently, stratum with deminishingly small sample sizes are managed by an ad-
 hoc "borrowing" protocol, outlined in Pearson and Erwin (1997). The protocol 
 for pooling data across port complexes calls for spatial pooling only when 
 forced to fill holes brought about by unsampled strata. Naturally, such a 
-protocol introduces a biase in speecies compositions which depends on the 
+protocol introduces a bias in speecies compositions which depends on the 
 availiability of data in each stratum and thus makes comparisions between 
 periods with pooled and unpooled data inconsistent with eah other. 
 Furthermore, the current ad-hoc "borrowing" protocol makes it difficult to 
@@ -897,7 +845,7 @@ seasonality from year to year.
 	* methods
 	* results
 	* discussion
-* Add MSE biase variance premonition/forshadowing
+* Add MSE bias variance premonition/forshadowing
 
 
 
@@ -956,6 +904,80 @@ but it represents even less potential for
 partial pooling through its heirarchical prior variance on 
 $\beta^{(y:q)}_{m\eta}$, sin . 
 -->
+
+
+
+
+
+
+
+
+<!--The posteriors from each model imply different predictive species composition distributions.-->
+<!--
+The predictive species composition distributions from each model are 
+visualized in Figure (1) as 95% Highest Density Intervals (HDI) $(citations)$, 
+plotted on top of the predictive means for each model and the observed species 
+compositions from the data in Figure(1). For brevity we only consider the most 
+prevalent six species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, BANK). 
+Additionally, the 
+MSE, DIC, WAIC, and Bayesian marginal likelyhood model probabilities are 
+computed for each model as measures of model fit as seen in Table(1).
+-->
+<!--
+![Interval Plot](./pictures/compPlot.pdf)
+
+           Poisson        Binomial      NB                 BB  
+--------- -------------  ------------- ------------------ -------------
+MSE         0.05286        0.05683      0.05188            0.05170
+DIC         5675.25        6759.86      1301.51            1261.00
+WAIC        5840.56        6939.74      1302.19            1261.30
+$pr(M|y)$   $\approx0$     $\approx0$   $\approx10^{-16}$  $\approx1$   
+-->					 
+<!--NB pr(M|y)=5.175555e-17-->
+<!--
+The large spread of the observed species compositions seen in Figure(1) 
+visually demonstrate the degree of overdispersion present in port sampling 
+data. The Poisson and binomial models disregaurd this overdispersion to 
+prioritize fitting the data mean.
+-->
+
+<!--
+ can tend to 
+bias mean estimates, in overdispersed stratum, toward larger values, for the 
+sake of estimating larger residual variances. Similarly variance estimates may 
+tend to be biased toward smaller values for the sake of estimating smaller 
+means. 
+-->
+
+<!--
+All of the measures in Table(1) consistently agree that the negative binomial 
+and beta-binomial models out perform the overdispersed Poisson and binomial 
+models. Furthermore, all of the metrics in Table(1) indicate that the beta-binomial model outperforms the negative binomial model. Depending 
+on the users value system toward model selection (e.g. predictive or 
+inferential), the support for the beta-binomial model over the negative 
+binomial model may vary, but it is worth noting that the more robust model 
+selction tools show stronger support for the beta-binomial model, with Bayesian 
+model probabilities indicating practically conclusive support for the 
+beta-binomial model. 
+
+The split beta-binomial intervals seen in Figure(1) are the consequence of 
+confining a large amount of residual variability to the unit interval. The 
+beta-binomial is the only model considered here, which estimates such a 
+large degree of variablility and thus it is the only model that produces 
+predictive species composition distributions of the sort. Figure(2) shows the 
+beta-binomial predictive distributions as a violin plot demonstrating how the
+beta-binomial model arranges predictive density over the unit interval. The 
+predictive intervals in Figure(1) are the smallest possible regions on each 
+density so that the intervals contain 95% of the predictive density (i.e. 
+these regions represent the densest packing of 95% probbaility under each 
+predictive distribution). For the cases of Aurora and Bank rockfish, the 
+empty upper regions seen in Figure(1) are understandable in terms of the 
+relatively low density region of the posterior they represent, as seen in 
+Figure(2).
+
+![Violin Plot](./pictures/compVioplot.pdf)
+-->
+
 
 
 <!--0.01948392 0.98055003--> 
@@ -1183,6 +1205,12 @@ page 124
 
 %
 \bibitem{bma} Hoeting, J. A., Madigan, D., Raftery, A. E., \& Volinsky, C. T. (1999). Bayesian model averaging: a tutorial. Statistical science, 382-401.
+
+%
+\bibitem{jaynesBook} Jaynes, E. T. (2003). Probability theory: The logic of science. Cambridge university press.
+
+%
+\bibitem{bvBook} Ramasubramanian, K., \& Singh, A. (2016). Machine Learning Using R. Apress.
 
 %
 \bibitem{glmBook} McCullagh P. \& Nelder, J.A. (1989). Generalized Linear Models, 2nd ed. London: Chapman and Hall.
