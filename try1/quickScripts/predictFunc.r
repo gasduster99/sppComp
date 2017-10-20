@@ -39,7 +39,7 @@ cleanZero = function( mcat ){
 
 
 #
-predPerf = function(datMcatFill, prob, avgPath, threads){
+predPerf = function(datMcatFill, prob, avgPath, threads, adj){
 	#
 	#end = 1
 	#preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric())	
@@ -78,7 +78,7 @@ predPerf = function(datMcatFill, prob, avgPath, threads){
 					#
 					##print(s)
 	#				#spIntHDI = hdi(sp[,s], credMass=prob)  
-					spIntHDI = hdi(density(sp[,s], from=0, to=1), credMass=prob, allowSplit=T)
+					spIntHDI = hdi(density(sp[,s], from=0, to=1, adjust=adj), credMass=prob, allowSplit=T)
                	               		#spIntHDI = HDInterval:::hdi.density(bkde(sp[,s], range.x=c(0,1), canonical=T), credMass=prob, allowSplit=T)
                	               		spIntCI = t(quantile(sp[,s], c((1-prob)/2, prob+(1-prob)/2)))
         #                       		##

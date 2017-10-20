@@ -122,7 +122,9 @@ gos = c(
 #
 perf = list()
 timePeriods = Sys.glob(sprintf('%s*to*/', path))
-for( tp in timePeriods ){
+aCount = 1
+adjusts = rep(2, 5)
+for( tp in timePeriods[1] ){
 	#
 	yearsStr = strsplit(tp, '/')[[1]][6]
 	##these data do not include the implied zeros
@@ -209,13 +211,15 @@ for( tp in timePeriods ){
 		#print(head(datMcatFill, 3))	
 		#NOTE: MCAT190 is SABL only; and does not return any preds!!!!!	
 		avgPath = sprintf('%sTop/avgModel/', mcat)
-		preds = predPerf(datMcatFill, 0.68, avgPath, 4)	
+		preds = predPerf(datMcatFill, 0.68, avgPath, 4, adjusts[aCount])	
 		perf[[mcat]] = preds
 		#
 		#print(nameSplit[7])
 		#print(preds$ciAvgAcc)
 		print(preds$hdiAvgAcc)
 		writeLines('')
+		#
+		aCount = aCount+1
 	}
 }
 
