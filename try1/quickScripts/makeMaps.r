@@ -122,8 +122,13 @@ gos = c(
 #
 perf = list()
 timePeriods = Sys.glob(sprintf('%s*to*/', path))
-aCount = 1
-adjusts = rep(2, 5)
+aCount = 4
+adjusts = c(
+	#78-82:*250,    *253,   265,  *269,  *956
+	       4.1/12,3.4/12,1.65/16,5.48/12,3.1/12,
+	#83-90:_*250,   253,   259,   269,   663,  _667,  *956, _*959,  *960, _*961
+	      4.4/12,1.85/12,2.0/12,9.7/12,1.5/12,6.2/12,4.4/12,2.8/12,2.3/12,2.35/12
+)
 for( tp in timePeriods[1] ){
 	#
 	yearsStr = strsplit(tp, '/')[[1]][6]
@@ -131,7 +136,7 @@ for( tp in timePeriods[1] ){
 	#dat = read.csv(sprintf('../data%s.csv', yearsStr), stringsAsFactors=F)	
 	#
 	mcats = Sys.glob(sprintf('%sMCAT*/', tp))
-	for( mcat in mcats ){ #foreach(){
+	for( mcat in mcats[6] ){ #foreach(){
 		##skippers
 		#if( mcat=="/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT250/" ){ next }	
 		if( !(mcat%in%gos) ){ next }
@@ -207,11 +212,11 @@ for( tp in timePeriods[1] ){
 		
 		#
 		print(mcat)
-		datMcatFill = cleanZero( mcat )
+		datMcatFill = cleanZero(mcat, 8)
 		#print(head(datMcatFill, 3))	
 		#NOTE: MCAT190 is SABL only; and does not return any preds!!!!!	
 		avgPath = sprintf('%sTop/avgModel/', mcat)
-		preds = predPerf(datMcatFill, 0.68, avgPath, 4, adjusts[aCount])	
+		preds = predPerf(datMcatFill, 0.99, avgPath, 8, adjusts[aCount])	
 		perf[[mcat]] = preds
 		#
 		#print(nameSplit[7])
@@ -253,7 +258,7 @@ for( tp in timePeriods[1] ){
 #        ylab='Proportion',
 #        main='' #'Species Composition'
 #)
-#axis(1, at=1:c, labels=head(names(ms), c))
+#axis(1, at=1:c, ctions, A, of thelabels=head(names(ms), c))
 #for(i in 1:c){ segments(i, qs[i,1], i, qs[i,2], lwd=5) }
 ##
 #opar
