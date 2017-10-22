@@ -817,6 +817,39 @@ seasonality from year to year.
 * Prediction v. Data
 	* Report predictive accuracy
 
+##78-82
+    68% 95% 99%
+--- --- --- ---
+195  NA  NA  NA
+250  
+253
+262  NA  NA  NA
+265
+269
+270  NA  NA  NA
+956
+959  NA  NA  NA
+961  NA  NA  NA
+
+##83-90
+    68%   95%   99%
+--- ----- ----- -----
+245 NA    NA    NA
+250 68.1% 96.0% 99.0%
+253 69.3% 97.1% 98.9%
+259 83.8% 91.9% 92.9% 
+262  NA   NA    NA
+269 68.6% 94.2% 94.7% 
+270  NA   NA    NA
+663  NA   NA    NA 
+667 69.4% 92.5% 93.5%
+956 67.5% 96.2% 99.0%
+959 67.4% 96.4% 99.0%
+960 68.0% 96.1% 98.6%
+961 68.6% 94.6% 97.8%
+
+
+
 # Compare to Current ($Discussion$)
 
 <!--
