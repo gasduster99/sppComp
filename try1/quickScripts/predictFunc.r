@@ -3,8 +3,9 @@
 #
 
 #
-cleanZero = function( mcat ){
+cleanZero = function( mcat, cores ){
 	#mcat: a path to the relavent mcat 
+	#cores: threads parallel
 
 	#
 	mcatNum = strsplit(strsplit(mcat, '/')[[1]][7], 'T')[[1]][2]
@@ -14,7 +15,49 @@ cleanZero = function( mcat ){
 	#
         sppEff = unique(dataClean$species)
         end = length(dataClean$sampleNumber)
-        #
+	
+        ##
+	#uid = unique(dataClean$sampleNumber)
+	#U = length(uid)
+	#bounds = seq(1, U, ceiling(length(uid)/cores))	
+	#luid = split(uid, bounds)
+	#dataClean = mclapply( luid, FUN = function(vid){
+	#	#
+        #	addd = numeric(0)
+	#	for(id in vid){
+	#		#
+        #		wid = which(dataClean$sampleNumber==id)
+	#		#
+        #		off  = dataClean$clustSize[wid[1]]
+        #		port = dataClean$portComplex[wid[1]]
+        #		gear = dataClean$gearGroup[wid[1]]
+        #		year = dataClean$year[wid[1]]
+        #		qtr  = dataClean$qtr[wid[1]]
+	#		#       #       
+        #		for(sn in sppEff[!sppEff%in%dataClean$species[wid]]){
+        #		        #
+        #		        end = end + 1
+        #		        #
+	#			add = matrix(NA, ncol=10, nrow=1)
+        #                	colnames(add) = c('sampleNumber', 'species', 'year', 'qtr', 'portComplex', 'gearGroup', 'mcat', 'isLive', 'weights', 'clustSize')
+        #                	add[,'sampleNumber'] = id
+        #                	add[,'species'] = sn
+        #                	add[,'year'] = year
+        #                	add[,'qtr']  = qtr
+        #                	add[,'portComplex'] = port
+        #                	add[,'gearGroup'] = gear
+        #                	add[,'mcat'] = mcatNum
+        #                	add[,'isLive'] = 'N'
+        #                	add[,'weights'] = 0
+        #                	add[,'clustSize'] = off
+        #		        #dataClean[end,] = c(id, sn, year, qtr, port, gear, mcatNum, 'N', 0, off)
+        #			addd = rbind(addd, add)
+	#		}
+	#	}
+	#	return(addd)
+	#}, mc.cores=cores)
+	#dataClean = as.data.frame(do.call(rbind, dataClean))
+	
         #fill in zero data (see ../../source/tempMakeDesign.r)
         for(id in unique(dataClean$sampleNumber)){
                #
@@ -34,6 +77,7 @@ cleanZero = function( mcat ){
                }
         }
 	#
+
 	return( dataClean )
 }
 
@@ -132,7 +176,7 @@ predPerf = function(datMcatFill, prob, avgPath, threads, adj){
 		#			        #wpCiMean = mean(inOut)
 		#			        #
 		#			        #, wpHdiMean, wpCiMean
-					        pred[end,] = c(p, g, q, y, s, cpHdiMean, cpCiMean, length(cp))
+					        pred[end,] = c(as.character(p), as.character(g), q, y, as.character(s), cpHdiMean, cpCiMean, length(cp))
 					        end = end+1
 					}
 				}
