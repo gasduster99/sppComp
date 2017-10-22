@@ -826,10 +826,10 @@ seasonality from year to year.
 262  NA   NA    NA
 265 69.6% 96.0% 97.8%
 269 68.2% 88.8% 90.2%
-270  NA  NA  NA
+270  NA  NA     NA
 956 68.3% 96.7% 99.2%
-959  NA  NA  NA
-961  NA  NA  NA
+959  NA  NA     NA
+961  NA  NA     NA
 
 ##83-90
     68%   95%   99%
