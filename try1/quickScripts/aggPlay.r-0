@@ -281,51 +281,51 @@ out = inla(weight~species + portComplex + gear + f(year) + f(qtr),
 #out = inla.hyperpar(out)
 print(summary(out))
 
+##
+#writeLines('BOTH RANDOM PLUS V MODEL')
+#out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
+#       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#	#control.inla=list(
+#	#	 strategy='gaussian',
+#        #        int.strategy='eb',
+#        #        tolerance=1e-10,
+#        #        h=1e-10,
+#        #        lincomb.derived.only=F
+#	#),
+#	control.compute=list(
+#        	config=T,
+#                waic=T,
+#                dic=T
+#       	),
+#       	control.mode = list(
+#               restart=T
+#       	)
+#)
+##out = inla.hyperpar(out)
+#print(summary(out))
 #
-writeLines('BOTH RANDOM PLUS V MODEL')
-out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
-       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-	#control.inla=list(
-	#	 strategy='gaussian',
-        #        int.strategy='eb',
-        #        tolerance=1e-10,
-        #        h=1e-10,
-        #        lincomb.derived.only=F
-	#),
-	control.compute=list(
-        	config=T,
-                waic=T,
-                dic=T
-       	),
-       	control.mode = list(
-               restart=T
-       	)
-)
-#out = inla.hyperpar(out)
-print(summary(out))
-
-#
-writeLines('V MODEL')
-out = inla(weight~species + portComplex + gear + f(QGivenY), 
-       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-	#control.inla=list(
-	#	 strategy='gaussian',
-        #        int.strategy='eb',
-        #        tolerance=1e-10,
-        #        h=1e-10,
-        #        lincomb.derived.only=F
-	#),
-	control.compute=list(
-        	config=T,
-                waic=T,
-                dic=T
-       	),
-       	control.mode = list(
-               restart=T
-       	)
-)
-#out = inla.hyperpar(out)
-print(summary(out))
+##
+#writeLines('V MODEL')
+#out = inla(weight~species + portComplex + gear + f(QGivenY), 
+#       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#	#control.inla=list(
+#	#	 strategy='gaussian',
+#        #        int.strategy='eb',
+#        #        tolerance=1e-10,
+#        #        h=1e-10,
+#        #        lincomb.derived.only=F
+#	#),
+#	control.compute=list(
+#        	config=T,
+#                waic=T,
+#                dic=T
+#       	),
+#       	control.mode = list(
+#               restart=T
+#       	)
+#)
+##out = inla.hyperpar(out)
+#print(summary(out))
 
 
 
