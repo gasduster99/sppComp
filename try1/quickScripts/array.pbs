@@ -1,10 +1,10 @@
 #!/bin/sh
  
-#PBS -N priorPlay.r
-#PBS -t 0-6
+#PBS -N aggPlay.r
+#PBS -t 3,4,5
 #PBS -l mem=30GB
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=48:00:00
+#PBS -l nodes=1:ppn=20
+#PBS -l walltime=84:00:00
 
  
 cd ${PBS_O_WORKDIR}
