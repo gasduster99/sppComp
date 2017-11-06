@@ -4,7 +4,9 @@ rm(list=ls())
 library(INLA)
 library(boot)
 library(vioplot)
+library(foreach)
 library(parallel)
+library(doParallel)
 library(HDInterval)
 library(KernSmooth)
 
@@ -68,6 +70,13 @@ clustWeight = aggregate( data.frame(dat$weight), by=list(dat$id), FUN=sum )
 for(cw in 1:dim(clustWeight)[1]){ dat[dat[,1]==clustWeight[cw, 1], dim(dat)[2]]=clustWeight[cw, 2] }
 colnames(dat)[10] = 'clustSize'
 dat$portComplex = as.character(dat$portComplex)
+dat$gear = as.character(dat$gear)
+
+#aggregate gear to OTH=UNK+FPT; TWL=TWL+MDT; HKL; NET
+dat$gear[dat$gear=='MDT'] = 'TWL'
+dat$gear[dat$gear=='FPT'] = 'OTH'
+dat$gear[dat$gear=='UNK'] = 'OTH'
+dat$gear[dat$gear=='GFT'] = 'OTH'
 
 #add zeros/account for clusters
 yearEff = unique(dat$year)
@@ -239,7 +248,7 @@ for(y in yearEff){
 #        	restart=T
 #	)
 #)
-##out = inla.hyperpar(out)
+#out = inla.hyperpar(out)
 #print(summary(out))
 
 #try f(year) + qtr
@@ -375,20 +384,25 @@ colnames(distQY) = who
 
 writeLines('MSE')
 
-#registerDoParallel(cores=length(portEff))
-#preds = foreach( p=portEff )%dopar%{
-preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
-pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
-for(p in portEff){
-        ##
-        #end  = 1 
-        #pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
-        ##
-        for(g in gearEff){#[1]){
-        for(q in qtrEff ){#[1] ){
-        for(y in yearEff){#[1]){
+#
+##DAT0 = DAT[!is.na(DAT$id),]
+#end = 1
+#pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+##preds = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F)
+#for(p in portEff){
+registerDoParallel(cores=round(length(portEff)/2))
+preds = foreach( p=portEff )%dopar%{
+        #
+        end  = 1 
+        pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), mse=numeric(), n=numeric(), stringsAsFactors=F) #weightPredHDI=numeric(), weightPredCI=numeric(), propPredHDI=numeric(), propPredCI=numeric(), n=numeric(), stringsAsFactors=F)
+        #
+        for(g in gearEff){ print(g)
+        for(q in qtrEff ){
+        for(y in yearEff){
                 #observations
-		W = DAT[DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y,]
+		wwhere = which(DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y)
+		W = cbind(DAT[wwhere,], wwhere) #DAT[DAT$portComplex==p & DAT$gear==g & DAT$qtr==q & DAT$year==y,]
+		colnames(W)[length(colnames(W))] = 'wwhere'
                 #avoid the case where no data exists
                 if( dim(W)[1]>0 ){
 			#cluster info
@@ -401,14 +415,15 @@ for(p in portEff){
 			colnames(distQY) = who
 			#make predictive distributions
 			for(w in rev(who)){
-			        #
-			        where = which( 
-					DAT$portComplex==p 	& 
-					DAT$gear==g 		& 
-					DAT$qtr==q 		& 
-					DAT$year==y 		& 
-					DAT$species==w
-				)[1]
+			        ##
+			        #where = which( 
+				#	DAT$portComplex==p 	& 
+				#	DAT$gear==g 		& 
+				#	DAT$qtr==q 		& 
+				#	DAT$year==y 		& 
+				#	DAT$species==w
+				#)[1]
+				where = W[ which(W$species==w)[1], 'wwhere' ]
 			        mup   = sapply(postQY, function(logSam){
 			                #
 			                idxStr = sprintf('Predictor:%06d', where)
@@ -482,18 +497,14 @@ for(p in portEff){
                         }
                 }
         }}}
-        #return(pred)
+        return(pred)
 }
-##
-#preds = do.call(rbind, preds)
-#preds$mse = as.numeric(preds$mse)
-#preds$n   = as.numeric(preds$n)
-##
-#mse = sum(preds$mse*preds$n)/sum(preds$n)
-pred$mse = as.numeric(pred$mse)
-pred$n = as.numeric(pred$n)
-#mse = sum(pred$mse*pred$n)/sum(pred$n)
-mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na(pred$mse)])
+#
+preds = do.call(rbind, preds)
+preds$mse = as.numeric(preds$mse)
+preds$n   = as.numeric(preds$n)
+##mse = sum(preds$mse*preds$n)/sum(preds$n)
+mse = sum(preds$mse[!is.na(preds$mse)]*preds$n[!is.na(preds$mse)])/sum(preds$n[!is.na(preds$mse)])
 
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))

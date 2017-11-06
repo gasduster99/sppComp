@@ -14,8 +14,8 @@ library(RColorBrewer)
 
 
 #
-minYear = 1978 # 1983 # 1991 # 2000 # 
-maxYear = 1982 # 1990 # 1999 # 2015 # 
+minYear = 2000 # 1978 # 1983 # 1991 #
+maxYear = 2015 # 1982 # 1990 # 1999 #
 #mcat = 250
 
 #driver
@@ -115,26 +115,59 @@ mcatQProbs = cumsum(landsTotals$weight[mcatOrd])/sum(landsTotals$weight)#cumsum(
 mcatProbs = landsTotals$weight[mcatOrd]/sum(landsTotals$weight)
 samProbs = samCounts$n[mcatOrd]/sum(samCounts$n)
 names(mcatQProbs) = landsTotals$mcat[mcatOrd]
-
 #
-palette(brewer.pal(n = 8, name = "Set3"))#
+pThing = t(t(tb[sppOrd,mcatOrd][,mcatQProbs<prob])/colSums(tb[sppOrd,mcatOrd][,mcatQProbs<prob]))
+#
+special = c("BANK", "BCAC", "ARRA", "BLGL", "BLCK", "CLPR", "YTRK", "CNRY", "BLUR", "BRWN", "VRML", "WDOW")#, "BRNZ", "CWCD", "RDBD")
+cols = brewer.pal(n = 12, name = "Paired")
+bw = c('grey65', 'grey75') #rep('grey60', 2) #
+#
+pThing = rbind(pThing[rownames(pThing)%in%special,], pThing[!rownames(pThing)%in%special,])
+#
+j=0
+pCol = rep(NA, dim(pThing)[1])
+for(i in 1:dim(pThing)[1]){
+	spp = rownames(pThing)[i]
+	where = which(special==spp)
+	if( length(where)==0 ){ 
+		pCol[i] = bw[(j%%2)+1]
+		j = j+1
+	} else{
+		pCol[i] = cols[where]
+	}
+}
 #
 pdf(sprintf('%sto%sBar2.pdf', minYear, maxYear))
-par(mar = c(5,7,2,5))
-barplot( tb[sppOrd,mcatOrd][,mcatQProbs<prob]/sum(tb[sppOrd,mcatOrd][,mcatQProbs<prob]),
+par(mar = c(3,5,2,2))
+par(cex.axis=1.5, cex.lab=1.5, cex.main=1.5)
+layout(matrix(c(2,2,1,1,1), nrow=5, ncol=1))
+barplot( pThing,
 	ylim=c(0, 1), #ylim=c(0, 350000),
 	border=NA,
 	las=2,
-	col=1:length(sppOrd), 
-	main=sprintf('%s-%s', minYear, maxYear), 
-	ylab='Proportion of Sampled Weight\n\n' 
+	col=pCol, 
+	#main=sprintf('%s-%s', minYear, maxYear), 
+	ylab='Proportion of Sampled Weight Within MCAT'
 )
-par(new=T)
-plot((1:sum(mcatQProbs<prob)), mcatProbs[mcatQProbs<prob], type='l', lty=1, axes=F, ylim=c(-0.6, 0.5), ylab='', xlim=c(1-0.5, sum(mcatQProbs<prob)+0.5), xlab='Market Category')
-points((1:sum(mcatQProbs<prob)), mcatProbs[mcatQProbs<prob], cex=0.7, pch=19)
-lines((1:sum(mcatQProbs<prob)), samProbs[mcatQProbs<prob], col='blue')
-points((1:sum(mcatQProbs<prob)), samProbs[mcatQProbs<prob], cex=0.7, pch=19, col='blue')
-axis(4, at=seq(0,0.55,0.1))
-mtext(side=4, line=3, '                                                                    Proportion')
+mtext(colSums(pThing>0), side=3, line=0.8, at=head(seq(0, 100, 1.2)+0.7, length(colSums(pThing>0))))
+#par(new=T)
+par(mar = c(0,5,2,2))
+plot((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], 
+	type='l', 
+	lty=1, 
+	axes=F, 
+	ylim=c(0, 1), 
+	xlim=c(1, sum(mcatQProbs<prob)+1),
+	ylab='Proportion',
+	xlab='',
+	main=sprintf('%s-%s', minYear, maxYear)
+	#xlim=c(1-0.5, sum(mcatQProbs<prob)+0.5), 
+	#xlab='Market Category'
+)
+points((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], cex=0.7, pch=19)
+lines((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], col='blue')
+points((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], cex=0.7, pch=19, col='blue')
+axis(2, at=seq(0, 1, 0.2), las=1)
+legend('right', legend=c("Landed Weight", "# of Samples"), col=c('black', 'blue'), lty=c(1, 1), pch=c(19, 19), cex=1.5, bty='n')
 dev.off()
 

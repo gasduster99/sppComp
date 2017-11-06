@@ -504,7 +504,7 @@ preds = do.call(rbind, preds)
 preds$mse = as.numeric(preds$mse)
 preds$n   = as.numeric(preds$n)
 ##mse = sum(preds$mse*preds$n)/sum(preds$n)
-mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na(pred$mse)])
+mse = sum(preds$mse[!is.na(preds$mse)]*preds$n[!is.na(preds$mse)])/sum(preds$n[!is.na(preds$mse)])
 
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))
