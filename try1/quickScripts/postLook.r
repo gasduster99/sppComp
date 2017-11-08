@@ -92,6 +92,7 @@ for(m in mcats){
 #}, mc.cores=length(mcats))
 #nowComps = do.call(rbind, nowComps)
 colnames(nowComps) = c('source', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'comp')
+nowComps = data.frame(nowComps)
 save(yearEff, qtrEff, gearEff, portEff, mcats, minYear, maxYear, nowComps, file=sprintf('%sto%sDonComps.RData', minYear, maxYear))
 
 #load('1978to1982DonComps.RData')
