@@ -201,6 +201,84 @@ predPerf = function(datMcatFill, prob, avgPath, threads, adj){
 	return(out)
 }
 
+#
+postOpt = function(adj, mcat){
+        #	
+	writeLines(sprintf('%s:', adj))
+	adj = max(0.001, adj)
+	#
+        probs = c(0.68, 0.95, 0.99)
+        registerDoParallel(cores=threads)
+        #
+        sqErrs = c()
+        rates = c()
+        for(prob in probs){
+                preds = foreach( p=ports )%dopar%{
+                #for(p in ports){
+                        #
+                        end  = 1
+                        pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), propPostHDI=numeric(), propPostCI=numeric(), stringsAsFactors=F)
+                        #
+                        for(g in gears){
+                        for(q in qtrs ){
+                        for(y in years){
+                                #
+                                dp = nowComps[nowComps[,'mcat']==mcat & nowComps[,'year']==y & nowComps[,'qtr']==q & nowComps[,'gear']==g & nowComps[,'port']==p,]
+                                donSpp = dp[,'species'] #<<<< I WAS HERE
+                                dp = as.numeric(dp[,'comp'])
+                                names(dp) = donSpp
+                                #
+                                lp = read.csv(sprintf('%s/%s/%s/%s/%s/lpPost.csv', avgPath, p, g, q, y))
+                                lp = lp[!is.na(lp[,1]),]
+                                #boxplot(lp, ylim=c(0, 0.3))
+                                for(s in donSpp[donSpp%in%colnames(lp)]){ #NOTE: donSpp){ some species that are not in my numbers
+                                        #
+                                        spIntHDI = hdi(density(lp[,s], from=0, to=1, adjust=adj), credMass=prob, allowSplit=T)
+                                        spIntCI = t(quantile(lp[,s], c((1-prob)/2, prob+(1-prob)/2)))
+                                        #
+                                        #spHDI
+                                        inOut = 0
+                                        for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(dp[s], spIntHDI[i,], rightmost.closed=T)==1 | inOut }
+                                        #inOut = rep(0, length(cp))    #check if in interval, convert to proper bool, and unite with other interva
+                                        #for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(cp, spIntHDI[i,])==1 | inOut }
+                                        cpHdiMean = mean(inOut)
+                                        #
+                                        #spCI
+                                        inOut = 0
+                                        for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(dp[s], spIntCI[i,], rightmost.closed=T)==1 | inOut }
+                                        #inOut = rep(0, length(cp))   #check if in interval, convert to proper bool, and unite with other interval
+                                        #for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(cp, spIntCI[i,])==1 | inOut }
+                                        cpCiMean = mean(inOut)
+                                        #
+                                        pred[end,] = c(as.character(p), as.character(g), q, y, as.character(s), cpHdiMean, cpCiMean)
+                                        end = end+1
+                                }
+                        }}}
+                        return(pred)
+                        #preds = rbind(preds, pred)
+                }
+                #reduce preds
+                preds = do.call(rbind, preds)
+                preds$propPostHDI = as.numeric(preds$propPostHDI)
+                preds$propPostCI = as.numeric(preds$propPostCI)
+                #
+                sqErrs = c(sqErrs, (prob-mean(preds$propPostHDI))^2)
+                rates = c(rates, mean(preds$propPostHDI))
+        }
+        # 
+        writeLines(sprintf('c(%s, %s, %s)', rates[1], rates[2], rates[3]))
+        writeLines('')
+        #
+        return( mean(c(sqErrs, sqErrs[1])))  #)))#
+}
+
+
+
+
+
+
+
+
 ###fillZero test
 ##mcatNum = as.integer(strsplit(nameSplit[7], 'T')[[1]][2])
 ##datMcat = dat[dat$marketCategory==mcatNum,]
