@@ -10,15 +10,15 @@ library(HDInterval)
 #
 source('predictFunc.r')
 
-##
-##DON COMPS
-##
 #
+#DON COMPS
+#
+
 ##
-#mcats = c(245, 250, 253, 259, 262, 269, 270, 663, 667, 956, 959, 960, 961) # c(195, 250, 253, 262, 265, 269, 270, 956, 959, 961) #
+#mcats = c(195, 250, 253, 262, 265, 269, 270, 956, 959, 961) # c(245, 250, 253, 259, 262, 269, 270, 663, 667, 956, 959, 960, 961) #
 ##
-#minYear = 1983 # 1978 #
-#maxYear = 1990 # 1982 #
+#minYear = 1978 # 1983 #
+#maxYear = 1982 # 1990 #
 #
 ##driver
 #drv = JDBC('com.microsoft.sqlserver.jdbc.SQLServerDriver', './sqljdbc4.jar', identifier.quote="'");
@@ -43,6 +43,10 @@ source('predictFunc.r')
 #        ", minYear, maxYear)
 #)
 #lands = lands[lands$mark_cat%in%mcats,]
+##aggregate gear to OTH=UNK+FPT; TWL=TWL+MDT; HKL; NET
+#lands$gear_grp[lands$gear_grp=='MDT'] = 'TWL'
+#lands$gear_grp[lands$gear_grp=='FPT'] = 'OTH'
+#lands$gear_grp[lands$gear_grp=='UNK'] = 'OTH'
 ##
 #yearEff = unique(lands$year)
 #qtrEff  = unique(lands$quarter)
@@ -94,159 +98,303 @@ source('predictFunc.r')
 ##}, mc.cores=length(mcats))
 ##nowComps = do.call(rbind, nowComps)
 #colnames(nowComps) = c('source', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'comp')
-#nowComps = data.frame(nowComps)
+#nowComps = data.frame(nowComps, stringsAsFactors=F)
 #save(yearEff, qtrEff, gearEff, portEff, mcats, minYear, maxYear, nowComps, file=sprintf('%sto%sDonComps.RData', minYear, maxYear))
 
-#load('1978to1982DonComps.RData')
-load('1983to1990DonComps.RData')
-
+load('1978to1982DonComps.RData')
+#load('1983to1990DonComps.RData')
 
 #
 #HAND TUNE STRATA
 #
 
 #78-82:
-#       253: 
-#552: c(0.842185128983308, 0.893778452200303, 0.893778452200303)
-#       262:    
-#475: c(0.925196850393701, 0.94488188976378, 0.968503937007874)
-#	956:
-#550: c(0.806167400881057, 0.863436123348018, 0.876651982378855)
+#unlumped gears
+##195:                                                                                                       
+#1: c(0.90702479338843, 0.917355371900826, 1)                                                               
+#                                                                                                           
+#250:                                                                                                                 
+#1: c(0.123626373626374, 0.217948717948718, 0.259157509157509)                                                        
+#                                                                                                                                 
+#253:                                                                                                                             
+#1: c(0.159332321699545, 0.2701062215478, 0.355083459787557)                                                                      
+#                                                                                                                                 
+#262:                                                                                                                             
+#1: c(0.106299212598425, 0.248031496062992, 0.354330708661417)                                                                    
+#                                                                                                                                 
+#265:                                                                                                                             
+#1: c(0.647577092511013, 0.823788546255507, 0.86784140969163)
+#
+#269:
+#1: c(0.228571428571429, 0.357142857142857, 0.485714285714286)
+#
+#270:
+#1: c(0.301204819277108, 0.487951807228916, 0.512048192771084)
+#
+#956:
+#1: c(0.224669603524229, 0.405286343612335, 0.555066079295154)
+#
+#959:
+#1: c(0.389473684210526, 0.747368421052632, 0.842105263157895)
+#
+#961:
+#1: c(0.304347826086957, 0.543478260869565, 0.652173913043478)
+#
+
+#lumped gears
+#195:
+#1: c(0.762962962962963, 0.823703703703704, 0.908148148148148)
+#
+#250:
+#1: c(0.133391455972101, 0.233362394652717, 0.275210694565533)
+#
+#253:
+#1: c(0.165680473372781, 0.272189349112426, 0.353550295857988)
+#
+#262:
+#1: c(0.10546875, 0.24609375, 0.3515625)
+#
+#265:
+#1: c(0.647577092511013, 0.823788546255507, 0.86784140969163)
+#
+#269:
+#1: c(0.269230769230769, 0.375, 0.461538461538462)
+#
+#270:
+#1: c(0.303571428571429, 0.488095238095238, 0.511904761904762)
+#
+#956:
+#1: c(0.224669603524229, 0.405286343612335, 0.555066079295154)
+#
+#959:
+#1: c(0.389473684210526, 0.747368421052632, 0.842105263157895)
+#
+#961:
+#1: c(0.304347826086957, 0.543478260869565, 0.652173913043478)
+
 
 #83-90:
-#       959:
-#1090: c(0.734405531339245, 0.815271306177664, 0.874643018187284)
-#       960:    
-#760: c(0.68525641025641, 0.783333333333333, 0.847435897435897)
-#       961:    
-#701: c(0.784615384615385, 0.887449392712551, 0.937651821862348)
+#unlumped gears
+#245:
+#1: c(0.339152119700748, 0.456359102244389, 0.680798004987531)
+#
+#250:
+#1: c(0.0566455696202532, 0.140084388185654, 0.171413502109705)
+#
+#253:
+#1: c(0.239495798319328, 0.390756302521008, 0.525210084033613)
+#
+#259:
+#1: c(0.579505300353357, 0.706713780918728, 0.724381625441696)
+#
+#262:
+#1: c(0.0731707317073171, 0.181818181818182, 0.266075388026608)
+#
+#269:
+#1: c(0.270018621973929, 0.342644320297952, 0.409683426443203)
+#
+#270:
+#1: c(0.5, 0.5, 0.5)
+#
+#663:
+#1: c(0.407766990291262, 0.601941747572815, 0.640776699029126)
+#
+#667:
+#1: c(0.195710455764075, 0.364611260053619, 0.463806970509383)
+#
+#956:
+#1: c(0.0929577464788732, 0.185482123510293, 0.226435536294691)
+#
+#959:
+#1: c(0.17631143844882, 0.324515256275364, 0.381482038178265)
+#
+#960:
+#1: c(0.341666666666667, 0.451282051282051, 0.538461538461538)
+#
+#961:
+#1: c(0.14412955465587, 0.240485829959514, 0.302834008097166)
 
+##lumped gears
+#245:
+#1: c(0.342364532019704, 0.458128078817734, 0.679802955665025)
+#
+#250:
+#1: c(0.0563874832180109, 0.139729422699577, 0.170814830114634)
+#
+#253:
+#1: c(0.239495798319328, 0.390756302521008, 0.525210084033613)
+#
+#259:
+#1: c(0.579861111111111, 0.704861111111111, 0.722222222222222)
+#
+#262:
+#1: c(0.0764331210191083, 0.18895966029724, 0.271762208067941)
+#
+#269:
+#1: c(0.259896729776248, 0.323580034423408, 0.387263339070568)
+#
+#270:
+#1: c(0.5, 0.5, 0.5)
+#
+#663:
+#1: c(0.407766990291262, 0.601941747572815, 0.640776699029126)
+#
+#667:
+#1: c(0.2, 0.368, 0.466666666666667)
+#
+#956:
+#1: c(0.0926517571884984, 0.18381256656017, 0.224068157614483)
+#
+#959:
+#1: c(0.178291129868207, 0.326521545979565, 0.382644750481268)
+#
+#960:
+#1: c(0.340575079872204, 0.449840255591054, 0.538019169329073)
+#
+#961:
+#1: c(0.141260973663208, 0.237031125299282, 0.298483639265762)
 
 #
 adj = 1#552
 #mcat = 253 
 probs = c(0.68, 0.95, 0.99)
 #
-threads = 8
+threads = 10 #8
 registerDoParallel(cores=threads)
-#
-for(mcat in mcats){
-writeLines(sprintf('%s:', mcat))
 #
 yMin = substr(minYear, 3, 4)
 yMax = substr(maxYear, 3, 4)
-#
-avgPath = sprintf("/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/%sto%s/MCAT%d/Top/avgModel/", yMin, yMax, mcat)
-dynPath = avgPath
-#
-ports = list.dirs(dynPath, recursive=F)
-ports = unlist(lapply(strsplit(ports, '//'), function(x){x[2]}))
-dynPath = sprintf("%s%s/", dynPath, ports[1])
-# 
-gears = list.dirs(dynPath, recursive=F);
-gears = unlist(lapply(strsplit(gears, '//'), function(x){x[2]}))
-dynPath = sprintf("%s%s/", dynPath, gears[1])
-#
-qtrs = list.dirs(dynPath, recursive=F);
-qtrs = unlist(lapply(strsplit(qtrs, '//'), function(x){x[2]}))
-dynPath = sprintf("%s%s/", dynPath, qtrs[1])
-#
-years = list.dirs(dynPath, recursive=F);
-years = unlist(lapply(strsplit(years, '//'), function(x){x[2]}))
+#	
+predMCAT = list()
+for(mcat in mcats){
+	writeLines(sprintf('%s:', mcat))
+	#
+	avgPath = sprintf("/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/%sto%s/MCAT%d/Top/avgModel/", yMin, yMax, mcat)
+	dynPath = avgPath
+	#
+	ports = list.dirs(dynPath, recursive=F)
+	ports = unlist(lapply(strsplit(ports, '//'), function(x){x[2]}))
+	dynPath = sprintf("%s%s/", dynPath, ports[1])
+	# 
+	gears = list.dirs(dynPath, recursive=F);
+	gears = unlist(lapply(strsplit(gears, '//'), function(x){x[2]}))
+	dynPath = sprintf("%s%s/", dynPath, gears[1])
+	#
+	qtrs = list.dirs(dynPath, recursive=F);
+	qtrs = unlist(lapply(strsplit(qtrs, '//'), function(x){x[2]}))
+	dynPath = sprintf("%s%s/", dynPath, qtrs[1])
+	#
+	years = list.dirs(dynPath, recursive=F);
+	years = unlist(lapply(strsplit(years, '//'), function(x){x[2]}))
+	
+	#
+	sqErrs = c()
+	rates = c()
+	for(prob in probs){
+	        preds = foreach( p=ports )%dopar%{
+	        #for(p in ports){
+	                #
+	                end  = 1
+	                pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), propPostHDI=numeric(), propPostCI=numeric(), stringsAsFactors=F)
+	                #
+	                for(g in gears){
+	                for(q in qtrs ){
+	                for(y in years){
+	                        #
+	                        dp = nowComps[nowComps[,'mcat']==mcat & nowComps[,'year']==y & nowComps[,'qtr']==q & nowComps[,'gear']==g & nowComps[,'port']==p,]
+	                        donSpp = dp[,'species'] #<<<< I WAS HERE
+	                        dp = as.numeric(dp[,'comp'])
+	                        names(dp) = donSpp
+	                        #
+	                        lp = read.csv(sprintf('%s/%s/%s/%s/%s/lpPost.csv', avgPath, p, g, q, y))
+	                        lp = lp[!is.na(lp[,1]),]
+	                        #boxplot(lp, ylim=c(0, 0.3))
+	                        for(s in donSpp[donSpp%in%colnames(lp)]){ #NOTE: donSpp){ some species that are not in my numbers
+	                                #
+	                                spIntHDI = hdi(density(lp[,s], from=0, to=1, adjust=adj), credMass=prob, allowSplit=T)
+	                                spIntCI = t(quantile(lp[,s], c((1-prob)/2, prob+(1-prob)/2)))
+	                                #
+	                                #spHDI
+	                                inOut = 0
+	                                for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(dp[s], spIntHDI[i,], rightmost.closed=T)==1 | inOut }
+	                                #inOut = rep(0, length(cp))    #check if in interval, convert to proper bool, and unite with other interva
+	                                #for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(cp, spIntHDI[i,])==1 | inOut }
+	                                cpHdiMean = mean(inOut)
+	                                #
+	                                #spCI
+	                                inOut = 0
+	                                for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(dp[s], spIntCI[i,], rightmost.closed=T)==1 | inOut }
+	                                #inOut = rep(0, length(cp))   #check if in interval, convert to proper bool, and unite with other interval
+	                                #for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(cp, spIntCI[i,])==1 | inOut }
+	                                cpCiMean = mean(inOut)
+	                                #
+	                                pred[end,] = c(as.character(p), as.character(g), q, y, as.character(s), cpHdiMean, cpCiMean)
+	                                end = end+1
+	                        }
+	                }}}
+	                return(pred)
+	                #preds = rbind(preds, pred)
+	        }
+	        #reduce preds
+	        preds = do.call(rbind, preds)
+	        preds$propPostHDI = as.numeric(preds$propPostHDI)
+	        preds$propPostCI = as.numeric(preds$propPostCI)
+	        #
+	        sqErrs = c(sqErrs, (prob-mean(preds$propPostHDI))^2)
+	        rates = c(rates, mean(preds$propPostHDI))
+		#
+		strMcat = as.character(mcat)
+		if( prob==0.68 ){ 
+			predMCAT[[strMcat]] = preds
+			names(predMCAT[[strMcat]])[6:7] = c(sprintf('propPostHDI%s', prob*100), sprintf('propPostCI%s', prob*100))
+		} else{
+			predMCAT[[strMcat]] = cbind(predMCAT[[strMcat]], cbind(preds$propPostHDI, preds$propPostCI))
+			names(predMCAT[[strMcat]])[(ncol(predMCAT[[strMcat]])-1):ncol(predMCAT[[strMcat]])] = c(sprintf('propPostHDI%s', prob*100), sprintf('propPostCI%s', prob*100))
+		}
+		print( head(predMCAT[[strMcat]]) )
+	
+	}
+	# 
+	writeLines(sprintf('%s: c(%s, %s, %s)', adj, rates[1], rates[2], rates[3]))
+	writeLines('')
+	##
+	#g = gears[length(gears)]
+	#p = ports[length(ports)]
+	#q = qtrs[length(qtrs)]
+	#y = years[length(years)]
+	##
+	#dp = nowComps[
+	#	nowComps[,'mcat']==mcat & 
+	#	nowComps[,'year']==y    & 
+	#	nowComps[,'qtr']==q     & 
+	#	nowComps[,'gear']==g    & 
+	#	nowComps[,'port']==p,]
+	#donSpp = dp[,'species']
+	#dp = as.numeric(dp[,'comp'])
+	#names(dp) = donSpp
+	##
+	#dp = nowComps[nowComps[,'mcat']==mcat & nowComps[,'year']==y & nowComps[,'qtr']==q & nowComps[,'gear']==g & nowComps[,'port']==p,]
+	#donSpp = dp[,'species'] #<<<< I WAS HERE
+	#dp = as.numeric(dp[,'comp'])
+	#names(dp) = donSpp
+	##
+	#lp = read.csv(sprintf('%s/%s/%s/%s/%s/lpPost.csv', avgPath, p, g, q, y))
+	#lp = lp[!is.na(lp[,1]),]
+	##
+	#m = sum(donSpp%in%colnames(lp))
+	#if( m>0 ){
+	#	dev.new()
+	#	layout(matrix(seq(1, min(4, m)), nrow=m, ncol=1))
+	#	for(s in head(donSpp[donSpp%in%colnames(lp)], 4)){
+	#		hist(lp[,s], freq=F, xlim=c(0, 1), main=s, xlab=mcat)
+	#		lines(density(lp[,s], from=0, to=1, adjust=adj))
+	#		abline(v=dp[s], col='red')
+	#	}
+	#}
+}
 
 #
-sqErrs = c()
-rates = c()
-for(prob in probs){
-        preds = foreach( p=ports )%dopar%{
-        #for(p in ports){
-                #
-                end  = 1
-                pred = data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), propPostHDI=numeric(), propPostCI=numeric(), stringsAsFactors=F)
-                #
-                for(g in gears){
-                for(q in qtrs ){
-                for(y in years){
-                        #
-                        dp = nowComps[nowComps[,'mcat']==mcat & nowComps[,'year']==y & nowComps[,'qtr']==q & nowComps[,'gear']==g & nowComps[,'port']==p,]
-                        donSpp = dp[,'species'] #<<<< I WAS HERE
-                        dp = as.numeric(dp[,'comp'])
-                        names(dp) = donSpp
-                        #
-                        lp = read.csv(sprintf('%s/%s/%s/%s/%s/lpPost.csv', avgPath, p, g, q, y))
-                        lp = lp[!is.na(lp[,1]),]
-                        #boxplot(lp, ylim=c(0, 0.3))
-                        for(s in donSpp[donSpp%in%colnames(lp)]){ #NOTE: donSpp){ some species that are not in my numbers
-                                #
-                                spIntHDI = hdi(density(lp[,s], from=0, to=1, adjust=adj), credMass=prob, allowSplit=T)
-                                spIntCI = t(quantile(lp[,s], c((1-prob)/2, prob+(1-prob)/2)))
-                                #
-                                #spHDI
-                                inOut = 0
-                                for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(dp[s], spIntHDI[i,], rightmost.closed=T)==1 | inOut }
-                                #inOut = rep(0, length(cp))    #check if in interval, convert to proper bool, and unite with other interva
-                                #for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(cp, spIntHDI[i,])==1 | inOut }
-                                cpHdiMean = mean(inOut)
-                                #
-                                #spCI
-                                inOut = 0
-                                for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(dp[s], spIntCI[i,], rightmost.closed=T)==1 | inOut }
-                                #inOut = rep(0, length(cp))   #check if in interval, convert to proper bool, and unite with other interval
-                                #for(i in 1:dim(spIntCI)[1]){ inOut=findInterval(cp, spIntCI[i,])==1 | inOut }
-                                cpCiMean = mean(inOut)
-                                #
-                                pred[end,] = c(as.character(p), as.character(g), q, y, as.character(s), cpHdiMean, cpCiMean)
-                                end = end+1
-                        }
-                }}}
-                return(pred)
-                #preds = rbind(preds, pred)
-        }
-        #reduce preds
-        preds = do.call(rbind, preds)
-        preds$propPostHDI = as.numeric(preds$propPostHDI)
-        preds$propPostCI = as.numeric(preds$propPostCI)
-        #
-        sqErrs = c(sqErrs, (prob-mean(preds$propPostHDI))^2)
-        rates = c(rates, mean(preds$propPostHDI))
-}
-# 
-writeLines(sprintf('%s: c(%s, %s, %s)', adj, rates[1], rates[2], rates[3]))
-writeLines('')
-#
-g = gears[length(gears)]
-p = ports[length(ports)]
-q = qtrs[length(qtrs)]
-y = years[length(years)]
-#
-dp = nowComps[
-	nowComps[,'mcat']==mcat & 
-	nowComps[,'year']==y    & 
-	nowComps[,'qtr']==q     & 
-	nowComps[,'gear']==g    & 
-	nowComps[,'port']==p,]
-donSpp = dp[,'species']
-dp = as.numeric(dp[,'comp'])
-names(dp) = donSpp
-#
-dp = nowComps[nowComps[,'mcat']==mcat & nowComps[,'year']==y & nowComps[,'qtr']==q & nowComps[,'gear']==g & nowComps[,'port']==p,]
-donSpp = dp[,'species'] #<<<< I WAS HERE
-dp = as.numeric(dp[,'comp'])
-names(dp) = donSpp
-#
-lp = read.csv(sprintf('%s/%s/%s/%s/%s/lpPost.csv', avgPath, p, g, q, y))
-lp = lp[!is.na(lp[,1]),]
-#
-m = sum(donSpp%in%colnames(lp))
-if( m>0 ){
-	layout(matrix(seq(1, min(4, m)), nrow=m, ncol=1))
-	for(s in head(donSpp[donSpp%in%colnames(lp)], 4)){
-		hist(lp[,s], freq=F, xlim=c(0, 1), main=s)
-		lines(density(lp[,s], from=0, to=1, adjust=adj))
-		abline(v=dp[s], col='red')
-	}
-}
-}
+save(predMCAT, file=sprintf('%sto%sPostLooks.RData', minYear, maxYear))
 
 ##
 ##AUTO TUNE STRATA

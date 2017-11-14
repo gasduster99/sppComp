@@ -45,7 +45,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 1 #30 #48 #25 #15 #8 #4
+cores = 10 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -79,13 +79,13 @@ sppEff  = unique(dat$species)
 ##subset data
 mct = '250'
 #plc = 'MNT'
-ger = 'HKL' #'TWL'
+#ger = 'HKL' #'TWL'
 #yer = '1990'
 ##zero data
 #D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger,]
 #D = dat[dat$mcat==mct & dat$portComplex==plc & dat$gear==ger,]
-D = dat[dat$mcat==mct & dat$gear==ger,]
-#D = dat[dat$mcat==mct,]
+#D = dat[dat$mcat==mct & dat$gear==ger,]
+D = dat[dat$mcat==mct,]
 end = length(D$id)
 #for(id in unique(D$id)){
 #mcOut = mclapply( unique(D$id), FUN = function(id){
@@ -312,7 +312,7 @@ out = inla(weight~species + portComplex + gear + f(QGivenY),
 	control.inla=list(
 		#strategy='gaussian',	
         	#diagonal=1,
-		int.strategy='eb',
+		int.strategy='ccd', #'eb',
 		tolerance=1e-10,
                 h=1e-10,
                 lincomb.derived.only=F
