@@ -92,10 +92,12 @@ statistical models and model averaging (Gelman et al., 2014).
 
 ![Spase Data](./pictures/sampleComplex.png)
 
-![early](./pictures/1978to1982Bar.pdf))
-![best](./pictures/1983to1990Bar.pdf)
-![worse](./pictures/1991to1999Bar.pdf)
-![worst](./pictures/2000to2015Bar.pdf)
+![panel](./pictures/mockUp.pdf)
+
+![early](./pictures/1978to1982Bar3.pdf))
+![best](./pictures/1983to1990Bar3.pdf)
+![worse](./pictures/1991to1999Bar3.pdf)
+![worst](./pictures/2000to2015Bar3.pdf)
 
 
 # Methods
@@ -826,10 +828,10 @@ seasonality from year to year.
 262  NA   NA    NA
 265 69.6% 96.0% 97.8%
 269 68.2% 88.8% 90.2%
-270  NA  NA     NA
+270  NA   NA    NA
 956 68.3% 96.7% 99.2%
-959  NA  NA     NA
-961  NA  NA     NA
+959  NA   NA    NA
+961  NA   NA    NA
 
 ##83-90
     68%   95%   99%
@@ -851,6 +853,39 @@ seasonality from year to year.
 
 
 # Compare to Current ($Discussion$)
+
+##78-82
+    68%   95%   99%
+--- ----- ----- -----
+195 100%  100%  100%
+250 76.4% 88.9% 91.3%
+253  NA   NA    NA
+262  NA   NA    NA
+265 67.8% 95.6% 100%
+269 74.3% 91.4% 94.3%
+270 89.8% 93.4% 98.8%
+956  NA   NA     NA
+959 49.5% 75.8% 89.5%
+961 63.0% 89.1% 100%
+
+##83-90
+    68%   95%   99%
+--- ----- ----- -----
+245 61.1% 95.3% 99.0%
+250 75.5% 85.9% 88.6%
+253 85.3% 90.3% 91.2%
+259 69.6% 93.3% 95.4% 
+262 77.2% 91.1% 95.3% 
+269 78.8% 87.9% 90.5%
+270 50.0% 100%  100%
+663 68.0% 96.1% 98.1%
+667 66.8% 90.1% 90.6%
+956 74.2% 88.2% 90.9% 
+959  NA   NA    NA
+960  NA   NA    NA
+961  NA   NA    NA
+
+
 
 <!--
 * General Products
