@@ -45,7 +45,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 1 #30 #48 #25 #15 #8 #4
+cores = 10 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -53,7 +53,8 @@ cores = 1 #30 #48 #25 #15 #8 #4
 
 #dat = read.table('1985_trwl_mcat250.csv', header=T, sep=',')
 #Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
-Dat = read.table('data1983To1990.csv', header=T, sep=',', stringsAsFactors=F)
+#Dat = read.table('data1983To1990.csv', header=T, sep=',', stringsAsFactors=F)
+Dat = read.table('data1978To1982.csv', header=T, sep=',', stringsAsFactors=F)
 #colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
 #aggregate categories
 dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gearGroup, Dat$marketCategory, Dat$live), by=list(Dat$sampleNumber, Dat$species), FUN=unique )
@@ -79,13 +80,13 @@ sppEff  = unique(dat$species)
 ##subset data
 mct = '250'
 #plc = 'MNT'
-ger = 'HKL' #'TWL'
+#ger = 'HKL' #'TWL'
 #yer = '1990'
 ##zero data
 #D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger,]
 #D = dat[dat$mcat==mct & dat$portComplex==plc & dat$gear==ger,]
-D = dat[dat$mcat==mct & dat$gear==ger,]
-#D = dat[dat$mcat==mct,]
+#D = dat[dat$mcat==mct & dat$gear==ger,]
+D = dat[dat$mcat==mct,]
 end = length(D$id)
 #for(id in unique(D$id)){
 #mcOut = mclapply( unique(D$id), FUN = function(id){
@@ -525,7 +526,7 @@ print(summary(out))
 #writeLines(sprintf('MSE: %1.7f\n', mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic)) #, mse))
 colnames(metrics) = c('mlik', 'waic', 'dic') #, 'mse')
-write.csv(format(metrics, scientific=T, digits=10), file="./aggMetrics.csv-0", row.names=F, quote=F)
+write.csv(format(metrics, scientific=T, digits=10), file="./aggMetrics.csv-0try", row.names=F, quote=F)
 
 
 
