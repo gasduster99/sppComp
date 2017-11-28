@@ -94,11 +94,12 @@ statistical models and model averaging (Gelman et al., 2014).
 
 ![panel](./pictures/mockUp.pdf)
 
+<!--
 ![early](./pictures/1978to1982Bar3.pdf))
 ![best](./pictures/1983to1990Bar3.pdf)
 ![worse](./pictures/1991to1999Bar3.pdf)
 ![worst](./pictures/2000to2015Bar3.pdf)
-
+-->
 
 # Methods
 ## Data Generating Model
@@ -869,6 +870,7 @@ seasonality from year to year.
 
 # Compare to Current ($Discussion$)
 
+<!--
 ##78-82
     68%   95%   99%
 --- ----- ----- -----
@@ -899,7 +901,7 @@ seasonality from year to year.
 959  NA   NA    NA
 960  NA   NA    NA
 961  NA   NA    NA
-
+-->
 
 
 <!--
