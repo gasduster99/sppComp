@@ -44,13 +44,14 @@ getMSE = function(data, means){
 #
 
 #dat = read.table('1985_trwl_mcat250.csv', header=T, sep=',')
-Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
-colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
+#Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
+Dat = read.table('data1978To1982.csv', header=T, sep=',', stringsAsFactors=F)
+#colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
 #aggregate categories
-dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gear, Dat$mcat, Dat$isLive), by=list(Dat$id, Dat$species), FUN=unique )
+dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gearGroup, Dat$marketCategory, Dat$live), by=list(Dat$sampleNumber, Dat$species), FUN=unique )
 colnames(dat) = c('id', 'species', 'year', 'qtr', 'portComplex', 'gear', 'mcat', 'isLive')
 #aggregate add weights such that there is one weight per species per sample (aggregate cluster samples)
-dat = cbind(dat, aggregate(data.frame(Dat$weight), by=list(Dat$id, Dat$species), FUN=sum)[,3])
+dat = cbind(dat, aggregate(data.frame(Dat$weight), by=list(Dat$sampleNumber, Dat$species), FUN=sum)[,3])
 colnames(dat)[9] = 'weight'
 #preallocate for cluster size
 dat = cbind( dat, rep(NA, dim(dat)[1]) )
@@ -59,6 +60,23 @@ clustWeight = aggregate( data.frame(dat$weight), by=list(dat$id), FUN=sum )
 #match up total sampled weight with species weights 
 for(cw in 1:dim(clustWeight)[1]){ dat[dat[,1]==clustWeight[cw, 1], dim(dat)[2]]=clustWeight[cw, 2] }
 colnames(dat)[10] = 'clustSize'
+dat$portComplex = as.character(dat$portComplex)
+
+
+##aggregate categories
+#dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gear, Dat$mcat, Dat$isLive), by=list(Dat$id, Dat$species), FUN=unique )
+#colnames(dat) = c('id', 'species', 'year', 'qtr', 'portComplex', 'gear', 'mcat', 'isLive')
+##aggregate add weights such that there is one weight per species per sample (aggregate cluster samples)
+#dat = cbind(dat, aggregate(data.frame(Dat$weight), by=list(Dat$id, Dat$species), FUN=sum)[,3])
+#colnames(dat)[9] = 'weight'
+##preallocate for cluster size
+#dat = cbind( dat, rep(NA, dim(dat)[1]) )
+##get cluster weight by sample
+#clustWeight = aggregate( data.frame(dat$weight), by=list(dat$id), FUN=sum )
+##match up total sampled weight with species weights 
+#for(cw in 1:dim(clustWeight)[1]){ dat[dat[,1]==clustWeight[cw, 1], dim(dat)[2]]=clustWeight[cw, 2] }
+#colnames(dat)[10] = 'clustSize'
+
 
 #add zeros/account for clusters
 yearEff = unique(dat$year)
@@ -68,10 +86,10 @@ qtrEff  = unique(dat$gear)
 sppEff  = unique(dat$species)
 #subset data
 mct = '250'
-plc = 'MNT'
+plc = 'MNT' #'OSF' #'MNT' #'OSF'
 ger = 'TWL'
-yer = '1990'
-qtr = '4'
+yer = '1982'#'1990'
+qtr = '2' #'4'
 #zero data
 D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger & dat$qtr==qtr,]
 end = length(D$id)
@@ -164,9 +182,10 @@ bp = boxplot(as.numeric(D$weight)~D$species, plot=F)
 o = order(bp$stats[5,], decreasing=T)
 #
 off = 0.5
-howMany = 6 # 7
+howMany = 6 #8 #7 #6
 all = bp$names[o]
 who = head(bp$names[o], howMany)
+who = who[c(1,2,4,5,3,6)]
 DAT = D[D$species%in%who, c('weight', 'species', 'clustSize')]
 DAT$weight = as.numeric(DAT$weight)
 DAT$clustSize = as.numeric(DAT$clustSize)
@@ -221,6 +240,7 @@ M = 10^4
 #poisson
 #pHype = inla.hyperpar.sample(M, pOut)
 pPost = inla.posterior.sample(M, pOut)
+fString = sprintf('Predictor:%%0%dd', nchar(max(grep('Predictor', rownames(pPost[[1]]$latent)))) ) #'Predictor:%03d'
 #
 pDist = matrix(NA, nrow=M, ncol=howMany)
 colnames(pDist) = who
@@ -235,7 +255,7 @@ for(w in rev(who)){
 	where = which(DAT$species==w)[1]
 	wSam = sapply(pPost, function(logSam){
 		#
-		idxStr = sprintf('Predictor:%03d', where)
+		idxStr = sprintf(fString, where)
 		sam = exp( logSam[['latent']][idxStr,] )	
 		#
 		return( sam )
@@ -252,9 +272,11 @@ for(w in rev(who)){
 pDist = pDist/rowSums(pDist)
 for(w in who){ 
 	#
-	pBox[w,9:10] = c(mean(pDist[,w]), median(pDist[,w]))#, quantile(pDist[,w], 0.025), quantile(pDist[,w], 0.975)) 
+	naDist = pDist[,w]
+	naDist = naDist[!is.na(naDist)]
+	pBox[w,9:10] = c(mean(naDist), median(naDist))#, quantile(pDist[,w], 0.025), quantile(pDist[,w], 0.975)) 
 	#spIntHDI = HDInterval:::hdi.density(bkde(bDist[,w], range.x=c(0,1), canonical=T), credMass=0.95, allowSplit=T)
-        spIntHDI = HDInterval:::hdi.density(density(pDist[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+        spIntHDI = HDInterval:::hdi.density(density(naDist, from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
         pHDI[[w]] = matrix(spIntHDI[,], ncol=2)
         colnames(pHDI[[w]]) = c('begin', 'end')
 }
@@ -277,7 +299,7 @@ for(w in rev(who)){
 	where = which(DAT$species==w)[1]
 	wSam = sapply(bPost, function(logSam){
 		#
-		idxStr = sprintf('Predictor:%03d', where)
+		idxStr = sprintf(fString, where)
 		#sam = DAT$clustSize[where]*inv.logit( logSam[['latent']][idxStr,] )
 		sam = inv.logit( logSam[['latent']][idxStr,] )	
 		#
@@ -294,9 +316,11 @@ for(w in rev(who)){
 bDist = bDist/rowSums(bDist)
 for(w in who){
         #
-	bBox[w,9:10] = c(mean(bDist[,w]), median(bDist[,w]))#, quantile(bDist[,w], 0.025), quantile(bDist[,w], 0.975))
+	naDist = bDist[,w]
+        naDist = naDist[!is.na(naDist)]
+	bBox[w,9:10] = c(mean(naDist), median(naDist))#, quantile(bDist[,w], 0.025), quantile(bDist[,w], 0.975))
 	#spIntHDI = HDInterval:::hdi.density(bkde(bDist[,w], range.x=c(0,1), canonical=T), credMass=0.95, allowSplit=T)
-	spIntHDI = HDInterval:::hdi.density(density(bDist[,w], from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
+	spIntHDI = HDInterval:::hdi.density(density(naDist, from=0, to=1, bw=0.1), credMass=0.95, allowSplit=T)
 	bHDI[[w]] = matrix(spIntHDI[,], ncol=2)
 	colnames(bHDI[[w]]) = c('begin', 'end')
 }
@@ -319,7 +343,7 @@ for(w in rev(who)){
 	where = which(DAT$species==w)[1]
 	nbSam = sapply(nbPost, function(logSam){
 		#
-		idxStr = sprintf('Predictor:%03d', where)
+		idxStr = sprintf(fString, where)
 		sam = exp( logSam[['latent']][idxStr,] )
 		#
 		return( sam )
@@ -363,7 +387,7 @@ for(w in rev(who)){
 	where = which(DAT$species==w)[1]
 	wSam = sapply(bbPost, function(logSam){
 		#
-		idxStr = sprintf('Predictor:%03d', where)
+		idxStr = sprintf(fString, where)
 		sam = inv.logit( logSam[['latent']][idxStr,] )
 		#
 		return( sam )
@@ -418,10 +442,10 @@ bMSE = getMSE(comps, bM)
 nbMSE = getMSE(comps, nbM)
 bbMSE = getMSE(comps, bbM)
 
-##
-##PLOT COUNTS
-##
 #
+#PLOT COUNTS
+#
+
 ##dev.new()
 #pdf('weightPlot.pdf')
 #plot(0, 0, ylim=c(0, 60), xlim=c(1-off, howMany+off), xlab='', ylab='Weight', xaxt='n', main='95% Predictive HDI Model Comparison')
