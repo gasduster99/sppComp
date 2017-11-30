@@ -255,7 +255,7 @@ predictively usless since each estimated parameter is specifically bound to a
 particular observation, and thus such a model does not generalize. <!--has no information for which to base predictions on future data.-->
 
 For modeling $\beta^{(t)}_{m\eta}$ we consider a spectrum of models which span 
-a wide range of possible number of parameters and several different predictive 
+a wide range of partially pooled models with several different predictive 
 structures as seen below.
 
 ###(M1)
@@ -266,6 +266,7 @@ $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 (M1) represents a fixed effects model for additive year and quarter parameters. 
 Here each year and quarter receive totally independent and diffuse priors. 
 
+<!--
 ###(M2)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, 32^2)$$
@@ -286,42 +287,63 @@ $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 single heirarchical variance parameter, $v^{(y)}$, shared among the 
 $\beta^{(y)}_{m}$. $v^{(y)}$ has the effect of partially pooling 
 information among years but not quarters.
+-->
 
-###(M4)
+###(M2)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 
-(M4) estimates two heirarchical variance parameters, $v^{(y)}$ and $v^{(q)}$.
+(M2) estimates two heirarchical variance parameters, $v^{(y)}$ and $v^{(q)}$.
+$v^{(y)}$ has the effect of partially pooling information among year parameters, 
+while $v^{(q)}$ partially pools information among quarter parameters. The actual 
+degree of pooling among each of the years and quarters is determined by the data.
+Depending on the posterior distributions of $v^{(y)}$ and $v^{(q)}$, $\beta^{(y)}$ 
+and $\beta^{(q)}$ may be shrunk back toward the common mean for small $v$ or 
+allowed to take largely distinct values in the case of large estimates of the $v$.    
+
+<!--
 $v^{(y)}$ partially pools information among the $\beta^{(y)}_{m}$, and 
 separately $v^{(q)}$ partially pools information among the $\beta^{(q)}_{\eta}$. 
+-->
 
-###(M5)
+###(M3)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
 $$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
 $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v)$$
 
-(M5) functions similarly as (M4), in that it has heirarchical partial pooling 
+(M3) functions similarly as (M2), in that it has heirarchical partial pooling 
 among both the $\beta^{(y)}_{m}$ and $\beta^{(q)}_{\eta}$ parameters, except 
 that it intoduces a two-way interaction term between year and quarter. This 
 interaction term allows estimates for particular quarters to differ from 
 year to year, as opposed to the previous models in which quarters 
 within a year are assumed to be identical from year to year. 
 
-Furthermore the $\beta^{(y:q)}_{m\eta}$ is also modeled with a single 
-heirarchical variance parameter, $v$, shared among all of the $m\eta$ categories. 
-Although the interaction term adds many parameters to the model, the shared 
-$v$ parameter functions to shrink extranious $\beta^{(y:q)}_{m\eta}$ estimates 
-back toward the common stratum mean. 
+Furthermore the $\beta^{(y:q)}_{m\eta}$ are also modeled heirarchically to 
+introduce a single variance parameter, $v$, shared among all of the $m\eta$ 
+time chunks. Although this interaction term adds many parameters to the model, 
+the shared $v$ parameter functions to shrink extranious $\beta^{(y:q)}_{m\eta}$ 
+estimates back toward the common stratum mean. 
 
-###M6
-$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
-$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
-$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+
+###(M4)
+$$\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}$$
+$$\beta^{(y:q)}_{m\eta} \sim N(0, v)$$
+
+(M4) simplifies (M3) by excluding year and quarter main effects. This leaves all 
+temporal information in the data to be modeled solely by the quarterly 
+$\beta^{(y:q)}_{m\eta}$ interaction terms. This model reqresents more opportunity 
+for partial pooling through time than (M3), as fewer time parameters are 
+introduced. Furthermore all of the $\beta^{(y:q)}_{m\eta}$ are heirarchically 
+pooled back toward a single common stratum mean via the single shared variance parameter, 
+$v$. 
+
+###(M5)
+$$\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
 
-(M6) is largely the same as (M5), but it represents slightly less potential
+(M5) is largely the same as (M4), but it represents slightly less potential
 partial pooling through its heirarchical prior variances, $v_\eta$, on
 $\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool
 interactions across years, within a common quarter, but since each quarter is 
@@ -341,17 +363,15 @@ potential to decrease estimate biases if data within quarters is more similar
 than data within years.
 -->
 
-###M7
-$$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta}$$
-$$\beta^{(y)}_{m} \sim N(0, v^{(y)})$$
-$$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
+###(M6)
+$$\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v_m)$$
 
-(M7) follows the same idea as (M6), however here interaction terms are allowed 
+(M6) follows the same idea as (M5), however here interaction terms are allowed 
 to partially pool interactions within a common year, across the quarters of 
-that year, but not between years. (M7) involves fitting slightly more 
-parameters than (M6) because in this setting we model more than 4 years of 
-data at once.
+that year, but not between years. (M6) often involves fitting slightly more 
+parameters than (M5) because, at least in this setting, it is typical to model 
+more than four years of data at once.
 
 Heirarchical variance parameters are estimated from the data. As the above 
 models learn the posteriors of the hierarchical variance parameters, it effects 
@@ -359,28 +379,29 @@ the degree of shrinkage as well as the effective number of parameters held
 within the respective heirarchies (Gelman, 2014). To achieve this, each 
 variance parameter must itself be assigned a prior to be estimated. For all of 
 the heirarchical variance parameters included in the above models $v$ is 
-assigned a diffuse and heavy tailed $v \sim IG(1,~2\times10^{3})$ prior.
- 
+assigned a diffuse $v \sim IG(1,~2\times10^{3})$ prior.
+<!--and heavy tailed--> 
+
 Finally the overdispersion parameter, $\rho$, is first logit transformed to 
 have values spanning the entire real number line and assigned the prior 
 $\text{logit}(\rho) \sim N(0, 2^2)$. The $N(0, 2^2)$ prior is indeed a 
 symmetric, and far reaching, prior when back transformed to the unit interval. 
 To notice this, it is helpful to realize that the central 95% inverval for a 
-$N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety of the domain 
-when back transformed to exist in the unit interval (i.e. $0.5\pm0.48$).
+$N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety of the back 
+transformed unit interval (i.e. $0.5\pm0.48$).
 
-$Choose Model M4-M5$
+$Choose Model M4$
 
 As a final check of the model structure and the implied prior information the 
 prior predictive is considered. The prior predictive distribution summarizes 
-the information is intrinsic to the model structure itself, in the absense 
+the information that is intrinsic to the model structure itself, in the absense 
 of data. The prior predictive of modeled weight is considered over a 100 pound 
 cluster size, which is consistent with aggregating the two nominal 50 pound 
 cluster samples described by Sen (1984) in the original sampling protocol. 
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
-As seen in Figure(XX) the prior predictive of M5 is both symmetric and quite 
+As seen in Figure(XX) the prior predictive of (M4) is both symmetric and quite 
 diffuse over the 100 pound domain. The U shape of the distribution is a side 
 effect of the diffusion of the selected prior. As data are added to the model 
 the indecisive U shape of this distribution collapses toward the data in the 
@@ -392,7 +413,7 @@ $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\m
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$
 -->
 
-Estimating model $M4-M5$ in a fully Bayesain way gives access to the full posterior 
+Estimating model (M4) in a Bayesain way gives access to the full posterior 
 distribution of all of the parameters of the model. It is useful to emphasise 
 that in the Bayesain setting these parameters are themselves full 
 distributions, and they are typically handeled as a large number of samples 
@@ -733,7 +754,7 @@ $pr(M|y)$   $\approx0$     $\approx0$   $\approx10^{-16}$  $\approx1$
 
            Poisson        Binomial      NB                 BB  
 --------- -------------  ------------- ------------------ -------------
-MSE        0.06412        0.06264       0.05171            0.04479343
+MSE        0.06412        0.06264       0.05171            0.04479
 DIC        1342.27        1571.46       345.89             340.86
 WAIC       1421.61        1665.41       345.09             341.66
 $pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
