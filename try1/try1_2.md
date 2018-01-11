@@ -390,23 +390,6 @@ To notice this, it is helpful to realize that the central 95% inverval for a
 $N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety of the back 
 transformed unit interval (i.e. $0.5\pm0.48$).
 
-$Choose Model M4$
-
-As a final check of the model structure and the implied prior information the 
-prior predictive is considered. The prior predictive distribution summarizes 
-the information that is intrinsic to the model structure itself, in the absense 
-of data. The prior predictive of modeled weight is considered over a 100 pound 
-cluster size, which is consistent with aggregating the two nominal 50 pound 
-cluster samples described by Sen (1984) in the original sampling protocol. 
-
-![Prior Prediction](./pictures/priorPredict.pdf)
-
-As seen in Figure(XX) the prior predictive of (M4) is both symmetric and quite 
-diffuse over the 100 pound domain. The U shape of the distribution is a side 
-effect of the diffusion of the selected prior. As data are added to the model 
-the indecisive U shape of this distribution collapses toward the data in the 
-posterior. 
-
 ## Species Composition Prediction
 <!--
 $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2\Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
@@ -414,8 +397,8 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{
 -->
 
 Estimating model (M4) in a Bayesain way gives access to the full posterior 
-distribution of all of the parameters of the model. It is useful to emphasise 
-that in the Bayesain setting these parameters are themselves full 
+distribution of all of the parameters of the model. It is useful to emphasize 
+that in the Bayesian setting, these parameters have full 
 distributions, and they are typically handeled as a large number of samples 
 from the joint posterior distribution of the parameters. Once the posterior 
 sampling is complete, this simplifies parameter mean and variance estimation 
@@ -807,10 +790,14 @@ beta-binomial model arranges predictive density over the unit interval. The
 predictive intervals in Figure(1) are the smallest possible regions on each 
 density so that the intervals contain 95% of the predictive density (i.e. 
 these regions represent the densest packing of 95% probbaility under each 
-predictive distribution). For the cases of Aurora and Bank rockfish, the 
+predictive distribution). 
+
+<!--
+For the cases of Aurora and Bank rockfish, the 
 empty upper regions seen in Figure(1) are understandable in terms of the 
 relatively low density region of the posterior they represent, as seen in 
 Figure(2).
+-->
 
 # Predictor and Prior Selection
 
@@ -822,6 +809,7 @@ MSE        0.127245    0.127042     0.126801            0.122373      0.127236  
 DIC        39790.26    39491.64     39244.91            37231.70      39407.02     39406.41           <!--103182.45   102373.85           102332.46           101743.90            101238.84    101241.41          101247.95    -->         
 WAIC       39745.58    39446.51     39192.25            37182.93      39354.11     39353.49           <!--103127.61   102318.63           102277.24           101688.38            101172.87    101175.44          101181.99    --> 
 $pr(M|y)$  $\approx0$  $\approx0$   $\approx0$          $\approx1$    $\approx0$   $\approx0$         <!--$\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}$   $\approx1$   $\approx10^{-10}$  $\approx10^{-17}$--> 
+
 
 <!--
 c(-2.688421136e+04, -2.674287641e+04, -2.663455027e+04, -1.362101051e+04, -2.689255e+04, -2.688977508e+04)
@@ -843,10 +831,18 @@ mlik,waic,dic
 
 Table(XX) displays the relative support for the model structure on the 
 $\beta^{(t)}_{m\eta}$ time parameters. From M1 to M4 the models represent a 
-spectrum of models which decrease in the possible number of implied parameters. 
-Models M5, M6, and M7 represent models which build in complexity, from M4, via the 
-inclusion of heirarchical interaction terms.
+spectrum of models with an increasing potential of shrinkage among time 
+parameters. <!--which decrease in the possible number of implied parameters.-->
+Models M5 and M6 represent models which build in complexity, from M4, via the 
+inclusion of multiple heirarchical variance parameters amoung the interaction 
+terms.
 
+Across all of the time models, model M4 displays consistent support over all
+other candidate models considered here. Model M4 represents a model with 
+maximal potential for pooling through time, while still maintaing the ability to model differences in 
+seasonality from year to year.
+
+<!--
 From M1 to M4 all model selection criterion consistently support the 
 inclusion of heirarchical main effects on both year and quarter parmeters. 
 As various model forms for interaction term are added in M5, M6, and M7 the 
@@ -857,7 +853,25 @@ degree of support. Presumably M5 strikes a balance between maximal potential for
 heirarchical pooling, while still maintaing the ability to model differences in 
 seasonality from year to year.
 
-* Degree of smoothing (heirarchical parameters)
+$Choose Model M4$
+-->
+
+As a final check of the model structure and the implied prior information the 
+prior predictive is considered. The prior predictive distribution summarizes 
+the information that is intrinsic to the model structure itself, in the absense 
+of data. The prior predictive of modeled weight is considered over a 100 pound 
+cluster size, which is consistent with aggregating the two nominal 50 pound 
+cluster samples described by Sen (1984) in the original sampling protocol. 
+
+![Prior Prediction](./pictures/priorPredict.pdf)
+
+As seen in Figure(XX) the prior predictive of (M4) is both symmetric and quite 
+diffuse over the 100 pound domain. The U shape of the distribution is a side 
+effect of the diffusion of the selected prior. As data are added to the model, 
+the indecisive U shape of this distribution collapses toward the data in the 
+posterior. 
+
+* Degree of smoothing (heirarchical parameters, rho)
 
 # Model Exploration \& Averaging
 
