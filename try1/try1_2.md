@@ -128,14 +128,19 @@ binomial model.
 
 ###An Example
 
-<!--m=0;for(id in unique(Dat[Dat$mcat==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gear==ger,]$id)){m=m+max(Dat[Dat$mcat==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gear==ger & Dat$id==id,]$clust)}-->
+<!--
+m=0
+for(id in unique(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger,]$sampleNumber)){
+	m=m+max(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger & Dat$sampleNumber==id,]$clusterNumber)
+}
+-->
 To discern between these discrete modeling options we consider a small scale 
 example of the Poisson, binomial, negative binomial, and beta-binomial models 
 fit to the port sampling integer weight data from market category 250, in the 
-Montery port complex trawl fishery in 1990. $(any will work)$ This stratum was 
-visited 38 times by port samplers, <!--in 1990,--> collecting a total of 67 
-cluster samples, resulting in 344 model observations across 21 $(at least; URCK
-)$ unique species. Each of the above models are fit to these data. 
+Montery port complex trawl fishery in 1982. $(any will work)$ This stratum was 
+visited 32 times by port samplers, collecting a total of 59 <!--38 times by port samplers, collecting a total of 67-->
+cluster samples across 55 unique species. <!--344 model observations across 21 $(at least; URCK)$ unique species.--> 
+Each of the above models are fit to these data. 
 
 The Poisson and binomial models attempt to model both the mean and 
 residual variance of the data with a single parameter for each species. By 
@@ -145,10 +150,12 @@ sufficient to produce models which predict well.
 
 
 In contrast, the negative binomial and beta-binomial models estimate an 
-additional parameter which is intended to disentangle the mean and residual 
-variance estimates. Thus it is possible that the negative binomial and 
-beta-binomial models may produce more accurate estimates of both the mean and 
-residual variance.
+additional parameter which is can be used to disentangle the mean and residual 
+variance estimates. Thus the negative binomial and beta-binomial models may 
+produce more accurate estimates of the residual variance; in better modeling 
+the variance, these models may often prduce more accurate estimates of the 
+mean.
+<!--Thus it is possible that the negative binomial and--> 
 
 For each of the above mentioned models The predictive species composition 
 distributions are visualized in Figure(1) as 95% Highest Density Intervals 
@@ -159,9 +166,10 @@ only consider the most prevalent six species in this example
 Bayesian marginal likelyhood model probabilities are computed for each model 
 as measures of model fit as seen in Table(1). 
 
-Table(1) show a clear prefernce for the overdispersed models, with the most 
+Table(1) show a clear preference for the overdispersed models, with the most 
 overall support for the beta-binomial model. This initial result guides the 
-use of the beta-binomial data generating model.
+use of the beta-binomial data generating model for the purposes of building a 
+model to apply at an operational scale.
 
 ###Operationalized Model
 
@@ -212,7 +220,7 @@ and partial pooling strategies as described in the following section(XX).
 
 ## Priors
 
-To complete the bayesian formulation of this model priors are expressed in a 
+To complete the bayesian formulation of this model, priors are expressed in a 
 largly diffuse manner. 
 
 $$\beta_0 \propto 1$$
@@ -382,9 +390,9 @@ the heirarchical variance parameters included in the above models $v$ is
 assigned a diffuse $v \sim IG(1,~2\times10^{3})$ prior.
 <!--and heavy tailed--> 
 
-Finally the overdispersion parameter, $\rho$, is first logit transformed to 
-have values spanning the entire real number line and assigned the prior 
-$\text{logit}(\rho) \sim N(0, 2^2)$. The $N(0, 2^2)$ prior is indeed a 
+<!--first logit transformed to have values spanning the entire real number line and assigned the prior-->
+Finally the overdispersion parameter, $\rho$, is assigned a diffuse normal 
+prior on the logit scale, $\text{logit}(\rho) \sim N(0, 2^2)$. The $N(0, 2^2)$ prior is indeed a 
 symmetric, and far reaching, prior when back transformed to the unit interval. 
 To notice this, it is helpful to realize that the central 95% inverval for a 
 $N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety of the back 
@@ -415,7 +423,7 @@ $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{
 
 Estimating model (M4) in a Bayesain way gives access to the full posterior 
 distribution of all of the parameters of the model. It is useful to emphasise 
-that in the Bayesain setting these parameters are themselves full 
+that in the Bayesian setting these parameters are themselves full 
 distributions, and they are typically handeled as a large number of samples 
 from the joint posterior distribution of the parameters. Once the posterior 
 sampling is complete, this simplifies parameter mean and variance estimation 
@@ -436,7 +444,7 @@ observation and $P(\mu_{jklm\eta}, \sigma^2_{jklm\eta}|y)$ is the posterior
 distribution of the parameters given the observed data. Integration of the 
 parameters, $\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$, is done by monte carlo 
 integration to obtain samples from the predictive distribution, 
-$p(y^*_{jklm\eta}|y)$, for sampled weights in the $jklm\eta^th$ stratum. 
+$p(y^*_{jklm\eta}|y)$, for sampled weights in the $jklm\eta^{th}$ stratum. 
 
 Obtaining predictive species compositions from predictive weights amounts to 
 computing the following transformation,
@@ -457,20 +465,31 @@ simply resampled.
 ## Model Exploration \& Averaging
 
 Presently, stratum with deminishingly small sample sizes are managed by an ad-
-hoc "borrowing" protocol, outlined in Pearson and Erwin (1997). The protocol 
-for pooling data across port complexes calls for spatial pooling only when 
+hoc "data borrowing" protocol, as outlined in Pearson and Erwin (1997). The 
+protocol for "data borrowing" calls for pooling only when forced to fill holes 
+brought about by unsampled strata. Naturally, such a pooling protocol introduces 
+bias to fill in unsampled strata, however due to the mathematically unstructured 
+way in which this bias is introduced it is hard to quantitatively justify 
+these "data borrowing" rules.  
+
+<!--across port complexes calls for spatial pooling only when 
 forced to fill holes brought about by unsampled strata. Naturally, such a 
-protocol introduces a bias in speecies compositions which depends on the 
+pooling protocol introduces bias in species composition estimates 
+
+ which depends on the 
 availiability of data in each stratum and thus makes comparisions between 
 periods with pooled and unpooled data inconsistent with eah other. 
 Furthermore, the current ad-hoc "borrowing" protocol makes it difficult to 
 know exactly when "borrowing" has occured.
+-->
 
-Handeling these data as heirarchical models allows the models described in 
-section (XX) to avoid the ad-hoc "borrowing" protocol used in Pearson and 
-Erwin (1997). The heirarchical structure of the model, in combination with the 
-Bayesian predictive framework, allows holes in the data to be filled with 
-posterior predictive distributions for any unobserved strata. 
+Handeling these data with heirarchical models allows the models described in 
+section (XX) to avoid the temporal ad-hoc "borrowing" protocols used in Pearson 
+and Erwin (1997). The heirarchical structures proposed here use the data to estimate 
+the degree of pooling appropriate through time, rather than ad-hoc 
+"data borrowing". Furthermore the Bayesian predictive framework, allows holes 
+in the data to be filled with posterior predictive distributions for any 
+unobserved strata. 
 
 <!-- %efforts to pool data through time via the heirarchical priors described in section (XX) -->
 Despite the benefits of modeling these data as Bayesian heirarchical models, 
@@ -479,8 +498,8 @@ data it is certainly possible that models which consider an additional degree
 of data pooling between port complexes may offer predictive benefits. In 
 exploring strategies for pooling data across space it is necessary to formalize 
 the port complex pooling scheme in a way which provides a mathematically 
-understandable and scalable structure to build upon while minimizes issues of 
-inconsistent comparisions between statum.
+understandable and scalable structure to build upon.
+<!-- while minimizes issues of inconsistent comparisions between statum.-->
 
 <!--
 within a modeled period, brought about by the pooling scheme itself.
@@ -494,20 +513,22 @@ inconsistency brought about by the pooling scheme itself.
 Given the categorical nature of port complex variables, the typical 
 heirarchical regularization priors amoung port complexes are not appropriate.
 Rather, we frame port complex pooling as a model uncertainty problem, in which 
-it is assumed that some degree of port complex pooling is appropriate, but the 
-exact degree of pooling, and particular partitioning of the pooled port 
-complexes are not known. 
+we consider some degree of port complex pooling, but the exact degree of 
+pooling, and the particular partitioning of the pooled port complexes are not 
+known. 
 
-Port complex pooling is achieved by repeatedly fitting model M5 with different 
+Port complex pooling is achieved by repeatedly fitting model (M4) with different 
 partitionings of the port complex variables within a particular market category 
 and modeling time period. This model exploration exercise explores the 
 possible ways to produce groupings of the existing port complexes so as to 
 discover predictively useful partionings of the port complexes. Insisting that 
 the port complex groupings be partitions of the availiable port complexes 
 provides a well defined mathematical structure for exploring the space of 
-pooled port complexes, additionally due to the fact that partitions are 
-stationary in time provides consistency within the modeled period.
-
+pooled port complexes.
+<!--
+additionally due to the fact that partitions are 
+stationary in time, provides consistency within the modeled period.
+-->
 
 
 
@@ -539,18 +560,18 @@ given by the Bell numbers ($B_K$),
 $$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\hat k -j} \left(\substack{\hat k \\ j}\right) j^K \right).$$
 
 In the case of California the set of items to be partitioned is the set of 
-port complexes in California, of which there are $K=10$, implying a grad total of 
+port complexes in California, of which there are $K=10$, implying a grand total of 
 $B_{10}=115975$ ways of partitioning the port complexs in California in each 
 market category and modeled time period. The brute force model selection 
 strategy of computing all 115975 of these partitionings strategies is 
 computationally infeasible. However, not all pooling schemes represent 
 biologically relevant models. For example, perhaps it is reasonable to pool 
-only among adjacent ports (i.e. no disontinuities between port complex in 
+only among adjacent ports (i.e. no discontinuities between port complex pooling in 
 space), or perhaps it is reasonable to assert that biologically similar 
 regions can only extend across a small number of ports.
 
 Here only adjacent port poolings are considered, such that the maximum size of 
-a port complex grouping is three port complexes. These are the only 
+a port complex grouping is three port complexes. These are the only two 
 constraints that are enforced on port complex partitions here, although many 
 other constraints may in theory be chosen. These constraints were chosen so as to 
 mirror the currently accepted protocols in Pearson and Erwin (1997) within the 
@@ -569,20 +590,21 @@ An exhaustive search of the models in the biologically constrained subspace of
 $B_{10}$, allows for a concrete comparison of the relative predictive accuracy 
 of each partitioning. Additionally the partitioned models provide a set of 
 candidate models for use in Bayesian Model Averaging (BMA) 
-(Hoeting et al., 1999). BMA averaging, as applied here, essetially allows the 
+(Hoeting et al., 1999). BMA, as applied here, essetially allows the 
 model exploration strategy to average across all realavent port complex partionings
-and adds robustness to the end species composition estimates.
+and adds robustness to the final species composition estimates.
 
 For the $\mu^{th}$ model in a set of candidate models $M$, then the BMA weight 
-for $M_\mu$ follows directly from Bayes Theorem as follows, 
+for $M_\mu$ follows directly from Bayes Theorem as, 
 
 <!--\mathbb{M}-->
-$$\omega_\mu = Pr(M_\mu|y) = \frac{ p(y|M_\mu)p(M_\mu) }{ \sum_\mu p(y|M_\mu)p(M_\mu) }$$
+$$\omega_\mu = Pr(M_\mu|y) = \frac{ p(y|M_\mu)p(M_\mu) }{ \sum_\mu p(y|M_\mu)p(M_\mu) }.$$
 
-$??model priors??$ Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true
+<!--$??model priors??$--> 
+Where $\omega_\mu$ is the posterior probability that model $\mu$ is the true
 data generating model of the data, conditional on the subspace of candidate
 models and the observed data. $\omega_\mu$ is then straightforwardly used to
-average together whichever posterior quantites desired, as follows
+average posteriors across all of the models, as 
 
 $$\bar p(\theta|y) = \sum_{\mu} \omega_\mu p(\theta|y, M_\mu).$$
 
@@ -732,11 +754,14 @@ In the absence of Citation employes exploring pooling
 options in space  are extrordinarily sparce. 
 -->
 
+
+<!--
 * how to deal with ports
 	* model uncertainty around port
 	* bell number for exploration
 	* constrained exploration
 	* bayesian model averaging
+-->
 
 # Results
 ## Data Generating Model
