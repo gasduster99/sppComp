@@ -759,6 +759,36 @@ $pr(M|y)$   $\approx0$     $\approx0$   $\approx10^{-16}$  $\approx1$
 -->
 
 <!--NB pr(M|y)=5.175555e-17-->
+<!--
+           Poisson        Binomial      NB                 BB  
+--------- -------------  ------------- ------------------ -------------
+MSE        0.06412        0.06264       0.05171            0.04479
+DIC        1342.27        1571.46       345.89             340.86
+WAIC       1421.61        1665.41       345.09             341.66
+$pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
+-->
+<!--7.778048e-221 1.782425e-270  1.028494e-07  9.999999e-01-->
+<!-- -692.62, -806.92, -201.89, -185.80 -->
+
+## Example
+
+Table(1) shows model performance metrics for the toy example considered from 
+market category 250 for the Montery Trawl fishery in 1982. Here we consider 
+Mean Squared Error (MSE; computed on the species composition scale), deviance 
+information criterion (DIC), widely applicable information criterion (WAIC), 
+and marginal bayesian model probabilities ($pr(M|y)$). These measures span a 
+wide range of model selection philosphies and yet here they all consistently 
+agree in ranking the likelihood models. Both of the overdispersion models 
+considered here (NB and BB) outperform the more standard Poisson and binomial 
+count models, with the most support being for the BB model and the Piosson 
+model showing the least support. 
+<!--
+ative binomial and beta-binomial models out perform the overdispersed 
+Poisson and binomial models. Furthermore, all of the metrics in 
+Table(1) indicate that the beta-binomial model outperforms the negative 
+binomial model. 
+-->
+<!--are also able to discern-->
 
            Poisson        Binomial      NB                 BB  
 --------- -------------  ------------- ------------------ -------------
@@ -767,17 +797,45 @@ DIC        1342.27        1571.46       345.89             340.86
 WAIC       1421.61        1665.41       345.09             341.66
 $pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
 
-<!--7.778048e-221 1.782425e-270  1.028494e-07  9.999999e-01-->
-<!-- -692.62, -806.92, -201.89, -185.80 -->
+Figure(1) shows observed species compositions plotted against Poisson, 
+Binomial, NB, and BB predictive intervals. Here 95% highest density intervals 
+(HDI) are shown to visualize the predictive accuracy of each model against the 
+data.
 
 ![Interval Plot](./pictures/compPlot1982Qtr2.pdf)
-![Violin Plot](./pictures/compVioplot1982Qtr2.pdf)
-
 
 The large spread of the observed species compositions seen in Figure(1) 
 visually demonstrate the degree of overdispersion present in port sampling 
 data. The Poisson and binomial models disregaurd this overdispersion to 
-prioritize fitting the data mean.
+prioritize fitting the data mean. The NB and BB models explicatly model 
+overdispersion in the data, albeit via differing mechanisms, and as such they 
+predict a larger subset of the data.
+
+![Violin Plot](./pictures/compVioplot1982Qtr2.pdf)
+
+The split beta-binomial intervals seen in Figure(1) are the consequence of 
+confining a large amount of residual variability to the unit interval. The 
+beta-binomial is the only model considered here, which estimates such a 
+large degree of variablility and thus it is the only model that produces 
+predictive species composition distributions of the sort. Figure(2) shows the 
+beta-binomial predictive distributions as a violin plot demonstrating how the
+beta-binomial model arranges predictive density over the unit interval. The 
+predictive intervals in Figure(1) are the smallest possible regions on each 
+of these densities so that each intervals contain 95% probability. Species 
+composition is bounded on [0, 1], thus in the presence of large variablity 
+predictive density may aggragate around the bounds. For the example of STRK, 
+notice that although the predictive HDI is split, the vast majority of density 
+lies directly atop the data.
+
+
+<!--
+ Because the 
+species composition scale is bounded on [0, 1], in the presence of large variablitypredictive density may 
+aggragate around the bounds   (i.e. 
+these regions represent the densest packing of 95% probbaility under each 
+predictive distribution). 
+-->
+
 <!--
 The Poisson and binomial models attempt to model both the mean and 
 residual variances with a single parameter for each species. This can tend to 
@@ -794,28 +852,20 @@ able to produce more accurate estimates of both the mean and residual
 variance.
 -->
 
+<!--
 All of the measures in Table(1) consistently agree that the negative binomial 
 and beta-binomial models out perform the overdispersed Poisson and binomial 
-models. Furthermore, all of the metrics in Table(1) indicate <!--are also able to discern-->
-that the beta-binomial model outperforms the negative binomial model. Depending 
+models. Furthermore, all of the metrics in Table(1) indicate 
+that the beta-binomial model outperforms the negative binomial model. 
+
+Depending 
 on the users value system toward model selection (e.g. predictive or 
 inferential), the support for the beta-binomial model over the negative 
 binomial model may vary, but it is worth noting that the more robust model 
 selction tools show stronger support for the beta-binomial model, with Bayesian 
 model probabilities indicating practically conclusive support for the 
 beta-binomial model. 
-
-The split beta-binomial intervals seen in Figure(1) are the consequence of 
-confining a large amount of residual variability to the unit interval. The 
-beta-binomial is the only model considered here, which estimates such a 
-large degree of variablility and thus it is the only model that produces 
-predictive species composition distributions of the sort. Figure(2) shows the 
-beta-binomial predictive distributions as a violin plot demonstrating how the
-beta-binomial model arranges predictive density over the unit interval. The 
-predictive intervals in Figure(1) are the smallest possible regions on each 
-density so that the intervals contain 95% of the predictive density (i.e. 
-these regions represent the densest packing of 95% probbaility under each 
-predictive distribution). 
+-->
 
 <!--
 For the cases of Aurora and Bank rockfish, the 
@@ -903,9 +953,11 @@ posterior.
 * Partitioning results
 	* WAIC => Biogeography
 	* Pr(M) => model averaging
- 
+<!-- 
 * Prediction v. Data
 	* Report predictive accuracy
+-->
+
 
 ##78-82
     68%   95%   99%
@@ -986,8 +1038,10 @@ posterior.
 -->
 
 # Discussion
+<!--
 * General Math/Science
 * Database Stuff
+-->
 * Looking Forward	
 	* forcasting/hindcasting
 		* simple
@@ -996,14 +1050,14 @@ posterior.
 		* broader model exploration
 		* broader spatial expansion
 
-
+<!--
 # Draft 2
 * Orthodox scientific method restructure
 	* methods
 	* results
 	* discussion
 * Add MSE bias variance premonition/forshadowing
-
+-->
 
 
 
