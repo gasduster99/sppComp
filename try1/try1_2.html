@@ -88,7 +88,7 @@ statistical models and model averaging (Gelman et al., 2014).
 <p class="caption">Spase Data</p>
 </div>
 <div class="figure">
-<embed src="./pictures/mockUp.pdf" />
+<img src="./pictures/mockUp.png" alt="panel" />
 <p class="caption">panel</p>
 </div>
 <!--
@@ -499,12 +499,12 @@ binomial model.
 </table>
 <p>Figure(1) shows observed species compositions plotted against Poisson, Binomial, NB, and BB predictive intervals. Here 95% highest density intervals (HDI) are shown to visualize the predictive accuracy of each model against the data.</p>
 <div class="figure">
-<embed src="./pictures/compPlot1982Qtr2.pdf" />
+<img src="./pictures/compPlot1982Qtr2.png" alt="Interval Plot" />
 <p class="caption">Interval Plot</p>
 </div>
 <p>The large spread of the observed species compositions seen in Figure(1) visually demonstrate the degree of overdispersion present in port sampling data. The Poisson and binomial models disregaurd this overdispersion to prioritize fitting the data mean. The NB and BB models explicatly model overdispersion in the data, albeit via differing mechanisms, and as such they predict a larger subset of the data.</p>
 <div class="figure">
-<embed src="./pictures/compVioplot1982Qtr2.pdf" />
+<img src="./pictures/compVioplot1982Qtr2.png" alt="Violin Plot" />
 <p class="caption">Violin Plot</p>
 </div>
 <p>The split beta-binomial intervals seen in Figure(1) are the consequence of confining a large amount of residual variability to the unit interval. The beta-binomial is the only model considered here, which estimates such a large degree of variablility and thus it is the only model that produces predictive species composition distributions of the sort. Figure(2) shows the beta-binomial predictive distributions as a violin plot demonstrating how the beta-binomial model arranges predictive density over the unit interval. The predictive intervals in Figure(1) are the smallest possible regions on each of these densities so that each intervals contain 95% probability. Species composition is bounded on [0, 1], thus in the presence of large variablity predictive density may aggragate around the bounds. For the example of STRK, notice that although the predictive HDI is split, the vast majority of density lies directly atop the data.</p>

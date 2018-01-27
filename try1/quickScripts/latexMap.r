@@ -146,12 +146,12 @@ for( tp in timePeriods ){
 		mcatNum = tail(strsplit(tail(strsplit(mcat, '/')[[1]], 1), 'T')[[1]], 1)		
 
 		#LATEX		
-		writeLines(sprintf('\\begin{tabular}{|%s|}', paste(rep('c', h), collapse='|')))
+		writeLines(sprintf('\\begin{tabular}{|%s|}', paste(rep('c', h+1), collapse='|')))
 		#\cline{2-6}
-		writeLines(sprintf('\t \\hline \\multicolumn{%d}{|c|}{MCAT %s} \\\\ \\hline', h, mcatNum))
-		writeLines(sprintf('\t%s \\\\ \\hline', paste(sprintf('%1.2f', round(weights, 2)), collapse='&')))
+		writeLines(sprintf('\t \\hline \\multicolumn{%d}{|c|}{MCAT %s} \\\\ \\hline', h+1, mcatNum))
+		writeLines(sprintf('\t $\\omega$&%s \\\\ \\hline', paste(sprintf('%1.2f', round(weights, 2)), collapse='&')))
 		for(p in ports){
-			writeLines(sprintf('\t%s \\\\ \\hline', paste(sprintf('\\cellcolor[HTML]{%s}', cMat[p,]), collapse='&')))
+			writeLines(sprintf('\t%s&%s \\\\ \\hline', p, paste(sprintf('\\cellcolor[HTML]{%s}', cMat[p,]), collapse='&')))
 		}
 		writeLines('\\end{tabular}')	
 	}

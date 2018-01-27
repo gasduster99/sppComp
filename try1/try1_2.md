@@ -92,7 +92,7 @@ statistical models and model averaging (Gelman et al., 2014).
 
 ![Spase Data](./pictures/sampleComplex.png)
 
-![panel](./pictures/mockUp.pdf)
+![panel](./pictures/mockUp.png)
 
 <!--
 ![early](./pictures/1978to1982Bar3.pdf))
@@ -802,7 +802,7 @@ Binomial, NB, and BB predictive intervals. Here 95% highest density intervals
 (HDI) are shown to visualize the predictive accuracy of each model against the 
 data.
 
-![Interval Plot](./pictures/compPlot1982Qtr2.pdf)
+![Interval Plot](./pictures/compPlot1982Qtr2.png)
 
 The large spread of the observed species compositions seen in Figure(1) 
 visually demonstrate the degree of overdispersion present in port sampling 
@@ -811,7 +811,7 @@ prioritize fitting the data mean. The NB and BB models explicatly model
 overdispersion in the data, albeit via differing mechanisms, and as such they 
 predict a larger subset of the data.
 
-![Violin Plot](./pictures/compVioplot1982Qtr2.pdf)
+![Violin Plot](./pictures/compVioplot1982Qtr2.png)
 
 The split beta-binomial intervals seen in Figure(1) are the consequence of 
 confining a large amount of residual variability to the unit interval. The 
