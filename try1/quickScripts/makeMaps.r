@@ -101,42 +101,54 @@ path = "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/"
 #[12] "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT960/"        
 #[13] "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT961/"
 gos = c(
-	#78-82
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT250/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT253/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT269/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT956/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT265/",
-	#83-90
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT250/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT956/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT269/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT959/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT961/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT960/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT667/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT253/",
-	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT259/",
+	##78-82
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT250/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT253/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT269/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT956/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT265/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT262/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT270/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT959/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT961/",
+	##83-90
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT250/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT956/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT269/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT959/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT961/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT960/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT667/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT253/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT259/",
+	#"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT663/"
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT245/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT262/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT270/",
 	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT663/"
 )
 #
 perf = list()
 timePeriods = Sys.glob(sprintf('%s*to*/', path))
-aCount = 4
+aCount = 7
 adjusts = c(
-	#78-82:*250,    *253,   265,  *269,  *956
-	       4.1/12,3.4/12,1.65/16,5.48/12,3.1/12,
-	#83-90:_*250,   253,   259,   269,   663,  _667,  *956, _*959,  *960, _*961
-	      4.4/12,1.85/12,2.0/12,9.7/12,1.5/12,6.2/12,4.4/12,2.8/12,2.3/12,2.35/12
+	##78-82:*250,    *253,   265,  *269,  *956
+	#       4.1/12,3.4/12,1.65/16,5.48/12,3.1/12,
+	#	262, 	270,	959,	961
+		6.4599/12,1.9/12,.499/12,0.645/12,
+	##83-90:_*250,   253,   259,   269,   663,  _667,  *956, _*959,  *960, _*961
+	#      4.4/12,1.85/12,2.0/12,9.7/12,1.5/12,6.2/12,4.4/12,2.8/12,2.3/12,2.35/12
+	#	245,	262,	270,	663
+		1.01/12,7.5/12,0.82/12,1.1/12
 )
-for( tp in timePeriods[1] ){
+for( tp in timePeriods[2] ){
 	#
 	yearsStr = strsplit(tp, '/')[[1]][6]
 	##these data do not include the implied zeros
 	#dat = read.csv(sprintf('../data%s.csv', yearsStr), stringsAsFactors=F)	
 	#
 	mcats = Sys.glob(sprintf('%sMCAT*/', tp))
-	for( mcat in mcats[6] ){ #foreach(){
+	for( mcat in mcats[7] ){ #foreach(){
 		##skippers
 		#if( mcat=="/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT250/" ){ next }	
 		if( !(mcat%in%gos) ){ next }
@@ -212,17 +224,28 @@ for( tp in timePeriods[1] ){
 		
 		#
 		print(mcat)
+		#print(adjusts[aCount])
 		datMcatFill = cleanZero(mcat, 8)
 		#print(head(datMcatFill, 3))	
 		#NOTE: MCAT190 is SABL only; and does not return any preds!!!!!	
 		avgPath = sprintf('%sTop/avgModel/', mcat)
-		preds = predPerf(datMcatFill, 0.99, avgPath, 8, adjusts[aCount])	
+		preds = predPerf(datMcatFill, 0.68, avgPath, 8, adjusts[aCount])	
 		perf[[mcat]] = preds
 		#
 		#print(nameSplit[7])
 		#print(preds$ciAvgAcc)
 		print(preds$hdiAvgAcc)
 		writeLines('')
+		##
+		#preds = predPerf(datMcatFill, 0.95, avgPath, 8, adjusts[aCount])	
+		#perf[[mcat]] = preds
+		#print(preds$hdiAvgAcc)
+		#writeLines('')
+		##
+		#preds = predPerf(datMcatFill, 0.99, avgPath, 8, adjusts[aCount])	
+		#perf[[mcat]] = preds	
+		#print(preds$hdiAvgAcc)
+		#writeLines('')
 		#
 		aCount = aCount+1
 	}

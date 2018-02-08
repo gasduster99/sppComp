@@ -58,26 +58,34 @@ cols = c(gsub('#', '', brewer.pal(9,"Set1")), '000000')
 
 #
 gos = c(
-        #78-82
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT250/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT253/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT269/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT956/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT265/",
-        #83-90
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT250/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT956/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT269/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT959/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT961/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT960/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT667/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT253/",
-        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT259/",
+        ##78-82
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT250/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT253/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT269/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT956/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT265/",
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT262/",
+        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT270/",
+        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT959/",
+        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/78to82/MCAT961/",
+        ##83-90
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT250/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT956/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT269/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT959/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT961/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT960/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT667/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT253/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT259/",
+        #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT663/"
+	"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT245/",
+        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT262/",
+        "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT270/",
         "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/83to90/MCAT663/"
 )
 #basic knobs
-h = 10
+h = 5
 path = "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/"
 cols = c(gsub('#', '', brewer.pal(9,"Set1")), '000000')
 ports = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
