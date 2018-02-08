@@ -807,7 +807,7 @@ data.
 The large spread of the observed species compositions seen in Figure(1) 
 visually demonstrate the degree of overdispersion present in port sampling 
 data. The Poisson and binomial models disregaurd this overdispersion to 
-prioritize fitting the data mean. The NB and BB models explicatly model 
+prioritize fitting the data mean. The NB and BB models explicitly model 
 overdispersion in the data, albeit via differing mechanisms, and as such they 
 predict a larger subset of the data.
 
@@ -874,7 +874,7 @@ relatively low density region of the posterior they represent, as seen in
 Figure(2).
 -->
 
-# Predictor and Prior Selection
+## Predictor and Prior Selection
 
 <!--      Both Fixed  Both Random  Both Random Plus $V$ Only $V$     Only $V_m$   Only $V_\eta$-->            
 
@@ -946,44 +946,44 @@ effect of the diffusion of the selected prior. As data are added to the model,
 the indecisive U shape of this distribution collapses toward the data in the 
 posterior. 
 
-* Degree of smoothing (heirarchical parameters, rho)
+## Model Exploration \& Averaging
 
-# Model Exploration \& Averaging
+* Should any of these be excluded?
 
-* Partitioning results
-	* WAIC => Biogeography
-	* Pr(M) => model averaging
-<!-- 
-* Prediction v. Data
-	* Report predictive accuracy
--->
+* One good model selection example
+	* Maps?
+* Include all results as table (fill in extra mcats)
+* Fill in final prediction table values
 
 
-##78-82
+## Prediction
+
+* Should any of these be excluded?
+
+### 78-82
     68%   95%   99%
 --- ----- ----- -----
-195  NA   NA    NA
 250 67.1% 96.1% 98.7% 
 253 67.3% 96.3% 98.9%
-262  NA   NA    NA
+262 67.4% 93.8% 95.3%
 265 69.6% 96.0% 97.8%
 269 68.2% 88.8% 90.2%
-270  NA   NA    NA
+270 68.6% 93.6% 96.7%
 956 68.3% 96.7% 99.2%
-959  NA   NA    NA
-961  NA   NA    NA
+959 68.5% 96.3% 98.1%
+961 69.3% 93.2% 95.3%
 
-##83-90
+### 83-90
     68%   95%   99%
 --- ----- ----- -----
-245 NA    NA    NA
+245 60.8% 94.9% 97.7%
 250 68.1% 96.0% 99.0%
 253 69.3% 97.1% 98.9%
 259 83.8% 91.9% 92.9% 
-262  NA   NA    NA
+262 68.5% 95.1% 95.9%
 269 68.6% 94.2% 94.7% 
-270  NA   NA    NA
-663  NA   NA    NA 
+270 67.9% 94.2% 96.7%
+663 68.1% 94.1% 96.3%
 667 69.4% 92.5% 93.5%
 956 67.5% 96.2% 99.0%
 959 67.4% 96.4% 99.0%
@@ -991,8 +991,28 @@ posterior.
 961 68.6% 94.6% 97.8%
 
 
+## Nusiance Parameters
 
-# Compare to Current ($Discussion$)
+* Degree of smoothing (heirarchical parameters, rho)
+* Report mean/variance of example
+* Add $v$ and $\rho$ tables across all runs
+
+
+
+
+# Discussion
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--
 ##78-82
@@ -1042,6 +1062,13 @@ posterior.
 * General Math/Science
 * Database Stuff
 -->
+
+* Variance Estimates; Justify Model based statistics
+
+* Biase/Variance trade off; heirarchical modeling
+
+* Model averaging
+
 * Looking Forward	
 	* forcasting/hindcasting
 		* simple
@@ -1049,79 +1076,53 @@ posterior.
 	* more computation faster
 		* broader model exploration
 		* broader spatial expansion
+	* Heirarchical Spatial Models
+	* DP Models
 
-<!--
-# Draft 2
-* Orthodox scientific method restructure
-	* methods
-	* results
-	* discussion
-* Add MSE bias variance premonition/forshadowing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+* Partitioning results
+	* WAIC => Biogeography
+	* Pr(M) => model averaging
+
+* Prediction v. Data
+	* Report predictive accuracy
 -->
-
-
-
-
-
-<!--
-* how to calculate species compositions from model
-	* prediction
-	* full sampled distributions
-	* species composition transformation
-
-
-$$p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}$$
-$$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0$$
-
-
--->
-
-<!--
-### Port Trick - TWL
-
-           M1          M2                  M3                  M4                   M5           M6                  M7
---------- ----------- ------------------- ------------------- -------------------  ------------ ------------------- ------------------
-MSE        NA	       NA                  NA                  NA                   NA           NA                  NA             
-DIC        -649216.99  -649153.95          -648895.47          NA                   NA           NA                  NA
-WAIC       686481.53   696181.06           709841.59           NA                   NA           NA                  NA
-$pr(M|y)$  NA          NA                  NA                  NA                   NA           NA                  NA
-
--->
-<!-- -34834.60, -34823.29, -34804.38, , , , --> 
-
-
-
-<!--
-however it offers the potential to decrease estimate biases if 
-data across quarters of each year are more similar than data across years 
-within each quarter.
--->
-
-<!--
-interaction terms are allowed
-to partially pool across quarters, within a common quarter, but not between
-quarters. 
-
-
-but it represents slightly less potential 
-partial pooling through its heirarchical prior variances $v_m$ on 
-$\beta^{(y:q)}_{m\eta}$. Here interaction terms are allowed to partially pool 
-interactions within a common year, across the quarters of that year, but since 
-each year is assigned a separate variance parameter no pooling is possible 
-between years.
-
-
-but it represents even less potential for 
-partial pooling through its heirarchical prior variance on 
-$\beta^{(y:q)}_{m\eta}$, sin . 
--->
-
-
-
-
-
-
-
 
 <!--The posteriors from each model imply different predictive species composition distributions.-->
 <!--
