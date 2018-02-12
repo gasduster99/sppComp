@@ -559,7 +559,6 @@ $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
 ## Data
 
-
 Figure $(bars)$ shows the relative sampling effort and landings across the top 
 $x$ percent of landed rockfish market categories for two modeled periods. In the top 
 panel of each modeled period the black line represented the proportion of 
@@ -571,11 +570,40 @@ fill in all other species. On the top of each bar are the number of observed
 species in each market category. Hatched regions indicated the nominal species 
 of a market category where applicable. 
 
+Notice that sampling effort both tracks landings as well as the number of species 
+in each market category. That is to say that heavily landed markets with the exception 
+
+It is helpful to notice that for a given modeled period all market categories are 
+modeled over the same number of years and quarters; furthermore all port complexes 
+and gear groups are present in each market category. Thus considering 
+Eq($linear predictor$) the primary difference in the number of parameters between 
+market categories comes from the number of species present. 
+
+Assuming that it is desirable to better characterize market categories with larger 
+landings. If the number of species in each market category were the same, one would 
+expect sampling effort to roughly track landings, so as to achieve more samples per 
+parameter in more heavily landed market categories. In Figure $(bars)$ we roughly 
+observe this pattern. However it is clear that deviations from this pattern appear 
+when many more or less species are present in a market category. These deviations 
+take samples away from market categories with relatively few parameters and add 
+samples to market categories with relatively greater numbers of parameters so as to 
+keep the overall number of samples per parameter in track with landed weight. 
+
+By 
+
+<!--
+In marketexcept where in market categories 
+where the number of species 
+the number of species both track 
+Thinking of the proportion labnded weight as a proxy for commer
+within a modeled period is tghe number of observed species
+-->
 
 <!--![panel](./pictures/mockUp.png)-->
 
 ![early](./pictures/1978to1982Bar3.pdf)
 ![best](./pictures/1983to1990Bar3.pdf)
+![best](./pictures/barplotLegend.pdf)
 
 <!--
 ![worse](./pictures/1991to1999Bar3.pdf)
@@ -585,7 +613,7 @@ of a market category where applicable.
 ## Data Generating Model
 ### Example
 
-Table(1) shows model performance metrics for the toy example considered from 
+Table(likelihood) shows model performance metrics for the toy example considered from 
 market category 250 for the Montery Trawl fishery in 1982. Here we consider 
 Mean Squared Error (MSE; computed on the species composition scale), deviance 
 information criterion (DIC), widely applicable information criterion (WAIC), 
@@ -603,7 +631,7 @@ DIC        1342.27        1571.46       345.89             340.86
 WAIC       1421.61        1665.41       345.09             341.66
 $pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
 
-Figure(1) shows observed species compositions plotted against Poisson, 
+Figure(likelihood) shows observed species compositions plotted against Poisson, 
 Binomial, NB, and BB predictive intervals. Here 95% highest density intervals 
 (HDI) are shown to visualize the predictive accuracy of each model against the 
 data.
