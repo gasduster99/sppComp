@@ -79,7 +79,93 @@ statistical models and model averaging (Gelman et al., 2014).
 # Abstract
 
 # Introduction
-## Context
+
+Estimates of landed catch are a key component of many fishery management 
+systems. Stock assessment models (referred to here as “assessments”) are often 
+conditioned on time series of annual catch, usually under the assumption that 
+catches are known without error. While some assessment models are able to 
+incorporate uncertainty in catch 
+(e.g. Stock Synthesis; Methot and Wetzel, 2013), reliable estimates of cach 
+uncertainty are often unavailable. Without this information, assessment 
+authors often rely on ad-hoc sensitivity analyses which may or may not be 
+incorporated into management advice and/or fail to propagate catch uncertainty 
+into quantities of interest to managers.
+
+Over the past decade, the estimation of catch and associated uncertainty has 
+become a focus for recreational fisheries in the United States (NAS, 2017). 
+Commercial fisheries, on the other hand, are often assumed to have precise 
+estimates of catch by species. This is due in part to the availability of 
+landing receipts (aka “fish tickets”) which serve as a record of the weight of 
+fish landed into various market categories (sort groups). As noted by 
+Pearson et al. (2008), it is important to recognize that species and market categories 
+are not synonymous. On the U.S. West Coast, for example, it is common for 
+multiple species to be landed within a single market category 
+(CALCOM 2017, PacFIN 2017). This is expected for categories that are clearly 
+designated as mixed-species categories (e.g. “nearshore rockfish,” or species 
+within a particular genus or family). However, some categories that are named 
+after a single species still contain several species, to varying degrees, even 
+after regulations require sorting into a particular category 
+(Pearson et al., 2008).
+
+The decision of how to sort species into market categories on a landing 
+receipt is typically made by the fishermen, dealers, or processors. As a 
+result, trained port samplers intercept vessels offloading catch or during 
+subsequent processing in order to determine the species composition of catch 
+landed in a given market category (Sen 1984, Crone 1995, Tsou et al. 2015). 
+These species composition data are used to partition the weight of landed 
+catch in a market category across species, a process commonly referred to as 
+“catch expansion” (Pearson and Almany, 1995). To calculate total landings for a 
+single species, the expanded catch is summed across all market categories in 
+which the species was landed.
+
+Within market categories, the species composition of landed catch can vary 
+spatially, temporally, by fishing gear, and catch disposition (e.g. fish sold 
+alive or dead). These differences are attributable to many factors, including 
+market preference, fishing behavior, regulatory constraints, and 
+biological/ecological characteristics (e.g. spatial distribution) of the 
+landed species. As a result, estimates of species composition for a given 
+market category are often stratified over time (e.g. quarterly) and across 
+other relevant strata (e.g. ports, gears, catch disposition). Sampling 
+programs often have limited funds, and attempts to reduce bias in species 
+composition estimates through the introduction of additional strata comes at a 
+cost, namely reduced precision (Cochran, 19xx; Tomlinson, 1971).
+
+On the U.S. West Coast, port sampling programs allocate effort both spatially 
+and temporally, but many domains of interest (e.g. market category, gear type, 
+catch disposition) remain unsampled or sparsely sampled due to a proliferation 
+of categories over time, logistical constraints, and limited resources (Sen 
+1986; Crone 1995; Pearson et al. 2008; Tsou et al. 2015). Ad-hoc ‘data 
+borrowing’ algorithms based on expert opinion are used to calculate species 
+compositions for unsampled strata and domains, but these algorithms have 
+unknown bias and do not produce estimates of uncertainty. In contrast, 
+model-based estimators are increasingly used to estimate quantities of 
+interest for domains with small sample sizes and/or unsampled strata 
+(sometimes referred to as ‘small area’ estimation; Rao 2003).  Shelton et al. 
+(2012) developed a Bayesian hierarchical statistical framework for species 
+composition data that pools information among sparsely sampled strata, 
+predicts species compositions for unsampled strata, and can be combined with 
+landing receipts to estimate total landings by species, across market 
+categories and other strata, with associated estimates of uncertainty. Shelton 
+et al. considered hierarchical pooling only among quarters within a single 
+year, comparing generalized linear and hierarchical linear models to trawl 
+data from a single port in California. The authors also underscored the need 
+to better understand performance of alternative models, and to overcome issues 
+with computation time, particularly since commercial port sampling data sets 
+often include hundreds of landed strata spanning decades, multiple ports, gear 
+types, and other domains of interest.
+
+In this paper, we evaluate the model-based framework proposed by Shelton et 
+al. (2012) using commercial port sampling data collected in California, U.S.A. 
+We describe species composition data collected by the California Cooperative 
+Groundfish Survey (CCGS, 2017) over the period 1978-1990. We then extend the 
+Shelton et al. framework to address limitations of their approach. 
+Specifically, we evaluate alternative likelihoods to address overdispersion, 
+compare multiple hierarchical structures for pooling information through time, 
+and integrate model predictions across uncertainties in the spatial model 
+structure. Finally, we estimate landed catch by species for both sampled and 
+unsampled strata, and summarize a general framework for quantifying 
+uncertainty including an efficient database design for dissemination of 
+results at any level of aggregation.
 
 ![Spase Data](./pictures/sampleComplex.png)
 
@@ -97,10 +183,10 @@ based on the particular challanges of sampling each stratum.
 
 The model based methodology proposed here does not rely strongly upon the cluster 
 sampling structure, but rather simply views each sample as independent and 
-identically distributed ($I.I.D.$) draws from some data generating model, 
+identically distributed ($i.i.d.$) draws from some data generating model, 
 conditional on some parameterisation of the stratification system. So long as 
 the parameterisation and data generating model are sufficiently robust for 
-handeling the quirks of these data in particular, the conditionally $I.I.D.$ 
+handeling the quirks of these data in particular, the conditionally $i.i.d.$ 
 model of these data can be seen as practically useful for producing predictions 
 about the data generating system even if our model does not replicate the true data 
 generating process exactly.
@@ -566,38 +652,27 @@ landings in each market category, while the blue line represents the proportion
 of samples, by number, taken in each market category. In the bottom panel of each 
 modeled period, colors repesent the proportion of sampled weight of the top twelve 
 most landed species in the port samples. Alternating dark and light grey panels 
-fill in all other species. On the top of each bar are the number of observed 
-species in each market category. Hatched regions indicated the nominal species 
+fill in all other species. On the top of each bar the number of observed 
+species in each market category is listed. Hatched regions indicated the nominal species 
 of a market category where applicable. 
 
 Notice that sampling effort both tracks landings as well as the number of species 
-in each market category. That is to say that heavily landed markets with the exception 
+in each market category. These two factors are amoung the most important factors 
+to prioritize in sampling for the sake of expanding more of the landings. 
+Furthermore given this pattern in port sampling, when sample sizes become too 
+small to apply our model, in a modeled period, the expanded landings tend to
+represent a negligable proportion of total landings.
 
-It is helpful to notice that for a given modeled period all market categories are 
-modeled over the same number of years and quarters; furthermore all port complexes 
-and gear groups are present in each market category. Thus considering 
-Eq($linear predictor$) the primary difference in the number of parameters between 
-market categories comes from the number of species present. 
-
-Assuming that it is desirable to better characterize market categories with larger 
-landings. If the number of species in each market category were the same, one would 
-expect sampling effort to roughly track landings, so as to achieve more samples per 
-parameter in more heavily landed market categories. In Figure $(bars)$ we roughly 
-observe this pattern. However it is clear that deviations from this pattern appear 
-when many more or less species are present in a market category. These deviations 
-take samples away from market categories with relatively few parameters and add 
-samples to market categories with relatively greater numbers of parameters so as to 
-keep the overall number of samples per parameter in track with landed weight. 
-
-By 
-
-<!--
-In marketexcept where in market categories 
-where the number of species 
-the number of species both track 
-Thinking of the proportion labnded weight as a proxy for commer
-within a modeled period is tghe number of observed species
--->
+The lower panels of Figure $(bar)$ visually demonstrates just how many different 
+species are landed into very commercially realavent market categories. Although 
+market categories often carry names that label them with a nominal species, 
+Figure $(bar)$ makes it abundantly clear that these names can mislead our 
+thinking about the pureity and consistency of these categories through time. 
+To drive this point home, consider market category 267. The nominal label for 
+market category 267 is Brown, while Brown rockfish only amounts to Y% of the sampled weight in 1978-1982. 
+In 1978-1982 market category 267 might be better named ZZZ as ZZZ amounts to W% of sampled 
+weight in this time period, however considering recent time periods in Appendix Figre $(panel)$
+market category 267 is composed of Yhat% Brown and What% ZZZ. 
 
 <!--![panel](./pictures/mockUp.png)-->
 
@@ -691,7 +766,7 @@ mlik,waic,dic
 <!--mlik , , , , , , -->                        <!--$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$ 5.357171e-11 2.083286e-17-->
 <!--prob , , , , , , -->                        <!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
 
-Table(XX) displays the relative support for the model structure on the 
+Table$(Predictor)$ displays the relative support for the model structure on the 
 $\beta^{(t)}_{m\eta}$ time parameters. From M1 to M4 the models represent a 
 spectrum of models with an increasing potential of shrinkage among time 
 parameters. <!--which decrease in the possible number of implied parameters.-->
@@ -701,8 +776,8 @@ terms.
 
 Across all of the time models, model M4 displays consistent support over all
 other candidate models considered here. Model M4 represents a model with 
-maximal potential for pooling through time, while still maintaing the ability to model differences in 
-seasonality from year to year.
+maximal potential for pooling through time, while still maintaing the ability 
+to model differences in seasonality from year to year.
 
 As a final check of the model structure and the implied prior information the 
 prior predictive is considered. The prior predictive distribution summarizes 
@@ -713,13 +788,18 @@ cluster samples described by Sen (1984) in the original sampling protocol.
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
-As seen in Figure(XX) the prior predictive of (M4) is both symmetric and quite 
+As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both symmetric and quite 
 diffuse over the 100 pound domain. The U shape of the distribution is a side 
 effect of the diffusion of the selected prior. As data are added to the model, 
 the indecisive U shape of this distribution collapses toward the data in the 
 posterior. 
 
 ## Model Exploration \& Averaging
+
+![modelSelect](./pictures/latexTableCompress1.pdf)
+![modelSelect](./pictures/latexTableCompress2.pdf)
+![modelSelect](./pictures/latexTableCompress3.pdf)
+![modelSelect](./pictures/latexTableCompress4.pdf)
 
 * One good model selection example
 	* Maps?
@@ -859,7 +939,31 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 
 
 
+<!--
+It is helpful to notice that for a given modeled period all market categories are 
+modeled over the same number of years and quarters; furthermore all port complexes 
+and gear groups are present in each market category. Thus considering 
+Eq($linear predictor$) the primary difference in the number of parameters between 
+market categories comes from the number of species present. 
 
+Assuming that it is desirable to better characterize market categories with larger 
+landings. If the number of species in each market category were the same, one would 
+expect sampling effort to roughly track landings, so as to achieve more samples per 
+parameter in more heavily landed market categories. In Figure $(bars)$ we roughly 
+observe this pattern. However it is clear that deviations from this pattern appear 
+when many more or less species are present in a market category. These deviations 
+take samples away from market categories with relatively few parameters and add 
+samples to market categories with relatively greater numbers of parameters so as to 
+keep the overall number of samples per parameter in track with landed weight. 
+-->
+
+<!--
+In marketexcept where in market categories 
+where the number of species 
+the number of species both track 
+Thinking of the proportion labnded weight as a proxy for commer
+within a modeled period is tghe number of observed species
+-->
 <!--
 ###(M2)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -1609,45 +1713,72 @@ page 124
 \begin{thebibliography}{1}
 
 %
-\bibitem{gelman} Gelman, A., Carlin, J. B., Stern, H. S., \& Rubin, D. B. (2014). Bayesian data analysis (Vol. 2). Boca Raton, FL, USA: Chapman \& Hall/CRC.
+\bibitem{ccgs} CCGS (California Cooperative Groundfish Survey). (2017). 
+Pacific States Marine Fisheries Commission, 350 Harbor Boulevard, Belmont, 
+California, 94002. URL:  128.114.3.187.
 
 %
-\bibitem{bma} Hoeting, J. A., Madigan, D., Raftery, A. E., \& Volinsky, C. T. (1999). Bayesian model averaging: a tutorial. Statistical science, 382-401.
+\bibitem{gelman} Gelman, A., Carlin, J. B., Stern, H. S., \& Rubin, D. B. 
+(2014). Bayesian data analysis (Vol. 2). Boca Raton, FL, USA: Chapman \& 
+Hall/CRC.
 
 %
-\bibitem{jaynesBook} Jaynes, E. T. (2003). Probability theory: The logic of science. Cambridge university press.
+\bibitem{nas} NAS (National Academies of Sciences, Engineering, and Medicine). 
+2017. Review of the Marine Recreational Information Program. Washington, DC: 
+The National Academies Press.
 
 %
-\bibitem{bvBook} Ramasubramanian, K., \& Singh, A. (2016). Machine Learning Using R. Apress.
+\bibitem{bma} Hoeting, J. A., Madigan, D., Raftery, A. E., \& Volinsky, C. T. 
+(1999). Bayesian model averaging: a tutorial. Statistical science, 382-401.
 
 %
-\bibitem{glmBook} McCullagh P. \& Nelder, J.A. (1989). Generalized Linear Models, 2nd ed. London: Chapman and Hall.
+\bibitem{jaynesBook} Jaynes, E. T. (2003). Probability theory: The logic of 
+science. Cambridge university press.
 
 %
-\bibitem{pearsonErwin} Pearson, D.E., and Erwin, B. (1997). Documentation of California’s commercial market sampling data entry and expansion programs. NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
+\bibitem{bvBook} Ramasubramanian, K., \& Singh, A. (2016). Machine Learning 
+Using R. Apress.
 
 %
-\bibitem{rCoreTeam} R Core Team (2015). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+\bibitem{glmBook} McCullagh P. \& Nelder, J.A. (1989). Generalized Linear 
+Models, 2nd ed. London: Chapman and Hall.
 
 %
-\bibitem{inlaPackage} Rue H., Martino S., Lindgren F., Simpson D., Riebler A. (2013). R-INLA:
-Approximate Bayesian Inference using Integrated Nested Laplace
-Approximations. Trondheim, Norway. URL http://www.r-inla.org/.
+\bibitem{pearsonErwin} Pearson, D.E., and Erwin, B. (1997). Documentation of 
+California’s commercial market sampling data entry and expansion programs. 
+NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
 
 %
-\bibitem{inlaMethod} Rue, H., Martino, S., \& Chopin, N. (2009). Approximate Bayesian
-inference for latent Gaussian models by using integrated nested Laplace
-approximations. Journal of the royal statistical society: Series b
-(statistical methodology), 71(2), 319-392.
+\bibitem{rCoreTeam} R Core Team (2015). R: A language and environment for 
+statistical computing. R Foundation for Statistical Computing, Vienna, 
+Austria. URL https://www.R-project.org/.
 
 %
-\bibitem{senMemo} Sen, A.R. (1984). Sampling commercial rockfish landings in California. NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-45.
+\bibitem{inlaPackage} Rue H., Martino S., Lindgren F., Simpson D., Riebler A. 
+(2013). R-INLA: Approximate Bayesian Inference using Integrated Nested Laplace 
+Approximations.  Trondheim, Norway. URL 
+http://www.r-inla.org/.
 
 %
-\bibitem{senPaper} Sen AR. (1986). Methodological problems in sampling commercial rockfish landings. Fish Bull. 84: 409-421 .
+\bibitem{inlaMethod} Rue, H., Martino, S., \& Chopin, N. (2009). Approximate 
+Bayesian inference for latent Gaussian models by using integrated nested 
+Laplace approximations. Journal of the royal statistical society: 
+Series b (statistical methodology), 71(2), 319-392.
 
 %
-\bibitem{sheltonEtAl} Shelton, A. O., Dick, E. J., Pearson, D. E., Ralston, S., \& Mangel, M. (2012). Estimating species composition and quantifying uncertainty in multispecies fisheries: hierarchical Bayesian models for stratified sampling protocols with missing data. Canadian Journal of Fisheries and Aquatic Sciences, 69(2), 231-246.
+\bibitem{senMemo} Sen, A.R. (1984). Sampling commercial rockfish landings in 
+California. NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-45.
+
+%
+\bibitem{senPaper} Sen AR. (1986). Methodological problems in sampling 
+commercial rockfish landings. Fish Bull. 84: 409-421 .
+
+%
+\bibitem{sheltonEtAl} Shelton, A. O., Dick, E. J., Pearson, D. E., Ralston, 
+S., \& Mangel, M. (2012). Estimating species composition and quantifying 
+uncertainty in multispecies fisheries: hierarchical Bayesian models for 
+stratified sampling protocols with missing data. Canadian Journal of Fisheries 
+and Aquatic Sciences, 69(2), 231-246.
 
 \end{thebibliography}
 
