@@ -835,9 +835,23 @@ The results shown here only represent a single market category across the time
 period 1978-1982. Similar results for other market categories and time periods 
 are provided in the appendix Figure$(color tables)$.
 
-* zero landings
+* zero landings?
 
 ## Prediction
+
+Repeatedly fitting model (M4) across port complex partitionings and applying the 
+BMA proceedure, ultimatly provides access to posterior predictive distributions 
+of the species compositions ($\pi^*_jklm\eta$) within a market category and 
+time interval modeled period. A straight forward way to evaluate the performance 
+of the model in each modeled period is to compare the predictions of the model 
+in each modeled period to with the actual observations of species compostions 
+from port samplers.
+
+Species composition posterior predictive distributions are considered via HDI 
+at three levels containing 68%, 95%, and 99% of posterior predictive probability.
+Table$(Prediction)$ shows the proportion of observed species compositions 
+which existed within the HDI across all strata, of each prdiction level, in each 
+modeled period.
 
 * Should any of these be excluded?
 
@@ -870,6 +884,15 @@ are provided in the appendix Figure$(color tables)$.
 959 67.4% 96.4% 99.0%
 960 68.0% 96.1% 98.6%
 961 68.6% 94.6% 97.8%
+
+* Overall Prediction
+
+Table$(Prediction)$ largely shows that the oberseved proportion of predictied 
+samples aligns appropriatly with the predictions made by the model. 
+
+* may slightly tend to underpredict in the far tails.
+* at the 68% level basically all modeled periods work well, except MCAT 259 in 83-90.
+	* way over prediction at the 68% level and under prediction in the tails.
 
 ## Nusiance Parameters
 
