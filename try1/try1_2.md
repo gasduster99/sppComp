@@ -650,29 +650,31 @@ $x$ percent of landed rockfish market categories for two modeled periods. In the
 panel of each modeled period the black line represented the proportion of 
 landings in each market category, while the blue line represents the proportion 
 of samples, by number, taken in each market category. In the bottom panel of each 
-modeled period, colors repesent the proportion of sampled weight of the top twelve 
-most landed species in the port samples. Alternating dark and light grey panels 
+modeled period, colors repesent the proportion of sampled weight of twelve 
+commercially realavant species. Alternating dark and light grey panels 
 fill in all other species. On the top of each bar the number of observed 
-species in each market category is listed. Hatched regions indicated the nominal species 
-of a market category where applicable. 
+species in each market category is listed. Hatched regions indicated the nominal 
+species of a market category where applicable. 
 
 Notice that sampling effort both tracks landings as well as the number of species 
 in each market category. These two factors are amoung the most important factors 
-to prioritize in sampling for the sake of expanding more of the landings. 
+to prioritize in sampling for the sake of applying our model's results to a large 
+proportion of landings $(What proportion of landings is the model expanding?)$.  
 Furthermore given this pattern in port sampling, when sample sizes become too 
-small to apply our model, in a modeled period, the expanded landings tend to
+small to apply our model, in a modeled period, the expanded landings tend to 
 represent a negligable proportion of total landings.
 
 The lower panels of Figure $(bar)$ visually demonstrates just how many different 
-species are landed into very commercially realavent market categories. Although 
+species are landed into commercially realavent market categories. Although 
 market categories often carry names that label them with a nominal species, 
 Figure $(bar)$ makes it abundantly clear that these names can mislead our 
-thinking about the pureity and consistency of these categories through time. 
+thinking about the pureity, and consistency, of these categories through time. 
 To drive this point home, consider market category 267. The nominal label for 
-market category 267 is Brown, while Brown rockfish only amounts to Y% of the sampled weight in 1978-1982. 
-In 1978-1982 market category 267 might be better named ZZZ as ZZZ amounts to W% of sampled 
-weight in this time period, however considering recent time periods in Appendix Figre $(panel)$
-market category 267 is composed of Yhat% Brown and What% ZZZ. 
+market category 267 is Brown, while Brown rockfish only amounts to Y% of the 
+sampled weight in 1978-1982. In 1978-1982 market category 267 might be better 
+named ZZZ as ZZZ amounts to W% of sampled weight in this time period, however 
+considering recent time periods in Appendix Figre $(panel)$ market category 
+267 is composed of Yhat% Brown and What% ZZZ. 
 
 <!--![panel](./pictures/mockUp.png)-->
 
@@ -788,24 +790,52 @@ cluster samples described by Sen (1984) in the original sampling protocol.
 
 ![Prior Prediction](./pictures/priorPredict.pdf)
 
-As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both symmetric and quite 
-diffuse over the 100 pound domain. The U shape of the distribution is a side 
-effect of the diffusion of the selected prior. As data are added to the model, 
-the indecisive U shape of this distribution collapses toward the data in the 
-posterior. 
+As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both 
+symmetric and quite diffuse over the 100 pound domain. The U shape of the 
+distribution is a side effect of the diffusion of the selected prior. As data 
+are added to the model, the indecisive U shape of this distribution collapses 
+toward the data in the posterior. 
 
 ## Model Exploration \& Averaging
 
-![modelSelect](./pictures/latexTableCompress1.pdf)
-![modelSelect](./pictures/latexTableCompress2.pdf)
-![modelSelect](./pictures/latexTableCompress3.pdf)
-![modelSelect](./pictures/latexTableCompress4.pdf)
+![1978 to 1982](./pictures/tinyTrim.png)
 
-* One good model selection example
-	* Maps?
-* Include all results as table (fill in extra mcats)
-* Fill in final prediction table values
+Figure$(model selection)$ shows the results of port complex model selection 
+for the modeled period from 1978 to 1982 in market category 250. Along the 
+top, $\omega$ BMA weights for the top 10 models are displayed (each column is a 
+distinct model). The following ten rows indicate the ten port complexes in 
+California, and the colored cells indicate how port complexes are partitioned 
+in each model.
 
+Considering Figure$(model selection)$, the best partitioned model gives 
+distinct parameters to CRS and ERK, while pooling BRG/BDG, OSF/MNT/MRO, and 
+OSB/OLA/OSD. This model uses five parameters to model the ten ports complexes 
+in California. Given the set of candidate models explained above, the BMA 
+proceedure weights this model at approximatly 32% of the truth. Notice that the 
+only difference amoung the top four models is in how the port complexes south of 
+point conception are handeled. In fact, when the seven northernly port complexes 
+are fixed in the described partitioning, the top four models represent all of the 
+possible partitionings of the southern three port complexes. 
+
+In this modeled period it is known that no species composition sampling (landings?) 
+was done south of piont conception, thus it is not surprising that these models 
+perform similarly. When no data is present, parameters simply represent place 
+holders for out of sample prediction. Since the port complexes south of 
+point conception are not informed by data, the predicitons are identical in 
+these categories. Since the first model makes identical predictions to the 
+following three, and does so using the fewest parameters, is is correctly 
+identified as the most parsimonious explaination among these data.
+
+When considering how the top four model partitionings share idential structure 
+in the seven northernly port complexes, while exaustively spanning the candidate 
+partitions south of point conception, it is simple to see that BMA assignes 
+approximatly 71% marginal probability to the northernly model structure.
+
+The results shown here only represent a single market category across the time 
+period 1978-1982. Similar results for other market categories and time periods 
+are provided in the appendix Figure$(color tables)$.
+
+* zero landings
 
 ## Prediction
 
@@ -936,6 +966,14 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 ![worse](./pictures/1991to1999Bar3.pdf)
 ![worst](./pictures/2000to2015Bar3.pdf)
 -->
+
+
+![modelSelect](./pictures/latexTableCompress1.pdf)
+![modelSelect](./pictures/latexTableCompress2.pdf)
+![modelSelect](./pictures/latexTableCompress3.pdf)
+![modelSelect](./pictures/latexTableCompress4.pdf)
+
+
 
 
 
