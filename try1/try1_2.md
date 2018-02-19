@@ -844,13 +844,13 @@ BMA proceedure, ultimatly provides access to posterior predictive distributions
 of the species compositions ($\pi^*_jklm\eta$) within a market category and 
 time interval modeled period. A straight forward way to evaluate the performance 
 of the model in each modeled period is to compare the predictions of the model 
-in each modeled period to with the actual observations of species compostions 
+in each modeled period with the actual observations of species compostions 
 from port samplers.
 
 Species composition posterior predictive distributions are considered via HDI 
 at three levels containing 68%, 95%, and 99% of posterior predictive probability.
 Table$(Prediction)$ shows the proportion of observed species compositions 
-which existed within the HDI across all strata, of each prdiction level, in each 
+which existed within the HDI across all strata, of each prediction level, in each 
 modeled period.
 
 * Should any of these be excluded?
@@ -867,6 +867,7 @@ modeled period.
 956 68.3% 96.7% 99.2%
 959 68.5% 96.3% 98.1%
 961 69.3% 93.2% 95.3%
+AVG 68.3% 94.5% 96.7%
 
 ### 83-90
     68%   95%   99%
@@ -884,15 +885,18 @@ modeled period.
 959 67.4% 96.4% 99.0%
 960 68.0% 96.1% 98.6%
 961 68.6% 94.6% 97.8%
+AVG 68.9% 94.9% 96.9%
 
-* Overall Prediction
+Table$(Prediction)$ largely shows that the oberseved proportion of predicted 
+samples aligns appropriatly with the predictions made by the model. Considering
+the avergage performance across market categories at each prediction level, it 
+ appears that prediction is mostly appropriate with the possible exception of
+the 99% prediction level. The 99% prediction level appears to slightly 
+underpredict on average, indicating that predictive distributions are slightly 
+lighter in the far tails than the data.
 
-Table$(Prediction)$ largely shows that the oberseved proportion of predictied 
-samples aligns appropriatly with the predictions made by the model. 
-
-* may slightly tend to underpredict in the far tails.
-* at the 68% level basically all modeled periods work well, except MCAT 259 in 83-90.
-	* way over prediction at the 68% level and under prediction in the tails.
+* tails lighter due to inla?
+	* higher degree laplace approximation will better capture higher moments of data and thus may better capture information in the tails 
 
 ## Nusiance Parameters
 
@@ -950,6 +954,9 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 961 & 0.59 & 0.59 & 0.001       \\
 \hline
 \end{tabular}
+
+* high $\rho$ in 259 and over prediction in 259? 
+* lower rho might predictict more appropriatly?
 
 #### $v$
 \begin{tabular}{|c|c|c|c|}
