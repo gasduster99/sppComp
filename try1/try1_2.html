@@ -81,10 +81,10 @@ statistical models and model averaging (Gelman et al., 2014).
 </div>
 <h1 id="methods">Methods</h1>
 <h2 id="data">Data</h2>
-<p>As outlined in <span class="math inline">(<em>c</em><em>i</em><em>t</em><em>e</em>)</span> the data in <span class="math inline"><em>b</em><em>l</em><em>a</em><em>n</em><em>k</em></span> are the result of a cluster sampling protocol across the many strata, in which each sample is intendeded to be composed of two fifty pound clusters from the selected stratum. Although port samplers do there best to follow protocol, in reality the port sampling environment does not always allow the exact <span class="math inline">(<em>c</em><em>i</em><em>t</em><em>e</em>)</span> protocol to be followed. Variations in the sampling protocol may result in more or less clusters taken, or the size of clusters taken to vary, from stratum to stratum based on the particular challenges of sampling each stratum.</p>
+<p>As outlined in <span class="math inline">(<em>c</em><em>i</em><em>t</em><em>e</em>)</span> the data in <span class="math inline"><em>b</em><em>l</em><em>a</em><em>n</em><em>k</em></span> are the result of a cluster sampling protocol across the many strata, in which each sample is intended to be composed of two fifty pound clusters from the selected stratum. Although port samplers do there best to follow protocol, in reality the port sampling environment does not always allow the exact <span class="math inline">(<em>c</em><em>i</em><em>t</em><em>e</em>)</span> protocol to be followed. Variations in the sampling protocol may result in more or less clusters taken, or the size of clusters taken to vary, from stratum to stratum based on the particular challenges of sampling each stratum.</p>
 <p>The model based methodology proposed here does not rely strongly upon the cluster sampling structure, but rather simply views each sample as independent and identically distributed (<span class="math inline"><em>i</em>.<em>i</em>.<em>d</em>.</span>) draws from some data generating model, conditional on some parameterization of the stratification system. So long as the parameterization and data generating model are sufficiently robust for handling the behavior of these data, the conditionally <span class="math inline"><em>i</em>.<em>i</em>.<em>d</em>.</span> model of these data can be seen as practically useful model for producing predictions about the data generating system. <!-- even if our model does not replicate the true data generating process exactly.--></p>
 <p>That said, for the purpose of modeling these data, it is enough to know which clusters were collected as part of which samples, and how big each cluster actually ended up being. This information is readily available from CALCOM. For the purpose of the models presented here, all of the observed clusters across a unique sample are aggregated so that the total weight sampled is the sum of all of the total pounds sampled in each cluster of each unique sample. Similarly the observed weight for a particular species in each unique sample is the sum of all of the observed weights, for that species, across each cluster of each unique sample.</p>
-<p>Although model based data analysis has the potential to add significant structure to data, an ethical application of these methods must always confront the model with enough empirical information to adequately learn about the system. In this setting some market categories and time periods may not be well enough sampled to learn the parameters of the models presented here. For any modeled period where the minimum number of possible parameters exceeds the number of samples for the modeled period, the model is not applied. Rather than apply models inappropriately, these cases are speciated as the nominal species for their market category. We later demonstrate in Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em><em>s</em>)</span> that due to the prioritization for sampling heavily landed, or otherwise commercially realavent categories, a sample size heuristic such as this, typically only leads to nominal speciation in market categories and time periods where total landings are low. Thus the expanded landings in these periods have a negligible effect on the overall expanded landings for species in these categories.</p>
+<p>Although model based data analysis has the potential to add significant structure to data, an ethical application of these methods must always confront the model with enough empirical information to adequately learn about the system. In this setting some market categories and time periods may not be well enough sampled to learn the parameters of the models presented here. For any modeled period where the minimum number of possible parameters exceeds the number of samples for the modeled period, the model is not applied. Rather than apply models inappropriately, these cases are speciated as the nominal species for their market category. We later demonstrate in Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em><em>s</em>)</span> that due to the prioritization for sampling heavily landed, or otherwise commercially relevant categories, a sample size heuristic such as this, typically only leads to nominal speciation in market categories and time periods where total landings are low. Thus the expanded landings in these periods have a negligible effect on the overall expanded landings for species in these categories.</p>
 <!--
 the models are constructed 
 so that these cases represent cases where relatively low landings are present and 
@@ -107,8 +107,8 @@ observed clusters
 -->
 <h2 id="data-generating-model">Data Generating Model</h2>
 <!--Something something hierarchical Poisson model. Something something (Shelton, 2012).-->
-<p>For the purposes of accurately modeling not only species composition means, but also higher moments of the data, such as species composition variances, it is neccisary to recognize model limitations with respect to over-dispersed data. Among the simplest models for count data are the Poisson and binomial models. Both models are typically specified with a single parameter for <!--degree of freedom for--> modeling all of the moments of the data, and thus they rely heavily on their respective data generating processes to accurately represent higher moments in the data. McCullagh and Nelder (1989, pg. 124) commiserate about the prevalence of over-dispersed data in cluster sampling, and explain ways in which cluster sampling itself may result in over-dispersion.</p>
-<p>Extending the Poisson and binomial models to deal with over-dispersion, typically involves adding additional parameters for the purpose of modeling higher moments of the data. The negative binomial (NB) distribution is often used as an over-dispersed extension of the Poisson model, since it can be expressly written as an infite mixture of Poisson distributions. While the beta-binomial model is typically used to as an over-dispersed extension of the binomial model.</p>
+<p>For the purposes of accurately modeling not only species composition means, but also higher moments of the data, such as species composition variances, it is necessary to recognize model limitations with respect to over-dispersed data. Among the simplest models for count data are the Poisson and binomial models. Both models are typically specified with a single parameter for <!--degree of freedom for--> modeling all of the moments of the data, and thus they rely heavily on their respective data generating processes to accurately represent higher moments in the data. McCullagh and Nelder (1989, pg. 124) commiserate about the prevalence of over-dispersed data in cluster sampling, and explain ways in which cluster sampling itself may result in over-dispersion.</p>
+<p>Extending the Poisson and binomial models to deal with over-dispersion, typically involves adding additional parameters for the purpose of modeling higher moments of the data. The negative binomial (NB) distribution is often used as an over-dispersed extension of the Poisson model, since it can be expressly written as an infinite mixture of Poisson distributions. While the beta-binomial model is typically used to as an over-dispersed extension of the binomial model.</p>
 <h3 id="an-example">An Example</h3>
 <!--
 m=0
@@ -198,7 +198,7 @@ not capable of providing species composition information, and the stratum is
 simply re-sampled.
 --></p>
 <h2 id="model-exploration-averaging">Model Exploration &amp; Averaging</h2>
-<p>Presently, stratum with deminishingly small sample sizes are managed by an ad-hoc &quot;data borrowing&quot; protocol, as outlined in Pearson and Erwin (1997). The protocol for &quot;data borrowing&quot; calls for pooling only when forced to fill holes brought about by unsampled strata. Naturally, such a pooling protocol introduces bias to fill in unsampled strata, however due to the mathematically unstructured way in which this bias is introduced, it is hard to quantitatively justify these &quot;data borrowing&quot; rules.</p>
+<p>Presently, stratum with diminishingly small sample sizes are managed by an ad-hoc &quot;data borrowing&quot; protocol, as outlined in Pearson and Erwin (1997). The protocol for &quot;data borrowing&quot; calls for pooling only when forced to fill holes brought about by unsampled strata. Naturally, such a pooling protocol introduces bias to fill in unsampled strata, however due to the mathematically unstructured way in which this bias is introduced, it is hard to quantitatively justify these &quot;data borrowing&quot; rules.</p>
 <p>Model (M4) avoids temporal ad-hoc &quot;borrowing&quot; protocols used in Pearson and Erwin (1997) by making use of its hierarchical structure to fill temporal holes with a posterior predictive distribution for unseen time periods within the modeled period. This hierarchical structure uses the data to estimate the degree of pooling through time, rather than ad-hoc &quot;data borrowing&quot;.</p>
 <!--
 Furthermore the Bayesian predictive framework, allows holes 
@@ -208,12 +208,12 @@ unobserved strata.
 <!-- %efforts to pool data through time via the hierarchical priors described in section (XX) -->
 <p>Despite the benefits of modeling these data as Bayesian hierarchical models, port sampling data still remains sparse. Given the degree of sparsity in these data it is certainly possible that models which consider an additional degree of data pooling between port complexes may offer predictive benefits. In exploring strategies for pooling data across space it is necessary to formalize the port complex pooling scheme in a way which provides a mathematically understandable and scalable structure to build upon.</p>
 <p>Given the categorical nature of port complex variables, the typical hierarchical regularization priors among port complexes are not appropriate. Rather, we frame port complex pooling as a model uncertainty problem, in which we consider some degree of port complex pooling, but the exact degree of pooling, and the particular partitioning of the pooled port complexes are not known.</p>
-<p>Port complex pooling is achieved by repeatedly fitting model (M4) with different partitionings of the port complex variables within a particular market category and modeling time period. This model exploration exercise explores the possible ways to produce groupings of the existing port complexes so as to discover predictively useful partionings of the port complexes. Insisting that the port complex groupings be partitions of the available port complexes provides a well defined mathematical structure for exploring the space of pooled port complexes.</p>
+<p>Port complex pooling is achieved by repeatedly fitting model (M4) with different partitionings of the port complex variables within a particular market category and modeling time period. This model exploration exercise explores the possible ways to produce groupings of the existing port complexes so as to discover predictively useful partitionings of the port complexes. Insisting that the port complex groupings be partitions of the available port complexes provides a well defined mathematical structure for exploring the space of pooled port complexes.</p>
 <p>The size of the space of possible pooled models is in the setting is well defined in terms of the size of the set of items to be partitioned, <span class="math inline"><em>K</em></span>, as given by the Bell numbers (<span class="math inline"><em>B</em><sub><em>K</em></sub></span>),</p>
 <p><br /><span class="math display">$$B_K=\sum_{\hat k=0}^{K} \frac{1}{\hat k!} \left( \sum_{j=0}^{\hat k} (-1)^{\hat k -j} \left(\substack{\hat k \\ j}\right) j^K \right).$$</span><br /></p>
 <p>In the case of California the set of items to be partitioned is the set of port complexes in California, of which there are <span class="math inline"><em>K</em> = 10</span>, implying a grand total of <span class="math inline"><em>B</em><sub>10</sub> = 115975</span> ways of partitioning the port complexes in California in each market category and modeled time period. The brute force model selection strategy of computing all 115975 of these partitionings strategies is computationally infeasible. However, not all pooling schemes represent biologically relevant models. For example, perhaps it is reasonable to pool only among adjacent ports (i.e. no discontinuities between port complex pooling in space), or perhaps it is reasonable to assert that biologically similar regions can only extend across a small number of ports.</p>
 <p>Here only adjacent port poolings are considered, such that the maximum size of a port complex grouping is three port complexes. These are the only two constraints that are enforced on port complex partitions here, although many other constraints may, in theory, be chosen. These constraints were chosen so as to mirror the currently accepted protocols in Pearson and Erwin (1997) within the context of this framework. When these two simple constraints are applied, the number of models to explore in each modeled period is reduced to a much more manageable 274 models.</p>
-<p>An exhaustive search of the models in the biologically constrained subspace of <span class="math inline"><em>B</em><sub>10</sub></span>, allows for a concrete comparison of the relative predictive accuracy of each partitioning. Additionally the partitioned models provide a set of candidate models for use in Bayesian Model Averaging (BMA) (Hoeting et al., 1999). BMA, as applied here, essentially allows the model exploration strategy to average across all realavent port complex partionings and adds robustness to the final species composition estimates.</p>
+<p>An exhaustive search of the models in the biologically constrained subspace of <span class="math inline"><em>B</em><sub>10</sub></span>, allows for a concrete comparison of the relative predictive accuracy of each partitioning. Additionally the partitioned models provide a set of candidate models for use in Bayesian Model Averaging (BMA) (Hoeting et al., 1999). BMA, as applied here, essentially allows the model exploration strategy to average across all relevant port complex partitionings and adds robustness to the final species composition estimates.</p>
 <p>For the <span class="math inline"><em>ι</em><sup><em>t</em><em>h</em></sup></span> model in a set of candidate models <span class="math inline"><em>M</em></span>, then the BMA weight for <span class="math inline"><em>M</em><sub><em>ι</em></sub></span> follows directly from Bayes Theorem as,</p>
 <!--\mathbb{M}-->
 <p><br /><span class="math display">$$\omega_\iota = Pr(M_\iota|y) = \frac{ p(y|M_\iota)p(M_\iota) }{ \sum_\iota p(y|M_\iota)p(M_\iota) }.$$</span><br /></p>
@@ -225,7 +225,7 @@ unobserved strata.
 <p>Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em><em>s</em>)</span> shows the relative sampling effort and landings across the top <span class="math inline"><em>x</em></span> percent of landed rockfish market categories for two modeled periods. In the top panel of each modeled period the black line represented the proportion of landings in each market category, while the blue line represents the proportion of samples, by number, taken in each market category. In the bottom panel of each modeled period, colors represent the proportion of sampled weight of twelve commercially realavant species. Alternating dark and light grey panels fill in all other species. On the top of each bar the number of observed species in each market category is listed. Hatched regions indicated the nominal species of a market category where applicable.</p>
 <p>Notice that sampling effort both tracks landings as well as the number of species in each market category. These two factors are among the most important factors to prioritize in sampling for the sake of applying our model's results to a large proportion of landings <span class="math inline">(<em>W</em><em>h</em><em>a</em><em>t</em><em>p</em><em>r</em><em>o</em><em>p</em><em>o</em><em>r</em><em>t</em><em>i</em><em>o</em><em>n</em><em>o</em><em>f</em><em>l</em><em>a</em><em>n</em><em>d</em><em>i</em><em>n</em><em>g</em><em>s</em><em>i</em><em>s</em><em>t</em><em>h</em><em>e</em><em>m</em><em>o</em><em>d</em><em>e</em><em>l</em><em>e</em><em>x</em><em>p</em><em>a</em><em>n</em><em>d</em><em>i</em><em>n</em><em>g</em>?)</span>.<br />
 Furthermore given this pattern in port sampling, when sample sizes become too small to apply our model, in a modeled period, the expanded landings tend to represent a negligible proportion of total landings.</p>
-<p>The lower panels of Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em>)</span> visually demonstrates just how many different species are landed into commercially realavent market categories. Although market categories often carry names that label them with a nominal species, Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em>)</span> makes it abundantly clear that these names can mislead our thinking about the purity, and consistency, of these categories through time. To drive this point home, consider market category 267. The nominal label for market category 267 is Brown, while Brown rockfish only amounts to Y% of the sampled weight in 1978-1982. In 1978-1982 market category 267 might be better named ZZZ as ZZZ amounts to W% of sampled weight in this time period, however considering recent time periods in Appendix Figure <span class="math inline">(<em>p</em><em>a</em><em>n</em><em>e</em><em>l</em>)</span> market category 267 is composed of Yhat% Brown and What% ZZZ.</p>
+<p>The lower panels of Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em>)</span> visually demonstrates just how many different species are landed into commercially relevant market categories. Although market categories often carry names that label them with a nominal species, Figure <span class="math inline">(<em>b</em><em>a</em><em>r</em>)</span> makes it abundantly clear that these names can mislead our thinking about the purity, and consistency, of these categories through time. To drive this point home, consider market category 267. The nominal label for market category 267 is Brown, while Brown rockfish only amounts to Y% of the sampled weight in 1978-1982. In 1978-1982 market category 267 might be better named ZZZ as ZZZ amounts to W% of sampled weight in this time period, however considering recent time periods in Appendix Figure <span class="math inline">(<em>p</em><em>a</em><em>n</em><em>e</em><em>l</em>)</span> market category 267 is composed of Yhat% Brown and What% ZZZ.</p>
 <!--![panel](./pictures/mockUp.png)-->
 <p><embed src="./pictures/1978to1982Bar3.pdf" /> <embed src="./pictures/1983to1990Bar3.pdf" /> <embed src="./pictures/barplotLegend.pdf" /></p>
 <!--
@@ -556,7 +556,7 @@ mlik,waic,dic
 </tr>
 </tbody>
 </table>
-<p>Table<span class="math inline">(<em>P</em><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em>)</span> largely shows that the oberseved proportion of predicted samples aligns appropriately with the predictions made by the model. Considering the average performance across market categories at each prediction level, it appears that prediction is mostly appropriate with the possible exception of the 99% prediction level. The 99% prediction level appears to slightly under-predict on average, indicating that predictive distributions are slightly lighter in the far tails than the data.</p>
+<p>Table<span class="math inline">(<em>P</em><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em>)</span> largely shows that the observed proportion of predicted samples aligns appropriately with the predictions made by the model. Considering the average performance across market categories at each prediction level, it appears that prediction is mostly appropriate with the possible exception of the 99% prediction level. The 99% prediction level appears to slightly under-predict on average, indicating that predictive distributions are slightly lighter in the far tails than the data.</p>
 <ul>
 <li>tails lighter due to inla?
 <ul>
@@ -576,7 +576,7 @@ mlik,waic,dic
 
 <ul>
 <li>high <span class="math inline"><em>ρ</em></span> in 259 and over prediction in 259?</li>
-<li>lower rho might predictict more appropriately?</li>
+<li>lower rho might predict more appropriately?</li>
 </ul>
 <h4 id="v-1"><span class="math inline"><em>v</em></span></h4>
 
@@ -689,18 +689,18 @@ We only consider pooling strategies
 which remain consistent within the modeled period and explicitly outline 
 state-wide pooling strategies, rather than protocols that change from stratum 
 to stratum. That is to say, for a particular market category and modeling time 
-period, port pooling is defined as some partion of the set of port complexes in 
+period, port pooling is defined as some partition of the set of port complexes in 
 California. This formulation does not make it clear which ports should be 
 pooled together in the partitioning of the state, however this formulation does 
 achieve consistency among port pooling within market categories and modeled time 
-periods, while providiving a mathematical structure for considering the space 
+periods, while providing a mathematical structure for considering the space 
 of possible pooled models.  
 -->
 <!--
 In this 
 setting BMA accounts for model uncertainty around the port partitioning 
 decision. As used here BMA effectively integrates across the possible 
-biologically realavent modeling decisions with to port complex pooling. 
+biologically relevant modeling decisions with to port complex pooling. 
 
  For the $\mu^{th}$ model, of
 model space $\mathbb{M}$, a straight forward implementation of Bayes theorem
@@ -761,7 +761,7 @@ of ports (if so, how many?).
 The straight-forward spatial model implied by the categorical port complex 
 variables do not adequately resolve in-sample prediction at the observed 
 sample sizes. 
-Presently these deminishingly small within stratum sample sizes are managed 
+Presently these diminishingly small within stratum sample sizes are managed 
 by an ad-hoc "borrowing" protocol outlined by Pearson and Erwin (1997).
 We aim to formalize this "borrowing" idea via an exhaustive search of spatially 
 pooled models, combined with the formalized process of Bayesian Model 
@@ -867,7 +867,7 @@ binomial model.
 <!--are also able to discern-->
 <!--
  Because the 
-species composition scale is bounded on [0, 1], in the presence of large variablitypredictive density may 
+species composition scale is bounded on [0, 1], in the presence of large variablity predictive density may 
 aggregate around the bounds   (i.e. 
 these regions represent the densest packing of 95% probability under each 
 predictive distribution). 
@@ -915,7 +915,7 @@ data seem to support prior structures which involve the potential for a higher
 degree of partial pooling while still supporting the inclusion of year-quarter 
 interactions. All model selection criterion agree that M5 shows the highest 
 degree of support. Presumably M5 strikes a balance between maximal potential for 
-hierarchical pooling, while still maintaing the ability to model differences in 
+hierarchical pooling, while still maintaining the ability to model differences in 
 seasonality from year to year.
 
 $Choose Model M4$
@@ -1061,9 +1061,9 @@ Figure(2).
 $$v \sim IG(1,~2\times10^{3}) ~~~\forall~~~v$$.  
 
 the model applies to 
-stratum contained within each heriarchy
+stratum contained within each hierarchy
  depending on 
-the posteriors of these variance parameters the each model learns  stratum contained within each heriarchy maybe
+the posteriors of these variance parameters the each model learns  stratum contained within each hierarchy maybe
 
 Any and all hierarchical variance 
 parameters are estimated from the data and thus distributed 
@@ -1200,7 +1200,7 @@ the space of pooled models to obtain quantitative evidence of optimal pooling be
 The straight-forward spatial model implied by the categorical port complex 
 variables do not adequatly resolve in-sample prediction at the observed 
 sample sizes. 
-Presently these deminishingly small within stratum sample sizes are managed 
+Presently these diminishingly small within stratum sample sizes are managed 
 by an ad-hoc "borrowing" protocol outlined by Pearson and Erwin (1997).
 We aim to formalize this "borrowing" idea via an exhaustive search of spatially 
 pooled models, combined with the formalized process of Bayesian Model 
