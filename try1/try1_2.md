@@ -288,7 +288,7 @@ better modeling the variance, these models may often produce more accurate
 measures of center as well.
 <!--Thus it is possible that the negative binomial and--> 
 
-For each of the above mentioned models The predictive species composition 
+For each of the above mentioned models the predictive species composition 
 distributions are visualized in Figure($Interval Plot$) as 95% Highest Density Intervals 
 (HDI) $(citations)$, plotted on top of the predictive means for each model and 
 the observed species compositions from the data in Figure($Interval Plot$). For brevity we 
@@ -414,9 +414,9 @@ $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 $v^{(y)}$ has the effect of partially pooling information among year parameters, 
 while $v^{(q)}$ partially pools information among quarter parameters. The actual 
 degree of pooling among each of the years and quarters is determined by the data.
-Depending on the posterior distributions of $v^{(y)}$ and $v^{(q)}$, $\beta^{(y)}$ 
-and $\beta^{(q)}$ may be shrunk back toward the common mean for small $v$ or 
-allowed to take largely distinct values in the case of large estimates of the $v$.    
+Depending on the posterior distributions of $v^{(y)}$ and $v^{(q)}$, the $\beta^{(y)}$ <!-- the $\bm{\beta^{(y)}}$ and $\bm{\beta^{(q)}}$ -->
+and $\beta^{(q)}$ may be shrunk back toward the common mean (for small $v$) or 
+allowed to take largely distinct values (in the case of large estimates of the $v$).    
 
 <!--
 $v^{(y)}$ partially pools information among the $\beta^{(y)}_{m}$, and 
@@ -508,12 +508,12 @@ distribution of all of the parameters of the model. It is useful to emphasize
 that in the Bayesian setting, these parameters have full 
 distributions, and they are typically handled as a large number of samples 
 from the joint posterior distribution of the parameters. Once the posterior 
-sampling is complete, this simplifies parameter mean and variance estimation 
-since the required moments are simply obtained by computing the desired 
-moments from the posterior samples. Additionally the fact that the parameters 
-are full distributions, means that any functions which contain, or are derived 
-from, parameters are themselves random variables with the function 
-representing a random variable transformation of those parameters.
+sampling is complete, this simplifies parameter mean and variance estimation; 
+required moments are simply obtained by computing the desired moments from the 
+posterior samples. Additionally, the fact that the parameters are full 
+distributions means that any functions which contain, or are derived from, 
+parameters are themselves random variables with the function representing a 
+random variable transformation of those parameters.
 
 <!--Model M5 is a model on sampled weight; -->
 To obtain predicted species compositions from this model, first consider the 
@@ -533,9 +533,10 @@ computing the following transformation,
 
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.$$ 
 
-Here $\pi^*_{jklm\eta}$ is the models representation of the observation level 
-species composition for species $j$ in the $k^{th}$ port, caught with the 
-$l^{th}$ gear, in the $\eta^{th}$ quarter, of year $m$. 
+For a particular market category, $\pi^*_{jklm\eta}$ is the models 
+representation of the observation level species composition for species $j$ in 
+the $k^{th}$ port, caught with the $l^{th}$ gear, in the $\eta^{th}$ quarter, 
+of year $m$. 
 <!--
 The constraint 
 $y^*_{klm\eta}\neq 0$ is added to exclude the predictive situations where no 
@@ -659,9 +660,10 @@ Notice that sampling effort both tracks landings as well as the number of specie
 in each market category. These two factors are among the most important factors 
 to prioritize in sampling for the sake of applying our model's results to a large 
 proportion of landings $(What proportion of landings is the model expanding?)$.  
-Furthermore given this pattern in port sampling, when sample sizes become too 
-small to apply our model, in a modeled period, the expanded landings tend to 
-represent a negligible proportion of total landings.
+Furthermore due to this pattern in port sampling, when sample sizes become too 
+small to apply our model, <!--, in a modeled period,-->
+the expanded landings tend to represent a negligible proportion of total 
+landings.
 
 The lower panels of Figure $(bar)$ visually demonstrates just how many different 
 species are landed into commercially relevant market categories. Although 
@@ -707,14 +709,14 @@ DIC        1342.27        1571.46       345.89             340.86
 WAIC       1421.61        1665.41       345.09             341.66
 $pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
 
-Figure(likelihood) shows observed species compositions plotted against Poisson, 
+Figure(likelihoods) shows observed species compositions plotted against Poisson, 
 Binomial, NB, and BB predictive intervals. Here 95% highest density intervals 
 (HDI) are shown to visualize the predictive accuracy of each model against the 
 data.
 
 ![Interval Plot](./pictures/compPlot1982Qtr2.png)
 
-The large spread of the observed species compositions seen in Figure(1) 
+The large spread of the observed species compositions seen in Figure(likelihoods) 
 visually demonstrate the degree of overdispersion present in port sampling 
 data. The Poisson and binomial models disregard this overdispersion to 
 prioritize fitting the data mean. The NB and BB models explicitly model 
@@ -723,14 +725,14 @@ predict a larger subset of the data.
 
 ![Violin Plot](./pictures/compVioplot1982Qtr2.png)
 
-The split beta-binomial intervals seen in Figure(1) are the consequence of 
+The split beta-binomial intervals seen in Figure(likelihoods) are the consequence of 
 confining a large amount of residual variability to the unit interval. The 
 beta-binomial is the only model considered here, which estimates such a 
 large degree of variability and thus it is the only model that produces 
-predictive species composition distributions of the sort. Figure(2) shows the 
+predictive species composition distributions of the sort. Figure(violin) shows the 
 beta-binomial predictive distributions as a violin plot demonstrating how the
 beta-binomial model arranges predictive density over the unit interval. The 
-predictive intervals in Figure(1) are the smallest possible regions on each 
+predictive intervals in Figure(likelihoods) are the smallest possible regions on each 
 of these densities so that each intervals contain 95% probability. Species 
 composition is bounded on [0, 1], thus in the presence of large variability 
 predictive density may aggregate around the bounds. For the example of STRK, 
@@ -792,8 +794,8 @@ cluster samples described by Sen (1984) in the original sampling protocol.
 As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both 
 symmetric and quite diffuse over the 100 pound domain. The U shape of the 
 distribution is a side effect of the diffusion of the selected prior. As data 
-are added to the model, the indecisive U shape of this distribution collapses 
-toward the data in the posterior. 
+are added to the model, the indecisive U shape <!--of this distribution-->
+collapses toward the data in the posterior. 
 
 ## Model Exploration \& Averaging
 
@@ -822,7 +824,7 @@ perform similarly. When no data is present, parameters simply represent place
 holders for out of sample prediction. Since the port complexes south of 
 point conception are not informed by data, the predictions are identical in 
 these categories. Since the first model makes identical predictions to the 
-following three, and does so using the fewest parameters, is is correctly 
+following three, and does so using the fewest parameters, it is correctly 
 identified as the most parsimonious explanation among these data.
 
 When considering how the top four model partitionings share identical structure 
@@ -840,7 +842,7 @@ are provided in the appendix Figure$(color tables)$.
 
 Repeatedly fitting model (M4) across port complex partitionings and applying the 
 BMA procedure, ultimately provides access to posterior predictive distributions 
-of the species compositions ($\pi^*_jklm\eta$) within a market category and 
+of the species compositions ($\pi^*_{jklm\eta}$) within a market category and 
 time interval modeled period. A straight forward way to evaluate the performance 
 of the model in each modeled period is to compare the predictions of the model 
 in each modeled period with the actual observations of species compositions 
