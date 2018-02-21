@@ -645,16 +645,17 @@ $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
 ## Data
 
-Figure $(bars)$ shows the relative sampling effort and landings across the top 
-$x$ percent of landed rockfish market categories for two modeled periods. In the top 
-panel of each modeled period the black line represented the proportion of 
-landings in each market category, while the blue line represents the proportion 
-of samples, by number, taken in each market category. In the bottom panel of each 
-modeled period, colors represent the proportion of sampled weight of twelve 
-commercially realavant species. Alternating dark and light grey panels 
-fill in all other species. On the top of each bar the number of observed 
-species in each market category is listed. Hatched regions indicated the nominal 
-species of a market category where applicable. 
+Figure $(bars)$ shows the relative sampling effort and landings across 
+rockfish market cateogries accounting for the top 99% percent of landings 
+for two modeled periods. In the top panel of each modeled period the black 
+line represented the proportion of landings in each market category, while the 
+blue line represents the proportion of samples, by number, taken in each 
+market category. In the bottom panel of each modeled period, colors represent 
+the proportion of sampled weight of twelve commercially realavant species. 
+Alternating dark and light grey panels fill in all other species. On the top 
+of each bar the number of observed species in each market category is listed. 
+Hatched regions indicated the nominal species of a market category where 
+applicable. 
 
 Notice that sampling effort both tracks landings as well as the number of species 
 in each market category. These two factors are among the most important factors 
@@ -671,11 +672,12 @@ market categories often carry names that label them with a nominal species,
 Figure $(bar)$ makes it abundantly clear that these names can mislead our 
 thinking about the purity, and consistency, of these categories through time. 
 To drive this point home, consider market category 267. The nominal label for 
-market category 267 is Brown, while Brown rockfish only amounts to Y% of the 
+market category 267 is Brown, while Brown rockfish only amounts to 6.3% of the 
 sampled weight in 1978-1982. In 1978-1982 market category 267 might be better 
-named ZZZ as ZZZ amounts to W% of sampled weight in this time period, however 
-considering recent time periods in Appendix Figure $(panel)$ market category 
-267 is composed of Yhat% Brown and What% ZZZ. 
+named Widow as Widow rockfish amounts to 92.6% of sampled weight in this time 
+period, however considering the most recent time period (2000-2015), in Appendix 
+Figure $(panel)$, market category 267 samples are composed of 99.6% Brown and 
+0% Widow. 
 
 <!--![panel](./pictures/mockUp.png)-->
 
