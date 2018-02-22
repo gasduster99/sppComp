@@ -174,11 +174,12 @@ results at any level of aggregation.
 As outlined in $(cite)$ the data in $blank$ are the result of a cluster sampling 
 protocol across the many strata, in which each sample is intended to be 
 composed of two fifty pound clusters from the selected stratum. Although port 
-samplers do there best to follow protocol, in reality the port sampling 
+samplers do their best to follow protocol, in reality the port sampling 
 environment does not always allow the exact $(cite)$ protocol to be 
-followed. Variations in the sampling protocol may result in more or less 
-clusters taken, or the size of clusters taken to vary, from stratum to stratum 
-based on the particular challenges of sampling each stratum. 
+followed. Variations in the sampling protocol may result in only a single 
+cluster being taken clusters taken, or the size of clusters taken to vary, 
+from stratum to stratum based on the particular challenges of sampling each 
+stratum. 
 
 The model based methodology proposed here does not rely strongly upon the cluster 
 sampling structure, but rather simply views each sample as independent and 
@@ -192,7 +193,8 @@ about the data generating system.
 
 That said, for the purpose of modeling these data, it is enough to know 
 which clusters were collected as part of which samples, and how big each cluster 
-actually ended up being. This information is readily available from CALCOM. For 
+actually ended up being. This information is readily available from CALCOM 
+(the database maintained by the California Cooperative Groundfish Survey). For 
 the purpose of the models presented here, all of the observed clusters across 
 a unique sample are aggregated so that the total weight sampled is the sum of 
 all of the total pounds sampled in each cluster of each unique sample. Similarly
@@ -235,6 +237,10 @@ observed clusters
 * General Structure of Data
 * where can I put something about sub-setting MCATs?
 -->
+
+* port complexes v. ports? or in intro?
+* something about chuncking time at regulation time periods
+	* introduce idea of modeled period (mcat/time chunk)
 
 ## Data Generating Model
 <!--Something something hierarchical Poisson model. Something something (Shelton, 2012).-->
@@ -640,6 +646,9 @@ average posteriors across all of the models, as
 
 $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
+## Expansion
+
+$$\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}$$
 
 # Results
 
@@ -898,9 +907,6 @@ the 99% prediction level. The 99% prediction level appears to slightly
 under-predict on average, indicating that predictive distributions are slightly 
 lighter in the far tails than the data.
 
-* tails lighter due to inla?
-	* higher degree Laplace approximation will better capture higher moments of data and thus may better capture information in the tails 
-
 ## Nuisance Parameters
 
 ### 78-82
@@ -988,6 +994,30 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 
 
 # Discussion
+
+* Variance Estimates; Justify Model based statistics
+
+* Biase/Variance trade off; hierarchical modeling
+
+* Prediction: tails lighter due to inla?
+	* higher degree Laplace approximation will better capture higher moments of posterior and thus may better capture information in the tails 
+
+* high $\rho$ in 259 and over prediction in 259? 
+* lower rho might predict more appropriately?
+
+* Model averaging
+	* Interpret/Speculate
+
+* Looking Forward	
+	* forecasting/hindcasting
+		* simple
+		* time series models
+	* more computation faster
+		* broader model exploration
+		* broader spatial expansion
+	* Hierarchical Spatial Models
+	* DP Models
+
 
 
 # Appendix
@@ -1428,28 +1458,12 @@ $Choose Model M4$
 	* Report predictive accuracy
 -->
 
-# Discussion
 <!--
+# Discussion
+
 * General Math/Science
 * Database Stuff
 -->
-
-* Variance Estimates; Justify Model based statistics
-
-* Biase/Variance trade off; hierarchical modeling
-
-* Model averaging
-
-* Looking Forward	
-	* forecasting/hindcasting
-		* simple
-		* time series models
-	* more computation faster
-		* broader model exploration
-		* broader spatial expansion
-	* Hierarchical Spatial Models
-	* DP Models
-
 
 
 
