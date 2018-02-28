@@ -1,6 +1,6 @@
 ---
 title: Improving Catch Estimation Methods in Sparsely Sampled Mixed-Stock Fisheries.
-author: Nick Grunloh, Edward Dick, Don Pearson, John Field, Marc Mangel
+author: Nick Grunloh, E.J. Dick, Don Pearson, John Field, Marc Mangel
 ---
 
 <!--
@@ -100,60 +100,104 @@ Pearson et al. (2008), it is important to recognize that species and market cate
 are not synonymous. On the U.S. West Coast, for example, it is common for 
 multiple species to be landed within a single market category 
 (CALCOM 2017, PacFIN 2017). This is expected for categories that are clearly 
-designated as mixed-species categories (e.g. nearshore rockfish, or species 
-within a particular genus or family). However, some categories that are named 
-after a single species still contain several species, to varying degrees, even 
-after regulations require sorting into a particular category 
-(Pearson et al., 2008).
+designated as mixed-species categories (e.g. ``nearshore rockfish'', or species 
+within a particular genus or family). However, in some states, categories that 
+are named after a single species still contain several species, to varying 
+degrees, even after regulations require sorting into a particular 
+category (Pearson et al., 2008). As a result, estimation of landings for a 
+single species based on landing receipt data alone may produce biased 
+estimates of total catch. 
 
-The decision of how to sort species into market categories on a landing 
-receipt is typically made by the fishermen, dealers, or processors. As a 
-result, trained port samplers intercept vessels offloading catch or during 
-subsequent processing in order to determine the species composition of catch 
-landed in a given market category (Sen 1984, Crone 1995, Tsou et al. 2015). 
-These species composition data are used to partition the weight of landed 
-catch in a market category across species, a process commonly referred to as 
-catch expansion (Pearson and Almany, 1995). To calculate total landings for a 
-single species, the expanded catch is summed across all market categories in 
-which the species was landed.
+Fisherman, dealers, or processors typically decide how to sort species into 
+market categories on a landing receipt. Trained port samplers intercept 
+vessels offloading catch or during subsequent processing in order to determine 
+the species composition of catch landed in a given market category (Sen 1984, 
+Crone 1995, Tsou et al. 2015).  These species composition data are used to 
+partition, or distribute, the weight of landed catch in a market category 
+across species, a process commonly referred to as catch expansion (Pearson and 
+Almany, 1995). To estimate total landings for a single species, the expanded 
+catch is summed across all relevant market categories. Assuming that landing 
+receipt data are a census of the landed catch, uncertainty in total catch for 
+a given species reflects variability in the species composition among port 
+samples. If information is available to estimate sources of bias in the 
+landing receipt data, e.g.  underreporting, then it is possible to also 
+incorporate uncertainty in the bias correction factors as well 
+(Bousquet et al. 2010). In this study, we quantify sampling uncertainty for 
+estimates of landed catch, although the modeling framework could be extended 
+to include uncertainty or bias in landing receipt data.
 
 Within market categories, the species composition of landed catch can vary 
 spatially, temporally, by fishing gear, and catch disposition (e.g. fish sold 
 alive or dead). These differences are attributable to many factors, including 
-market preference, fishing behavior, regulatory constraints, and 
-biological/ecological characteristics (e.g. spatial distribution) of the 
-landed species. As a result, estimates of species composition for a given 
-market category are often stratified over time (e.g. quarterly) and across 
-other relevant strata (e.g. ports, gears, catch disposition). Sampling 
-programs often have limited funds, and attempts to reduce bias in species 
-composition estimates through the introduction of additional strata comes at a 
-cost, namely reduced precision (Cochran, 19xx; Tomlinson, 1971).
+market preference, fishing behavior, regulatory constraints, 
+and biological/ecological characteristics (e.g. spatial distribution) of 
+the landed species. As a result, estimates of species composition for a 
+given market category are often stratified over time (e.g. quarterly) and 
+across other relevant strata (e.g. ports, gears, catch disposition). 
+Sampling programs often have limited funds, and attempts to reduce bias in 
+species composition estimates through the introduction of additional strata 
+comes at a cost, namely reduced precision (Cochran, 1977; Tomlinson, 1971).  
 
 On the U.S. West Coast, port sampling programs allocate effort both spatially 
-and temporally, but many domains of interest (e.g. market category, gear type, 
-catch disposition) remain unsampled or sparsely sampled due to a proliferation 
-of categories over time, logistical constraints, and limited resources (Sen 
-1986; Crone 1995; Pearson et al. 2008; Tsou et al. 2015). Ad-hoc data 
-borrowing algorithms based on expert opinion are used to calculate species 
-compositions for unsampled strata and domains, but these algorithms have 
-unknown bias and do not produce estimates of uncertainty. In contrast, 
-model-based estimators are increasingly used to estimate quantities of 
-interest for domains with small sample sizes and/or unsampled strata 
-(sometimes referred to as small area estimation; Rao 2003).  Shelton et al. 
-(2012) developed a Bayesian hierarchical statistical framework for species 
-composition data that pools information among sparsely sampled strata, 
-predicts species compositions for unsampled strata, and can be combined with 
-landing receipts to estimate total landings by species, across market 
-categories and other strata, with associated estimates of uncertainty. Shelton 
-et al. considered hierarchical pooling only among quarters within a single 
-year, comparing generalized linear and hierarchical linear models to trawl 
-data from a single port in California. The authors also underscored the need 
-to better understand performance of alternative models, and to overcome issues 
-with computation time, particularly since commercial port sampling data sets 
-often include hundreds of landed strata spanning decades, multiple ports, gear 
-types, and other domains of interest.
+and temporally, but many domains of interest (e.g. market category, gear 
+type, catch disposition) remain unsampled or sparsely sampled due to a 
+proliferation of categories over time, logistical constraints, and limited 
+resources (Sen 1986; Crone 1995; Pearson et al. 2008; Tsou et al. 2015). 
+In California, for example, commercial port sampling effort has changed over 
+time and space (Pearson and Almany 1995). For example, regular sampling of 
+California ports north of Point Conception (roughly $34^{\circ}$ 27' N. 
+latitude) began as early as 1978, but the more southern ports were rarely 
+sampled prior to 1983. This allocation of effort was largely based on the 
+statewide distribution of landings, diffuse spatial distribution of southern 
+commercial ports, and limitations in funding for port samplers.  
 
-In this paper, we evaluate the model-based framework proposed by Shelton et 
+
+When no port samples are collected for landed strata and domains, species 
+composition estimates are ‘borrowed’ from other strata using deterministic 
+algorithms based on expert opinion. These algorithms have unknown bias and 
+precision. In contrast, model-based estimators are increasingly used to 
+estimate quantities of interest for domains with small sample sizes and/or 
+unsampled strata (sometimes referred to as small area estimation; Rao 2003).  
+Shelton et al. (2012) developed a Bayesian hierarchical statistical framework 
+for species composition data that pools information among sparsely sampled 
+strata, predicts species compositions for unsampled strata, and can be 
+combined with landing receipts to estimate total landings by species, across 
+market categories and other strata, with associated estimates of uncertainty. 
+Shelton et al. considered hierarchical pooling only among quarters within a 
+single year, comparing generalized linear and hierarchical linear models to 
+trawl data from a single port in California. The authors underscored the 
+need to better understand performance of alternative models, and to overcome 
+issues with computation time, particularly since commercial port sampling data 
+sets often include hundreds of landed strata spanning decades, multiple ports, 
+gear types, and other domains of interest.
+
+Among the U.S. West Coast states, the challenge of estimating landings for 
+sparsely-sampled mixed stock fisheries is perhaps greatest for California. 
+Relative to Oregon and Washington, California has a greater number of 
+commercial ports, market categories, and landed species, with greater species 
+diversity among ports due to the geographical range of the coast. Of 
+particular consequence to the estimation of species compositions is the 
+proliferation of landed market categories over time, particularly during the 
+1990s (Figure 1). Sampling effort also leveled off in the mid-1990s, with a 
+reduction in effort in the early 2000s. The net result of increased 
+stratification and flat (or reduced) sampling effort over time is a decline in 
+mean sample size per stratum (Figure 1). In this situation, it is critical to 
+understand how efforts to reduce bias (e.g. increasing the number of landed 
+market categories) affect precision of the expanded catch estimates.  
+
+Models that take catch uncertainty into account are not new (c.f. Doubleday 
+1976), but most assessments on the U.S. West Coast assume catch is known 
+without error (PFMC 2018). As a result, catch uncertainty is not propagated 
+into management reference points.  However, the implications of catch 
+uncertainty are not limited to stock assessment efforts.  In a management 
+context, catch estimates with large (but unknown) uncertainty may cause 
+managers to react to large, high-frequency deviations in estimated catch, and 
+either impose unnecessary restrictions on a fishery, or mistakenly support 
+excessive harvest. This is particularly an issue for prohibited and/or ‘choke’ 
+species, for which information is limited and may be based solely on estimates 
+of discarded catch.  
+
+In this study, we evaluate the model-based framework proposed by Shelton et 
 al. (2012) using commercial port sampling data collected in California, U.S.A. 
 We describe species composition data collected by the California Cooperative 
 Groundfish Survey (CCGS, 2017) over the period 1978-1990. We then extend the 
@@ -166,7 +210,11 @@ unsampled strata, and summarize a general framework for quantifying
 uncertainty including an efficient database design for dissemination of 
 results at any level of aggregation.
 
-![Sparse Data](./pictures/sampleComplex.png)
+![Number of commercial port samples per market category in California,
+1978-2014 (upper panel), average sample size per stratum (middle panel), and 
+number of market categories recorded on landing receipts (lower panel). On the 
+lower panels, points indicate observed values, while the black lines represent 
+9 year moving averages](./pictures/sampleComplex.png)
 
 # Methods
 
