@@ -225,47 +225,55 @@ composed of two fifty pound clusters from the selected stratum. Although port
 samplers do their best to follow protocol, in reality the port sampling 
 environment does not always allow the exact $(cite)$ protocol to be 
 followed. Variations in the sampling protocol may result in only a single 
-cluster being taken clusters taken, or the size of clusters taken to vary, 
-from stratum to stratum based on the particular challenges of sampling each 
-stratum. 
+cluster being taken, or the size of clusters taken to vary, from stratum to 
+stratum based on the particular challenges of sampling each stratum. 
 
-The model based methodology proposed here does not rely strongly upon the cluster 
-sampling structure, but rather simply views each sample as independent and 
-identically distributed ($i.i.d.$) draws from some data generating model, 
-conditional on some parameterization of the stratification system. So long as 
-the parameterization and data generating model are sufficiently robust for 
-handling the behavior of these data, the conditionally $i.i.d.$ model of these 
-data can be seen as practically useful model for producing predictions 
-about the data generating system.
+[add more detailed description of data here; e.g. samples are recorded as 
+integer weights (pounds) by port samplers, number of market categories, range 
+of years, gears, port complexes, ignoring live fish for now, etc.; show map of 
+state with port complexes.]
+
+The model based methodology proposed here does not rely strongly upon the 
+cluster sampling structure, but rather simply views each sample as independent 
+and identically distributed ($i.i.d.$) draws from a data generating model, 
+conditional on a parameterization of the stratification system. So long as the 
+parameterization and data generating model are sufficiently robust for 
+handling the behavior of these data, a conditionally $i.i.d.$ model of these 
+data will be practically useful for producing predictions about the data 
+generating system.
 <!-- even if our model does not replicate the true data generating process exactly.-->
 
 That said, for the purpose of modeling these data, it is enough to know 
 which clusters were collected as part of which samples, and how big each cluster 
-actually ended up being. This information is readily available from CALCOM 
-(the database maintained by the California Cooperative Groundfish Survey). For 
-the purpose of the models presented here, all of the observed clusters across 
-a unique sample are aggregated so that the total weight sampled is the sum of 
-all of the total pounds sampled in each cluster of each unique sample. Similarly
-the observed weight for a particular species in each unique sample is the sum of 
-all of the observed weights, for that species, across each cluster of each unique 
-sample.
+actually ended up being. This information is readily available from CALCOM, a 
+database maintained by the California Cooperative Groundfish Survey 
+(CALCOM 2018). Specifically, we aggregate all observed clusters across
+<!--or the purpose of the models presented here, all of the-->
+a unique sample so that the total weight sampled is the sum of all pounds in 
+each unique sample. Similarly the observed weight for a particular species in 
+each unique sample is the sum of all of the observed weights, for that 
+species, across each cluster of each unique sample.
 
 Although model based data analysis has the potential to add significant 
-structure to data, an ethical application of these methods must always confront 
+structure to data, a judicious application of these methods must always confront 
 the model with enough empirical information to adequately learn about the system.
 In this setting some market categories and time periods may not be well enough 
-sampled to learn the parameters of the models presented here. For any modeled 
-period where the minimum number of possible parameters exceeds the number of 
-samples for the modeled period, the model is not applied. Rather than apply 
-models inappropriately, these cases are speciated as the nominal species for 
-their market category. We later demonstrate in Figure $(bars)$ that due to the 
-prioritization for sampling heavily landed, or otherwise commercially relevant 
-categories, a sample size heuristic such as this, typically only leads to nominal 
-speciation in market categories and time periods where total landings are low. 
-Thus the expanded landings in these periods have a negligible effect on the 
-overall expanded landings for species in these categories.
+sampled to learn the parameters of the models presented here. For this reason, 
+we refrain from modeling any period where the minimum number of possible 
+parameters exceeds the number of samples for the modeled period. Rather than apply 
+models inappropriately, these landings are speciated as the nominal species for 
+their market category. We later demonstrate that due to the prioritization for 
+sampling heavily landed, or otherwise commercially relevant categories, this 
+sample size heuristic only leads to nominal speciation in market categories and 
+time periods where total landings are low. Thus nominal landings represent a
+negligible component of the overall expansion process. 
+
 
 <!--
+expanded landings.
+weight toward the overall expansion landings for 
+
+
 the models are constructed 
 so that these cases represent cases where relatively low landings are present and 
 
