@@ -268,33 +268,6 @@ sample size heuristic only leads to nominal speciation in market categories and
 time periods where total landings are low. Thus nominal landings represent a
 negligible component of the overall expansion process. 
 
-
-<!--
-expanded landings.
-weight toward the overall expansion landings for 
-
-
-the models are constructed 
-so that these cases represent cases where relatively low landings are present and 
-
-gets around the fact that there is always an important empirical 
-component to these models
-
-Since model based strategies of data analysis are reliant not only on a
-model, but also the models ability the to learn from data, we do our best 
-to only apply the models in cases where it is reasonable to expect  models to 
-produce valid results. For example in some market categories 
-and time periods our models may end up having more parameters that 
-
-
-ah sample is aggregated across the 
-observed clusters
-
-* General Structure of Data
-* where can I put something about sub-setting MCATs?
--->
-
-* port complexes v. ports? or in intro?
 * something about chuncking time at regulation time periods
 	* introduce idea of modeled period (mcat/time chunk)
 
@@ -305,7 +278,7 @@ For the purposes of accurately modeling not only species composition means, but
 also higher moments of the data, such as species composition variances, it is 
 necessary to recognize model limitations with respect to over-dispersed data. 
 Among the simplest models for count data are the Poisson and binomial models. 
-Both models are typically specified with a single parameter for <!--degree of freedom for--> 
+Both models are typically specified with a single parameter for<!--degree of freedom for--> 
 modeling all of the moments of the data, and thus they rely heavily on their 
 respective data generating processes to accurately represent higher moments in 
 the data. McCullagh and Nelder (1989, pg. 124) commiserate about the 
@@ -316,31 +289,16 @@ Extending the Poisson and binomial models to deal with over-dispersion,
 typically involves adding additional parameters for the purpose of modeling 
 higher moments of the data. The negative binomial (NB) distribution is often 
 used as an over-dispersed extension of the Poisson model, since it can be 
-expressly written as an infinite mixture of Poisson distributions. While the 
-beta-binomial model is typically used to as an over-dispersed extension of the 
-binomial model.
-
-###An Example
-
-<!--
-m=0
-for(id in unique(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger,]$sampleNumber)){
-	m=m+max(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger & Dat$sampleNumber==id,]$clusterNumber)
-}
--->
-To discern between these discrete modeling options we consider a small scale 
-example of the Poisson, binomial, negative binomial, and beta-binomial models 
-fit to the port sampling integer weight data from market category 250, in the 
-Monterey port complex trawl fishery in 1982. $(any will work)$ This stratum was 
-visited 32 times by port samplers, collecting a total of 59 <!--38 times by port samplers, collecting a total of 67-->
-cluster samples across 55 unique species. <!--344 model observations across 21 $(at least; URCK)$ unique species.--> 
-Each of the above models are fit to these data. 
+expressly written as an infinite mixture of Poisson distributions. The 
+beta-binomial model is used as an over-dispersed extension of the binomial 
+model.
 
 The Poisson and binomial models attempt to model both the mean and 
-residual variance of the data with a single parameter for each species. By 
-definition these models have residual variances which are tied to the species 
-means. Simply estimating the mean parameters in these cases may not be 
-sufficient to produce models which predict well.
+residual variance of the data, with a single parameter for each species. By 
+definition these models do not have additional parameters to model the variance, 
+but rather, residual variances in these models are simply transformations 
+their mean parameters. Only estimating the mean parameters in these cases 
+may not be sufficient to produce models which predict well.
 
 In contrast, the negative binomial and beta-binomial models estimate an 
 additional parameter which can be used to disentangle the mean and residual 
@@ -348,8 +306,28 @@ variance estimates. Thus the negative binomial and beta-binomial models may
 produce more accurate estimates of the residual variance. Furthermore, in 
 better modeling the variance, these models may often produce more accurate 
 measures of center as well.
-<!--Thus it is possible that the negative binomial and--> 
 
+<!--
+###An Example
+
+m=0
+for(id in unique(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger,]$sampleNumber)){
+	m=m+max(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger & Dat$sampleNumber==id,]$clusterNumber)
+}
+-->
+
+To discern between these discrete modeling options we considered Poisson, 
+binomial, negative binomial, and beta-binomial models fit to a subset of the <!--the port sampling integer weight--> 
+data from market category 250, in the Monterey port complex trawl fishery in 
+1982. $(any will work)$ This stratum was visited 32 times by port samplers, 
+collecting a total of 59 <!--38 times by port samplers, collecting a total of 67-->
+cluster samples across 55 unique species. <!--344 model observations across 21 $(at least; URCK)$ unique species.--> 
+For brevity, in this example, we only consider the six most prevalent species
+(BCAC, CLPR, WDOW, YTRK, BANK, STRK). Each of the above mentioned models are 
+fit to these data, and the preliminary results seen in Table($likelihood$) 
+guide the use of the BB likelihood model moving forward.
+
+<!--
 For each of the above mentioned models the predictive species composition 
 distributions are visualized in Figure($Interval Plot$) as 95% Highest Density Intervals 
 (HDI) $(citations)$, plotted on top of the predictive means for each model and 
@@ -363,20 +341,23 @@ Table($likelihood table$) show a clear preference for the overdispersed models, 
 overall support for the beta-binomial model. This initial result guides the 
 use of the beta-binomial data generating model for the purposes of building a 
 model to apply at an operational scale.
+-->
 
-###Operationalized Model
+###Full-Scale Beta-Binomial Model
 
 For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
 the $j^{th}$ species' weight, in the $k^{th}$ port, caught with the $l^{th}$
-gear, in the $\eta^{th}$ quarter, of year $m$. As supported by the preliminary 
-results in Figure($Interval Plot$) and Table($likelihood table$), the 
-$y_{ijklm\eta}$ are modeled as observations from a beta-binomial distribution 
+gear, in the $\eta^{th}$ quarter, of year $m$. 
+<!--As supported by the preliminary 
+results in Figure($Interval Plot$) and Table($likelihood table$), the
+--> 
+The $y_{ijklm\eta}$ are modeled as observations from a beta-binomial distribution 
 conditional on parameters $\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$,
 
 <!--$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\bm{\theta}, \rho).$$-->
 $$y_{ijklm\eta} \sim BB(\mu_{jklm\eta},~\sigma^2_{jklm\eta}).$$
 
-Where $\mu_{jklm\eta}$ is the stratum level beta-binomial mean weight and 
+Above, $\mu_{jklm\eta}$ is the stratum level mean weight, and 
 $\sigma^2_{jklm\eta}$ is the stratum level residual variance. $\mu_{jklm\eta}$ 
 is related to a linear predictor, $\theta_{jklm\eta}$, via the mean function,
 
@@ -390,23 +371,23 @@ overdispersion parameter, $\rho$, via the following equation,
 $$\sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n_{ijklm\eta}}\Big)\Big(1+(n_{ijklm\eta}-1)~\rho\Big).$$
 
 <!--https://www.healthknowledge.org.uk/public-health-textbook/research-methods/1a-epidemiology/clustered-data-->
-$\rho$ is the within cluster correlation. The situation where 
+$\rho$ is the within-cluster correlation. The situation where 
 $\rho\rightarrow1$ represents identical information content among replicates 
 within a cluster, with maximal overdispersion relative to the binomial 
 distribution. The situation where $\rho\rightarrow0$ represents totally 
 independent information content among replicates within a cluster, and the 
 beta-binomial model approaches the binomial model. $\rho$ explicitly models 
-average overdispersion across all stratum, while $\mu_{jklm\eta}$ gives the 
-model flexibility at the stratum level through the $\theta$ linear 
-predictors,
+average overdispersion across all strata within a market category, while 
+$\mu_{jklm\eta}$ gives the model flexibility at the stratum level through the 
+$\theta$ linear predictors,
 
 <!--$$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}.$$-->
 $$\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\eta}.$$
 
 Firstly, $\theta$ includes a reference level intercept ($\beta_0$). Secondly, 
 $\theta$ is factored among the many strata by additive offsets from $\beta_0$ 
-for each of the species ($\beta^{(s)}_j$), port-complex ($\beta^{(p)}_k$), and 
-gear-group ($\beta^{(g)}_l$) categories. Finally year and quarter parameters 
+for each of the species ($\beta^{(s)}_j$), port-complexes ($\beta^{(p)}_k$), and 
+gear-groups ($\beta^{(g)}_l$). Finally year and quarter parameters 
 are indicated generally here inside the $\beta^{(t)}_{m\eta}$ term. Several 
 forms for $\beta^{(t)}_{m\eta}$ are explored each implying a different prior 
 and partial pooling strategies as described in the following section($Priors$).
@@ -428,16 +409,17 @@ similar to classical fixed effect models for species, port-complex, and gear-
 group parameters.
 
 In returning to the time parameter model, $\beta^{(t)}_{m\eta}$, it is useful 
-to consider how the inclusion of predictively superfluous parameters may cause 
-overfitting and weaken model performance through the bias-variance dilemma 
-(Ramasubramanian, K., \& Singh, A., 2016). Simply put, the bias-variance dilemma means that model formulation is 
-not simply a bias reduction task, but rather the goal is to formulate models 
-which reduce bias, while jointly minimizing uncertainty. Janyes (2003, pg. 511) 
-describes how the inclusion of estimation bias via the Bayesian methodology may 
-produce better performing estimates, more quickly, than unbiased counterparts.
-Among the simplest ways to see the principle is in the structure of the MSE 
-performance metric, and how it can be explicitly written to value both 
-estimator bias and variance, as follows. 
+to consider how overparameterized models <!--the inclusion of predictively superfluous parameters-->
+may cause overfitting and weaken model performance through the bias-variance 
+dilemma (Ramasubramanian, K., \& Singh, A., 2016). Simply put, the 
+bias-variance dilemma means that model formulation is not simply a bias 
+reduction task, but rather the goal is to formulate models which reduce bias, 
+while jointly minimizing uncertainty. Janyes (2003, pg. 511) describes how the 
+inclusion of estimation bias via the Bayesian methodology may produce better 
+performing estimates, more quickly, than unbiased counterparts.  Among the 
+simplest ways to see the principle is in the structure of the MSE performance 
+metric, and how it can be explicitly written to value both estimator bias and 
+variance, as follows. 
 
 $$\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}$$
 
@@ -465,7 +447,7 @@ $$\beta^{(y)}_{m} \sim N(0, 32^2)$$
 $$\beta^{(q)}_{\eta} \sim N(0, 32^2)$$
 
 (M1) represents a fixed effects model for additive year and quarter parameters. 
-Here each year and quarter receive totally independent and diffuse priors. 
+Here each year and quarter are assigned totally independent and diffuse priors. 
 
 ###(M2)
 $$\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}$$
@@ -474,8 +456,9 @@ $$\beta^{(q)}_{\eta} \sim N(0, v^{(q)})$$
 
 (M2) estimates two hierarchical variance parameters, $v^{(y)}$ and $v^{(q)}$.
 $v^{(y)}$ has the effect of partially pooling information among year parameters, 
-while $v^{(q)}$ partially pools information among quarter parameters. The actual 
-degree of pooling among each of the years and quarters is determined by the data.
+while $v^{(q)}$ partially pools information among quarter parameters (i.e. 
+treats both year and quarter as ``random effects''). The actual degree of 
+pooling among each of the years and quarters is determined by the data.  
 Depending on the posterior distributions of $v^{(y)}$ and $v^{(q)}$, the $\beta^{(y)}$ <!-- the $\bm{\beta^{(y)}}$ and $\bm{\beta^{(q)}}$ -->
 and $\beta^{(q)}$ may be shrunk back toward the common mean (for small $v$) or 
 allowed to take largely distinct values (in the case of large estimates of the $v$).    
@@ -514,8 +497,8 @@ temporal information in the data to be modeled solely by the quarterly
 $\beta^{(y:q)}_{m\eta}$ interaction terms. This model represents more opportunity 
 for partial pooling through time than (M3), as fewer time parameters are 
 introduced. Furthermore all of the $\beta^{(y:q)}_{m\eta}$ are hierarchically 
-pooled back toward a single common stratum mean via the single shared variance parameter, 
-$v$. 
+pooled back toward a single common stratum mean via the single shared variance 
+parameter, $v$. 
 
 ###(M5)
 $$\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}$$
@@ -537,13 +520,31 @@ that year, but not between years. (M6) often involves fitting slightly more
 parameters than (M5) because, at least in this setting, it is typical to model 
 more than four years of data at once.
 
+Historically, regulations have been enacted with the aim of isolating catch in 
+a market category to a single species (“sort requirements”). This clearly 
+affects the composition of the target market category, but these regulations 
+also affect the species composition of other market categories in which the 
+target species previously occurred. We incorporate this information into the 
+model structure by treating time periods with relatively stable regulatory 
+conditions as independent models. In other words, information is only shared 
+among years in which regulations were similar. For example, a sort requirement 
+for widow rockfish (S. entomelas) was initiated in 1983, which not only 
+affected the composition of the “widow rockfish” market category (xxx), but 
+also the composition of other categories, including the “unspecified rockfish” 
+market category (250). We model the first five years of available data 
+(1978-1982) independently from the years 1983-1990. In 1991, a sort 
+requirement for bocaccio rockfish (S. paucispinis) was enacted, which is known 
+to have affected the composition of other categories, including the 
+Chilipepper rockfish market category (xxx) and the Chilipepper/Bocaccio market 
+category (xxx).
+
 Hierarchical variance parameters are estimated from the data. As the above 
 models learn the posteriors of the hierarchical variance parameters, it affects 
 the degree of shrinkage as well as the effective number of parameters held 
 within the respective hierarchies (Gelman, 2014). To achieve this, each 
 variance parameter must itself be assigned a prior to be estimated. For all of 
 the hierarchical variance parameters included in the above models $v$ is 
-assigned a diffuse $v \sim IG(1,~2\times10^{3})$ prior.
+assigned a diffuse inverse gamma (IG) prior $v \sim IG(1,~2\times10^{3})$.
 <!--and heavy tailed--> 
 
 <!--first logit transformed to have values spanning the entire real number line and assigned the prior-->
@@ -554,10 +555,8 @@ the unit interval. To notice this, it is helpful to realize that the central
 95% interval for a $N(0, 2^2)$ (i.e. $0\pm3.91$), includes almost the entirety 
 of the back transformed unit interval (i.e. $0.5\pm0.48$).
 
-Table($priortable$) shows a clear preference for model (M4). It is worth mentioning 
-that among all of the models considered here, (M4) offers the largest potential for
-hierarchical partial pooling among the time parameters. For the duration of 
-the methods we build upon this preliminary result.
+Each of models M1-M6 are fit to data from 1978-1982 in market category 250, with 
+Table($priortable$) guiding the use of model (M4) for the duration of the study. 
 
 ## Species Composition Prediction
 <!--
@@ -565,17 +564,17 @@ $$p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\m
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}$$
 -->
 
-Estimating model (M4) in a Bayesian way gives access to the full posterior 
-distribution of all of the parameters of the model. It is useful to emphasize 
-that in the Bayesian setting, these parameters have full 
+Bayesian inference of the above models gives access to the full posterior 
+distribution of all of the parameters of the model given the data. It is 
+useful to emphasize that in the Bayesian setting, these parameters have full 
 distributions, and they are typically handled as a large number of samples 
 from the joint posterior distribution of the parameters. Once the posterior 
 sampling is complete, this simplifies parameter mean and variance estimation; 
 required moments are simply obtained by computing the desired moments from the 
 posterior samples. Additionally, the fact that the parameters are full 
-distributions means that any functions which contain, or are derived from, 
-parameters are themselves random variables with the function representing a 
-random variable transformation of those parameters.
+distributions means that any functions of those parameters are themselves 
+random variables with the function representing a transformation of those 
+parameters.
 
 <!--Model M5 is a model on sampled weight; -->
 To obtain predicted species compositions from this model, first consider the 
@@ -595,10 +594,9 @@ computing the following transformation,
 
 $$\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.$$ 
 
-For a particular market category, $\pi^*_{jklm\eta}$ is the models 
-representation of the observation level species composition for species $j$ in 
-the $k^{th}$ port, caught with the $l^{th}$ gear, in the $\eta^{th}$ quarter, 
-of year $m$. 
+For a particular market category, $\pi^*_{jklm\eta}$ is predicted proportion of 
+species $j$ in the $k^{th}$ port, caught with the $l^{th}$ gear, in the 
+$\eta^{th}$ quarter, of year $m$. 
 <!--
 The constraint 
 $y^*_{klm\eta}\neq 0$ is added to exclude the predictive situations where no 
@@ -609,7 +607,7 @@ simply re-sampled.
 
 ## Model Exploration \& Averaging
 
-Presently, stratum with diminishingly small sample sizes are managed by an 
+Presently, strata with diminishingly small sample sizes are managed by an 
 ad-hoc "data borrowing" protocol, as outlined in Pearson and Erwin (1997). The 
 protocol for "data borrowing" calls for pooling only when forced to fill holes 
 brought about by unsampled strata. Naturally, such a pooling protocol introduces 
@@ -617,7 +615,7 @@ bias to fill in unsampled strata, however due to the mathematically unstructured
 way in which this bias is introduced, it is hard to quantitatively justify 
 these "data borrowing" rules.  
 
-Model (M4) avoids temporal ad-hoc "borrowing" protocols used in Pearson
+Model (M4) avoids temporal ad-hoc "borrowing" protocols described in Pearson
 and Erwin (1997) by making use of its hierarchical structure to fill temporal 
 holes with a posterior predictive distribution for unseen time periods within 
 the modeled period. This hierarchical structure uses the data to estimate the 
@@ -638,12 +636,24 @@ exploring strategies for pooling data across space it is necessary to formalize
 the port complex pooling scheme in a way which provides a mathematically 
 understandable and scalable structure to build upon.
 
-Given the categorical nature of port complex variables, the typical 
-hierarchical regularization priors among port complexes are not appropriate.
-Rather, we frame port complex pooling as a model uncertainty problem, in which 
-we consider some degree of port complex pooling, but the exact degree of 
-pooling, and the particular partitioning of the pooled port complexes are not 
-known. 
+Given the spatial structure, and complex behavior of, port complex parameters, 
+the typical zero mean hierarchical regularization priors are not appropriate 
+among port complexes. Pooling across spatial categorical parameters in this 
+setting requires the ability to pool port complex parameters back toward an 
+unknown number ($\le K$) of mean levels.
+<!--
+ Port complex certainly contains predictive information, 
+but port complex 
+information is exploring pooled 
+Port complex models benefits from 
+regularization, but pooling all port complexes back toward a common level 
+ignores how port complexes close in space may behave similarly.  
+ toward  are not appropriate.
+-->
+Rather than hierarchically regularize port complex, we frame port complex 
+pooling as a model uncertainty problem, in which we consider some degree of 
+full pooling among port complex, but the exact degree of pooling, and the particular 
+partitioning of the pooled port complexes are not known. 
 
 Port complex pooling is achieved by repeatedly fitting model (M4) with different 
 partitionings of the port complex variables within a particular market category 
@@ -651,7 +661,7 @@ and modeling time period. This model exploration exercise explores the
 possible ways to produce groupings of the existing port complexes so as to 
 discover predictively useful partitionings of the port complexes. Insisting that 
 the port complex groupings be partitions of the available port complexes 
-provides a well defined mathematical structure for exploring the space of 
+provides a well-defined mathematical structure for exploring the space of 
 pooled port complexes.
 
 The size of the space of possible pooled models is in the setting is well 
@@ -668,8 +678,8 @@ strategy of computing all 115975 of these partitionings strategies is
 computationally infeasible. However, not all pooling schemes represent 
 biologically relevant models. For example, perhaps it is reasonable to pool 
 only among adjacent ports (i.e. no discontinuities between port complex pooling in 
-space), or perhaps it is reasonable to assert that biologically similar 
-regions can only extend across a small number of ports.
+space), or perhaps it is reasonable to assert that similar regions can only 
+extend across a small number of ports.
 
 Here only adjacent port poolings are considered, such that the maximum size of 
 a port complex grouping is three port complexes. These are the only two 
@@ -680,13 +690,13 @@ context of this framework. When these two simple constraints are applied, the
 number of models to explore in each modeled period is reduced to a much more 
 manageable 274 models. 
 
-An exhaustive search of the models in the biologically constrained subspace of 
-$B_{10}$, allows for a concrete comparison of the relative predictive accuracy 
-of each partitioning. Additionally the partitioned models provide a set of 
-candidate models for use in Bayesian Model Averaging (BMA) 
-(Hoeting et al., 1999). BMA, as applied here, essentially allows the 
-model exploration strategy to average across all relevant port complex partitionings
-and adds robustness to the final species composition estimates.
+An exhaustive search of the models in the constrained subspace of $B_{10}$, 
+allows for a concrete comparison of the relative predictive accuracy of each 
+partitioning. Additionally the partitioned models provide a set of candidate 
+models for use in Bayesian Model Averaging (BMA) (Hoeting et al., 1999). BMA, 
+as applied here, allows the model exploration strategy to average models 
+across all potentially relevant partitions of the port complexes, so as to add 
+robustness to final species composition estimates.
 
 For the $\iota^{th}$ model in a set of candidate models $M$, then the BMA weight 
 for $M_\iota$ follows directly from Bayes Theorem as, 
@@ -702,7 +712,7 @@ average posteriors across all of the models, as
 
 $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
-## Expansion
+## ??Expansion??
 
 $$\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}$$
 
@@ -758,16 +768,27 @@ Figure $(panel)$, market category 267 samples are composed of 99.6% Brown and
 ## Data Generating Model
 ### Example
 
-Table(likelihood) shows model performance metrics for the toy example considered from 
-market category 250 for the Monterey Trawl fishery in 1982. Here we consider 
-Mean Squared Error (MSE; computed on the species composition scale), deviance 
-information criterion (DIC), widely applicable information criterion (WAIC), 
-and marginal Bayesian model probabilities ($pr(M|y)$). These measures span a 
-wide range of model selection philosophies and yet here they all consistently 
-agree in ranking the likelihood models. Both of the overdispersion models 
-considered here (NB and BB) outperform the more standard Poisson and binomial 
-count models, with the most support being for the BB model and the Poisson 
-model showing the least support. 
+Table(likelihood) shows model performance metrics for the toy example considered 
+from market category 250 for the Monterey Trawl fishery in 1982. Here we 
+consider Mean Squared Error (MSE; computed on the species composition scale), 
+deviance information criterion (DIC), widely applicable information criterion 
+(WAIC), and marginal Bayesian model probabilities ($pr(M|y)$). These measures 
+span a wide range of model selection philosophies and yet here they all 
+consistently agree in ranking the likelihood models. 
+
+<!--
+Both of the overdispersion 
+models considered here (NB and BB) outperform the more standard Poisson and 
+binomial count models, with the most support being for the BB model and the 
+Poisson model showing the least support. 
+-->
+
+Table($likelihood table$) show a clear preference for the overdispersed models 
+(NB and BB), with the most overall support for the beta-binomial model and the 
+Poisson model showing the least support. This initial result guides the use of 
+the beta-binomial data generating model for the purposes of building a model 
+to apply at an operational scale.
+
 
            Poisson        Binomial      NB                 BB  
 --------- -------------  ------------- ------------------ -------------
@@ -776,10 +797,37 @@ DIC        1342.27        1571.46       345.89             340.86
 WAIC       1421.61        1665.41       345.09             341.66
 $pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
 
-Figure(likelihoods) shows observed species compositions plotted against Poisson, 
-Binomial, NB, and BB predictive intervals. Here 95% highest density intervals 
-(HDI) are shown to visualize the predictive accuracy of each model against the 
-data.
+
+For each of the above mentioned models, Figure($Interval Plot$) visualizes 
+the predictive species composition distributions as 95% Highest Density 
+Intervals (HDI) (colored vertical lines), plotted on top of the predictive 
+means for each model and the observed species compositions (black horizontal 
+lines) from the data in Figure($Interval Plot$). 
+<!--
+For brevity we only consider 
+the most prevalent six species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, 
+BANK). 
+-->
+
+
+<!--
+Figure(likelihoods) shows observed species 
+compositions plotted against Poisson, Binomial, NB, and BB predictive 
+intervals. Here 95% highest 
+density intervals (HDI) are shown to visualize the predictive accuracy of each 
+model against the data.
+-->
+
+<!--
+ Additionally, the MSE, DIC, WAIC, and 
+Bayesian marginal likelihood model probabilities are computed for each model 
+as measures of model fit as seen in Table($likelihood table$). 
+
+Table($likelihood table$) show a clear preference for the overdispersed models, with the most 
+overall support for the beta-binomial model. This initial result guides the 
+use of the beta-binomial data generating model for the purposes of building a 
+model to apply at an operational scale.
+-->
 
 ![Interval Plot](./pictures/compPlot1982Qtr2.png)
 
@@ -845,9 +893,11 @@ inclusion of multiple hierarchical variance parameters among the interaction
 terms.
 
 Across all of the time models, model M4 displays consistent support over all
-other candidate models considered here. Model M4 represents a model with 
-maximal potential for pooling through time, while still maintain the ability 
-to model differences in seasonality from year to year.
+other candidate models considered here. It is worth mentioning that among all 
+of the models considered here, (M4) offers the largest potential for 
+hierarchical partial pooling among the time parameters. Model M4 represents a 
+model with maximal potential for pooling through time, while still maintain the 
+ability to model differences in seasonality from year to year.
 
 As a final check of the model structure and the implied prior information the 
 prior predictive is considered. The prior predictive distribution summarizes 
@@ -1095,7 +1145,30 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 
 
 
+<!--
+expanded landings.
+weight toward the overall expansion landings for 
 
+
+the models are constructed 
+so that these cases represent cases where relatively low landings are present and 
+
+gets around the fact that there is always an important empirical 
+component to these models
+
+Since model based strategies of data analysis are reliant not only on a
+model, but also the models ability the to learn from data, we do our best 
+to only apply the models in cases where it is reasonable to expect  models to 
+produce valid results. For example in some market categories 
+and time periods our models may end up having more parameters that 
+
+
+ah sample is aggregated across the 
+observed clusters
+
+* General Structure of Data
+* where can I put something about sub-setting MCATs?
+-->
 <!--
 It is helpful to notice that for a given modeled period all market categories are 
 modeled over the same number of years and quarters; furthermore all port complexes 
