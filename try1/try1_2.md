@@ -718,47 +718,48 @@ $$\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}$$
 
 # Results
 
-## Data
+## Characteristics of the Landings Data
 
-Figure $(bars)$ shows the relative sampling effort and landings across 
-rockfish market cateogries accounting for the top 99% percent of landings 
-for two modeled periods. In the top panel of each modeled period the black 
-line represented the proportion of landings in each market category, while the 
-blue line represents the proportion of samples, by number, taken in each 
-market category. In the bottom panel of each modeled period, colors represent 
-the proportion of sampled weight of twelve commercially realavant species. 
-Alternating dark and light grey panels fill in all other species. On the top 
-of each bar the number of observed species in each market category is listed. 
-Hatched regions indicated the nominal species of a market category where 
-applicable. 
+In the two time periods examined here, Figures (bar78) and (bar83) show how
+commercial port sampling effort tracks both total landed weight as well as the 
+number of species in each market category. These two factors are among the most 
+important characteristics to prioritize in sampling for the sake of applying 
+our model's results to a large proportion of landings $(What proportion of 
+landings is the model expanding?)$. Furthermore, since port sampling effort 
+prioritizes heavily landed market categories, then market categories that are 
+left with too few samples to apply our model tend to represent a negligible 
+proportion of total landings.
 
-Notice that sampling effort both tracks landings as well as the number of species 
-in each market category. These two factors are among the most important factors 
-to prioritize in sampling for the sake of applying our model's results to a large 
-proportion of landings $(What proportion of landings is the model expanding?)$.  
-Furthermore due to this pattern in port sampling, when sample sizes become too 
-small to apply our model, <!--, in a modeled period,-->
-the expanded landings tend to represent a negligible proportion of total 
-landings.
-
-The lower panels of Figure $(bar)$ visually demonstrates just how many different 
-species are landed into commercially relevant market categories. Although 
-market categories often carry names that label them with a nominal species, 
-Figure $(bar)$ makes it abundantly clear that these names can mislead our 
-thinking about the purity, and consistency, of these categories through time. 
-To drive this point home, consider market category 267. The nominal label for 
-market category 267 is Brown, while Brown rockfish only amounts to 6.3% of the 
-sampled weight in 1978-1982. In 1978-1982 market category 267 might be better 
-named Widow as Widow rockfish amounts to 92.6% of sampled weight in this time 
-period, however considering the most recent time period (2000-2015), in Appendix 
-Figure $(panel)$, market category 267 samples are composed of 99.6% Brown and 
-0% Widow. 
+The lower panels of Figures (bar78) and (bar83) demonstrate just how many 
+different species are landed into commercially relevant market categories. 
+Although market categories often carry names that label them with a nominal 
+species, Figure (bar78) makes it abundantly clear that these names can mislead 
+our thinking about the purity, and consistency, of these categories through time. 
+To drive this point, consider the sampled species in market category 267 in 
+1978-1982. The nominal label for market category 267 is Brown Rockfish, while 
+Brown Rockfish only amounts to a small fraction of that category in 1978-1982. 
+In fact, only 6.3% of the sampled weight in 1978-1982 consisted of Brown 
+Rockfish. In 1978-1982 market category 267 might be better named Widow 
+Rockfish as Widow amounts to 92.6% of sampled weight in this time period, 
+however market category 267 is composed of 99.6% Brown and 0% Widow in recent 
+time periods (see Appendix X Figure (bars)).
 
 <!--![panel](./pictures/mockUp.png)-->
 
-![early](./pictures/1978to1982Bar3.pdf)
-![best](./pictures/1983to1990Bar3.pdf)
-![best](./pictures/barplotLegend.pdf)
+![
+The relative sampling effort and landings across rockfish market cateogries 
+accounting for the top 99% percent of landings for two modeled periods, 
+1978-1982 ans 1983-1990. In the top panel of each figure the black 
+line represents the proportion of landings in each market category, while the 
+blue line represents the proportion of samples, by number, taken in each 
+market category.  In the bottom panel of each modeled period, colors represent 
+the proportion of sampled weight of thirteen commercially relevant species.  
+Alternating dark and light grey panels fill in all other species. On the top 
+of each bar the number of observed species in each market category is listed.  
+Hatched regions indicated the nominal species of a market category where 
+applicable.](./pictures/1978to1982Bar3.pdf)
+![same](./pictures/1983to1990Bar3.pdf)
+![legend](./pictures/barplotLegend.pdf)
 
 <!--
 ![worse](./pictures/1991to1999Bar3.pdf)
@@ -768,8 +769,8 @@ Figure $(panel)$, market category 267 samples are composed of 99.6% Brown and
 ## Data Generating Model
 ### Example
 
-Table(likelihood) shows model performance metrics for the toy example considered 
-from market category 250 for the Monterey Trawl fishery in 1982. Here we 
+Table(likelihood) shows model performance metrics for the previously described 
+subset, market category 250 for the Monterey Trawl fishery in 1982. Here we 
 consider Mean Squared Error (MSE; computed on the species composition scale), 
 deviance information criterion (DIC), widely applicable information criterion 
 (WAIC), and marginal Bayesian model probabilities ($pr(M|y)$). These measures 
@@ -789,81 +790,73 @@ Poisson model showing the least support. This initial result guides the use of
 the beta-binomial data generating model for the purposes of building a model 
 to apply at an operational scale.
 
+               Poisson        Binomial      NB                 BB  
+------------- -------------  ------------- ------------------ -------------
+MSE            0.06412        0.06264       0.05171            0.04479
+$\Delta$ DIC   1001.41        1230.60       5.03               0             <!--1342.27  1571.46  345.89  340.86-->
+$\Delta$ WAIC  1079.95        1323.75       3.43               0             <!--1421.61  1665.41  345.09  341.66-->
+$pr(M|y)$      $\approx0$     $\approx0$    $\approx10^{-7}$   $\approx1$
 
-           Poisson        Binomial      NB                 BB  
---------- -------------  ------------- ------------------ -------------
-MSE        0.06412        0.06264       0.05171            0.04479
-DIC        1342.27        1571.46       345.89             340.86
-WAIC       1421.61        1665.41       345.09             341.66
-$pr(M|y)$  $\approx0$     $\approx0$    $\approx10^{-7}$     $\approx1$
-
-
-For each of the above mentioned models, Figure($Interval Plot$) visualizes 
+<!--
+For each of the above mentioned models, Figure(Interval Plot) showsvisualizes 
 the predictive species composition distributions as 95% Highest Density 
 Intervals (HDI) (colored vertical lines), plotted on top of the predictive 
 means for each model and the observed species compositions (black horizontal 
 lines) from the data in Figure($Interval Plot$). 
-<!--
-For brevity we only consider 
-the most prevalent six species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, 
-BANK). 
 -->
 
+![
+Interval Plot: The predictive species composition distributions as 95% Highest 
+Density Intervals (HDI) (colored vertical lines), plotted on top of the 
+predictive means for each model and the observed species compositions (black 
+horizontal lines) from the data
+](./pictures/compPlot1982Qtr2.png)
 
-<!--
-Figure(likelihoods) shows observed species 
-compositions plotted against Poisson, Binomial, NB, and BB predictive 
-intervals. Here 95% highest 
-density intervals (HDI) are shown to visualize the predictive accuracy of each 
-model against the data.
--->
-
-<!--
- Additionally, the MSE, DIC, WAIC, and 
-Bayesian marginal likelihood model probabilities are computed for each model 
-as measures of model fit as seen in Table($likelihood table$). 
-
-Table($likelihood table$) show a clear preference for the overdispersed models, with the most 
-overall support for the beta-binomial model. This initial result guides the 
-use of the beta-binomial data generating model for the purposes of building a 
-model to apply at an operational scale.
--->
-
-![Interval Plot](./pictures/compPlot1982Qtr2.png)
-
-The large spread of the observed species compositions seen in Figure(likelihoods) 
+The large spread of the observed species compositions seen in Figure(Interval Plot) 
 visually demonstrate the degree of overdispersion present in port sampling 
 data. The Poisson and binomial models disregard this overdispersion to 
 prioritize fitting the data mean. The NB and BB models explicitly model 
-overdispersion in the data, albeit via differing mechanisms, and as such they 
-predict a larger subset of the data.
+overdispersion in the data, and as such they predict a larger subset of the 
+data. Notably, only the intervals produced by the BB model include the low 
+observed proportions of bocaccio (BCAC) and the high observed proportion of 
+chilipepper rockfish (CLPR) in this example.
 
 ![Violin Plot](./pictures/compVioplot1982Qtr2.png)
 
-The split beta-binomial intervals seen in Figure(likelihoods) are the consequence of 
-confining a large amount of residual variability to the unit interval. The 
-beta-binomial is the only model considered here, which estimates such a 
-large degree of variability and thus it is the only model that produces 
-predictive species composition distributions of the sort. Figure(violin) shows the 
-beta-binomial predictive distributions as a violin plot demonstrating how the
-beta-binomial model arranges predictive density over the unit interval. The 
-predictive intervals in Figure(likelihoods) are the smallest possible regions on each 
-of these densities so that each intervals contain 95% probability. Species 
-composition is bounded on [0, 1], thus in the presence of large variability 
-predictive density may aggregate around the bounds. For the example of STRK, 
-notice that although the predictive HDI is split, the vast majority of density 
-lies directly atop the data.
+The split beta-binomial intervals seen in Figure(Interval plot) reflect a 
+large amount of residual variability confined on the unit interval. The 
+beta-binomial is the only model considered here, that estimates such a large 
+degree of variability and thus it is the only model that produces predictive 
+species composition distributions that effectively cover the range of observed 
+species compositions. Figure(violin) shows the beta-binomial predictive 
+distributions as a violin plot demonstrating how the beta-binomial model 
+distributes predictive density over the unit interval. The predictive intervals 
+in Figure(likelihoods) are the smallest possible regions on each of these 
+densities so that each intervals contain 95% probability. Species composition 
+is bounded on [0, 1], thus in the presence of large variability predictive 
+density may aggregate around the bounds. For the example of STRK, notice that 
+although the predictive HDI is split, the vast majority of density lies 
+directly atop the data.
 
 ## Predictor and Prior Selection
 
 <!--      Both Fixed  Both Random  Both Random Plus $V$ Only $V$     Only $V_m$   Only $V_\eta$-->            
 
-           M1          M2           M3                  M4            M5           M6               
---------- ----------- ------------ ------------------- ------------  ------------ ----------
-MSE        0.127245    0.127042     0.126801            0.122373      0.127236     0.126573                 <!--0.008399    0.008524            0.008391            0.008443            NA           NA                  NA           --> 
-DIC        39790.26    39491.64     39244.91            37231.70      39407.02     39406.41           <!--103182.45   102373.85           102332.46           101743.90            101238.84    101241.41          101247.95    -->         
-WAIC       39745.58    39446.51     39192.25            37182.93      39354.11     39353.49           <!--103127.61   102318.63           102277.24           101688.38            101172.87    101175.44          101181.99    --> 
-$pr(M|y)$  $\approx0$  $\approx0$   $\approx0$          $\approx1$    $\approx0$   $\approx0$         <!--$\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}$   $\approx1$   $\approx10^{-10}$  $\approx10^{-17}$--> 
+               M1          M2           M3                  M4            M5           M6               
+------------- ----------- ------------ ------------------- ------------  ------------ ----------
+MSE            0.127245    0.127042     0.126801            0.122373      0.127236     0.126573           
+$\Delta$ DIC   2558.56     2259.94      2013.21             0             2175.32      2174.71    <!--39790.26    39491.64     39244.91            37231.70      39407.02     39406.41-->             
+$\Delta$ WAIC  2562.65     2263.58      2009.32             0             2171.18      2170.56    <!--39745.58    39446.51     39192.25            37182.93      39354.11     39353.49-->        
+$pr(M|y)$      $\approx0$  $\approx0$   $\approx0$          $\approx1$    $\approx0$   $\approx0$         
+
+
+
+<!--0.008399    0.008524            0.008391            0.008443            NA           NA                  NA           --> 
+<!--103182.45   102373.85           102332.46           101743.90            101238.84    101241.41          101247.95    -->      
+<!--103127.61   102318.63           102277.24           101688.38            101172.87    101175.44          101181.99    --> 
+<!--$\approx0$  $\approx10^{-274}$  $\approx10^{-265}$  $\approx10^{-125}$   $\approx1$   $\approx10^{-10}$  $\approx10^{-17}$--> 
+
+
 
 
 <!--
@@ -884,8 +877,11 @@ mlik,waic,dic
 <!--mlik , , , , , , -->                        <!--$pr(M|y)$  $\approx0$     5.370390e-275 2.496899e-265  4.870208e-125 $\approx1$ 5.357171e-11 2.083286e-17-->
 <!--prob , , , , , , -->                        <!-- -69074.74, -68665.55, -68643.29, -68320.26, -68034.02, -68057.67, -68072.43-->
 
-Table$(Predictor)$ displays the relative support for the model structure on the 
-$\beta^{(t)}_{m\eta}$ time parameters. From M1 to M4 the models represent a 
+
+Table$(Predictor)$ displays the result of fitting models M1-M6 to data from 
+1978-1982 in market category 250. Recall models M1-M6 differ in the structure 
+of the $\beta^{(t)}_{m\eta}$ time parameters. Table$(Predictor)$ shows the 
+relative support for those model structures. From M1 to M4 the models represent a 
 spectrum of models with an increasing potential of shrinkage among time 
 parameters. <!--which decrease in the possible number of implied parameters.-->
 Models M5 and M6 represent models which build in complexity, from M4, via the 
@@ -899,24 +895,9 @@ hierarchical partial pooling among the time parameters. Model M4 represents a
 model with maximal potential for pooling through time, while still maintain the 
 ability to model differences in seasonality from year to year.
 
-As a final check of the model structure and the implied prior information the 
-prior predictive is considered. The prior predictive distribution summarizes 
-the information that is intrinsic to the model structure itself, in the absence 
-of data. The prior predictive of modeled weight is considered over a 100 pound 
-cluster size, which is consistent with aggregating the two nominal 50 pound 
-cluster samples described by Sen (1984) in the original sampling protocol. 
-
-![Prior Prediction](./pictures/priorPredict.pdf)
-
-As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both 
-symmetric and quite diffuse over the 100 pound domain. The U shape of the 
-distribution is a side effect of the diffusion of the selected prior. As data 
-are added to the model, the indecisive U shape <!--of this distribution-->
-collapses toward the data in the posterior. 
-
 ## Model Exploration \& Averaging
 
-![1978 to 1982](./pictures/tinyTrim.png)
+![model selection: 1978 to 1982](./pictures/tinyTrim.png)
 
 Figure$(model selection)$ shows the results of port complex model selection 
 for the modeled period from 1978 to 1982 in market category 250. Along the 
@@ -925,18 +906,19 @@ distinct model). The following ten rows indicate the ten port complexes in
 California, and the colored cells indicate how port complexes are partitioned 
 in each model.
 
-Considering Figure$(model selection)$, the best partitioned model gives 
-distinct parameters to CRS and ERK, while pooling BRG/BDG, OSF/MNT/MRO, and 
-OSB/OLA/OSD. This model uses five parameters to model the ten ports complexes 
-in California. Given the set of candidate models explained above, the BMA 
-procedure weights this model at approximately 32% of the truth. Notice that the 
-only difference among the top four models is in how the port complexes south of 
-point conception are handled. In fact, when the seven northernly port complexes 
-are fixed in the described partitioning, the top four models represent all of the 
-possible partitionings of the southern three port complexes. 
+Considering Figure$(model selection)$, the best partitioned model 
+(first column, $\omega=0.32$) gives distinct parameters to CRS and ERK, while 
+pooling BRG/BDG, OSF/MNT/MRO, and OSB/OLA/OSD. This model uses five parameters 
+to model the ten ports complexes in California. Given the set of candidate 
+models explained above, the BMA procedure weights this model at approximately 
+32% of the truth. Notice that the only difference among the top four models is 
+in how the port complexes south of Point Conception are handled. In fact, the 
+seven northerly port complexes are identially partitioned in the top four 
+models, which also represent all of the possible partitionings of the 
+southern three port complexes. 
 
-In this modeled period it is known that no species composition sampling (landings?) 
-was done south of point conception, thus it is not surprising that these models 
+In this modeled period it is known that no species composition sampling was 
+done south of Point Conception, thus it is not surprising that these models 
 perform similarly. When no data is present, parameters simply represent place 
 holders for out of sample prediction. Since the port complexes south of 
 point conception are not informed by data, the predictions are identical in 
@@ -944,10 +926,10 @@ these categories. Since the first model makes identical predictions to the
 following three, and does so using the fewest parameters, it is correctly 
 identified as the most parsimonious explanation among these data.
 
-When considering how the top four model partitionings share identical structure 
-in the seven northernly port complexes, while exhaustively spanning the candidate 
-partitions south of point conception, it is simple to see that BMA assign's 
-approximately 71% marginal probability to the northernly model structure.
+Considering how the top four model configurations share identical structure 
+in the seven northerly port complexes, while exhaustively spanning the candidate 
+partitions south of Point Conception, it is simple to see that BMA assign's 
+approximately 71% marginal probability to the northerly model structure.
 
 The results shown here only represent a single market category across the time 
 period 1978-1982. Similar results for other market categories and time periods 
@@ -1136,6 +1118,20 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 ![worst](./pictures/2000to2015Bar3.pdf)
 -->
 
+As a final check of the model structure and the implied prior information the 
+prior predictive is considered. The prior predictive distribution summarizes 
+the information that is intrinsic to the model structure itself, in the absence 
+of data. The prior predictive of modeled weight is considered over a 100 pound 
+cluster size, which is consistent with aggregating the two nominal 50 pound 
+cluster samples described by Sen (1984) in the original sampling protocol. 
+
+![Prior Prediction](./pictures/priorPredict.pdf)
+
+As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both 
+symmetric and quite diffuse over the 100 pound domain. The U shape of the 
+distribution is a side effect of the diffusion of the selected prior. As data 
+are added to the model, the indecisive U shape <!--of this distribution-->
+collapses toward the data in the posterior. 
 
 ![modelSelect](./pictures/latexTableCompress1.pdf)
 ![modelSelect](./pictures/latexTableCompress2.pdf)
@@ -1144,7 +1140,31 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 
 
 
+<!--
+For brevity we only consider 
+the most prevalent six species in this example (CLPR, BCAC, WDOW, BLGL, ARRA, 
+BANK). 
+-->
 
+
+<!--
+Figure(likelihoods) shows observed species 
+compositions plotted against Poisson, Binomial, NB, and BB predictive 
+intervals. Here 95% highest 
+density intervals (HDI) are shown to visualize the predictive accuracy of each 
+model against the data.
+-->
+
+<!--
+ Additionally, the MSE, DIC, WAIC, and 
+Bayesian marginal likelihood model probabilities are computed for each model 
+as measures of model fit as seen in Table($likelihood table$). 
+
+Table($likelihood table$) show a clear preference for the overdispersed models, with the most 
+overall support for the beta-binomial model. This initial result guides the 
+use of the beta-binomial data generating model for the purposes of building a 
+model to apply at an operational scale.
+-->
 <!--
 expanded landings.
 weight toward the overall expansion landings for 
