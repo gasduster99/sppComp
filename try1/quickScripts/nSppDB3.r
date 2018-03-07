@@ -15,14 +15,14 @@ library(RColorBrewer)
 
 
 #
-minYear = 2000 # 1978 # 1983 # 1991 #
-maxYear = 2015 # 1982 # 1990 # 1999 #
+minYear = 1991 # 2000 # 1978 # 1983 #
+maxYear = 1999 # 2015 # 1982 # 1990 #
 #mcat = 250
 
 #driver
 drv = JDBC('com.microsoft.sqlserver.jdbc.SQLServerDriver', './sqljdbc4.jar', identifier.quote="'");
 #connection
-ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc2017')
+ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc!2018')
 #data query
 data = dbGetQuery(ch,
         sprintf("
@@ -119,8 +119,8 @@ names(mcatQProbs) = landsTotals$mcat[mcatOrd]
 #
 pThing = t(t(tb[sppOrd,mcatOrd][,mcatQProbs<prob])/colSums(tb[sppOrd,mcatOrd][,mcatQProbs<prob]))
 #
-special = c("BANK", "BCAC", "ARRA", "BLGL", "BLCK", "CLPR", "YTRK", "CNRY", "BLUR", "VRML", "BRWN", "RDBD") #c("BANK", "BCAC", "ARRA", "BLGL", "BLCK", "CLPR", "YTRK", "CNRY", "BLUR", "BRWN", "VRML", "WDOW")#, "BRNZ", "CWCD", "RDBD")
-cols = brewer.pal(n = 12, name = "Paired")
+special = sort(c("BANK", "BCAC", "BLGL", "BLCK", "CLPR", "YTRK", "CNRY", "BLUR", "VRML", "BRWN", "WDOW", "DBRK", "SNOS")) #c("BANK", "BCAC", "ARRA", "BLGL", "BLCK", "CLPR", "YTRK", "CNRY", "BLUR", "BRWN", "VRML", "WDOW")#, "BRNZ", "CWCD", "RDBD")
+cols = c('deepskyblue', brewer.pal(n = 12, name = "Paired")) 
 bw = c('grey65', 'grey75') #rep('grey60', 2) #
 #
 pThing = rbind(pThing[rownames(pThing)%in%special,], pThing[!rownames(pThing)%in%special,])

@@ -14,14 +14,14 @@ library(RColorBrewer)
 
 
 #
-minYear = 2000 # 1978 # 1983 # 1991 #
-maxYear = 2015 # 1982 # 1990 # 1999 #
+minYear = 1978 # 1983 # 1991 # 2000 #
+maxYear = 1982 # 1990 # 1999 # 2015 #
 #mcat = 250
 
 #driver
 drv = JDBC('com.microsoft.sqlserver.jdbc.SQLServerDriver', './sqljdbc4.jar', identifier.quote="'");
 #connection
-ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc2017')
+ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc!2018')
 #data query
 data = dbGetQuery(ch,
         sprintf("
@@ -136,38 +136,38 @@ for(i in 1:dim(pThing)[1]){
 		pCol[i] = cols[where]
 	}
 }
-#
-pdf(sprintf('%sto%sBar2.pdf', minYear, maxYear))
-par(mar = c(3,5,2,2))
-par(cex.axis=1.5, cex.lab=1.5, cex.main=1.5)
-layout(matrix(c(2,2,1,1,1), nrow=5, ncol=1))
-barplot( pThing,
-	ylim=c(0, 1), #ylim=c(0, 350000),
-	border=NA,
-	las=2,
-	col=pCol, 
-	#main=sprintf('%s-%s', minYear, maxYear), 
-	ylab='Proportion of Sampled Weight Within MCAT'
-)
-mtext(colSums(pThing>0), side=3, line=0.8, at=head(seq(0, 100, 1.2)+0.7, length(colSums(pThing>0))))
-#par(new=T)
-par(mar = c(0,5,2,2))
-plot((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], 
-	type='l', 
-	lty=1, 
-	axes=F, 
-	ylim=c(0, 1), 
-	xlim=c(1, sum(mcatQProbs<prob)+1),
-	ylab='Proportion',
-	xlab='',
-	main=sprintf('%s-%s', minYear, maxYear)
-	#xlim=c(1-0.5, sum(mcatQProbs<prob)+0.5), 
-	#xlab='Market Category'
-)
-points((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], cex=0.7, pch=19)
-lines((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], col='blue')
-points((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], cex=0.7, pch=19, col='blue')
-axis(2, at=seq(0, 1, 0.2), las=1)
-legend('right', legend=c("Landed Weight", "# of Samples"), col=c('black', 'blue'), lty=c(1, 1), pch=c(19, 19), cex=1.5, bty='n')
-dev.off()
+##
+#pdf(sprintf('%sto%sBar2.pdf', minYear, maxYear))
+#par(mar = c(3,5,2,2))
+#par(cex.axis=1.5, cex.lab=1.5, cex.main=1.5)
+#layout(matrix(c(2,2,1,1,1), nrow=5, ncol=1))
+#barplot( pThing,
+#	ylim=c(0, 1), #ylim=c(0, 350000),
+#	border=NA,
+#	las=2,
+#	col=pCol, 
+#	#main=sprintf('%s-%s', minYear, maxYear), 
+#	ylab='Proportion of Sampled Weight Within MCAT'
+#)
+#mtext(colSums(pThing>0), side=3, line=0.8, at=head(seq(0, 100, 1.2)+0.7, length(colSums(pThing>0))))
+##par(new=T)
+#par(mar = c(0,5,2,2))
+#plot((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], 
+#	type='l', 
+#	lty=1, 
+#	axes=F, 
+#	ylim=c(0, 1), 
+#	xlim=c(1, sum(mcatQProbs<prob)+1),
+#	ylab='Proportion',
+#	xlab='',
+#	main=sprintf('%s-%s', minYear, maxYear)
+#	#xlim=c(1-0.5, sum(mcatQProbs<prob)+0.5), 
+#	#xlab='Market Category'
+#)
+#points((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], cex=0.7, pch=19)
+#lines((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], col='blue')
+#points((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], cex=0.7, pch=19, col='blue')
+#axis(2, at=seq(0, 1, 0.2), las=1)
+#legend('right', legend=c("Landed Weight", "# of Samples"), col=c('black', 'blue'), lty=c(1, 1), pch=c(19, 19), cex=1.5, bty='n')
+#dev.off()
 

@@ -16,7 +16,7 @@ maxYear = c(1982, 1990, 1999, 2015)
 #driver
 drv = JDBC('com.microsoft.sqlserver.jdbc.SQLServerDriver', './sqljdbc4.jar', identifier.quote="'");
 #connection
-ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc2017')
+ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc!2018')
 #define rockfish
 rckKey = dbGetQuery(ch,
         "
@@ -135,10 +135,13 @@ board = sort(board, decreasing=T)
 
 #
 n = 12
-nomes = names(head(board, n))
-cols = brewer.pal(n=n, name="Paired")
+#nomes = names(head(board, n))
+#cols = brewer.pal(n=n, name="Paired")
+##
+nomes = sort(c("BANK", "BCAC", "BLGL", "BLCK", "CLPR", "YTRK", "CNRY", "BLUR", "VRML", "BRWN", "WDOW", "DBRK", "SNOS")) #c("BANK", "BCAC", "ARRA", "BLG
+cols = c('deepskyblue', brewer.pal(n = 12, name = "Paired"))
 #
-pdf('barplotLegend.pdf', width=3.5, height=7.04)
+pdf('barplotLegend.pdf', width=3.5, height=7.54)
 plot.new()
 #par(mar = c(1,1,1,1))
 legend('top', legend=nomes, fill=cols, cex=2)
