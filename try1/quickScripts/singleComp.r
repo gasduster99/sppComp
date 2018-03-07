@@ -520,19 +520,24 @@ bbMSE = getMSE(comps, bbM)
 #legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
 #dev.off()
 #
-##
-#pdf(sprintf('compVioplotQtr%s.pdf', qtr))
-#vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
-#	names=colnames(bbDist),
-#	ylim=c(0, 1.15),
-#	col='grey',
-#	drawRect=F
-#)
-#title(
-#	main='Beta-Binomial Posterior Predictive Species Compositions',
-#        ylab='Proportion'
-#)
-#dev.off()
+#
+pdf(sprintf('compVioplotQtr%s.pdf', qtr))
+vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
+	names=colnames(bbDist),
+	ylim=c(0, 1.15),
+	col='grey',
+	drawRect=F
+)
+for(i in 1:howMany){
+	#make spp comp
+	comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+	points(rep(i, length(comps)), comps, pch='_', cex=4)
+}
+title(
+	main='Beta-Binomial Posterior Predictive Species Compositions',
+        ylab='Proportion'
+)
+dev.off()
 
 
 
