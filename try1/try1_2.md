@@ -75,8 +75,30 @@ partial pooling) among strata is achieved using Bayesian hierarchical
 statistical models and model averaging (Gelman et al., 2014).
 -->
 
-
 # Abstract
+
+Effective management of exploited fish populations requires accurate
+estimates of commercial fisheries catches to inform monitoring and
+assessment efforts. In California, the high degree of heterogeneity in
+the species composition of many groundfish fisheries, particularly those
+targeting rockfish (genus $Sebastes$), leads to challenges in sampling all
+potential strata, or species, adequately. Limited resources and
+increasingly complex stratification of the sampling system inevitably
+leads to gaps in sample data. In the presence of sampling gaps, ad-hoc
+species composition point estimation is currently obtained according to
+historically derived "data borrowing" (imputation) protocols which do
+not allow for uncertainty estimation or forecasting. In order to move
+from the current ad-hoc "data-borrowing" point estimators, we have
+constructed Bayesian hierarchical models to estimate species
+compositions, complete with accurate measures of uncertainty, as well as
+theoretically sound out-of-sample predictions. Furthermore, we introduce
+a Bayeisan model averaging approach for inferring spatial pooling 
+strategies across the over-stratified port sampling system. Our modeling 
+approach, along with a computationally robust system of inference and model 
+exploration, allows us to 1) quantify uncertainty in historical landings, and 
+2) understand the effect of the highly stratified, and sparse, sampling system 
+on the kinds of inference possible, while simultaneously making the most from 
+the available data.
 
 # Introduction
 
@@ -126,31 +148,32 @@ incorporate uncertainty in the bias correction factors as well
 estimates of landed catch, although the modeling framework could be extended 
 to include uncertainty or bias in landing receipt data.
 
-Within market categories, the species composition of landed catch can vary 
-spatially, temporally, by fishing gear, and catch disposition (e.g. fish sold 
-alive or dead). These differences are attributable to many factors, including 
-market preference, fishing behavior, regulatory constraints, 
-and biological/ecological characteristics (e.g. spatial distribution) of 
-the landed species. As a result, estimates of species composition for a 
-given market category are often stratified over time (e.g. quarterly) and 
-across other relevant strata (e.g. ports, gears, catch disposition). 
-Sampling programs often have limited funds, and attempts to reduce bias in 
-species composition estimates through the introduction of additional strata 
-comes at a cost, namely reduced precision (Cochran, 1977; Tomlinson, 1971).  
+Within market categories, particularly those used historically for groupings
+of highly speciose fockfish (Sebastes spp), the species composition of landed 
+catch can vary spatially, temporally, by fishing gear, and catch disposition 
+(e.g. fish sold alive or dead). These differences are attributable to many 
+factors, including market preference, fishing behavior, regulatory constraints
+, and biological/ecological characteristics (e.g. spatial distribution) 
+of the landed species. As a result, estimates of species composition for 
+a given market category are often stratified over time (e.g. quarterly) 
+and across other relevant strata (e.g. ports, gears, catch disposition
+).  Sampling programs often have limited funds, and attempts to reduce bias 
+in species composition estimates through the introduction of additional 
+strata comes at a cost, namely reduced precision (Cochran, 1977; Tomlinson, 
+1971).  
 
-On the U.S. West Coast, port sampling programs allocate effort both spatially 
-and temporally, but many domains of interest (e.g. market category, gear 
-type, catch disposition) remain unsampled or sparsely sampled due to a 
-proliferation of categories over time, logistical constraints, and limited 
-resources (Sen 1986; Crone 1995; Pearson et al. 2008; Tsou et al. 2015). 
-In California, for example, commercial port sampling effort has changed over 
-time and space (Pearson and Almany 1995). For example, regular sampling of 
-California ports north of Point Conception (roughly $34^{\circ}$ 27' N. 
-latitude) began as early as 1978, but the more southern ports were rarely 
-sampled prior to 1983. This allocation of effort was largely based on the 
-statewide distribution of landings, diffuse spatial distribution of southern 
-commercial ports, and limitations in funding for port samplers.  
-
+On the U.S. West Coast, port sampling programs for rockfish and other 
+groundfish allocate effort both spatially and temporally, but many domains of 
+interest (e.g. market category, gear type, catch disposition) remain unsampled 
+or sparsely sampled due to a proliferation of categories over time, logistical 
+constraints, and limited resources (Sen 1986; Crone 1995; Pearson et al. 2008; 
+Tsou et al. 2015).  In California, for example, commercial port sampling 
+effort has changed over time and space (Pearson and Almany 1995). For example, 
+regular sampling of California ports north of Point Conception (roughly 
+$34^{\circ}$ 27' N. latitude) began as early as 1978, but the more southern ports 
+were rarely sampled prior to 1983. This allocation of effort was largely based 
+on the statewide distribution of landings, diffuse spatial distribution of 
+southern commercial ports, and limitations in funding for port samplers.  
 
 When no port samples are collected for landed strata and domains, species 
 composition estimates are ‘borrowed’ from other strata using deterministic 
@@ -158,32 +181,43 @@ algorithms based on expert opinion. These algorithms have unknown bias and
 precision. In contrast, model-based estimators are increasingly used to 
 estimate quantities of interest for domains with small sample sizes and/or 
 unsampled strata (sometimes referred to as small area estimation; Rao 2003).  
-Shelton et al. (2012) developed a Bayesian hierarchical statistical framework 
-for species composition data that pools information among sparsely sampled 
-strata, predicts species compositions for unsampled strata, and can be 
-combined with landing receipts to estimate total landings by species, across 
-market categories and other strata, with associated estimates of uncertainty. 
-Shelton et al. considered hierarchical pooling only among quarters within a 
-single year, comparing generalized linear and hierarchical linear models to 
-trawl data from a single port in California. The authors underscored the 
-need to better understand performance of alternative models, and to overcome 
-issues with computation time, particularly since commercial port sampling data 
-sets often include hundreds of landed strata spanning decades, multiple ports, 
-gear types, and other domains of interest.
+As a pilot study, Shelton et al. (2012) developed a Bayesian hierarchical 
+statistical framework for estimating species compositions in rockfish market 
+categories from trawl fisheries from a single port in California in two 
+separate years. Their model has the ability to partially pool information 
+among sparsely sampled strata, predicts species compositions for unsampled 
+strata, and can be combined with landing receipts to estimate total landings 
+by species, across market categories and other strata, along with associated 
+estimates of uncertainty. However, their model considered hierarchical pooling 
+only among quarters within a single year, and the authors underscored the need 
+to better understand performance of alternative models, and to overcome issues 
+with computation time, particularly since commercial port sampling data sets 
+often include hundreds of landed strata spanning decades, multiple ports, gear 
+types, and other domains of interest.
 
 Among the U.S. West Coast states, the challenge of estimating landings for 
-sparsely-sampled mixed stock fisheries is perhaps greatest for California. 
-Relative to Oregon and Washington, California has a greater number of 
-commercial ports, market categories, and landed species, with greater species 
-diversity among ports due to the geographical range of the coast. Of 
+sparsely-sampled mixed stock rockfish fisheries is perhaps greatest for 
+California. Although overall landings have historically been greater for 
+rockfish off of Oregon and Washington, California has a greater number of 
+commercial ports, market categories, and landed species 
+(Pearson and Irwin 1997), with greater species diversity among ports due to 
+the geographical range of the coast and the observation that species diversity 
+for this genus is greatest in the Southern California Bight (Love et al. 2002
+). California also includes two major biogeographic features, Point Conception 
+and Cape Mendocino, that are associated with different physical oceanographic 
+conditions and biological community assemblages (Hickey 1979, Checkley and 
+Barth 2009, Gottscho  2016), and these features are also frequently used as 
+spatial boundaries for stock assessments and management measures. Of 
 particular consequence to the estimation of species compositions is the 
 proliferation of landed market categories over time, particularly during the 
-1990s (Figure 1). Sampling effort also leveled off in the mid-1990s, with a 
-reduction in effort in the early 2000s. The net result of increased 
-stratification and flat (or reduced) sampling effort over time is a decline in 
-mean sample size per stratum (Figure 1). In this situation, it is critical to 
-understand how efforts to reduce bias (e.g. increasing the number of landed 
-market categories) affect precision of the expanded catch estimates.  
+1990s (Figure (Sparce Data)). Sampling effort also leveled off in the mid-1990s, 
+with a reduction in effort in the early 2000s, associated with substantial 
+declines in total catches as well as reductions in sampling resources. The net 
+result of increased stratification and flat (or reduced) sampling effort over 
+time is a decline in mean sample size per stratum (Figure 1). In this situation
+, it is critical to understand how efforts to reduce bias (e.g. increasing the 
+number of landed market categories) affect precision of the expanded catch 
+estimates.  
 
 Models that take catch uncertainty into account are not new (c.f. Doubleday 
 1976), but most assessments on the U.S. West Coast assume catch is known 
@@ -210,7 +244,7 @@ unsampled strata, and summarize a general framework for quantifying
 uncertainty including an efficient database design for dissemination of 
 results at any level of aggregation.
 
-![Number of commercial port samples per market category in California,
+![Sparce Data: Number of commercial port samples per market category in California,
 1978-2014 (upper panel), average sample size per stratum (middle panel), and 
 number of market categories recorded on landing receipts (lower panel). On the 
 lower panels, points indicate observed values, while the black lines represent 
@@ -259,17 +293,19 @@ structure to data, a judicious application of these methods must always confront
 the model with enough empirical information to adequately learn about the system.
 In this setting some market categories and time periods may not be well enough 
 sampled to learn the parameters of the models presented here. For this reason, 
-we refrain from modeling any period where the minimum number of possible 
-parameters exceeds the number of samples for the modeled period. Rather than apply 
-models inappropriately, these landings are speciated as the nominal species for 
-their market category. We later demonstrate that due to the prioritization for 
-sampling heavily landed, or otherwise commercially relevant categories, this 
-sample size heuristic only leads to nominal speciation in market categories and 
-time periods where total landings are low. Thus nominal landings represent a
-negligible component of the overall expansion process. 
+we refrain from modeling any period where the minimum possible number of 
+effective parameters exceeds the number of samples for the modeled period. 
+Rather than apply models inappropriately, these landings are speciated as the 
+nominal species for their market category. We later demonstrate that due to 
+prioritization in sampling heavily landed, or otherwise commercially relevant 
+categories, this sample size heuristic leaves relatively few landings to be 
+speciated in a statistically uninformed way (i.e. ``nominal'' speciation). <!--nominal speciation in market categories and time periods where total landings are low.--> 
+Thus nominal speciation represents a negligible component of the overall 
+expanded landings for most species. 
 
-* something about chuncking time at regulation time periods
+* something about chuncking time at regulation time periods?
 	* introduce idea of modeled period (mcat/time chunk)
+	* a section got added later on by EJ
 
 ## Data Generating Model
 <!--Something something hierarchical Poisson model. Something something (Shelton, 2012).-->
@@ -303,9 +339,15 @@ may not be sufficient to produce models which predict well.
 In contrast, the negative binomial and beta-binomial models estimate an 
 additional parameter which can be used to disentangle the mean and residual 
 variance estimates. Thus the negative binomial and beta-binomial models may 
-produce more accurate estimates of the residual variance. Furthermore, in 
-better modeling the variance, these models may often produce more accurate 
-measures of center as well.
+produce more accurate estimates of the residual variance, while producing more 
+accurate measures of center. We develop an example for a subset of data to 
+demonstrate considerably greater statitiscal support for the beta-binomial 
+model (Appendix A), which we have subsequently used for the purposes of 
+applying at an operational scale.
+<!--
+Furthermore, in better modeling the variance, these models may often 
+produce more accurate measures of center as well.
+-->
 
 <!--
 ###An Example
@@ -676,10 +718,11 @@ $B_{10}=115975$ ways of partitioning the port complexes in California in each
 market category and modeled time period. The brute force model selection 
 strategy of computing all 115975 of these partitionings strategies is 
 computationally infeasible. However, not all pooling schemes represent 
-biologically relevant models. For example, perhaps it is reasonable to pool 
-only among adjacent ports (i.e. no discontinuities between port complex pooling in 
-space), or perhaps it is reasonable to assert that similar regions can only 
-extend across a small number of ports.
+biologically relevant models. For example, it is likely reasonable to pool 
+only among adjacent ports (i.e. no discontinuities between port complex 
+pooling in space) due to species distributions and the presence of 
+biogeographical provinces, and it may be similarly reasonable to assert that 
+similar regions can only extend across a small number of ports.
 
 Here only adjacent port poolings are considered, such that the maximum size of 
 a port complex grouping is three port complexes. These are the only two 
@@ -722,13 +765,36 @@ $$\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}$$
 
 In the two time periods examined here, Figures (bar78) and (bar83) show how
 commercial port sampling effort tracks both total landed weight as well as the 
-number of species in each market category. These two factors are among the most 
-important characteristics to prioritize in sampling for the sake of applying 
+number of species in each market category. Comparable figures for the periods 
+1991-1999 and 2000-2015 are provided in Appendix (bars), although we have not yet 
+completed modeling for these time periods. It is important to notice that since 
+port sampling effort prioritizes heavily landed market categories, and our 
+model is only fit to market categories with more data than parameters, then 
+market categories left with too few samples to fit our model, tend to be less 
+landed. Thus our model is appied to a relatively large proportion of the landings 
+and nominal speciation occurs for a relatively negligible proportion of total 
+landings. 
+<!--
+Since the our model requires separate 
+parameters for each species and rockfish market categories tend to have many 
+species, the number of species in a market category should, and appearantly is, be an importan 
+
+Since port sampling effort 
+prioritizes heavily landed market categories, then market categories that are 
+left with too few samples to apply our model tend to represent a negligible 
+proportion of total landings.
+-->
+
+<!--
+Total landed weight and the number 
+of species landed in a market category are among the most important 
+characteristics to prioritize in sampling for the sake of applying 
 our model's results to a large proportion of landings $(What proportion of 
 landings is the model expanding?)$. Furthermore, since port sampling effort 
 prioritizes heavily landed market categories, then market categories that are 
 left with too few samples to apply our model tend to represent a negligible 
 proportion of total landings.
+-->
 
 The lower panels of Figures (bar78) and (bar83) demonstrate just how many 
 different species are landed into commercially relevant market categories. 
@@ -939,7 +1005,7 @@ are provided in the appendix Figure$(color tables)$.
 
 ## Prediction
 
-Repeatedly fitting model (M4) across port complex partitionings and applying the 
+Repeatedly fitting model (M4) across port complex configurations and applying the 
 BMA procedure, ultimately provides access to posterior predictive distributions 
 of the species compositions ($\pi^*_{jklm\eta}$) within a market category and 
 time interval modeled period. A straight forward way to evaluate the performance 
@@ -947,13 +1013,13 @@ of the model in each modeled period is to compare the predictions of the model
 in each modeled period with the actual observations of species compositions 
 from port samplers.
 
-Species composition posterior predictive distributions are considered via HDI 
-at three levels containing 68%, 95%, and 99% of posterior predictive probability.
+We evaluate species composition posterior predictive distributions via HDI at 
+three levels containing 68%, 95%, and 99% of posterior predictive probability. 
 Table$(Prediction)$ shows the proportion of observed species compositions 
-which existed within the HDI across all strata, of each prediction level, in each 
-modeled period.
-
-* Should any of these be excluded?
+which existed within the HDI across all strata, of each prediction level, in 
+each modeled period. For example, observed species compositions for market 
+category 250 in the 1978-1982 time period fell within the 68% HDI of the 
+posterior predictive distribution 67.1% of the time (Table X). 
 
 ### 78-82
     68%   95%   99%
@@ -1059,7 +1125,7 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 \begin{tabular}{|c|c|c|c|}
 MCAT & Mean & Median & Posterior SD     \\ \hline
 245 & 20211.82 & 20204.95 & 1276.83     \\
-250 & 236.03 & 192.53 & 134.67  \\
+250 & 236.03   & 192.53   & 134.67  	\\
 253 & 20455.18 & 20140.50 & 1521.72     \\
 259 & 20246.14 & 20186.61 & 898.99      \\
 262 & 20445.49 & 20348.56 & 343.70      \\
@@ -1082,6 +1148,11 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 
 
 # Discussion
+
+* Sampling
+	* Since the our model requires separate 
+	parameters for each species and rockfish market categories tend to have many 
+	species, the number of species in a market category should, and appearantly is,
 
 * Variance Estimates; Justify Model based statistics
 
