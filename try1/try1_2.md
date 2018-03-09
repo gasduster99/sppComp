@@ -297,12 +297,12 @@ the particular challenges of sampling each stratum.
 
 Samples are recorded, by port samplers, as integer pounds for each observed 
 species, across the landed market categories, gear groups, and port complexes
-in time (quarters within year). Presently there are X rockfish market categories, although not all 
-market categories are always used by fisherman. The number of used market 
-categories has gone from less than 25 in 1978 to about 55 in $2014$. Landings 
-are grouped into major fishing gear groups (trawl, hook and line, gillnet, 
-fish pot, or other minor categories) and ten major port complexes spanning the 
-California coast.
+in time (quarters within year). Presently there are 71 rockfish market 
+categories, although not all market categories are always used by fisherman. 
+The number of used market categories has gone from less than 25 in 1978 to 
+about 55 in $2014$. Landings are grouped into major fishing gear groups 
+(trawl, hook and line, gillnet, fish pot, or other minor categories) and ten 
+major port complexes spanning the California coast.
 
 <!--
 [add more detailed description of data here; e.g. samples are recorded as 
@@ -576,14 +576,14 @@ model structure by treating time periods with relatively stable regulatory
 conditions as independent models. In other words, information is only shared 
 among years in which regulations were similar. For example, a sort requirement 
 for widow rockfish (S. entomelas) was initiated in 1983, which not only 
-affected the composition of the widow rockfish market category (xxx), but 
+affected the composition of the widow rockfish market category (269), but 
 also the composition of other categories, including the unspecified rockfish 
 market category (250). We model the first five years of available data 
 (1978-1982) independently from the years 1983-1990. In 1991, a sort 
 requirement for bocaccio rockfish (S. paucispinis) was enacted, which is known 
 to have affected the composition of other categories, including the 
-Chilipepper rockfish market category (xxx) and the Chilipepper/Bocaccio market 
-category (xxx).
+Chilipepper rockfish market category (254) and the Chilipepper/Bocaccio market 
+category (956).
 
 Hierarchical variance parameters are estimated from the data. As the above 
 models learn the posteriors of the hierarchical variance parameters, it affects 
@@ -788,6 +788,9 @@ average posteriors across all of the models, as
 $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
 # Results
+
+![mcatsTable](./pictures/MC_summary_table_part_1.png)
+![mcatsTable](./pictures/MC_summary_table_part_2.png)
 
 ## Characteristics of the Landings Data
 
