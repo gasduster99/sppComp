@@ -149,7 +149,7 @@ estimates of landed catch, although the modeling framework could be extended
 to include uncertainty or bias in landing receipt data.
 
 Within market categories, particularly those used historically for groupings
-of highly speciose fockfish (Sebastes spp), the species composition of landed 
+of highly speciose rockfish (Sebastes spp), the species composition of landed 
 catch can vary spatially, temporally, by fishing gear, and catch disposition 
 (e.g. fish sold alive or dead). These differences are attributable to many 
 factors, including market preference, fishing behavior, regulatory constraints
@@ -258,10 +258,10 @@ Originally, protocols for sampling rockfish in California were derived by Sen
 program and current process for expanding species composition estimates to 
 species-specific landings can be found elsewhere (Sen 1984, 1986; Pearson and 
 Erwin 1997). We briefly summarize the sampling process here. Sampling follows 
-a two-stage strati- fied sampling plan (Sen 1986). Vessels are selected 
+a two-stage stratified sampling plan (Sen 1986). Vessels are selected 
 arbitrarily by the port sampler and two 50 or 25 lb clusters of fish are 
 selected arbitrarily from bin(s) containing a single market category. The mass 
-sampled depended on the size of individ- ual fish in the landings, with 
+sampled depended on the size of individual fish in the landings, with 
 landings consisting of small fish having 25 lbs sampled and those consisting 
 of large fish having 50 lbs sampled. The mass of each species in the clusters 
 are recorded. The mass sampled relative to the total landing mass is highly 
@@ -385,7 +385,7 @@ additional parameter which can be used to disentangle the mean and residual
 variance estimates. Thus the negative binomial and beta-binomial models may 
 produce more accurate estimates of the residual variance, while producing more 
 accurate measures of center. We develop an example for a subset of data to 
-demonstrate considerably greater statitiscal support for the beta-binomial 
+demonstrate considerably greater statistical support for the beta-binomial 
 model (Appendix B), which we have subsequently used for the purposes of 
 applying at an operational scale.
 <!--
@@ -810,7 +810,7 @@ in 1983-1990.
 83: 0.982643
 Since the our model requires separate 
 parameters for each species and rockfish market categories tend to have many 
-species, the number of species in a market category should, and appearantly is, be an important 
+species, the number of species in a market category should, and apparently is, be an important 
 
 Since port sampling effort 
 prioritizes heavily landed market categories, then market categories that are 
@@ -1117,7 +1117,7 @@ reduction in precision of management quantities.
 The model based statistical framework allows tremendous flexibility in 
 accounting for a dynamic port sampling program. Market forces, regulation 
 changes, and fisherman behavior are a few factors, among the many, which 
-complicate the task of spaciating commercial catch. Unlike a purely 
+complicate the task of speciating commercial catch. Unlike a purely 
 sample-based statistical framework, model based statistics allows analysts to 
 quickly explore a wide range of hypotheses for estimating species compositions. 
 The models entertained here manage to achieve generally well behaved predictive 
@@ -1177,7 +1177,7 @@ ex
 * Sampling
 	* Since the our model requires separate parameters for each species and 
 	rockfish market categories tend to have many species, the number of species in 
-	a market category should, and appearantly is, 
+	a market category should, and apparently is, 
 	* Sort requirements do not eliminate the need for port sampling.
 	* The proliferation of market categories over time in the sampled catch has
 	not been matched with an increase in sampling effort, effectively reducing the 
@@ -1199,7 +1199,7 @@ predictor, regressing on landing size. Given the current model's agreement
 with existing data, ?as well as comlands estimates?, it is unlikely that landing 
 size has an important predictive effect on estimates, however without testing 
 the hypothesis, we can not say whether the effect will prove to be 
-explainitory.      
+explanatory.      
 
 In an attempt to add further flexibility to the models presented here, exploring 
 the posibilty of gear-species interactions, as random effects, may prove fruitful. 
@@ -1207,7 +1207,7 @@ Furthermore the inclusion of random vessel effects may also find support.
 
 Finally, further large changes to the methods proposed here might include a 
 true multivariate handling of the likelihood. The Beta-Binomial univariate 
-model, used here, suggests that the multivariate Dirichelette-Multinomial 
+model, used here, suggests that the multivariate Dirichelet-Multinomial 
 extension might be a good model for these data. We have yet to get these 
 models to practically compute, although they would likely impose much needed, 
 and appropriate, structure across the many species of this system. 
@@ -1216,7 +1216,7 @@ The BMA procedure presented here adds significant robustness and pooling
 potential to our species composition estimates, however it does so at a 
 substantial computational cost. We have found ways (through parallel 
 computation and constraining the model search) to make the computation 
-tractable, however the solution is far from elegant. By using Dirichelette 
+tractable, however the solution is far from elegant. By using Dirichelet 
 process Bayesian nonparameteric models, among the port parameters, a far more 
 elegant, exhaustive, and potentially computationally cheaper model search may 
 be possible.      
