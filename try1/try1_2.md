@@ -887,7 +887,7 @@ data. Notably, only the intervals produced by the BB model include the low
 observed proportions of bocaccio (BCAC) and the high observed proportion of 
 chilipepper rockfish (CLPR) in this example.
 
-![Violin Plot](./pictures/compVioplot1982Qtr2.png)
+![Violin Plot](./pictures/compVioplotQtr2.png)
 
 The split beta-binomial intervals seen in Figure(Interval plot) reflect a 
 large amount of residual variability confined on the unit interval. The 
