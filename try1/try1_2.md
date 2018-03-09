@@ -180,7 +180,7 @@ composition estimates are ‘borrowed’ from other strata using deterministic
 algorithms based on expert opinion. These algorithms have unknown bias and 
 precision. In contrast, model-based estimators are increasingly used to 
 estimate quantities of interest for domains with small sample sizes and/or 
-unsampled strata (sometimes referred to as small area estimation; Rao 2003).  
+unsampled strata (sometimes referred to as small area estimation; Rao 2003). 
 As a pilot study, Shelton et al. (2012) developed a Bayesian hierarchical 
 statistical framework for estimating species compositions in rockfish market 
 categories from trawl fisheries from a single port in California in two 
@@ -252,20 +252,64 @@ lower panels, points indicate observed values, while the black lines represent
 
 # Methods
 
-## Data
-As outlined in $(cite)$ the data in $blank$ are the result of a cluster sampling 
-protocol across the many strata, in which each sample is intended to be 
-composed of two fifty pound clusters from the selected stratum. Although port 
-samplers do their best to follow protocol, in reality the port sampling 
-environment does not always allow the exact $(cite)$ protocol to be 
-followed. Variations in the sampling protocol may result in only a single 
-cluster being taken, or the size of clusters taken to vary, from stratum to 
-stratum based on the particular challenges of sampling each stratum. 
+<!--
+Originally, protocols for sampling rockfish in California were derived by Sen 
+(1984, 1986) as a design-based cluster sampling. Detailed descriptions of the sampling 
+program and current process for expanding species composition estimates to 
+species-specific landings can be found elsewhere (Sen 1984, 1986; Pearson and 
+Erwin 1997). We briefly summarize the sampling process here. Sampling follows 
+a two-stage strati- fied sampling plan (Sen 1986). Vessels are selected 
+arbitrarily by the port sampler and two 50 or 25 lb clusters of fish are 
+selected arbitrarily from bin(s) containing a single market category. The mass 
+sampled depended on the size of individ- ual fish in the landings, with 
+landings consisting of small fish having 25 lbs sampled and those consisting 
+of large fish having 50 lbs sampled. The mass of each species in the clusters 
+are recorded. The mass sampled relative to the total landing mass is highly 
+variable. In some cases, the entire catch is sampled (e.g., some hook-and-line 
+landings), whereas in others (e.g., trawl landings), the proportion of 
+landed mass sample is very small. However, as the target population of port 
+sampling is the total landed mass in each market category, the proportion of 
+landed mass that is sampled is very small. 
 
+Multiple market categories are often landed by a single boat, and samples from 
+several different market categories may be collected from a given landing. The 
+species present in a market category are known to vary with location (e.g.,the 
+port; landings are grouped into 10 major port complexes in California that 
+span ~800 miles (1 mile = ~1.61 km) of coastline), time (year and the four 
+quarters within the year), fishing technique (trawl, hook and line, gillnet, 
+fish pot, or other minor categories), and if the fish are landed alive or dead. 
+Each combination of market category, location, time, fishing technique, and 
+alive–dead comprise a stratum, and the many categories result in a very large 
+number of potential strata. Annually, ~1500 strata have landings reported.
+-->
+
+## Data
+As outlined in Sen (1984, 1986) the data collection protocol for the species 
+composition port sampling data, held within the CALCOM database, are the result 
+of a design based cluster sampling proceedure across the many strata of 
+California's commercial fisheries. Each sample is intended to be composed of 
+two fifty pound clusters selected at random from a stratum. Although port 
+samplers do their best to follow protocol, in reality the port sampling 
+environment does not always allow Sen's original protocol to be followed. 
+Variations in the sampling protocol may result in only a single cluster being 
+taken, or the size of clusters taken to vary from stratum to stratum based on 
+the particular challenges of sampling each stratum. 
+
+Samples are recorded, by port samplers, as integer pounds for each observed 
+species, across the landed market categories, gear groups, and port complexes
+in time (). Presently there are X rockfish market categories, although not all 
+market categories are always used by fisherman. The number of used market 
+categories has gone from less than 25 in 1978 to about 55 in $2014$. Landings 
+are grouped into major fishing gear groups (trawl, hook and line, gillnet, 
+fish pot, or other minor categories) and ten major port complexes spanning the 
+Califonia coast.
+
+<!--
 [add more detailed description of data here; e.g. samples are recorded as 
 integer weights (pounds) by port samplers, number of market categories, range 
 of years, gears, port complexes, ignoring live fish for now, etc.; show map of 
 state with port complexes.]
+-->
 
 The model based methodology proposed here does not rely strongly upon the 
 cluster sampling structure, but rather simply views each sample as independent 
@@ -342,59 +386,20 @@ variance estimates. Thus the negative binomial and beta-binomial models may
 produce more accurate estimates of the residual variance, while producing more 
 accurate measures of center. We develop an example for a subset of data to 
 demonstrate considerably greater statitiscal support for the beta-binomial 
-model (Appendix A), which we have subsequently used for the purposes of 
+model (Appendix B), which we have subsequently used for the purposes of 
 applying at an operational scale.
 <!--
 Furthermore, in better modeling the variance, these models may often 
 produce more accurate measures of center as well.
 -->
 
-<!--
-###An Example
-
-m=0
-for(id in unique(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger,]$sampleNumber)){
-	m=m+max(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger & Dat$sampleNumber==id,]$clusterNumber)
-}
--->
-
-To discern between these discrete modeling options we considered Poisson, 
-binomial, negative binomial, and beta-binomial models fit to a subset of the <!--the port sampling integer weight--> 
-data from market category 250, in the Monterey port complex trawl fishery in 
-1982. $(any will work)$ This stratum was visited 32 times by port samplers, 
-collecting a total of 59 <!--38 times by port samplers, collecting a total of 67-->
-cluster samples across 55 unique species. <!--344 model observations across 21 $(at least; URCK)$ unique species.--> 
-For brevity, in this example, we only consider the six most prevalent species
-(BCAC, CLPR, WDOW, YTRK, BANK, STRK). Each of the above mentioned models are 
-fit to these data, and the preliminary results seen in Table($likelihood$) 
-guide the use of the BB likelihood model moving forward.
-
-<!--
-For each of the above mentioned models the predictive species composition 
-distributions are visualized in Figure($Interval Plot$) as 95% Highest Density Intervals 
-(HDI) $(citations)$, plotted on top of the predictive means for each model and 
-the observed species compositions from the data in Figure($Interval Plot$). For brevity we 
-only consider the most prevalent six species in this example 
-(CLPR, BCAC, WDOW, BLGL, ARRA, BANK). Additionally, the MSE, DIC, WAIC, and 
-Bayesian marginal likelihood model probabilities are computed for each model 
-as measures of model fit as seen in Table($likelihood table$). 
-
-Table($likelihood table$) show a clear preference for the overdispersed models, with the most 
-overall support for the beta-binomial model. This initial result guides the 
-use of the beta-binomial data generating model for the purposes of building a 
-model to apply at an operational scale.
--->
-
 ###Full-Scale Beta-Binomial Model
 
 For a particular market category, $y_{ijklm\eta}$ is the $i^{th}$ sample of 
 the $j^{th}$ species' weight, in the $k^{th}$ port, caught with the $l^{th}$
-gear, in the $\eta^{th}$ quarter, of year $m$. 
-<!--As supported by the preliminary 
-results in Figure($Interval Plot$) and Table($likelihood table$), the
---> 
-The $y_{ijklm\eta}$ are modeled as observations from a beta-binomial distribution 
-conditional on parameters $\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$,
+gear, in the $\eta^{th}$ quarter, of year $m$. As supported by the results in 
+Appendix B, the $y_{ijklm\eta}$ are modeled as observations from a beta-binomial 
+distribution conditional on parameters $\mu_{jklm\eta}$ and $\sigma^2_{jklm\eta}$,
 
 <!--$$y_{ijklm\eta} \sim BB(y_{ijklm\eta}|\bm{\theta}, \rho).$$-->
 $$y_{ijklm\eta} \sim BB(\mu_{jklm\eta},~\sigma^2_{jklm\eta}).$$
@@ -647,6 +652,33 @@ not capable of providing species composition information, and the stratum is
 simply re-sampled.
 -->
 
+## Expansion
+
+For a particular market category, speciated landings simply amounts to the 
+multiplication of the known total landings ($\lambda_{klm\eta}$), reported on 
+landing receipts in the $klm\eta^{th}$ stratum, with the posterior predictive 
+$\pi^*_{jklm\eta}$, as follows 
+
+$$\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}.$$
+
+$\lambda^*_{jklm\eta}$ is then the posterior predictive landings for species 
+$j$ in the $klm\eta^{th}$ stratum of a particular market category. Recall that 
+since $\pi^*_{jklm\eta}$ is a random variable, then so is $\lambda^*_{jklm\eta}$. 
+Computing the variance of $\lambda^*_{jklm\eta}$ simply amounts to computing 
+the variance of random draws from the $\lambda^*_{jklm\eta}$ distribution. 
+Furthermore, any level of aggregation of $\lambda^*_{jklm\eta}$ is easily 
+obtained by summing $\lambda^*_{jklm\eta}$ draws across the desired indicies. 
+For example to obtain the distributions of yearly catch of Bocaccio in a 
+particular market category, one simply sets $j=BCAC$, and computes the 
+following transformation of $\lambda^*_{jklm\eta}$,
+
+$$\lambda^*_{j\cdot\cdot m\cdot} =\sum_{k}\sum_{l}\sum_{\eta}\lambda^*_{jklm\eta}$$.
+
+Distribution summaries such as quantiles, means, or variances may be computed 
+by copmuting those metrics from the random draws of the resulting 
+$\lambda^*_{j\cdot\cdot m\cdot}$ distribution.
+ 
+
 ## Model Exploration \& Averaging
 
 Presently, strata with diminishingly small sample sizes are managed by an 
@@ -755,10 +787,6 @@ average posteriors across all of the models, as
 
 $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
-## ??Expansion??
-
-$$\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}$$
-
 # Results
 
 ## Characteristics of the Landings Data
@@ -770,11 +798,16 @@ number of species in each market category. Comparable figures for the periods
 completed modeling for these time periods. It is important to notice that since 
 port sampling effort prioritizes heavily landed market categories, and our 
 model is only fit to market categories with more data than parameters, then 
-market categories left with too few samples to fit our model, tend to be less 
+market categories left with too few samples to fit our model tend to be less 
 landed. Thus our model is appied to a relatively large proportion of the landings 
 and nominal speciation occurs for a relatively negligible proportion of total 
-landings. 
+landings. Applying the sample size heuristic to determine which market categories 
+are expended by our model results in 96.8% of landed weight being expanded via 
+our model in the 1978-1982 time and 98.3% of landed weight expanded by our model 
+in 1983-1990.
 <!--
+78: 0.9675626
+83: 0.982643
 Since the our model requires separate 
 parameters for each species and rockfish market categories tend to have many 
 species, the number of species in a market category should, and appearantly is, be an importan 
@@ -823,86 +856,14 @@ the proportion of sampled weight of thirteen commercially relevant species.
 Alternating dark and light grey panels fill in all other species. On the top 
 of each bar the number of observed species in each market category is listed.  
 Hatched regions indicated the nominal species of a market category where 
-applicable.](./pictures/1978to1982Bar3.pdf)
-![same](./pictures/1983to1990Bar3.pdf)
-![legend](./pictures/barplotLegend.pdf)
+applicable.](./pictures/1978to1982Bar3.png)
+![same](./pictures/1983to1990Bar3.png)
+![legend](./pictures/barplotLegend.png)
 
 <!--
 ![worse](./pictures/1991to1999Bar3.pdf)
 ![worst](./pictures/2000to2015Bar3.pdf)
 -->
-
-## Data Generating Model
-### Example
-
-Table(likelihood) shows model performance metrics for the previously described 
-subset, market category 250 for the Monterey Trawl fishery in 1982. Here we 
-consider Mean Squared Error (MSE; computed on the species composition scale), 
-deviance information criterion (DIC), widely applicable information criterion 
-(WAIC), and marginal Bayesian model probabilities ($pr(M|y)$). These measures 
-span a wide range of model selection philosophies and yet here they all 
-consistently agree in ranking the likelihood models. 
-
-<!--
-Both of the overdispersion 
-models considered here (NB and BB) outperform the more standard Poisson and 
-binomial count models, with the most support being for the BB model and the 
-Poisson model showing the least support. 
--->
-
-Table($likelihood table$) show a clear preference for the overdispersed models 
-(NB and BB), with the most overall support for the beta-binomial model and the 
-Poisson model showing the least support. This initial result guides the use of 
-the beta-binomial data generating model for the purposes of building a model 
-to apply at an operational scale.
-
-               Poisson        Binomial      NB                 BB  
-------------- -------------  ------------- ------------------ -------------
-MSE            0.06412        0.06264       0.05171            0.04479
-$\Delta$ DIC   1001.41        1230.60       5.03               0             <!--1342.27  1571.46  345.89  340.86-->
-$\Delta$ WAIC  1079.95        1323.75       3.43               0             <!--1421.61  1665.41  345.09  341.66-->
-$pr(M|y)$      $\approx0$     $\approx0$    $\approx10^{-7}$   $\approx1$
-
-<!--
-For each of the above mentioned models, Figure(Interval Plot) showsvisualizes 
-the predictive species composition distributions as 95% Highest Density 
-Intervals (HDI) (colored vertical lines), plotted on top of the predictive 
-means for each model and the observed species compositions (black horizontal 
-lines) from the data in Figure($Interval Plot$). 
--->
-
-![
-Interval Plot: The predictive species composition distributions as 95% Highest 
-Density Intervals (HDI) (colored vertical lines), plotted on top of the 
-predictive means for each model and the observed species compositions (black 
-horizontal lines) from the data
-](./pictures/compPlot1982Qtr2.png)
-
-The large spread of the observed species compositions seen in Figure(Interval Plot) 
-visually demonstrate the degree of overdispersion present in port sampling 
-data. The Poisson and binomial models disregard this overdispersion to 
-prioritize fitting the data mean. The NB and BB models explicitly model 
-overdispersion in the data, and as such they predict a larger subset of the 
-data. Notably, only the intervals produced by the BB model include the low 
-observed proportions of bocaccio (BCAC) and the high observed proportion of 
-chilipepper rockfish (CLPR) in this example.
-
-![Violin Plot](./pictures/compVioplotQtr2.png)
-
-The split beta-binomial intervals seen in Figure(Interval plot) reflect a 
-large amount of residual variability confined on the unit interval. The 
-beta-binomial is the only model considered here, that estimates such a large 
-degree of variability and thus it is the only model that produces predictive 
-species composition distributions that effectively cover the range of observed 
-species compositions. Figure(violin) shows the beta-binomial predictive 
-distributions as a violin plot demonstrating how the beta-binomial model 
-distributes predictive density over the unit interval. The predictive intervals 
-in Figure(likelihoods) are the smallest possible regions on each of these 
-densities so that each intervals contain 95% probability. Species composition 
-is bounded on [0, 1], thus in the presence of large variability predictive 
-density may aggregate around the bounds. For the example of STRK, notice that 
-although the predictive HDI is split, the vast majority of density lies 
-directly atop the data.
 
 ## Predictor and Prior Selection
 
@@ -1000,8 +961,6 @@ approximately 71% marginal probability to the northerly model structure.
 The results shown here only represent a single market category across the time 
 period 1978-1982. Similar results for other market categories and time periods 
 are provided in the appendix Figure$(color tables)$.
-
-* zero landings?
 
 ## Prediction
 
@@ -1144,28 +1103,131 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 * Report mean/variance of example
 * Add $v$ and $\rho$ tables across all runs
 
-
-
-
 # Discussion
 
+## Modeling
+Models that can incorporate catch uncertainty are not new (c.f. Doubleday
+1976), but estimates of uncertainty in commercial landings are rarely made
+available, at least on the U.S. West Coast. Previous research has focused on
+discarded and biased (under- or over-reported) catch. Bousquet et al. (2010)
+developed a model-based framework for estimation of catch and associated
+uncertainty when underreporting is an issue. Their results included a 
+reduction in precision of management quantities.
+
+The model based statistical framework allows tremendous flexibility in 
+accounting for a dynamic port sampling program. Market forces, regulation 
+changes, and fisherman behavior are a few factors, among the many, which 
+complicate the task of spaciating commercial catch. Unlike a purely 
+sample-based statistical framework, model based statisics allows analysts to 
+quickly explore a wide range of hypotheses for estimating species compositions. 
+The models entertained here manage to achieve generally well behaved predictive 
+accuracy (Tables pred78 and pred 83), however these models are by no means 
+perfect. The models presented here sinply offer a few big improvements toward 
+estimating species compositions. 
+
+Among the largest structural changes improving from the bayesian methodolgy 
+in Shelton et. al. (2012) is the recognition of overdispersion in port sampling 
+data. In the absence of highly predictive covariariates, modeling overdispersion 
+in port sampling data remains an important modeling consideration. Moving 
+forward, modeling descisions will require a careful consideration of 
+predictive accuracy and biase/variance trade-off, so as to tease better and 
+better performance out of further models. The models presented here offer a 
+great operational starting point and provide a basic framework for further 
+model exploration.
+
+The Bayesian models presented here provide easy access to estimates of uncertainty 
+in commercial catch, at any aggregarion of the stratification system. 
+Making posterior predictive draws from these models widely availiable, allows scientists 
+the flexibility to easily compute whichever derived distributions or distributional 
+summaries that follow from this general modeling approach. 
+
+##Data
+Due to observed trends in the sampling of more heavily landed, or specious, market 
+categories, the vast majority of commercial landings from 1978-1990 are able to be 
+expanded by our model. Moving into the modern era, regulation changes including the 
+start of the live fish fishery, and the proliferation in the number of market 
+categories, due to mandatory sort requirements, may challenge species composition 
+estimation. However, due to the increased number of strata that these changes 
+introduce, uncertainty estimation for these time periods will prove to be 
+critical. Without a matched increase in sampling effort, alongside increased 
+stratification, the number of samples per stratum falls dramatically and 
+species composition estimation may well become very uncertain.
+
+<!-- Moving forward-->
+Given a data sparse setting, model-based strategies of catch estimation provide 
+the best chance of a full statistical treatment of availiable data. However, 
+a more informed path forward involves either increasing sampling effort, or a 
+simplification of the stratification system. Either of these changes provide 
+models with more data to better infer parameters. The flexibility of models and 
+ability for stratum pooling strategies, will become vital for modeling 
+data-sparse time periods. Although estimates are likely estimable in these 
+sparse time periods, as pooling strategies become more extreme, model fit will 
+suffer as both bias and variance estimates increase.
+
+<!--
+hilethe performance of this system moving forward.
+
+port sampling presents further 
+issues 
+
+have been able to be 
+ex
+
+
 * Sampling
-	* Since the our model requires separate 
-	parameters for each species and rockfish market categories tend to have many 
-	species, the number of species in a market category should, and appearantly is,
+	* Since the our model requires separate parameters for each species and 
+	rockfish market categories tend to have many species, the number of species in 
+	a market category should, and appearantly is, 
+	* Sort requirements do not eliminate the need for port sampling.
+	* The proliferation of market categories over time in the sampled catch has
+	not been matched with an increase in sampling effort, effectively reducing the 
+	average number of samples per category over time (Figure X). This reduces 
+	precision of catch estimates, increases uncertainty in stock assessment outputs
+	, and impedes efforts to monitor removals relative to catch targets.
+	* Model-based approach is best course of action given sparse data, but best
+	solution is to increase sampling or reduce the number of strata.	
 
-* Variance Estimates; Justify Model based statistics
+-->
 
-* Biase/Variance trade off; hierarchical modeling
 
-* Prediction: tails lighter due to inla?
-	* higher degree Laplace approximation will better capture higher moments of posterior and thus may better capture information in the tails 
+##Future Effort
+Future effort in developing models should include an exploration of the effect 
+of preferencial sampling toward heavily landed stratum. The model-based 
+approach makes testing this hypothesis straight-forward, as the hypothesis may 
+amount to the inclusion of a single slope parameter, in the linear 
+predictor, regressing on landing size. Given the current model's agreement 
+with existing data, as well as comlands estimates, it is unlikely that landing 
+size has an important predictive effect on estimates, however without testing 
+the hypothesis, we can not say wheather the effect will prove to be 
+explainitory.      
 
-* high $\rho$ in 259 and over prediction in 259? 
-* lower rho might predict more appropriately?
+In an attempt to add futher flexibility to the models presented here, exploring 
+the posibilty of gear-species interactions, as random effects, may prove fruitful. 
+Furthermore the inclusion of random vessel effects may also find support.
 
-* Model averaging
-	* Interpret/Speculate
+Finally, further large changes to the methods proposed here might include a 
+true multivariate handeling of the likelihood. The Beta-Binomial univariate 
+model, used here, suggests that the multivariate Dirichelette-Multinomial 
+extension might be a good model for these data. We have yet to get these 
+models to practically compute, although they would likely impose much needed
+, and appropriate, structure across the many species of this system. 
+
+The BMA proceedure presented here adds significant robustness and pooling 
+potential to our species composition estmates, although it does so at a 
+substantial computational cost. We have found ways (through parallel 
+comutation and constraining the model search) to make the computation 
+tractable, however the solution is far from elegant. By using Dirichelette 
+process Bayesian nonparameteric models, amoung the port parameters, a far more 
+elegant, exaustive, and potentially computationally cheaper model search may 
+be possible.      
+
+<!--
+* Other modeling choices
+	* We treat the fish tickets as a census (total landed weight could be biased)
+	* condition model on landed weight, although its unlikely to make a 
+	difference based on calcom comparison
+	* f(gear:spp) flexibility
+	* f(vessel)	
 
 * Looking Forward	
 	* forecasting/hindcasting
@@ -1174,13 +1236,89 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 	* more computation faster
 		* broader model exploration
 		* broader spatial expansion
-	* Hierarchical Spatial Models
-	* DP Models
+
+* Structural
+	* multivariate
+	* Hierarchical/DP Spatial Models 
+-->
 
 
 
-# Appendix
+## ?? Misc. Other ideas ??
 
+* Sen (1986)
+	* Recommended a minimum of 4 samples in each category (MC, gear, live) within 
+	a port-month stratum, roughly 52 samples per year. Redirect sampling to 
+	infrequently landed categories until 4 samples are obtained.
+	* An increased number of categories increases the chance that a category will 
+	be missed by samplers.
+	* Boats are first stage samples within a stratum, with clusters used to avoid 
+	sampling bias due to non-random sampling
+
+* Sort requirements do not eliminate the need for port sampling.
+
+* The proliferation of market categories over time in the sampled catch has 
+not been matched with an increase in sampling effort, effectively reducing the 
+average number of samples per category over time (Figure X). This reduces 
+precision of catch estimates, increases uncertainty in stock assessment outputs
+, and impedes efforts to monitor removals relative to catch targets.
+
+* Fishermen and Dealers determine Market Categories for landed catch; issue 
+with sampling – can’t get all categories; describe problem; “sort requirements
+” used to increase proportion of a particular species in a given market 
+category, but other species are still landed in these categories (e.g. 
+bocaccio in Figure X); can improve precision of important targets, but is not 
+practical for large numbers of species; even for major targets, DOESN’T 
+ELIMINATE THE NEED FOR SAMPLING; cite example of Dover sole – rex sole is 
+small fraction, but of a HUGE landing; decline in sampling effort; need for 
+model-based approach to impute missing strata; current approach is ad-hoc.
+
+* Statistical framework; focus of estimation is the total landed catch, in 
+weight, of a single species; extend Shelton et al. (20xx); model-based – 
+allows for imputation, small-area estimation (Fey and Harriott); model 
+selection based on predictive criteria; model averaging to account for model 
+uncertainty; quantifies uncertainty.
+
+* Model-based approach is best course of action given sparse data, but best 
+solution is to increase sampling or reduce the number of strata.
+
+* Recommend cost/benefit analysis to help identify optimal number of market 
+categories given management goals.
+
+
+<!--
+* Prediction: tails lighter due to inla?
+	* higher degree Laplace approximation will better capture higher moments of posterior and thus may better capture information in the tails 
+	* high $\rho$ in 259 and over prediction in 259? 
+	* lower rho might predict more appropriately?
+
+* Model averaging
+	* Interpret/Speculate
+	* flexibiliy
+	* spatial
+-->
+
+<!--
+Furthermore the struture of the models presented here allow for 
+easy aggregation of estimated landings to any level within the stratification system. 
+
+
+* Statistical framework; focus of estimation is the total landed catch, in 
+weight, of a single species; extend Shelton et al. (20xx); model-based – 
+allows for imputation, small-area estimation (Fey and Harriott); model 
+selection based on predictive criteria; model averaging to account for model 
+uncertainty; quantifies uncertainty.
+
+* General Model based argument 
+	*[check] Justify Model based statistics
+	*[check] Biase/Variance trade off; hierarchical modeling
+	*[check] Why Shelton didn’t work
+	* Variance Estimates; 	
+-->
+
+# Appendix 
+
+## Appendix A 
 ![panel](./pictures/mockUp.png)
 <!--
 ![early](./pictures/1978to1982Bar3.pdf))
@@ -1189,6 +1327,145 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 ![worst](./pictures/2000to2015Bar3.pdf)
 -->
 
+## Appendix B: Subset Motivating Example
+
+<!--
+### An Example
+
+## Data Generating Model
+### Example
+
+m=0
+for(id in unique(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger,]$sampleNumber)){
+	m=m+max(Dat[Dat$marketCategory==mct & Dat$year==yer & Dat$portComplex==plc & Dat$gearGroup==ger & Dat$sampleNumber==id,]$clusterNumber)
+}
+-->
+
+<!--the port sampling integer weight--> 
+                                                                          
+<!--$(any will work)$--> 
+<!--38 times by port samplers, collecting a total of 67-->
+<!--344 model observations across 21 $(at least; URCK)$ unique species.-->
+
+To discern between these discrete modeling options we considered Poisson, 
+binomial, negative binomial, and beta-binomial models fit to a subset of the 		
+data from market category 250, in the Monterey port complex trawl fishery for 
+the second quarter of 1982. This stratum was selected as a relatively data rich 
+setting, although other stratum produce similar results. This stratum was 
+visited 32 times by port samplers, collecting a total of 59 cluster samples 
+across 55 unique species. For brevity, in this example, we only consider the 
+six most prevalent species (BCAC, CLPR, WDOW, YTRK, BANK, STRK). 
+
+Simplified models under each of the discrete likelihoods, metioned above, are 
+fit to the subset data. 
+
+$$y_{ij}\sim p(y_{ij}|\theta_j, \phi)$$
+
+Here $p$ takes the form of each of the considered Poisson, binomial, negative 
+binomial, and beta-binomial models, $\theta_j$ represents the fixed species 
+parameters, and $\phi$ is included to generally represent the nuisance 
+parameters for modeling overdispersion in the negative binomial, and 
+beta-binomial models.
+
+               Poisson        Binomial      NB                 BB  
+------------- -------------  ------------- ------------------ -------------
+MSE            0.06412        0.06264       0.05171            0.04479
+$\Delta$ DIC   1001.41        1230.60       5.03               0             <!--1342.27  1571.46  345.89  340.86-->
+$\Delta$ WAIC  1079.95        1323.75       3.43               0             <!--1421.61  1665.41  345.09  341.66-->
+$pr(M|y)$      $\approx0$     $\approx0$    $\approx10^{-7}$   $\approx1$
+
+Table(likelihood) shows Mean Squared Error (MSE; computed on the species 
+composition scale), delta deviance information criterion ($\Delta$ DIC), delta 
+widely applicable information criterion ($\Delta$ WAIC), and marginal Bayesian 
+model probabilities ($pr(M|y)$) across the likelihood models fit. These 
+measures span a wide range of model selection philosophies and yet here they 
+all consistently agree in ranking the likelihood models. 
+
+
+<!--for the previously described 
+subset, market category 250 for the Monterey Trawl fishery in 1982. Here we 
+consider
+
+Both of the overdispersion 
+models considered here (NB and BB) outperform the more standard Poisson and 
+binomial count models, with the most support being for the BB model and the 
+Poisson model showing the least support. 
+-->
+
+Table($likelihood table$) show a clear preference for the overdispersed models 
+(NB and BB), with the most overall support for the beta-binomial model and the 
+Poisson model showing the least support. This initial result guides the use of 
+the beta-binomial data generating model for the purposes of building a model 
+to apply at an operational scale.
+
+![Violin Plot](./pictures/compVioplotQtr2.png)
+
+Figure(violin) shows the beta-binomial predictive distributions as a violin 
+plot, with the observed species compositions, from port sampling, plotted atop 
+each density. Figure(violin) demonstrates how the beta-binomial model 
+distributes predictive density over the unit interval. Species composition is 
+bounded on [0, 1], thus in the presence of large variability, predictive 
+density may aggregate around the bounds.
+ 
+<!--
+For each of the above mentioned models, 
+-->
+Figure(Interval Plot) visualizes the predictive species composition 
+distributions as 95% Highest Density Intervals (HDI) (colored vertical lines), 
+plotted on top of the predictive means for each model and the observed species 
+compositions (black horizontal lines) from the data in Figure($Interval Plot$). 
+
+![
+Interval Plot: The predictive species composition distributions as 95% Highest 
+Density Intervals (HDI) (colored vertical lines), plotted on top of the 
+predictive means for each model and the observed species compositions (black 
+horizontal lines) from the data
+](./pictures/compPlot1982Qtr2.png)
+
+The large spread of the observed species compositions seen in Figure(Interval Plot) 
+visually demonstrate the degree of overdispersion present in port sampling 
+data. The Poisson and binomial models disregard this overdispersion to 
+prioritize fitting the data mean. The NB and BB models explicitly model 
+overdispersion in the data, and as such they predict a larger subset of the 
+data. Notably, only the intervals produced by the BB model include the low 
+observed proportions of bocaccio (BCAC) and the high observed proportion of 
+chilipepper rockfish (CLPR) in this example.
+
+The split beta-binomial intervals seen in Figure(Interval plot) reflect a 
+large amount of residual variability confined on the unit interval. The 
+beta-binomial is the only model considered here, that estimates such a large 
+degree of variability and thus it is the only model that produces predictive 
+species composition distributions that effectively cover the range of observed 
+species compositions. The predictive intervals in Figure(likelihoods) are 
+the smallest possible regions on each of the densities visualizes in 
+Figure (Violin) so that each intervals contain 95% probability. For the 
+example of STRK, notice that although the predictive HDI in Figure (Interval) is 
+split, the vast majority of density (seen in Figure (Violin)) lies directly 
+atop the data.
+
+<!--
+Each of the above mentioned models are 
+fit to these data, and the preliminary results seen in Table($likelihood$) 
+guide the use of the BB likelihood model moving forward.
+-->
+<!--
+For each of the above mentioned models the predictive species composition 
+distributions are visualized in Figure($Interval Plot$) as 95% Highest Density Intervals 
+(HDI) $(citations)$, plotted on top of the predictive means for each model and 
+the observed species compositions from the data in Figure($Interval Plot$). For brevity we 
+only consider the most prevalent six species in this example 
+(CLPR, BCAC, WDOW, BLGL, ARRA, BANK). Additionally, the MSE, DIC, WAIC, and 
+Bayesian marginal likelihood model probabilities are computed for each model 
+as measures of model fit as seen in Table($likelihood table$). 
+
+Table($likelihood table$) show a clear preference for the overdispersed models, with the most 
+overall support for the beta-binomial model. This initial result guides the 
+use of the beta-binomial data generating model for the purposes of building a 
+model to apply at an operational scale.
+-->
+
+## Appendix C
+
 As a final check of the model structure and the implied prior information the 
 prior predictive is considered. The prior predictive distribution summarizes 
 the information that is intrinsic to the model structure itself, in the absence 
@@ -1196,7 +1473,7 @@ of data. The prior predictive of modeled weight is considered over a 100 pound
 cluster size, which is consistent with aggregating the two nominal 50 pound 
 cluster samples described by Sen (1984) in the original sampling protocol. 
 
-![Prior Prediction](./pictures/priorPredict.pdf)
+![Prior Prediction](./pictures/priorPredict.png)
 
 As seen in Figure$(priorPredictive)$ the prior predictive of (M4) is both 
 symmetric and quite diffuse over the 100 pound domain. The U shape of the 
@@ -1204,11 +1481,89 @@ distribution is a side effect of the diffusion of the selected prior. As data
 are added to the model, the indecisive U shape <!--of this distribution-->
 collapses toward the data in the posterior. 
 
-![modelSelect](./pictures/latexTableCompress1.pdf)
-![modelSelect](./pictures/latexTableCompress2.pdf)
-![modelSelect](./pictures/latexTableCompress3.pdf)
-![modelSelect](./pictures/latexTableCompress4.pdf)
+##Appendix D
 
+![modelSelect](./pictures/latexTableCompress1.png)
+![modelSelect](./pictures/latexTableCompress2.png)
+![modelSelect](./pictures/latexTableCompress3.png)
+![modelSelect](./pictures/latexTableCompress4.png)
+
+
+
+
+<!--
+## Data Generating Model
+### Example
+
+Table(likelihood) shows model performance metrics for the previously described 
+subset, market category 250 for the Monterey Trawl fishery in 1982. Here we 
+consider Mean Squared Error (MSE; computed on the species composition scale), 
+deviance information criterion (DIC), widely applicable information criterion 
+(WAIC), and marginal Bayesian model probabilities ($pr(M|y)$). These measures 
+span a wide range of model selection philosophies and yet here they all 
+consistently agree in ranking the likelihood models. 
+-->
+<!--
+Both of the overdispersion 
+models considered here (NB and BB) outperform the more standard Poisson and 
+binomial count models, with the most support being for the BB model and the 
+Poisson model showing the least support. 
+-->
+<!--
+Table($likelihood table$) show a clear preference for the overdispersed models 
+(NB and BB), with the most overall support for the beta-binomial model and the 
+Poisson model showing the least support. This initial result guides the use of 
+the beta-binomial data generating model for the purposes of building a model 
+to apply at an operational scale.
+
+               Poisson        Binomial      NB                 BB  
+------------- -------------  ------------- ------------------ -------------
+MSE            0.06412        0.06264       0.05171            0.04479
+$\Delta$ DIC   1001.41        1230.60       5.03               0             <!--1342.27  1571.46  345.89  340.86-->
+$\Delta$ WAIC  1079.95        1323.75       3.43               0             <!--1421.61  1665.41  345.09  341.66-->
+$pr(M|y)$      $\approx0$     $\approx0$    $\approx10^{-7}$   $\approx1$
+-->
+<!--
+For each of the above mentioned models, Figure(Interval Plot) showsvisualizes 
+the predictive species composition distributions as 95% Highest Density 
+Intervals (HDI) (colored vertical lines), plotted on top of the predictive 
+means for each model and the observed species compositions (black horizontal 
+lines) from the data in Figure($Interval Plot$). 
+-->
+<!--
+![
+Interval Plot: The predictive species composition distributions as 95% Highest 
+Density Intervals (HDI) (colored vertical lines), plotted on top of the 
+predictive means for each model and the observed species compositions (black 
+horizontal lines) from the data
+](./pictures/compPlot1982Qtr2.png)
+
+The large spread of the observed species compositions seen in Figure(Interval Plot) 
+visually demonstrate the degree of overdispersion present in port sampling 
+data. The Poisson and binomial models disregard this overdispersion to 
+prioritize fitting the data mean. The NB and BB models explicitly model 
+overdispersion in the data, and as such they predict a larger subset of the 
+data. Notably, only the intervals produced by the BB model include the low 
+observed proportions of bocaccio (BCAC) and the high observed proportion of 
+chilipepper rockfish (CLPR) in this example.
+
+![Violin Plot](./pictures/compVioplotQtr2.png)
+
+The split beta-binomial intervals seen in Figure(Interval plot) reflect a 
+large amount of residual variability confined on the unit interval. The 
+beta-binomial is the only model considered here, that estimates such a large 
+degree of variability and thus it is the only model that produces predictive 
+species composition distributions that effectively cover the range of observed 
+species compositions. Figure(violin) shows the beta-binomial predictive 
+distributions as a violin plot demonstrating how the beta-binomial model 
+distributes predictive density over the unit interval. The predictive intervals 
+in Figure(likelihoods) are the smallest possible regions on each of these 
+densities so that each intervals contain 95% probability. Species composition 
+is bounded on [0, 1], thus in the presence of large variability predictive 
+density may aggregate around the bounds. For the example of STRK, notice that 
+although the predictive HDI is split, the vast majority of density lies 
+directly atop the data.
+-->
 
 
 <!--
