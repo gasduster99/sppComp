@@ -180,7 +180,7 @@ composition estimates are ‘borrowed’ from other strata using deterministic
 algorithms based on expert opinion. These algorithms have unknown bias and 
 precision. In contrast, model-based estimators are increasingly used to 
 estimate quantities of interest for domains with small sample sizes and/or 
-unsampled strata (sometimes referred to as small area estimation; Rao 2003).  
+unsampled strata (sometimes referred to as small area estimation; Rao 2003). 
 As a pilot study, Shelton et al. (2012) developed a Bayesian hierarchical 
 statistical framework for estimating species compositions in rockfish market 
 categories from trawl fisheries from a single port in California in two 
@@ -252,20 +252,64 @@ lower panels, points indicate observed values, while the black lines represent
 
 # Methods
 
-## Data
-As outlined in $(cite)$ the data in $blank$ are the result of a cluster sampling 
-protocol across the many strata, in which each sample is intended to be 
-composed of two fifty pound clusters from the selected stratum. Although port 
-samplers do their best to follow protocol, in reality the port sampling 
-environment does not always allow the exact $(cite)$ protocol to be 
-followed. Variations in the sampling protocol may result in only a single 
-cluster being taken, or the size of clusters taken to vary, from stratum to 
-stratum based on the particular challenges of sampling each stratum. 
+<!--
+Originally, protocols for sampling rockfish in California were derived by Sen 
+(1984, 1986) as a design-based cluster sampling. Detailed descriptions of the sampling 
+program and current process for expanding species composition estimates to 
+species-specific landings can be found elsewhere (Sen 1984, 1986; Pearson and 
+Erwin 1997). We briefly summarize the sampling process here. Sampling follows 
+a two-stage strati- fied sampling plan (Sen 1986). Vessels are selected 
+arbitrarily by the port sampler and two 50 or 25 lb clusters of fish are 
+selected arbitrarily from bin(s) containing a single market category. The mass 
+sampled depended on the size of individ- ual fish in the landings, with 
+landings consisting of small fish having 25 lbs sampled and those consisting 
+of large fish having 50 lbs sampled. The mass of each species in the clusters 
+are recorded. The mass sampled relative to the total landing mass is highly 
+variable. In some cases, the entire catch is sampled (e.g., some hook-and-line 
+landings), whereas in others (e.g., trawl landings), the proportion of 
+landed mass sample is very small. However, as the target population of port 
+sampling is the total landed mass in each market category, the proportion of 
+landed mass that is sampled is very small. 
 
+Multiple market categories are often landed by a single boat, and samples from 
+several different market categories may be collected from a given landing. The 
+species present in a market category are known to vary with location (e.g.,the 
+port; landings are grouped into 10 major port complexes in California that 
+span ~800 miles (1 mile = ~1.61 km) of coastline), time (year and the four 
+quarters within the year), fishing technique (trawl, hook and line, gillnet, 
+fish pot, or other minor categories), and if the fish are landed alive or dead. 
+Each combination of market category, location, time, fishing technique, and 
+alive–dead comprise a stratum, and the many categories result in a very large 
+number of potential strata. Annually, ~1500 strata have landings reported.
+-->
+
+## Data
+As outlined in Sen (1984, 1986) the data collection protocol for the species 
+composition port sampling data, held within the CALCOM database, are the result 
+of a design based cluster sampling proceedure across the many strata of 
+California's commercial fisheries. Each sample is intended to be composed of 
+two fifty pound clusters selected at random from a stratum. Although port 
+samplers do their best to follow protocol, in reality the port sampling 
+environment does not always allow Sen's original protocol to be followed. 
+Variations in the sampling protocol may result in only a single cluster being 
+taken, or the size of clusters taken to vary from stratum to stratum based on 
+the particular challenges of sampling each stratum. 
+
+Samples are recorded, by port samplers, as integer pounds for each observed 
+species, across the landed market categories, gear groups, and port complexes
+in time (). Presently there are X rockfish market categories, although not all 
+market categories are always used by fisherman. The number of used market 
+categories has gone from less than 25 in 1978 to about 55 in $2014$. Landings 
+are grouped into major fishing gear groups (trawl, hook and line, gillnet, 
+fish pot, or other minor categories) and ten major port complexes spanning the 
+Califonia coast.
+
+<!--
 [add more detailed description of data here; e.g. samples are recorded as 
 integer weights (pounds) by port samplers, number of market categories, range 
 of years, gears, port complexes, ignoring live fish for now, etc.; show map of 
 state with port complexes.]
+-->
 
 The model based methodology proposed here does not rely strongly upon the 
 cluster sampling structure, but rather simply views each sample as independent 
@@ -754,11 +798,16 @@ number of species in each market category. Comparable figures for the periods
 completed modeling for these time periods. It is important to notice that since 
 port sampling effort prioritizes heavily landed market categories, and our 
 model is only fit to market categories with more data than parameters, then 
-market categories left with too few samples to fit our model, tend to be less 
+market categories left with too few samples to fit our model tend to be less 
 landed. Thus our model is appied to a relatively large proportion of the landings 
 and nominal speciation occurs for a relatively negligible proportion of total 
-landings. 
+landings. Applying the sample size heuristic to determine which market categories 
+are expended by our model results in 96.8% of landed weight being expanded via 
+our model in the 1978-1982 time and 98.3% of landed weight expanded by our model 
+in 1983-1990.
 <!--
+78: 0.9675626
+83: 0.982643
 Since the our model requires separate 
 parameters for each species and rockfish market categories tend to have many 
 species, the number of species in a market category should, and appearantly is, be an importan 
@@ -1054,28 +1103,131 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 * Report mean/variance of example
 * Add $v$ and $\rho$ tables across all runs
 
-
-
-
 # Discussion
 
+## Modeling
+Models that can incorporate catch uncertainty are not new (c.f. Doubleday
+1976), but estimates of uncertainty in commercial landings are rarely made
+available, at least on the U.S. West Coast. Previous research has focused on
+discarded and biased (under- or over-reported) catch. Bousquet et al. (2010)
+developed a model-based framework for estimation of catch and associated
+uncertainty when underreporting is an issue. Their results included a 
+reduction in precision of management quantities.
+
+The model based statistical framework allows tremendous flexibility in 
+accounting for a dynamic port sampling program. Market forces, regulation 
+changes, and fisherman behavior are a few factors, among the many, which 
+complicate the task of spaciating commercial catch. Unlike a purely 
+sample-based statistical framework, model based statisics allows analysts to 
+quickly explore a wide range of hypotheses for estimating species compositions. 
+The models entertained here manage to achieve generally well behaved predictive 
+accuracy (Tables pred78 and pred 83), however these models are by no means 
+perfect. The models presented here sinply offer a few big improvements toward 
+estimating species compositions. 
+
+Among the largest structural changes improving from the bayesian methodolgy 
+in Shelton et. al. (2012) is the recognition of overdispersion in port sampling 
+data. In the absence of highly predictive covariariates, modeling overdispersion 
+in port sampling data remains an important modeling consideration. Moving 
+forward, modeling descisions will require a careful consideration of 
+predictive accuracy and biase/variance trade-off, so as to tease better and 
+better performance out of further models. The models presented here offer a 
+great operational starting point and provide a basic framework for further 
+model exploration.
+
+The Bayesian models presented here provide easy access to estimates of uncertainty 
+in commercial catch, at any aggregarion of the stratification system. 
+Making posterior predictive draws from these models widely availiable, allows scientists 
+the flexibility to easily compute whichever derived distributions or distributional 
+summaries that follow from this general modeling approach. 
+
+##Data
+Due to observed trends in the sampling of more heavily landed, or specious, market 
+categories, the vast majority of commercial landings from 1978-1990 are able to be 
+expanded by our model. Moving into the modern era, regulation changes including the 
+start of the live fish fishery, and the proliferation in the number of market 
+categories, due to mandatory sort requirements, may challenge species composition 
+estimation. However, due to the increased number of strata that these changes 
+introduce, uncertainty estimation for these time periods will prove to be 
+critical. Without a matched increase in sampling effort, alongside increased 
+stratification, the number of samples per stratum falls dramatically and 
+species composition estimation may well become very uncertain.
+
+<!-- Moving forward-->
+Given a data sparse setting, model-based strategies of catch estimation provide 
+the best chance of a full statistical treatment of availiable data. However, 
+a more informed path forward involves either increasing sampling effort, or a 
+simplification of the stratification system. Either of these changes provide 
+models with more data to better infer parameters. The flexibility of models and 
+ability for stratum pooling strategies, will become vital for modeling 
+data-sparse time periods. Although estimates are likely estimable in these 
+sparse time periods, as pooling strategies become more extreme, model fit will 
+suffer as both bias and variance estimates increase.
+
+<!--
+hilethe performance of this system moving forward.
+
+port sampling presents further 
+issues 
+
+have been able to be 
+ex
+
+
 * Sampling
-	* Since the our model requires separate 
-	parameters for each species and rockfish market categories tend to have many 
-	species, the number of species in a market category should, and appearantly is,
+	* Since the our model requires separate parameters for each species and 
+	rockfish market categories tend to have many species, the number of species in 
+	a market category should, and appearantly is, 
+	* Sort requirements do not eliminate the need for port sampling.
+	* The proliferation of market categories over time in the sampled catch has
+	not been matched with an increase in sampling effort, effectively reducing the 
+	average number of samples per category over time (Figure X). This reduces 
+	precision of catch estimates, increases uncertainty in stock assessment outputs
+	, and impedes efforts to monitor removals relative to catch targets.
+	* Model-based approach is best course of action given sparse data, but best
+	solution is to increase sampling or reduce the number of strata.	
 
-* Variance Estimates; Justify Model based statistics
+-->
 
-* Biase/Variance trade off; hierarchical modeling
 
-* Prediction: tails lighter due to inla?
-	* higher degree Laplace approximation will better capture higher moments of posterior and thus may better capture information in the tails 
+##Future Effort
+Future effort in developing models should include an exploration of the effect 
+of preferencial sampling toward heavily landed stratum. The model-based 
+approach makes testing this hypothesis straight-forward, as the hypothesis may 
+amount to the inclusion of a single slope parameter, in the linear 
+predictor, regressing on landing size. Given the current model's agreement 
+with existing data, as well as comlands estimates, it is unlikely that landing 
+size has an important predictive effect on estimates, however without testing 
+the hypothesis, we can not say wheather the effect will prove to be 
+explainitory.      
 
-* high $\rho$ in 259 and over prediction in 259? 
-* lower rho might predict more appropriately?
+In an attempt to add futher flexibility to the models presented here, exploring 
+the posibilty of gear-species interactions, as random effects, may prove fruitful. 
+Furthermore the inclusion of random vessel effects may also find support.
 
-* Model averaging
-	* Interpret/Speculate
+Finally, further large changes to the methods proposed here might include a 
+true multivariate handeling of the likelihood. The Beta-Binomial univariate 
+model, used here, suggests that the multivariate Dirichelette-Multinomial 
+extension might be a good model for these data. We have yet to get these 
+models to practically compute, although they would likely impose much needed
+, and appropriate, structure across the many species of this system. 
+
+The BMA proceedure presented here adds significant robustness and pooling 
+potential to our species composition estmates, although it does so at a 
+substantial computational cost. We have found ways (through parallel 
+comutation and constraining the model search) to make the computation 
+tractable, however the solution is far from elegant. By using Dirichelette 
+process Bayesian nonparameteric models, amoung the port parameters, a far more 
+elegant, exaustive, and potentially computationally cheaper model search may 
+be possible.      
+
+<!--
+* Other modeling choices
+	* We treat the fish tickets as a census (total landed weight could be biased)
+	* condition model on landed weight, although its unlikely to make a 
+	difference based on calcom comparison
+	* f(gear:spp) flexibility
+	* f(vessel)	
 
 * Looking Forward	
 	* forecasting/hindcasting
@@ -1084,15 +1236,89 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 	* more computation faster
 		* broader model exploration
 		* broader spatial expansion
-	* Hierarchical Spatial Models
-	* DP Models
+
+* Structural
+	* multivariate
+	* Hierarchical/DP Spatial Models 
+-->
 
 
 
-# Appendix
+## ?? Misc. Other ideas ??
 
-## Appendix A
+* Sen (1986)
+	* Recommended a minimum of 4 samples in each category (MC, gear, live) within 
+	a port-month stratum, roughly 52 samples per year. Redirect sampling to 
+	infrequently landed categories until 4 samples are obtained.
+	* An increased number of categories increases the chance that a category will 
+	be missed by samplers.
+	* Boats are first stage samples within a stratum, with clusters used to avoid 
+	sampling bias due to non-random sampling
 
+* Sort requirements do not eliminate the need for port sampling.
+
+* The proliferation of market categories over time in the sampled catch has 
+not been matched with an increase in sampling effort, effectively reducing the 
+average number of samples per category over time (Figure X). This reduces 
+precision of catch estimates, increases uncertainty in stock assessment outputs
+, and impedes efforts to monitor removals relative to catch targets.
+
+* Fishermen and Dealers determine Market Categories for landed catch; issue 
+with sampling – can’t get all categories; describe problem; “sort requirements
+” used to increase proportion of a particular species in a given market 
+category, but other species are still landed in these categories (e.g. 
+bocaccio in Figure X); can improve precision of important targets, but is not 
+practical for large numbers of species; even for major targets, DOESN’T 
+ELIMINATE THE NEED FOR SAMPLING; cite example of Dover sole – rex sole is 
+small fraction, but of a HUGE landing; decline in sampling effort; need for 
+model-based approach to impute missing strata; current approach is ad-hoc.
+
+* Statistical framework; focus of estimation is the total landed catch, in 
+weight, of a single species; extend Shelton et al. (20xx); model-based – 
+allows for imputation, small-area estimation (Fey and Harriott); model 
+selection based on predictive criteria; model averaging to account for model 
+uncertainty; quantifies uncertainty.
+
+* Model-based approach is best course of action given sparse data, but best 
+solution is to increase sampling or reduce the number of strata.
+
+* Recommend cost/benefit analysis to help identify optimal number of market 
+categories given management goals.
+
+
+<!--
+* Prediction: tails lighter due to inla?
+	* higher degree Laplace approximation will better capture higher moments of posterior and thus may better capture information in the tails 
+	* high $\rho$ in 259 and over prediction in 259? 
+	* lower rho might predict more appropriately?
+
+* Model averaging
+	* Interpret/Speculate
+	* flexibiliy
+	* spatial
+-->
+
+<!--
+Furthermore the struture of the models presented here allow for 
+easy aggregation of estimated landings to any level within the stratification system. 
+
+
+* Statistical framework; focus of estimation is the total landed catch, in 
+weight, of a single species; extend Shelton et al. (20xx); model-based – 
+allows for imputation, small-area estimation (Fey and Harriott); model 
+selection based on predictive criteria; model averaging to account for model 
+uncertainty; quantifies uncertainty.
+
+* General Model based argument 
+	*[check] Justify Model based statistics
+	*[check] Biase/Variance trade off; hierarchical modeling
+	*[check] Why Shelton didn’t work
+	* Variance Estimates; 	
+-->
+
+# Appendix 
+
+## Appendix A 
 ![panel](./pictures/mockUp.png)
 <!--
 ![early](./pictures/1978to1982Bar3.pdf))
