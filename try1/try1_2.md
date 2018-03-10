@@ -545,8 +545,12 @@ $\beta^{(y:q)}_{m\eta}$ interaction terms. This model represents more opportunit
 for partial pooling through time than (M3), as fewer time parameters are 
 introduced. Furthermore all of the $\beta^{(y:q)}_{m\eta}$ are hierarchically 
 pooled back toward a single common stratum mean via the single shared variance 
-parameter, $v$. 
-
+parameter, $v$. No models with fixed $\beta^{(y:q)}_{m\eta}$ interaction terms are 
+considered here, as these models introduce a very large number of parameters.
+Due to the sparcity of these data, the models ability to pool through time 
+is important for allowing model flexibility in time, while retaining the ability 
+to produce predictions for unsampled time periods.
+  
 ###(M5)
 $$\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}$$
 $$\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)$$
@@ -794,15 +798,16 @@ $$\bar p(\theta|y) = \sum_{\iota} \omega_\iota p(\theta|y, M_\iota).$$
 
 ## Characteristics of the Landings Data
 
-In the two time periods examined here, Figures (bar78) and (bar83) show how
+In the two time periods modeled here, Figures (bar78) and (bar83) show how
 commercial port sampling effort tracks both total landed weight as well as the 
-number of species in each market category. Comparable figures for the periods 
-1991-1999 and 2000-2015 are provided in Appendix (bars), although we have not yet 
-completed modeling for these time periods. It is important to notice that since 
-port sampling effort prioritizes heavily landed market categories, and our 
-model is only fit to market categories with more data than parameters, then 
-market categories left with too few samples to fit our model tend to be less 
-landed. Thus our model is applied to a relatively large proportion of the landings 
+number of species in market categories accounting for the top 99% of total 
+landings in each time period. Comparable figures for the periods 1991-1999 and 
+2000-2015 are provided in Appendix A, although we have not yet completed 
+modeling for these time periods. It is important to notice that since port 
+sampling effort prioritizes heavily landed market categories, and our model is 
+only fit to market categories with more data than parameters, then market 
+categories left with too few samples to fit our model tend to be less landed. 
+Thus our model is applied to a relatively large proportion of the landings 
 and nominal speciation occurs for a relatively negligible proportion of total 
 landings. Applying the sample size heuristic to determine which market categories 
 are expended by our model results in 96.8% of landed weight being expanded via 
@@ -844,7 +849,7 @@ In fact, only 6.3% of the sampled weight in 1978-1982 consisted of Brown
 Rockfish. In 1978-1982 market category 267 might be better named Widow 
 Rockfish as Widow amounts to 92.6% of sampled weight in this time period, 
 however market category 267 is composed of 99.6% Brown and 0% Widow in recent 
-time periods (see Appendix X Figure (bars)).
+time periods (see Appendix A Figure (bars00)).
 
 <!--![panel](./pictures/mockUp.png)-->
 
@@ -931,7 +936,7 @@ ability to model differences in seasonality from year to year.
 
 Figure$(model selection)$ shows the results of port complex model selection 
 for the modeled period from 1978 to 1982 in market category 250. Along the 
-top, $\omega$ BMA weights for the top 10 models are displayed (each column is a 
+top BMA weights ($\omega$) for the top 10 models are displayed (each column is a 
 distinct model). The following ten rows indicate the ten port complexes in 
 California, and the colored cells indicate how port complexes are partitioned 
 in each model.
@@ -1022,89 +1027,6 @@ the average performance across market categories at each prediction level, it
 the 99% prediction level. The 99% prediction level appears to slightly 
 under-predict on average, indicating that predictive distributions are slightly 
 lighter in the far tails than the data.
-
-## Nuisance Parameters
-
-### 78-82
-#### $\rho$
-<!--195 & 0.92 & 0.93 & 0.036       \\-->
-\begin{tabular}{|c|c|c|c|}
-MCAT & Mean & Median & Posterior SD     \\ \hline
-250 & 0.55 & 0.55 & 0.004       \\
-253 & 0.39 & 0.39 & 0.001       \\
-262 & 0.35 & 0.35 & 0.008       \\
-265 & 0.64 & 0.64 & 0.002       \\
-269 & 0.52 & 0.52 & 0.019       \\
-270 & 0.53 & 0.54 & 0.020       \\
-956 & 0.35 & 0.35 & 0.007       \\
-959 & 0.47 & 0.47 & 0.070       \\
-961 & 0.55 & 0.55 & 0.004       \\
-\hline
-\end{tabular}
-
-#### $v$
-<!--195 & 18666.56 & 18817.95 & 4676.48     \\-->
-\begin{tabular}{|c|c|c|c|}
-MCAT & Mean & Median & Posterior SD     \\ \hline
-250 & 12915.85 & 18523.12 & 8699.87     \\
-253 & 22747.87 & 23063.76 & 1535.53     \\
-262 & 20254.41 & 20506.36 & 2581.87     \\
-265 & 15846.22 & 16694.98 & 7601.15     \\
-269 & 20135.05 & 19975.15 & 4667.11     \\
-270 & 19931.96 & 19955.13 & 6033.35     \\
-956 & 19659.11 & 19795.60 & 1227.99     \\
-959 & 19159.69 & 13375.80 & 19256.94    \\
-961 & 18631.44 & 19498.31 & 7970.44     \\
-\hline
-\end{tabular}
-
-
-
-### 83-90
-#### $\rho$
-\begin{tabular}{|c|c|c|c|}
-MCAT & Mean & Median & Posterior SD     \\ \hline
-245 & 0.65 & 0.65 & 0.014       \\
-250 & 0.51 & 0.51 & 0.002       \\
-253 & 0.47 & 0.47 & 0.010       \\
-259 & 0.75 & 0.75 & 0.009       \\
-262 & 0.41 & 0.41 & 0.001       \\
-269 & 0.57 & 0.57 & 0.046       \\
-270 & 0.74 & 0.75 & 0.027       \\
-663 & 0.51 & 0.51 & 0.001       \\
-667 & 0.49 & 0.49 & 0.022       \\
-956 & 0.43 & 0.43 & 0.003       \\
-959 & 0.55 & 0.55 & 0.004       \\
-960 & 0.45 & 0.45 & 0.004       \\
-961 & 0.59 & 0.59 & 0.001       \\
-\hline
-\end{tabular}
-
-* high $\rho$ in 259 and over prediction in 259? 
-* lower rho might predict more appropriately?
-
-#### $v$
-\begin{tabular}{|c|c|c|c|}
-MCAT & Mean & Median & Posterior SD     \\ \hline
-245 & 20211.82 & 20204.95 & 1276.83     \\
-250 & 236.03   & 192.53   & 134.67  	\\
-253 & 20455.18 & 20140.50 & 1521.72     \\
-259 & 20246.14 & 20186.61 & 898.99      \\
-262 & 20445.49 & 20348.56 & 343.70      \\
-269 & 34386.49 & 25951.03 & 24030.32    \\
-270 & 20253.34 & 19908.07 & 9269.02     \\
-663 & 19563.87 & 19624.09 & 331.04      \\
-667 & 20089.55 & 20078.27 & 2723.34     \\
-956 & 20581.67 & 20664.71 & 913.92      \\
-959 & 19242.41 & 18707.09 & 5076.03     \\
-960 & 20059.66 & 20012.80 & 1703.89     \\
-961 & 20127.69 & 20141.04 & 580.80      \\
-\hline
-\end{tabular}
-
-* Degree of smoothing (hierarchical parameters, rho)
-* Report mean/variance of example
-* Add $v$ and $\rho$ tables across all runs
 
 # Discussion
 
@@ -1321,16 +1243,62 @@ uncertainty; quantifies uncertainty.
 
 # Appendix 
 
-## Appendix A 
-![panel](./pictures/mockUp.png)
+## Appendix A: Modern Market Categories and Sampling 
+
 <!--
+![panel: The relative sampling effort and landings across rockfish market categories 
+accounting for the top 99% percent of landings for four time periods, 
+1978-1982, 1983-1990, 1991-1999, and 2000-2015. In the top panel of each figure 
+the black line represents the proportion of landings in each market category, 
+while the blue line represents the proportion of samples, by number, taken in 
+each market category. In the bottom panel of each modeled period, colors 
+represent the proportion of sampled weight of thirteen commercially relevant 
+species.  Alternating dark and light grey panels fill in all other species. On 
+the top of each bar the number of observed species in each market category is 
+listed.  Hatched regions indicated the nominal species of a market category 
+where applicable.](./pictures/mockUp.png)
 ![early](./pictures/1978to1982Bar3.pdf))
 ![best](./pictures/1983to1990Bar3.pdf)
-![worse](./pictures/1991to1999Bar3.pdf)
-![worst](./pictures/2000to2015Bar3.pdf)
 -->
 
-## Appendix B: Subset Motivating Example
+![late: The relative sampling effort and landings across rockfish market categories 
+accounting for the top 99% percent of landings for four time periods, 
+1991-1999 and 2000-2015. In the top panel of each figure 
+the black line represents the proportion of landings in each market category, 
+while the blue line represents the proportion of samples, by number, taken in 
+each market category. In the bottom panel of each modeled period, colors 
+represent the proportion of sampled weight of thirteen commercially relevant 
+species.  Alternating dark and light grey panels fill in all other species. On 
+the top of each bar the number of observed species in each market category is 
+listed.  Hatched regions indicated the nominal species of a market category 
+where applicable.](./pictures/1991to1999Bar3.pdf)
+![worst](./pictures/2000to2015Bar3.pdf)
+
+Figures(bar91) and (bar00) show structure in port sampling data for two modern 
+unmodled time periods, 1991-1999 and 2000-2015. These modern time periods show 
+similar patterns in port sampling effort as the above describes modeled time 
+periods, although due to the increased number of market categories port 
+sampling is spread more thinly amoung the many categories. Namely port 
+sampling effort still seems to track both total landed weight, as well as the 
+number of species in each market category, however this pattern occurs across 
+many more market categories.
+
+In these two modern time periods a key feature of the data is the proliferation 
+of the number of market categories. Figures(bar91) and (bar00) show market 
+categories accounting for the top 99% of total landings in each time period. In 
+the modeled periods, 1978-1982 and 1983-1990, the top 99% of total landings are 
+landed into 6 and 12 distinct market categories respectively. In the unmodeled 
+periods shown here, 1991-1999 and 2000-2015, the top 99% of total landings are
+landed into 20 and 28 distinct market categories respectively.
+  
+It was noted in Section (Characteristics of the Landings Data) that market 
+category 267 (nomially Brown Rockfish) was actually composed of a relatively 
+little Brown Rockfish, while instead the market category actually contains 
+mostly Widow Rockfish. Figure (bar00) shows that in the most modern time 
+period (2000-2015) this pattern reverses as market category 267 is composed 
+almost entirely (99.6%) of Brown Rockfish. 
+
+## Appendix B: A Motivating Example
 
 <!--
 ### An Example
@@ -1467,7 +1435,7 @@ use of the beta-binomial data generating model for the purposes of building a
 model to apply at an operational scale.
 -->
 
-## Appendix C
+## Appendix C: Prior Predictive
 
 As a final check of the model structure and the implied prior information the 
 prior predictive is considered. The prior predictive distribution summarizes 
@@ -1484,12 +1452,107 @@ distribution is a side effect of the diffusion of the selected prior. As data
 are added to the model, the indecisive U shape <!--of this distribution-->
 collapses toward the data in the posterior. 
 
-##Appendix D
+## Appendix D: Spatial Model Averaging
+
+Here the spatial model averaging results are shown for all modeled time periods 
+(1978-1982 and 1983-1990) in all modeled market categories. For brevity we only show 
+the five most highly weighted models in each mcarket category, although 274 candidate 
+port complex partioning schemes are computed in each market category. 
+
+Notice that each market category has fairly unique port complex partitioning 
+results. The fact that each market category behaves uniquely indicates the 
+complexity of this system. Furthermore the fact that the BMA strategry picks 
+up on these varied market category behaviors indicates the flexibility of this 
+approach. Although the system is very dynamic, key breaks along California 
+biogeographic features, such as Cape Mendicino and/or Point Conception, seem to 
+be recurrent patterns. 
 
 ![modelSelect](./pictures/latexTableCompress1.png)
 ![modelSelect](./pictures/latexTableCompress2.png)
 ![modelSelect](./pictures/latexTableCompress3.png)
 ![modelSelect](./pictures/latexTableCompress4.png)
+
+## Appendinx E: Nuisance Parameters
+
+### 78-82
+#### $\rho$
+<!--195 & 0.92 & 0.93 & 0.036       \\-->
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+250 & 0.55 & 0.55 & 0.004       \\
+253 & 0.39 & 0.39 & 0.001       \\
+262 & 0.35 & 0.35 & 0.008       \\
+265 & 0.64 & 0.64 & 0.002       \\
+269 & 0.52 & 0.52 & 0.019       \\
+270 & 0.53 & 0.54 & 0.020       \\
+956 & 0.35 & 0.35 & 0.007       \\
+959 & 0.47 & 0.47 & 0.070       \\
+961 & 0.55 & 0.55 & 0.004       \\
+\hline
+\end{tabular}
+
+#### $v$
+<!--195 & 18666.56 & 18817.95 & 4676.48     \\-->
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+250 & 12915.85 & 18523.12 & 8699.87     \\
+253 & 22747.87 & 23063.76 & 1535.53     \\
+262 & 20254.41 & 20506.36 & 2581.87     \\
+265 & 15846.22 & 16694.98 & 7601.15     \\
+269 & 20135.05 & 19975.15 & 4667.11     \\
+270 & 19931.96 & 19955.13 & 6033.35     \\
+956 & 19659.11 & 19795.60 & 1227.99     \\
+959 & 19159.69 & 13375.80 & 19256.94    \\
+961 & 18631.44 & 19498.31 & 7970.44     \\
+\hline
+\end{tabular}
+
+### 83-90
+#### $\rho$
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+245 & 0.65 & 0.65 & 0.014       \\
+250 & 0.51 & 0.51 & 0.002       \\
+253 & 0.47 & 0.47 & 0.010       \\
+259 & 0.75 & 0.75 & 0.009       \\
+262 & 0.41 & 0.41 & 0.001       \\
+269 & 0.57 & 0.57 & 0.046       \\
+270 & 0.74 & 0.75 & 0.027       \\
+663 & 0.51 & 0.51 & 0.001       \\
+667 & 0.49 & 0.49 & 0.022       \\
+956 & 0.43 & 0.43 & 0.003       \\
+959 & 0.55 & 0.55 & 0.004       \\
+960 & 0.45 & 0.45 & 0.004       \\
+961 & 0.59 & 0.59 & 0.001       \\
+\hline
+\end{tabular}
+
+* high $\rho$ in 259 and over prediction in 259? 
+* lower rho might predict more appropriately?
+
+#### $v$
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+245 & 20211.82 & 20204.95 & 1276.83     \\
+250 & 236.03   & 192.53   & 134.67  	\\
+253 & 20455.18 & 20140.50 & 1521.72     \\
+259 & 20246.14 & 20186.61 & 898.99      \\
+262 & 20445.49 & 20348.56 & 343.70      \\
+269 & 34386.49 & 25951.03 & 24030.32    \\
+270 & 20253.34 & 19908.07 & 9269.02     \\
+663 & 19563.87 & 19624.09 & 331.04      \\
+667 & 20089.55 & 20078.27 & 2723.34     \\
+956 & 20581.67 & 20664.71 & 913.92      \\
+959 & 19242.41 & 18707.09 & 5076.03     \\
+960 & 20059.66 & 20012.80 & 1703.89     \\
+961 & 20127.69 & 20141.04 & 580.80      \\
+\hline
+\end{tabular}
+
+* Degree of smoothing (hierarchical parameters, rho)
+* Report mean/variance of example
+* Add $v$ and $\rho$ tables across all runs
+
 
 
 
@@ -1518,13 +1581,6 @@ Table($likelihood table$) show a clear preference for the overdispersed models
 Poisson model showing the least support. This initial result guides the use of 
 the beta-binomial data generating model for the purposes of building a model 
 to apply at an operational scale.
-
-               Poisson        Binomial      NB                 BB  
-------------- -------------  ------------- ------------------ -------------
-MSE            0.06412        0.06264       0.05171            0.04479
-$\Delta$ DIC   1001.41        1230.60       5.03               0             <!--1342.27  1571.46  345.89  340.86-->
-$\Delta$ WAIC  1079.95        1323.75       3.43               0             <!--1421.61  1665.41  345.09  341.66-->
-$pr(M|y)$      $\approx0$     $\approx0$    $\approx10^{-7}$   $\approx1$
 -->
 <!--
 For each of the above mentioned models, Figure(Interval Plot) showsvisualizes 
