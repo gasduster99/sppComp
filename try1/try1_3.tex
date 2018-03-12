@@ -44,19 +44,20 @@ all potential strata, or species, adequately. Limited resources and
 increasingly complex stratification of the sampling system inevitably
 leads to gaps in sample data. In the presence of sampling gaps, ad-hoc
 species composition point estimation is currently obtained according to
-historically derived ``data borrowing'' (imputation) protocols which do
-not allow for uncertainty estimation or forecasting. In order to move
-from the current ad-hoc ``data-borrowing'' point estimators, we have
-constructed Bayesian hierarchical models to estimate species
-compositions, complete with accurate measures of uncertainty, as well as
-theoretically sound out-of-sample predictions. Furthermore, we introduce
-a Bayesian model averaging approach for inferring spatial pooling
-strategies across the over-stratified port sampling system. Our modeling
-approach, along with a computationally robust system of inference and
-model exploration, allows us to 1) quantify uncertainty in historical
-landings, and 2) understand the effect of the highly stratified, and
-sparse, sampling system on the kinds of inference possible, while
-simultaneously making the most from the available data.
+historically derived ``data borrowing'' (imputation) protocols which 
+introduce unknown bias and do not allow for uncertainty estimation or 
+forecasting. In order to move from the current ad-hoc ``data-borrowing'' point 
+estimators, we have constructed Bayesian hierarchical models to estimate 
+species compositions, complete with accurate measures of uncertainty, as well 
+as theoretically sound out-of-sample predictions. Furthermore, we 
+introduce a Bayesian model averaging approach for inferring spatial 
+pooling strategies across the over-stratified port sampling system. Our 
+modeling approach, along with a computationally robust system of inference 
+and model exploration, allows us to 1) objectively compare alternative models 
+for estimation of species compositions in landed catch, 2) quantify uncertainty 
+in historical landings, and 3) understand the effect of the highly stratified, 
+and sparse, sampling system on the kinds of inference possible, 
+while simultaneously making the most from the available data.
 \end{abstract}
 
 %
@@ -86,7 +87,7 @@ record of the weight of fish landed into various market categories (sort
 groups). As noted by Pearson et al. (2008), it is important to recognize
 that species and market categories are not synonymous. On the U.S. West
 Coast, for example, it is common for multiple species to be landed
-within a single market category (CALCOM 2017, PacFIN 2017). This is
+within a single market category (CALCOM 2018, PacFIN 2018). This is
 expected for categories that are clearly designated as mixed-species
 categories (e.g. ``nearshore rockfish'', or species within a particular
 genus or family). However, in some states, categories that are named
@@ -97,26 +98,26 @@ a single species based on landing receipt data alone may produce biased
 estimates of total catch.
 
 Fisherman, dealers, or processors typically decide how to sort species
-into market categories on a landing receipt. Trained port samplers
-intercept vessels offloading catch or during subsequent processing in
-order to determine the species composition of catch landed in a given
-market category (Sen 1984, Crone 1995, Tsou et al. 2015). These species
-composition data are used to partition, or distribute, the weight of
-landed catch in a market category across species, a process commonly
-referred to as catch expansion (Pearson and Almany, 1995). To estimate
-total landings for a single species, the expanded catch is summed across
-all relevant market categories. Assuming that landing receipt data are a
-census of the landed catch, uncertainty in total catch for a given
-species reflects variability in the species composition among port
-samples. If information is available to estimate sources of bias in the
-landing receipt data, e.g. underreporting, then it is possible to also
-incorporate uncertainty in the bias correction factors as well (Bousquet
-et al. 2010). In this study, we quantify sampling uncertainty for
-estimates of landed catch, although the modeling framework could be
+into existing market categories (defined by state agencies) on a landing 
+receipt. Trained port samplers intercept vessels offloading catch or during 
+subsequent processing in order to determine the species composition of catch 
+landed in a given market category (Sen 1984, Crone 1995, Tsou et al. 2015). 
+These species composition data are used to partition, or distribute, the 
+weight of landed catch in a market category across species, a process 
+commonly referred to as catch expansion (Pearson and Almany, 1995). To 
+estimate total landings for a single species, the expanded catch is summed 
+across all relevant market categories. Assuming that landing receipt data 
+are a census of the landed catch, uncertainty in total catch for a 
+given species reflects variability in the species composition among 
+port samples. If information is available to estimate sources of bias in 
+the landing receipt data, e.g. underreporting, then it is possible to 
+also incorporate uncertainty in the bias correction factors as well 
+(Bousquet et al. 2010). In this study, we quantify sampling uncertainty 
+for estimates of landed catch, although the modeling framework could be
 extended to include uncertainty or bias in landing receipt data.
 
 Within market categories, particularly those used historically for
-groupings of highly speciose rockfish (Sebastes spp), the species
+groupings of highly speciose rockfish ($Sebastes$ spp), the species
 composition of landed catch can vary spatially, temporally, by fishing
 gear, and catch disposition (e.g.~fish sold alive or dead). These
 differences are attributable to many factors, including market
@@ -160,8 +161,8 @@ sampled strata, predicts species compositions for unsampled strata, and
 can be combined with landing receipts to estimate total landings by
 species, across market categories and other strata, along with
 associated estimates of uncertainty. However, their model considered
-hierarchical pooling only among quarters within a single year, and the
-authors underscored the need to better understand performance of
+hierarchical pooling only among quarters within a single year. The
+authors also underscored the need to better understand performance of
 alternative models, and to overcome issues with computation time,
 particularly since commercial port sampling data sets often include
 hundreds of landed strata spanning decades, multiple ports, gear types,
@@ -172,17 +173,17 @@ for sparsely-sampled mixed stock rockfish fisheries is perhaps greatest
 for California. Although overall landings have historically been greater
 for rockfish off of Oregon and Washington, California has a greater
 number of commercial ports, market categories, and landed species
-(Pearson and Irwin 1997), with greater species diversity among ports due
-to the geographical range of the coast and the observation that species
-diversity for this genus is greatest in the Southern California Bight
-(Love et al. 2002 ). California also includes two major biogeographic
-features, Point Conception and Cape Mendocino, that are associated with
-different physical oceanographic conditions and biological community
-assemblages (Hickey 1979, Checkley and Barth 2009, Gottscho 2016), and
-these features are also frequently used as spatial boundaries for stock
-assessments and management measures. Of particular consequence to the
-estimation of species compositions is the proliferation of landed market
-categories over time, particularly during the 1990s, 
+(Pearson and Irwin 1997). California's commercial landings also have greater 
+species diversity among ports due to the geographical range of the coast and 
+the observation that species diversity for this genus is greatest in the 
+Southern California Bight (Love et al. 2002 ). Lastly, California includes two 
+major biogeographic features, Point Conception and Cape Mendocino, that are 
+associated with different physical oceanographic conditions and biological 
+community assemblages (Hickey 1979, Checkley and Barth 2009, Gottscho 2016), 
+and these features are also frequently used as spatial boundaries for 
+stock assessments and management measures. Of particular consequence to 
+the estimation of species compositions is the proliferation of landed 
+market categories over time, particularly during the 1990s, 
 Figure (\ref{sparceData})). Sampling effort also leveled off in the mid-1990s, 
 with a reduction in effort in the early 2000s, associated with 
 substantial declines in total catches as well as reductions in sampling 
@@ -192,17 +193,30 @@ stratum, Figure (\ref{sparceData}). In this situation, it is critical
 to understand how efforts to reduce bias (e.g.~increasing the number of landed 
 market categories) affect precision of the expanded catch estimates.
 
-Models that take catch uncertainty into account are not new (c.f.
+%%%%%%%
+Of particular consequence to the estimation of species compositions in 
+California is the proliferation of landed market categories over time, 
+particularly during the 1990s, see Figure (\ref{sparceData}). Sampling effort 
+also leveled off in the mid-1990s, with a reduction in effort in the early 
+2000s, associated with substantial declines in total catches as well as 
+reductions in sampling resources. The net result of increased stratification 
+and flat (or reduced) sampling effort over time is a decline in mean sample 
+size per stratum, see Figure (\ref{sparceData}). In this situation, it is 
+critical to understand how efforts to reduce bias (e.g. increasing the number 
+of landed market categories) affect precision of the expanded catch estimates.
+%%%%%%%
+
+Assessments that take catch uncertainty into account are not new (c.f.
 Doubleday 1976), but most assessments on the U.S. West Coast assume
 catch is known without error (PFMC 2018). As a result, catch uncertainty
-is not propagated into management reference points. However, the
+is rarely propagated into management reference points. However, the
 implications of catch uncertainty are not limited to stock assessment
 efforts. In a management context, catch estimates with large (but
 unknown) uncertainty may cause managers to react to large,
 high-frequency deviations in estimated catch, and either impose
 unnecessary restrictions on a fishery, or mistakenly support excessive
 harvest. This is particularly an issue for prohibited and/or ``choke''
-species, for which information is limited and may be based solely on
+species, for which catch information is limited and may be based solely on
 estimates of discarded catch.
 
 In this study, we evaluate the model-based framework proposed by Shelton
@@ -234,27 +248,35 @@ observed values, while the black lines represent 9 year moving averages}
 
 \subsection{Data}\label{data}
 
-As outlined in Sen (1984, 1986) the data collection protocol for the
-species composition port sampling data, held within the CALCOM database,
-are the result of a design based cluster sampling procedure across the
-many strata of California's commercial fisheries. Each sample is
-intended to be composed of two fifty pound clusters selected at random
-from a stratum. Although port samplers do their best to follow protocol,
-in reality the port sampling environment does not always allow Sen's
-original protocol to be followed. Variations in the sampling protocol
-may result in only a single cluster being taken, or the size of clusters
-taken to vary from stratum to stratum based on the particular challenges
-of sampling each stratum.
+As outlined in Sen (1984, 1986) the species composition port sampling data, 
+held within the CALCOM database, are the result of a cluster sampling 
+protocol executed across the many strata of California's commercial fisheries. 
+Each sample is intended to be two fifty-pound clusters selected 
+at random from a stratum. Although port samplers do their best to follow 
+protocol, in reality the port sampling environment does not always allow Sen's 
+original protocol to be followed. Variations in the sampling protocol may 
+result in only a single cluster being taken, or the size of clusters taken to 
+vary from stratum to stratum based on the particular challenges of sampling 
+each stratum.
 
-Samples are recorded, by port samplers, as integer pounds for each
-observed species, across the landed market categories, gear groups, and
-port complexes in time (quarters within year). Presently there are 71
-rockfish market categories, although not all market categories are
-always used by fisherman. The number of used market categories has gone
-from less than 25 in 1978 to about 55 in \(2014\). Landings are grouped
+Samples are recorded as integer pounds for each observed species, across the 
+landed market categories, gear groups, and port complexes in time (quarters 
+within year). Presently there are 71 rockfish market categories, although not 
+all market categories are always used by fisherman. The number of market 
+categories has gone from less than 25 in 1978 to about 55 in 2014. Landings 
+are grouped
 into major fishing gear groups (trawl, hook and line, gillnet, fish pot,
 or other minor categories) and ten major port complexes spanning the
 California coast.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{./pictures/COMX_Ports_Final.png}
+\caption{Map showing the California ports that account for at least 95\% of 
+landings. Lines show how ports have been aggrated into port complexes.}
+\label{portMap}
+\end{figure}
+
 
 The model based methodology proposed here does not rely strongly upon
 the cluster sampling structure, but rather simply views each sample as
@@ -824,7 +846,7 @@ Averaging}\label{model-exploration-averaging-1}
 %\label{colorTab78}
 %\end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!h]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
         %\hline \multicolumn{6}{|c|}{MCAT 250} \\ \hline
@@ -1705,8 +1727,8 @@ recurrent patterns.
         OSD&\cellcolor[HTML]{F781BF}&\cellcolor[HTML]{F781BF}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33} \\ \hline
 \end{tabular}
 \end{minipage}
-\caption{1983-1990}
-\label{colorTabApp83}
+%\caption{1983-1990}
+%\label{colorTabApp83}
 \end{figure}
 \end{landscape}
 
@@ -1838,6 +1860,16 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 %
 \begin{thebibliography}{1}
 %
+\bibitem{bousquet2010} Bousquet, N., N. Cadigan, T. Duchesne, and L. Rivest. 
+2010. Detecting and correcting underreported catches in fish stock assessment: 
+trial of a new method. Canadian Journal of Fisheries and Aquatic Sciences 
+67:1247-1261.
+
+\bibitem{calcom2018} CALCOM, 2018. California Cooperative Groundfish Survey 
+Database: CDFG, Belmont, CA; PSMFC, Belmont, CA; NMFS, Santa Cruz, CA. 
+http://calcomfish.ucsc.edu.
+
+%
 \bibitem{ccgs} CCGS (California Cooperative Groundfish Survey). (2017). 
 Pacific States Marine Fisheries Commission, 350 Harbor Boulevard, Belmont, 
 California, 94002. URL:  128.114.3.187.
@@ -1909,9 +1941,23 @@ Models, 2nd ed. London: Chapman and Hall.
 The National Academies Press.
 
 %
-\bibitem{pearsonErwin} Pearson, D.E. \& Erwin, B. (1997). Documentation of 
-California’s commercial market sampling data entry and expansion programs. 
-NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
+\bibitem{pacfin2018} PacFIN (Pacific Fisheries Information Network). 2018. 
+https://pacfin.psmfc.org.
+
+%
+\bibitem{pearsonErwin97} Pearson, D. and B. Erwin. 1997. Documentation of 
+California's Commercial Market Sampling Data Entry and Expansion Programs. 
+NOAA Technical Memorandum NMFS, NOAA-TM-NMFS-SWFSC-240. 67 p.
+
+%
+\bibitem{pearsonErwim08}Pearson, D., B. Erwin, and M. Key. 2008. Reliability 
+of California's Groundfish Landing Estimates from 1969-2006. NOAA Technical 
+Memorandum NMFS, NOAA-TM-NMFS-SWFSC-431. 139 p.
+
+%
+\bibitem{pfmc18} PFMC (Pacific Fisheries Management Council). 2018. 
+Groundfish: Stock Assessments, STAR Reports, STAT Reports, Rebuilding 
+Analyses, Terms of Reference. https://www.pcouncil.org/groundfish/stock-assessments.
 
 %
 \bibitem{rCoreTeam} R Core Team (2015). R: A language and environment for 
@@ -1951,6 +1997,12 @@ and Aquatic Sciences, 69(2), 231-246.
 %
 \bibitem{tomlinson71} Tomlinson, P. K. (1971). Some sampling problems in 
 fishery work. Biometrics, 631-641.
+
+%
+\bibitem{tsou15} Tsou, T., L. Wargo, M. Langness, C. Jones, R. LeGoff, D. 
+Downs, V. Okimura, B. Walker, and D. Bacon. 2015. Washington Coastal 
+Commercial Groundfish Port Sampling, 2015 Report. Washington Department of 
+Fish and Wildlife, Fish Program Report Number FPA 15-07. 53 p.
 
 \end{thebibliography}
 
