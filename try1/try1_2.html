@@ -189,7 +189,7 @@ separately $v^{(q)}$ partially pools information among the $\beta^{(q)}_{\eta}$.
 <p>Furthermore the <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> are also modeled hierarchically to introduce a single variance parameter, <span class="math inline"><em>v</em></span>, shared among all of the <span class="math inline"><em>m</em><em>η</em></span> time chunks. Although this interaction term adds many parameters to the model, the shared <span class="math inline"><em>v</em></span> parameter functions to shrink extraneous <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> estimates back toward the common stratum mean.</p>
 <h3 id="m4">(M4)</h3>
 <p><br /><span class="math display"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>t</em>)</sup> = <em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span><br /> <br /><span class="math display"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup> ∼ <em>N</em>(0, <em>v</em>)</span><br /></p>
-<p>(M4) simplifies (M3) by excluding year and quarter main effects. This leaves all temporal information in the data to be modeled solely by the quarterly <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> interaction terms. This model represents more opportunity for partial pooling through time than (M3), as fewer time parameters are introduced. Furthermore all of the <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> are hierarchically pooled back toward a single common stratum mean via the single shared variance parameter, <span class="math inline"><em>v</em></span>. No models with fixed <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> interaction terms are considered here, as these models introduce a very large number of parameters. Due to the sparcity of these data, the models ability to pool through time is important for allowing model flexibility in time, while retaining the ability to produce predictions for unsampled time periods.</p>
+<p>(M4) simplifies (M3) by excluding year and quarter main effects. This leaves all temporal information in the data to be modeled solely by the quarterly <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> interaction terms. This model represents more opportunity for partial pooling through time than (M3), as fewer time parameters are introduced. Furthermore all of the <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> are hierarchically pooled back toward a single common stratum mean via the single shared variance parameter, <span class="math inline"><em>v</em></span>. No models with fixed <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> interaction terms are considered here, as these models introduce a very large number of parameters. Due to the sparsity of these data, the models ability to pool through time is important for allowing model flexibility in time, while retaining the ability to produce predictions for unsampled time periods.</p>
 <h3 id="m5">(M5)</h3>
 <p><br /><span class="math display"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>t</em>)</sup> = <em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span><br /> <br /><span class="math display"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup> ∼ <em>N</em>(0, <em>v</em><sub><em>η</em></sub>)</span><br /></p>
 <p>(M5) is largely the same as (M4), but it represents slightly less potential partial pooling through its hierarchical prior variances, <span class="math inline"><em>v</em><sub><em>η</em></sub></span>, on <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span>. Here interaction terms are allowed to partially pool interactions across years, within a common quarter, but since each quarter is assigned a separate variance parameter no pooling is possible between quarters.</p>
@@ -555,7 +555,7 @@ mlik,waic,dic
 <h2 id="modeling">Modeling</h2>
 <p>Models that can incorporate catch uncertainty are not new (c.f. Doubleday 1976), but estimates of uncertainty in commercial landings are rarely made available, at least on the U.S. West Coast. Previous research has focused on discarded and biased (under- or over-reported) catch. Bousquet et al. (2010) developed a model-based framework for estimation of catch and associated uncertainty when underreporting is an issue. Their results included a reduction in precision of management quantities.</p>
 <p>The model based statistical framework allows tremendous flexibility in accounting for a dynamic port sampling program. Market forces, regulation changes, and fisherman behavior are a few factors, among the many, which complicate the task of speciating commercial catch. Unlike a purely sample-based statistical framework, model based statistics allows analysts to quickly explore a wide range of hypotheses for estimating species compositions. The models entertained here manage to achieve generally well behaved predictive accuracy (Tables pred78 and pred 83), however these models are by no means perfect. The models presented here simply offer a few fundamental improvements toward estimating species compositions.</p>
-<p>Among the largest structural changes improving from the Bayesian methodology in Shelton et. al. (2012) is the recognition of overdispersion in port sampling data. In the absence of highly predictive covariariates, modeling overdispersion in port sampling data remains an important modeling consideration. Moving forward, modeling decisions will require a careful consideration of predictive accuracy and bias/variance trade-off, so as to tease better and better performance out of further models. The models presented here offer a great operational starting point and provide a basic framework for further model exploration.</p>
+<p>Among the largest structural changes improving from the Bayesian methodology in Shelton et. al. (2012) is the recognition of overdispersion in port sampling data. In the absence of highly predictive covariates, modeling overdispersion in port sampling data remains an important modeling consideration. Moving forward, modeling decisions will require a careful consideration of predictive accuracy and bias/variance trade-off, so as to tease better and better performance out of further models. The models presented here offer a great operational starting point and provide a basic framework for further model exploration.</p>
 <p>The Bayesian models presented here provide easy access to estimates of uncertainty in commercial catch, at any aggregation of the stratification system. Making posterior predictive draws from these models widely available, allows scientists the flexibility to easily compute whichever derived distributions or distributional summaries that follow from this general modeling approach.</p>
 <h2 id="data-1">Data</h2>
 <p>Due to observed trends in the sampling of more heavily landed, or specious, market categories, the vast majority of commercial landings from 1978-1990 are able to be expanded by our model. Moving into the modern era, regulation changes including the start of the live fish fishery, and the proliferation in the number of market categories, due to mandatory sort requirements, may challenge species composition estimation. However, due to the increased number of strata that these changes introduce, uncertainty estimation for these time periods will prove to be critical. Without a matched increase in sampling effort, alongside increased stratification, the number of samples per stratum falls dramatically and species composition estimation may well become very uncertain.</p>
@@ -587,9 +587,9 @@ ex
 -->
 <h2 id="future-effort">Future Effort</h2>
 <p>Future effort in developing models should include an exploration of the effect of preferential sampling toward heavily landed stratum. The model-based approach makes testing this hypothesis straight-forward, as the hypothesis may amount to the inclusion of a single slope parameter, in the linear predictor, regressing on landing size. Given the current model's agreement with existing data, ?as well as comlands estimates?, it is unlikely that landing size has an important predictive effect on estimates, however without testing the hypothesis, we can not say whether the effect will prove to be explanatory.</p>
-<p>In an attempt to add further flexibility to the models presented here, exploring the posibilty of gear-species interactions, as random effects, may prove fruitful. Furthermore the inclusion of random vessel effects may also find support.</p>
-<p>Finally, further large changes to the methods proposed here might include a true multivariate handling of the likelihood. The Beta-Binomial univariate model, used here, suggests that the multivariate Dirichelet-Multinomial extension might be a good model for these data. We have yet to get these models to practically compute, although they would likely impose much needed, and appropriate, structure across the many species of this system.</p>
-<p>The BMA procedure presented here adds significant robustness and pooling potential to our species composition estimates, however it does so at a substantial computational cost. We have found ways (through parallel computation and constraining the model search) to make the computation tractable, however the solution is far from elegant. By using Dirichelet process Bayesian nonparameteric models, among the port parameters, a far more elegant, exhaustive, and potentially computationally cheaper model search may be possible.</p>
+<p>In an attempt to add further flexibility to the models presented here, exploring the possibility of gear-species interactions, as random effects, may prove fruitful. Furthermore the inclusion of random vessel effects may also find support.</p>
+<p>Finally, further large changes to the methods proposed here might include a true multivariate handling of the likelihood. The Beta-Binomial univariate model, used here, suggests that the multivariate Dirichlet-Multinomial extension might be a good model for these data. We have yet to get these models to practically compute, although they would likely impose much needed, and appropriate, structure across the many species of this system.</p>
+<p>The BMA procedure presented here adds significant robustness and pooling potential to our species composition estimates, however it does so at a substantial computational cost. We have found ways (through parallel computation and constraining the model search) to make the computation tractable, however the solution is far from elegant. By using Dirichlet process Bayesian nonparameteric models, among the port parameters, a far more elegant, exhaustive, and potentially computationally cheaper model search may be possible.</p>
 <!--
 * Other modeling choices
     * We treat the fish tickets as a census (total landed weight could be biased)
@@ -790,31 +790,109 @@ model to apply at an operational scale.
 </div>
 <p>As seen in Figure<span class="math inline">(<em>p</em><em>r</em><em>i</em><em>o</em><em>r</em><em>P</em><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em>)</span> the prior predictive of (M4) is both symmetric and quite diffuse over the 100 pound domain. The U shape of the distribution is a side effect of the diffusion of the selected prior. As data are added to the model, the indecisive U shape <!--of this distribution--> collapses toward the data in the posterior.</p>
 <h2 id="appendix-d-spatial-model-averaging">Appendix D: Spatial Model Averaging</h2>
-<p>Here the spatial model averaging results are shown for all modeled time periods (1978-1982 and 1983-1990) in all modeled market categories. For brevity we only show the five most highly weighted models in each mcarket category, although 274 candidate port complex partioning schemes are computed in each market category.</p>
+<p>Here the spatial model averaging results are shown for all modeled time periods (1978-1982 and 1983-1990) in all modeled market categories. For brevity we only show the five most highly weighted models in each mcarket category, although 274 candidate port complex partioning schemes are computed in each market category in each modeled time period.</p>
 <p>Notice that each market category has fairly unique port complex partitioning results. The fact that each market category behaves uniquely indicates the complexity of this system. Furthermore the fact that the BMA strategry picks up on these varied market category behaviors indicates the flexibility of this approach. Although the system is very dynamic, key breaks along California biogeographic features, such as Cape Mendicino and/or Point Conception, seem to be recurrent patterns.</p>
 <p><img src="./pictures/latexTableCompress1.png" alt="modelSelect" /> <img src="./pictures/latexTableCompress2.png" alt="modelSelect" /> <img src="./pictures/latexTableCompress3.png" alt="modelSelect" /> <img src="./pictures/latexTableCompress4.png" alt="modelSelect" /></p>
-<h2 id="appendinx-e-nuisance-parameters">Appendinx E: Nuisance Parameters</h2>
-<h3 id="section-2">78-82</h3>
-<h4 id="rho"><span class="math inline"><em>ρ</em></span></h4>
+<h2 id="appendix-e-nuisance-parameters">Appendix E: Nuisance Parameters</h2>
+<p>Tables(X-Y) Summarize nuisance parameter posteriors for model M4 fitted in each market category, in each modeled period. Recall high values of <span class="math inline"><em>ρ</em></span> indicate overdispersion relative to the binomial model, and small values of <span class="math inline"><em>v</em></span> indicate a high degree of temporal pooling in the <span class="math inline"><em>β</em><sub><em>m</em><em>η</em></sub><sup>(<em>y</em> : <em>q</em>)</sup></span> parameters.</p>
+<h3 id="overdispersion-parameter-rho">Overdispersion Parameter (<span class="math inline"><em>ρ</em></span>)</h3>
+<p>In general <span class="math inline"><em>ρ</em></span> estimates seem to account for a fair degree of overdispersion. Values of <span class="math inline"><em>ρ</em></span> never approach the maximal limit (<span class="math inline"><em>ρ</em> = 1</span>), and thus the beta-binomial model seems to be appropriatly to modeling the observed residual variance of these data, on average, without structurally underestimating variablitly.</p>
+<h4 id="section-2">78-82</h4>
 <!--195 & 0.92 & 0.93 & 0.036       \\-->
 
-<h4 id="v"><span class="math inline"><em>v</em></span></h4>
+<h4 id="section-3">83-90</h4>
+
+<h3 id="temporal-pooling-v">Temporal Pooling (<span class="math inline"><em>v</em></span>)</h3>
+<p>Each modeled market category and time period require a different degree of pooling. The variance estimates span 2 orders of magnitudes with the smallest estimate (indicating the most temporal shrinkage) occuring in market category 250 in 1983-1990 and the largest estimate (indicating the least temporal shrinkage) occuring in market category 269 in 1983-1990. Modeling each market category separately provides the flexibility to separatly characterize these largely distinct temporal pooling behaviors.</p>
+<h4 id="section-4">78-82</h4>
 <!--195 & 18666.56 & 18817.95 & 4676.48     \\-->
 
-<h3 id="section-3">83-90</h3>
-<h4 id="rho-1"><span class="math inline"><em>ρ</em></span></h4>
+<h4 id="section-5">83-90</h4>
 
-<ul>
-<li>high <span class="math inline"><em>ρ</em></span> in 259 and over prediction in 259?</li>
-<li>lower rho might predict more appropriately?</li>
-</ul>
-<h4 id="v-1"><span class="math inline"><em>v</em></span></h4>
+<!--
+### 78-82
+#### $\rho$
+-->
+<!--195 & 0.92 & 0.93 & 0.036       \\-->
+<!--
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+250 & 0.55 & 0.55 & 0.004       \\
+253 & 0.39 & 0.39 & 0.001       \\
+262 & 0.35 & 0.35 & 0.008       \\
+265 & 0.64 & 0.64 & 0.002       \\
+269 & 0.52 & 0.52 & 0.019       \\
+270 & 0.53 & 0.54 & 0.020       \\
+956 & 0.35 & 0.35 & 0.007       \\
+959 & 0.47 & 0.47 & 0.070       \\
+961 & 0.55 & 0.55 & 0.004       \\
+\hline
+\end{tabular}
 
-<ul>
-<li>Degree of smoothing (hierarchical parameters, rho)</li>
-<li>Report mean/variance of example</li>
-<li>Add <span class="math inline"><em>v</em></span> and <span class="math inline"><em>ρ</em></span> tables across all runs</li>
-</ul>
+#### $v$
+-->
+<!--195 & 18666.56 & 18817.95 & 4676.48     \\-->
+<!--
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+250 & 12915.85 & 18523.12 & 8699.87     \\
+253 & 22747.87 & 23063.76 & 1535.53     \\
+262 & 20254.41 & 20506.36 & 2581.87     \\
+265 & 15846.22 & 16694.98 & 7601.15     \\
+269 & 20135.05 & 19975.15 & 4667.11     \\
+270 & 19931.96 & 19955.13 & 6033.35     \\
+956 & 19659.11 & 19795.60 & 1227.99     \\
+959 & 19159.69 & 13375.80 & 19256.94    \\
+961 & 18631.44 & 19498.31 & 7970.44     \\
+\hline
+\end{tabular}
+
+### 83-90
+#### $\rho$
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+245 & 0.65 & 0.65 & 0.014       \\
+250 & 0.51 & 0.51 & 0.002       \\
+253 & 0.47 & 0.47 & 0.010       \\
+259 & 0.75 & 0.75 & 0.009       \\
+262 & 0.41 & 0.41 & 0.001       \\
+269 & 0.57 & 0.57 & 0.046       \\
+270 & 0.74 & 0.75 & 0.027       \\
+663 & 0.51 & 0.51 & 0.001       \\
+667 & 0.49 & 0.49 & 0.022       \\
+956 & 0.43 & 0.43 & 0.003       \\
+959 & 0.55 & 0.55 & 0.004       \\
+960 & 0.45 & 0.45 & 0.004       \\
+961 & 0.59 & 0.59 & 0.001       \\
+\hline
+\end{tabular}
+
+* high $\rho$ in 259 and over prediction in 259? 
+* lower rho might predict more appropriately?
+
+#### $v$
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+245 & 20211.82 & 20204.95 & 1276.83     \\
+250 & 236.03   & 192.53   & 134.67      \\
+253 & 20455.18 & 20140.50 & 1521.72     \\
+259 & 20246.14 & 20186.61 & 898.99      \\
+262 & 20445.49 & 20348.56 & 343.70      \\
+269 & 34386.49 & 25951.03 & 24030.32    \\
+270 & 20253.34 & 19908.07 & 9269.02     \\
+663 & 19563.87 & 19624.09 & 331.04      \\
+667 & 20089.55 & 20078.27 & 2723.34     \\
+956 & 20581.67 & 20664.71 & 913.92      \\
+959 & 19242.41 & 18707.09 & 5076.03     \\
+960 & 20059.66 & 20012.80 & 1703.89     \\
+961 & 20127.69 & 20141.04 & 580.80      \\
+\hline
+\end{tabular}
+
+* Degree of smoothing (hierarchical parameters, rho)
+* Report mean/variance of example
+* Add $v$ and $\rho$ tables across all runs
+-->
 <!--
 ## Data Generating Model
 ### Example
@@ -1570,6 +1648,16 @@ dispersion the exception.''
 McCullagh P. & Nelder, J.A. (1989) Generalized Linear Models, 2nd ed. London: Chapman and Hall.
 https://onlinecourses.science.psu.edu/stat504/node/162
 page 124
+-->
+<!--???? 
+CALCOM 2017
+PacFIN 2017
+Pearson et al. (2008)
+Pearson and Irwin 1997
+Tsou et al. 2015
+Bousquet et al. 2010
+PFMC 2018
+
 -->
 
 <!--

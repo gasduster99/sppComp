@@ -547,7 +547,7 @@ introduced. Furthermore all of the $\beta^{(y:q)}_{m\eta}$ are hierarchically
 pooled back toward a single common stratum mean via the single shared variance 
 parameter, $v$. No models with fixed $\beta^{(y:q)}_{m\eta}$ interaction terms are 
 considered here, as these models introduce a very large number of parameters.
-Due to the sparcity of these data, the models ability to pool through time 
+Due to the sparsity of these data, the models ability to pool through time 
 is important for allowing model flexibility in time, while retaining the ability 
 to produce predictions for unsampled time periods.
   
@@ -1052,7 +1052,7 @@ estimating species compositions.
 
 Among the largest structural changes improving from the Bayesian methodology 
 in Shelton et. al. (2012) is the recognition of overdispersion in port sampling 
-data. In the absence of highly predictive covariariates, modeling overdispersion 
+data. In the absence of highly predictive covariates, modeling overdispersion 
 in port sampling data remains an important modeling consideration. Moving 
 forward, modeling decisions will require a careful consideration of 
 predictive accuracy and bias/variance trade-off, so as to tease better and 
@@ -1127,12 +1127,12 @@ the hypothesis, we can not say whether the effect will prove to be
 explanatory.      
 
 In an attempt to add further flexibility to the models presented here, exploring 
-the posibilty of gear-species interactions, as random effects, may prove fruitful. 
+the possibility of gear-species interactions, as random effects, may prove fruitful. 
 Furthermore the inclusion of random vessel effects may also find support.
 
 Finally, further large changes to the methods proposed here might include a 
 true multivariate handling of the likelihood. The Beta-Binomial univariate 
-model, used here, suggests that the multivariate Dirichelet-Multinomial 
+model, used here, suggests that the multivariate Dirichlet-Multinomial 
 extension might be a good model for these data. We have yet to get these 
 models to practically compute, although they would likely impose much needed, 
 and appropriate, structure across the many species of this system. 
@@ -1141,7 +1141,7 @@ The BMA procedure presented here adds significant robustness and pooling
 potential to our species composition estimates, however it does so at a 
 substantial computational cost. We have found ways (through parallel 
 computation and constraining the model search) to make the computation 
-tractable, however the solution is far from elegant. By using Dirichelet 
+tractable, however the solution is far from elegant. By using Dirichlet 
 process Bayesian nonparameteric models, among the port parameters, a far more 
 elegant, exhaustive, and potentially computationally cheaper model search may 
 be possible.      
@@ -1455,9 +1455,10 @@ collapses toward the data in the posterior.
 ## Appendix D: Spatial Model Averaging
 
 Here the spatial model averaging results are shown for all modeled time periods 
-(1978-1982 and 1983-1990) in all modeled market categories. For brevity we only show 
-the five most highly weighted models in each mcarket category, although 274 candidate 
-port complex partioning schemes are computed in each market category. 
+(1978-1982 and 1983-1990) in all modeled market categories. For brevity we 
+only show the five most highly weighted models in each mcarket category, 
+although 274 candidate port complex partioning schemes are computed in each 
+market category in each modeled time period. 
 
 Notice that each market category has fairly unique port complex partitioning 
 results. The fact that each market category behaves uniquely indicates the 
@@ -1472,10 +1473,22 @@ be recurrent patterns.
 ![modelSelect](./pictures/latexTableCompress3.png)
 ![modelSelect](./pictures/latexTableCompress4.png)
 
-## Appendinx E: Nuisance Parameters
+## Appendix E: Nuisance Parameters
 
-### 78-82
-#### $\rho$
+Tables(X-Y) Summarize nuisance parameter posteriors for model M4 fitted in each 
+market category, in each modeled period. Recall high values of $\rho$ indicate 
+overdispersion relative to the binomial model, and small values of $v$ indicate 
+a high degree of temporal pooling in the $\beta^{(y:q)}_{m\eta}$ parameters. 
+
+### Overdispersion Parameter ($\rho$)
+
+In general $\rho$ estimates seem to account for a fair degree of 
+overdispersion. Values of $\rho$ never approach the maximal limit ($\rho=1$), 
+and thus the beta-binomial model seems to be appropriatly to modeling the 
+observed residual variance of these data, on average, without structurally 
+underestimating variablitly.  
+
+#### 78-82
 <!--195 & 0.92 & 0.93 & 0.036       \\-->
 \begin{tabular}{|c|c|c|c|}
 MCAT & Mean & Median & Posterior SD     \\ \hline
@@ -1491,8 +1504,95 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 \hline
 \end{tabular}
 
-#### $v$
+#### 83-90
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+245 & 0.65 & 0.65 & 0.014       \\
+250 & 0.51 & 0.51 & 0.002       \\
+253 & 0.47 & 0.47 & 0.010       \\
+259 & 0.75 & 0.75 & 0.009       \\
+262 & 0.41 & 0.41 & 0.001       \\
+269 & 0.57 & 0.57 & 0.046       \\
+270 & 0.74 & 0.75 & 0.027       \\
+663 & 0.51 & 0.51 & 0.001       \\
+667 & 0.49 & 0.49 & 0.022       \\
+956 & 0.43 & 0.43 & 0.003       \\
+959 & 0.55 & 0.55 & 0.004       \\
+960 & 0.45 & 0.45 & 0.004       \\
+961 & 0.59 & 0.59 & 0.001       \\
+\hline
+\end{tabular}
+
+### Temporal Pooling ($v$)
+
+Each modeled market category and time period require a different degree of 
+pooling. The variance estimates span 2 orders of magnitudes with the smallest 
+estimate (indicating the most temporal shrinkage) occuring in market category 
+250 in 1983-1990 and the largest estimate (indicating the least temporal 
+shrinkage) occuring in market category 269 in 1983-1990. Modeling each market 
+category separately provides the flexibility to separatly characterize these 
+largely distinct temporal pooling behaviors.
+
+#### 78-82
 <!--195 & 18666.56 & 18817.95 & 4676.48     \\-->
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+250 & 12915.85 & 18523.12 & 8699.87     \\
+253 & 22747.87 & 23063.76 & 1535.53     \\
+262 & 20254.41 & 20506.36 & 2581.87     \\
+265 & 15846.22 & 16694.98 & 7601.15     \\
+269 & 20135.05 & 19975.15 & 4667.11     \\
+270 & 19931.96 & 19955.13 & 6033.35     \\
+956 & 19659.11 & 19795.60 & 1227.99     \\
+959 & 19159.69 & 13375.80 & 19256.94    \\
+961 & 18631.44 & 19498.31 & 7970.44     \\
+\hline
+\end{tabular}
+
+#### 83-90
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+245 & 20211.82 & 20204.95 & 1276.83     \\
+250 & 236.03   & 192.53   & 134.67      \\
+253 & 20455.18 & 20140.50 & 1521.72     \\
+259 & 20246.14 & 20186.61 & 898.99      \\
+262 & 20445.49 & 20348.56 & 343.70      \\
+269 & 34386.49 & 25951.03 & 24030.32    \\
+270 & 20253.34 & 19908.07 & 9269.02     \\
+663 & 19563.87 & 19624.09 & 331.04      \\
+667 & 20089.55 & 20078.27 & 2723.34     \\
+956 & 20581.67 & 20664.71 & 913.92      \\
+959 & 19242.41 & 18707.09 & 5076.03     \\
+960 & 20059.66 & 20012.80 & 1703.89     \\
+961 & 20127.69 & 20141.04 & 580.80      \\
+\hline
+\end{tabular}
+
+
+<!--
+### 78-82
+#### $\rho$
+-->
+<!--195 & 0.92 & 0.93 & 0.036       \\-->
+<!--
+\begin{tabular}{|c|c|c|c|}
+MCAT & Mean & Median & Posterior SD     \\ \hline
+250 & 0.55 & 0.55 & 0.004       \\
+253 & 0.39 & 0.39 & 0.001       \\
+262 & 0.35 & 0.35 & 0.008       \\
+265 & 0.64 & 0.64 & 0.002       \\
+269 & 0.52 & 0.52 & 0.019       \\
+270 & 0.53 & 0.54 & 0.020       \\
+956 & 0.35 & 0.35 & 0.007       \\
+959 & 0.47 & 0.47 & 0.070       \\
+961 & 0.55 & 0.55 & 0.004       \\
+\hline
+\end{tabular}
+
+#### $v$
+-->
+<!--195 & 18666.56 & 18817.95 & 4676.48     \\-->
+<!--
 \begin{tabular}{|c|c|c|c|}
 MCAT & Mean & Median & Posterior SD     \\ \hline
 250 & 12915.85 & 18523.12 & 8699.87     \\
@@ -1552,7 +1652,7 @@ MCAT & Mean & Median & Posterior SD     \\ \hline
 * Degree of smoothing (hierarchical parameters, rho)
 * Report mean/variance of example
 * Add $v$ and $\rho$ tables across all runs
-
+-->
 
 
 
@@ -2429,12 +2529,39 @@ McCullagh P. & Nelder, J.A. (1989) Generalized Linear Models, 2nd ed. London: Ch
 https://onlinecourses.science.psu.edu/stat504/node/162
 page 124
 -->
-\begin{thebibliography}{1}
 
+<!--???? 
+CALCOM 2017
+PacFIN 2017
+Pearson et al. (2008)
+Pearson and Irwin 1997
+Tsou et al. 2015
+Bousquet et al. 2010
+PFMC 2018
+
+-->
+\begin{thebibliography}{1}
 %
 \bibitem{ccgs} CCGS (California Cooperative Groundfish Survey). (2017). 
 Pacific States Marine Fisheries Commission, 350 Harbor Boulevard, Belmont, 
 California, 94002. URL:  128.114.3.187.
+
+%
+\bibitem{checkley09} Checkley Jr, D. M., \& Barth, J. A. (2009). Patterns and processes in 
+the California Current System. Progress in Oceanography, 83(1-4), 49-64.
+
+%
+\bibitem{cochran77} Cochran, W. G. (1977). Sampling Techniques: 3d Ed. Wiley.
+
+%
+\bibitem{crone} Crone, P. R. (1995). Sampling design and statistical 
+considerations for the commercial groundfish fishery of Oregon. Canadian 
+Journal of Fisheries and Aquatic Sciences, 52(4), 716-732.
+
+%
+\bibitem{doubleday} Doubleday, W. G. (1976). A least squares approach to 
+analyzing catch at age data. Int. Comm. Northwest Atl. Fish. Res. Bull, 12(1), 
+69-81.
 
 %
 \bibitem{gelman} Gelman, A., Carlin, J. B., Stern, H. S., \& Rubin, D. B. 
@@ -2442,9 +2569,14 @@ California, 94002. URL:  128.114.3.187.
 Hall/CRC.
 
 %
-\bibitem{nas} NAS (National Academies of Sciences, Engineering, and Medicine). 
-2017. Review of the Marine Recreational Information Program. Washington, DC: 
-The National Academies Press.
+\bibitem{gottscho16} Gottscho, A. D. (2016). Zoogeography of the San Andreas Fault system
+: Great Pacific Fracture Zones correspond with spatially concordant 
+phylogeographic boundaries in western North America. Biological Reviews, 91(1), 
+235-254.
+
+%
+\bibitem{hickey79} Hickey, B. M. (1979). The California Current 
+system—hypotheses and facts. Progress in Oceanography, 8(4), 191-279.
 
 %
 \bibitem{bma} Hoeting, J. A., Madigan, D., Raftery, A. E., \& Volinsky, C. T. 
@@ -2455,15 +2587,33 @@ The National Academies Press.
 science. Cambridge university press.
 
 %
+\bibitem{love02} Love, M. S., Yoklavich, M., \& Thorsteinson, L. K. (2002). The 
+rockfishes of the northeast Pacific. Univ of California Press.
+
+%
+\bibitem{pearson95} Pearson, D. E., \& Almany, G. (1995). The effectiveness of 
+California's commercial rockfish port sampling program.
+
+%
 \bibitem{bvBook} Ramasubramanian, K., \& Singh, A. (2016). Machine Learning 
 Using R. Apress.
+
+%
+\bibitem{ss3} Methot Jr, R. D., \& Wetzel, C. R. (2013). Stock synthesis: a 
+biological and statistical framework for fish stock assessment and fishery 
+management.  Fisheries Research, 142, 86-99.
 
 %
 \bibitem{glmBook} McCullagh P. \& Nelder, J.A. (1989). Generalized Linear 
 Models, 2nd ed. London: Chapman and Hall.
 
 %
-\bibitem{pearsonErwin} Pearson, D.E., and Erwin, B. (1997). Documentation of 
+\bibitem{nas} NAS (National Academies of Sciences, Engineering, and Medicine). 
+2017. Review of the Marine Recreational Information Program. Washington, DC: 
+The National Academies Press.
+
+%
+\bibitem{pearsonErwin} Pearson, D.E. \& Erwin, B. (1997). Documentation of 
 California’s commercial market sampling data entry and expansion programs. 
 NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
 
@@ -2471,6 +2621,9 @@ NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-240.
 \bibitem{rCoreTeam} R Core Team (2015). R: A language and environment for 
 statistical computing. R Foundation for Statistical Computing, Vienna, 
 Austria. URL https://www.R-project.org/.
+
+%
+\bibitem{roa03} Rao, J. N. K. (2003). Small area estimation. John Wiley \& Sons, Ltd.
 
 %
 \bibitem{inlaPackage} Rue H., Martino S., Lindgren F., Simpson D., Riebler A. 
@@ -2490,7 +2643,7 @@ California. NOAA Tech Memo. NOAA-TM-NMFS-SWFSC-45.
 
 %
 \bibitem{senPaper} Sen AR. (1986). Methodological problems in sampling 
-commercial rockfish landings. Fish Bull. 84: 409-421 .
+commercial rockfish landings. Fish Bull. 84: 409-421.
 
 %
 \bibitem{sheltonEtAl} Shelton, A. O., Dick, E. J., Pearson, D. E., Ralston, 
@@ -2498,6 +2651,10 @@ S., \& Mangel, M. (2012). Estimating species composition and quantifying
 uncertainty in multispecies fisheries: hierarchical Bayesian models for 
 stratified sampling protocols with missing data. Canadian Journal of Fisheries 
 and Aquatic Sciences, 69(2), 231-246.
+
+%
+\bibitem{tomlinson71} Tomlinson, P. K. (1971). Some sampling problems in 
+fishery work. Biometrics, 631-641.
 
 \end{thebibliography}
 
