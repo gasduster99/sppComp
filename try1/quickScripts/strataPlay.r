@@ -65,7 +65,7 @@ for(i in 2:(en-1)){ endFill=c(SMA(sampAvg[,2], n=i)[length(sampAvg[,2])-i], endF
 
 #dev.new()
 pdf('stratAvgSamp.pdf', width=9.5, height=3.5)
-plot(sampAvg, xlab='Year', ylab='Per Stratum \nAverage Sample Size')
+plot(sampAvg, ylab='Per Stratum \nAverage Sample Size', xlab='', xaxt='n')# xlab='Year')
 lines(sampAvg[,1], c(emaOut[floor(en/2):length(emaOut)], emaOut[1:floor(en/2)])[1:length(sampAvg[,1])], lwd=3)
 lines(sampAvg[1:floor(en/2),1], fill[1:floor(en/2)], lwd=3)
 lines(sampAvg[length(emaOut[floor(en/2):length(emaOut)]):length(sampAvg[,1])], endFill[floor(en/2):length(endFill)], lwd=3)

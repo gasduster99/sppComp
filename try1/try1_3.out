@@ -1,8 +1,8 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Methods}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Data}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Data Generating Model}{section.2}% 4
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Full-Scale Beta-Binomial Model}{subsection.2.2}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Likelihood Modeling}{section.2}% 4
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Beta-Binomial Model}{subsection.2.2}% 5
 \BOOKMARK [2][-]{subsection.2.3}{Priors}{section.2}% 6
 \BOOKMARK [3][-]{subsubsection.2.3.1}{\(M1\)}{subsection.2.3}% 7
 \BOOKMARK [3][-]{subsubsection.2.3.2}{\(M2\)}{subsection.2.3}% 8
@@ -11,7 +11,7 @@
 \BOOKMARK [3][-]{subsubsection.2.3.5}{\(M5\)}{subsection.2.3}% 11
 \BOOKMARK [3][-]{subsubsection.2.3.6}{\(M6\)}{subsection.2.3}% 12
 \BOOKMARK [2][-]{subsection.2.4}{Species Composition Prediction}{section.2}% 13
-\BOOKMARK [2][-]{subsection.2.5}{Expansion}{section.2}% 14
+\BOOKMARK [2][-]{subsection.2.5}{Expansion of Landed Catch to Species}{section.2}% 14
 \BOOKMARK [2][-]{subsection.2.6}{Model Exploration \046 Averaging}{section.2}% 15
 \BOOKMARK [1][-]{section.3}{Results}{}% 16
 \BOOKMARK [2][-]{subsection.3.1}{Characteristics of the Landings Data}{section.3}% 17
@@ -25,8 +25,8 @@
 \BOOKMARK [1][-]{section.5}{Appendix}{}% 25
 \BOOKMARK [2][-]{subsection.5.1}{Appendix A: Modern Market Categories and Sampling}{section.5}% 26
 \BOOKMARK [2][-]{subsection.5.2}{Appendix B: A Motivating Example}{section.5}% 27
-\BOOKMARK [2][-]{subsection.5.3}{Appendix C: Prior Predictive}{section.5}% 28
-\BOOKMARK [2][-]{subsection.5.4}{Appendix D: Spatial Model Averaging}{section.5}% 29
-\BOOKMARK [2][-]{subsection.5.5}{Appendix E: Nuisance Parameters}{section.5}% 30
-\BOOKMARK [3][-]{subsubsection.5.5.1}{Overdispersion Parameter\(\)}{subsection.5.5}% 31
-\BOOKMARK [3][-]{subsubsection.5.5.2}{Temporal Pooling\(v\)}{subsection.5.5}% 32
+\BOOKMARK [2][-]{subsection.5.3}{Appendix C: Spatial Model Averaging}{section.5}% 28
+\BOOKMARK [2][-]{subsection.5.4}{Appendix D: Nuisance Parameters}{section.5}% 29
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Overdispersion Parameter\(\)}{subsection.5.4}% 30
+\BOOKMARK [3][-]{subsubsection.5.4.2}{Temporal Pooling\(v\)}{subsection.5.4}% 31
+\BOOKMARK [1][-]{section.6}{Figures}{}% 32
