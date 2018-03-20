@@ -6,10 +6,10 @@
 \usepackage{bm}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage[percent]{overpic}
+%\usepackage[percent]{overpic}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usepackage[makeroom]{cancel}
+%\usepackage[makeroom]{cancel}
 \usetikzlibrary{positioning, shapes, snakes}
 
 %
@@ -62,28 +62,242 @@
 %
 
 %
-\section{Modeling}
+\section{Likelihood}
+\subsection{}
+\begin{frame}{Likelihood}
+$y_{ij}$: $i^{\text{th}}$ sample of the $j^{\text{th}}$ species' integer 
+weight from market category 250, in the Monterey port complex trawl
+fishery for the second quarter of 1982.
+% $k^{\text{th}}$ port, caught with the $l^{\text{th}}$ gear, in the $\eta^{\text{th}}$ \mbox{quarter,} of year $m$, for a particular market \mbox{category.}
+%$y_{ij}$ is data
+
+%\hspace*{-1cm}
+\begin{minipage}{0.24\textwidth}
+%\hspace*{-1cm}
+\begin{eqnarray*}
+y_{ij} \sim \text{Pois}(\theta_j)
+%\prod_{ij}\frac{\theta_j^{y_{ij}}e^{-\theta_j}}{y_{ij}!}
+\end{eqnarray*}
+\end{minipage}
+%\hspace*{-0.5cm}
+\begin{minipage}{0.24\textwidth}
+\begin{eqnarray*}
+y_{ij} \sim \text{Bin}(\theta_j)
+%\prod_{ij} \left(\substack{n_{ij}\\y_{ij}}\right) \theta_{j}^{y_{ij}} (1-\theta_{j})^{n_{ij}-y_{ij}}&
+\end{eqnarray*}
+\end{minipage}
+%\hspace*{0.5cm}
+\begin{minipage}{0.24\textwidth}
+\begin{eqnarray*}
+y_{ij} \sim \text{NB}(\theta_j, \phi)
+\end{eqnarray*}
+\end{minipage}
+%\hspace*{1cm}
+\begin{minipage}{0.24\textwidth}
+\begin{eqnarray*}
+y_{ij} \sim \text{BB}(\theta_j, \phi)
+%\substack{n_{ij}\\y_{ij}}\right)\text{B}()
+\end{eqnarray*}
+\end{minipage}
+\end{frame}
+
 \subsection{}
 \begin{frame}
+\hspace*{-1.05cm}
+\includegraphics[width=0.6\textwidth]{../pictures/compPlot1982Qtr2.png}
+\includegraphics[width=0.6\textwidth]{../pictures/compVioplotQtr2.png}
+\end{frame}
+
+%\subsection{}
+%\begin{frame}
+%\centering
+%\includegraphics[height=\textheight]{../pictures/compVioplotQtr2.png}
+%\end{frame}
+
+\subsection{}
+\begin{frame}
+\centering
+\resizebox{\textwidth}{!}{\begin{tabular}[c]{@{}lcccc@{}}
+%\toprule
+\hline
+& Poisson & Binomial & NB & BB \\ \hline
+%\midrule
+%\endhead
+MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
+\(\Delta\) DIC & 1001.41 & 1230.60 & 5.03 & 0 \\
+\(\Delta\) WAIC & 1079.95 & 1323.75 & 3.43 & 0 \\
+\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx10^{-7}\) & \(\approx1\) \\ \hline
+%\bottomrule
+\end{tabular}}
+\end{frame}
+
+%
+%
+
+%\section{}
+\subsection{}
+\begin{frame}{Beta-Binomial Model}
+\vspace{-0.5cm}
+%\begin{align*}
+\begin{equation*}
+        y_{ijklm\eta} \sim \text{Beta-Binomial}\Big(\mu_{jklm\eta},~\sigma^2_{jklm\eta} \Big)
+\end{equation*}
+\vspace{-0.7cm}
+\begin{gather*}
+%	\vspace{0.2cm}
+	\mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})\\
+	%=n~\frac{\alpha_{jklm\eta}}{\alpha_{jklm\eta}+\beta_{jklm\eta}}  
+	\sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n}\Big)\Big(1+(n-1)~\rho\Big)
+	%\sigma^2_{jklm\eta} = \bigg(\mu_{jklm\eta}-\frac{\mu^2_{jklm\eta}}{n}\bigg)\bigg(1+(n-1)~\rho\bigg)
+%	\vspace{0.2cm}
+\end{gather*}
+\vspace{-0.2cm}
+\begin{equation*}
+        \theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \color{blue}{\beta^{(t)}_{m\eta}}%\beta^{(y)}_m + \beta^{(q)}_\eta + \beta^{(y:q)}_{m\eta}   %{\color{blue}a_{jklm\eta}} + {\color{OliveGreen}b_{jklm\eta}} %+ c^*_{jklm\eta}
+	%=n~\text{logit}^{-1}(\theta_{jklm\eta})
+\end{equation*}
+\hspace{-0.5cm}
+%0.68
+\begin{minipage}[h!]{0.55\textwidth}
+	$~$\\
+	$y_{ijklm\eta}$: $i^{\text{th}}$ sample of the $j^{\text{th}}$ species' integer weight, in the $k^{\text{th}}$ port, caught with the $l^{\text{th}}$ gear, in the $\eta^{\text{th}}$ \mbox{quarter,} of year $m$, for a particular market \mbox{category.}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+	\vspace{-0.5cm}
+	\hspace{4cm}
+        \begin{eqnarray*}
+        j &\in&\left\{1, ..., J\right\} \text{Species}\\
+        k &\in&\left\{1, ..., K\right\} \text{Ports}\\
+        l &\in&\left\{1, ..., L\right\} \text{Gears}\\
+        m &\in&\left\{1, ..., M\right\} \text{Years}\\
+        \eta &\in&\left\{1, ..., H\right\} \text{Quarters}
+        \end{eqnarray*}
+\end{minipage}
 \end{frame}
 
 %
 %
 
 %
-\section{Like}
 \subsection{}
-\begin{frame}
+\begin{frame}{Time Model}
+\hspace*{-0.5cm}
+\begin{minipage}{0.3\textwidth}
+\begin{center}
+\textbf{(M1)}
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}&\\
+&\beta^{(y)}_{m} \sim N(0, 32^2)&\\
+&\beta^{(q)}_{\eta} \sim N(0, 32^2)&\\
+&~&
+\end{eqnarray*}
+\end{center}
+
+\begin{center}
+\textbf{(M4)}
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}&\\
+&\beta^{(y:q)}_{m\eta} \sim N(0, v)&\\
+&~&
+\end{eqnarray*}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{center}
+\textbf{(M2)}
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}&\\
+&\beta^{(y)}_{m} \sim N(0, v^{(y)})&\\
+&\beta^{(q)}_{\eta} \sim N(0, v^{(q)})&\\
+&~&
+\end{eqnarray*}
+\end{center}
+
+\begin{center}
+\textbf{(M5)}
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}&\\
+&\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)&\\
+&~&
+\end{eqnarray*}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{center}
+~~~~~~~~~~~~~\textbf{(M3)}
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta} & \\
+&\beta^{(y)}_{m} \sim N(0, v^{(y)}) & \\
+&\beta^{(q)}_{\eta} \sim N(0, v^{(q)}) & \\
+&\beta^{(y:q)}_{m\eta} \sim N(0, v) &
+\end{eqnarray*}
+\end{center}
+
+\begin{center}
+\textbf{(M6)}
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}&\\
+&\beta^{(y:q)}_{m\eta} \sim N(0, v_m)&
+\end{eqnarray*}i
+\end{center}
+\end{minipage}
 \end{frame}
 
 %
 %
 
-%
-\section{Performance}
 \subsection{}
 \begin{frame}
+\begin{center}
+\textbf{1978-1982}
+\hspace*{-0.4cm}
+\begin{tabular}[c]{@{}lcccccc@{}}
+%\toprule
+\hline
+& M1 & M2 & M3 & M4 & M5 & M6 \\ \hline
+%\midrule
+%\endhead
+MSE & 0.12725 & 0.12704 & 0.12680 & 0.12237 & 0.12724 & 0.12657 \\ %\hline
+\(\Delta\) DIC & 2558.56 & 2259.94 & 2013.21 & 0 & 2175.32 & 2174.71 \\ %\hline
+\(\Delta\) WAIC & 2562.65 & 2263.58 & 2009.32 & 0 & 2171.18 & 2170.56 \\ %\hline
+\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx0\) & \(\approx1\) & \(\approx0\) & \(\approx0\) \\ \hline
+%\bottomrule
+\end{tabular}
+
+$~$\\
+\textbf{1983-1990*}
+\hspace*{-0.4cm}
+\begin{tabular}[c]{@{}lcccccc@{}}
+%\toprule
+\hline
+& M1 & M2 & M3 & M4 & M5 & M6 \\ \hline
+%\midrule
+%\endhead
+MSE & 0.12724 & 0.12704 & 0.12680 & 0.12237 & 0.12723 & 0.12657 \\ %\hline
+\(\Delta\) DIC & 2558.56 & 2259.94 & 2013.21 & 0 & 2175.32 & 2174.71 \\ %\hline
+\(\Delta\) WAIC & 2562.65 & 2263.58 & 2009.32 & 0 & 2171.18 & 2170.56 \\ %\hline
+\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx0\) & \(\approx1\) & \(\approx0\) & \(\approx0\) \\ \hline
+%\bottomrule
+\end{tabular}
+\end{center}
 \end{frame}
+
+
+\begin{frame}
+\begin{itemize}
+\item 1983-1990 Results
+\item BMA Procedure
+\item BMA Results
+\item Prediction/?Hindcasting?
+\item Species Composition
+\end{itemize}
+\end{frame}
+
+%%
+%\section{Performance}
+%\subsection{}
+%\begin{frame}
+%\end{frame}
 
 
 
