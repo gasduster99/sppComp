@@ -298,7 +298,7 @@ MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
 \begin{eqnarray*}
 &\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}&\\
 &\beta^{(y:q)}_{m\eta} \sim N(0, v_m)&
-\end{eqnarray*}i
+\end{eqnarray*}
 \end{center}
 \end{minipage}
 \end{frame}
@@ -375,30 +375,74 @@ MSE & 0.12724 & 0.12704 & 0.12680 & 0.12237 & 0.12723 & 0.12657 \\ %\hline
 %
 \section{Prediction}
 \subsection{}
-\begin{frame}{Posterior Predictive Weight Distibutions}
+\begin{frame}{Posterior Predictive Weight}
 \vspace{-0.5cm}
 \begin{equation*}
 \hspace{-0.8cm}
 p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}
 \end{equation*}
-
+\begin{equation*}
+\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}
+\end{equation*}
+%
 \color{red}{motivate prediction for filling holes/hindcasting}\\
 \color{red}{show a 100 pound BCAC distribution}
-
+\includegraphics[width=1.15\textwidth]{../pictures/bocBox1.pdf}
 \end{frame}
 
 %
 %
 
-%\subsection{}
-\begin{frame}
+%
+\subsection{}
+\begin{frame}{Species Composition}
+\vspace{-0.5cm}
 \begin{equation*}
 \pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}
 \end{equation*}
-\color{red}{show sppComp distribution for some strata}
+%
+\color{red}{show a BCAC species comp distribution}
+\includegraphics[width=1.15\textwidth]{../pictures/bocBox1.pdf}
+\end{frame}
+
+
+%
+%
+
+%\subsection{}
+\begin{frame}{\color{red}{show sppComp distribution for some strata}}
 %%\vspace{-0.3cm}
-%\hspace*{-0.8cm}
-%\includegraphics[width=1.15\textwidth]{bocBox1.pdf}
+\hspace*{-0.8cm}
+\begin{minipage}{0.3\textwidth}
+%$~$\\\vspace{-1cm} 
+\vspace*{-0.25cm}
+\centering\textbf{HKL}
+\includegraphics[height=0.37\textheight]{../pictures/vioOSBHKL.pdf}\\
+\vspace*{-1.3cm}
+\includegraphics[height=0.37\textheight]{../pictures/vioOLAHKL.pdf}\\
+\vspace*{-1.3cm}
+\includegraphics[height=0.37\textheight]{../pictures/vioOSDHKL.pdf}
+\end{minipage}
+\hspace*{0.5cm}
+\begin{minipage}{0.3\textwidth}
+\vspace*{-0.25cm}
+\centering\textbf{NET}
+\includegraphics[height=0.37\textheight]{../pictures/vioOSBNET.pdf}\\
+\vspace*{-1.3cm}
+\includegraphics[height=0.37\textheight]{../pictures/vioOLANET.pdf}\\
+\vspace*{-1.3cm}
+\includegraphics[height=0.37\textheight]{../pictures/vioOSDNET.pdf}
+\end{minipage}
+\hspace*{0.5cm}
+\begin{minipage}{0.3\textwidth}
+\vspace*{-0.25cm}
+\centering\textbf{TWL}
+\includegraphics[height=0.37\textheight]{../pictures/vioOSBTWL.pdf}\\
+\vspace*{-1.3cm}
+\includegraphics[height=0.37\textheight]{../pictures/vioOLATWL.pdf}\\
+\vspace*{-1.3cm}
+\includegraphics[height=0.37\textheight]{../pictures/vioOSDTWL.pdf}
+\end{minipage}
 \end{frame}
 
 %
@@ -422,19 +466,19 @@ p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_
 $~$\\
 %\vspace{-0.5cm}
 \hspace*{-1cm}
-\includegraphics[width=0.6\textwidth]{northern269.pdf}
-\includegraphics[width=0.6\textwidth]{southern269.pdf}\\
+\includegraphics[width=0.6\textwidth]{../pictures/northern269.pdf}
+\includegraphics[width=0.6\textwidth]{../pictures/southern269.pdf}\\
 \vspace{-0.5cm}
 \hspace*{-0.3cm}
-\includegraphics[height=0.37\textheight]{./space10MapTop.pdf}
-\includegraphics[height=0.37\textheight]{./space9MapTop.pdf}
-\includegraphics[height=0.37\textheight]{./space14MapTop.pdf}
-\includegraphics[height=0.37\textheight]{./space4MapTop.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space10MapTop.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space9MapTop.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space14MapTop.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space4MapTop.pdf}
 \hspace*{0.9cm}
-\includegraphics[height=0.37\textheight]{./space2MapBottom.pdf}
-\includegraphics[height=0.37\textheight]{./space4MapBottom.pdf}
-\includegraphics[height=0.37\textheight]{./space5MapBottom.pdf}
-\includegraphics[height=0.37\textheight]{./space1MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space2MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space4MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space5MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{../pictures/space1MapBottom.pdf}
 \end{frame}
 
 %
