@@ -62,7 +62,67 @@
 %
 
 %
-\section{Likelihood}
+\subsection{}
+\begin{frame}
+\centering
+$~$\\
+\vspace{-0.5cm}
+\includegraphics[width=\textwidth]{../pictures/mcatColors.png}
+$~$\\
+\vspace*{-1cm}
+\hspace*{-0.2cm}
+\includegraphics[width=1.055\textwidth]{../pictures/stratAvgSamp.pdf}
+$~$\\
+\vspace*{-2.1cm}
+\hspace*{-0.2cm}
+\includegraphics[width=1.055\textwidth]{../pictures/nMcatsEMA.pdf}
+\end{frame}
+
+%
+%
+
+%
+\subsection{}
+\begin{frame}
+\centering
+%\vspace{-1.2cm}
+\includegraphics[height=\textheight]{../pictures/1978to1982Bar3.pdf}
+%\includegraphics[width=0.43\textwidth]{../pictures/1983to1990Bar3.pdf}
+\includegraphics[height=\textheight]{../pictures/barplotLegend.pdf}
+\end{frame}
+
+%
+%
+
+%
+%\subsection{}
+\begin{frame}
+\centering
+%\vspace{-1.2cm}
+%\includegraphics[width=0.43\textwidth]{../pictures/1978to1982Bar3.pdf}
+\includegraphics[height=\textheight]{../pictures/1983to1990Bar3.pdf}
+\includegraphics[height=\textheight]{../pictures/barplotLegend.pdf}
+\end{frame}
+
+%
+%
+
+%
+\subsection{}
+\begin{frame}
+{\color{red}
+\begin{itemize}
+\item sparce data -> Pooling and heirarchical models
+\item integer overdispersion (Motivate next slide)
+\end{itemize}
+}
+\end{frame}
+
+%
+%
+
+%
+\section{Modeling}
 \subsection{}
 \begin{frame}{Likelihood}
 $y_{ij}$: $i^{\text{th}}$ sample of the $j^{\text{th}}$ species' integer 
@@ -101,7 +161,7 @@ y_{ij} \sim \text{BB}(\theta_j, \phi)
 \end{minipage}
 \end{frame}
 
-\subsection{}
+%\subsection{}
 \begin{frame}
 \hspace*{-1.05cm}
 \includegraphics[width=0.6\textwidth]{../pictures/compPlot1982Qtr2.png}
@@ -114,7 +174,7 @@ y_{ij} \sim \text{BB}(\theta_j, \phi)
 %\includegraphics[height=\textheight]{../pictures/compVioplotQtr2.png}
 %\end{frame}
 
-\subsection{}
+%\subsection{}
 \begin{frame}
 \centering
 \resizebox{\textwidth}{!}{\begin{tabular}[c]{@{}lcccc@{}}
@@ -126,7 +186,7 @@ y_{ij} \sim \text{BB}(\theta_j, \phi)
 MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
 \(\Delta\) DIC & 1001.41 & 1230.60 & 5.03 & 0 \\
 \(\Delta\) WAIC & 1079.95 & 1323.75 & 3.43 & 0 \\
-\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx10^{-7}\) & \(\approx1\) \\ \hline
+\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx10^{-7}\) & \(\approx1-10^{-7}\) \\ \hline
 %\bottomrule
 \end{tabular}}
 \end{frame}
@@ -179,7 +239,7 @@ MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
 %
 
 %
-\subsection{}
+%\subsection{}
 \begin{frame}{Time Model}
 \hspace*{-0.5cm}
 \begin{minipage}{0.3\textwidth}
@@ -246,7 +306,32 @@ MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
 %
 %
 
-\subsection{}
+%\subsection{}
+\begin{frame}{Priors}
+$~$
+\hspace{-0.8cm}
+\begin{minipage}{0.55\textwidth}
+%\vspace{-0.5cm}
+\begin{align*}
+\beta_0 &\propto 1\\
+\beta^{(s)}_j &\sim N(0, 32^2)\\
+\beta^{(p)}_k &\sim N(0, 32^2)\\
+\beta^{(g)}_l &\sim N(0, 32^2)\\
+&\\
+\text{logit}(\rho) &\sim N(0, 2^2)\\
+&\\
+v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v 
+\end{align*}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}       
+\includegraphics[width=1.4\textwidth]{../pictures/priorPredict.pdf}
+\end{minipage}
+\end{frame}
+
+%
+%
+
+%\subsection{}
 \begin{frame}
 \begin{center}
 \textbf{1978-1982}
@@ -265,6 +350,7 @@ MSE & 0.12725 & 0.12704 & 0.12680 & 0.12237 & 0.12724 & 0.12657 \\ %\hline
 \end{tabular}
 
 $~$\\
+\color{red}{
 \textbf{1983-1990*}
 \hspace*{-0.4cm}
 \begin{tabular}[c]{@{}lcccccc@{}}
@@ -279,19 +365,139 @@ MSE & 0.12724 & 0.12704 & 0.12680 & 0.12237 & 0.12723 & 0.12657 \\ %\hline
 \(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx0\) & \(\approx1\) & \(\approx0\) & \(\approx0\) \\ \hline
 %\bottomrule
 \end{tabular}
+}
 \end{center}
 \end{frame}
 
+%
+%
+
+%
+\section{Prediction}
+\subsection{}
+\begin{frame}{Posterior Predictive Weight Distibutions}
+\vspace{-0.5cm}
+\begin{equation*}
+\hspace{-0.8cm}
+p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | \bm{y}\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}
+\end{equation*}
+
+\color{red}{motivate prediction for filling holes/hindcasting}\\
+\color{red}{show a 100 pound BCAC distribution}
+
+\end{frame}
+
+%
+%
+
+%\subsection{}
+\begin{frame}
+\begin{equation*}
+\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ \bm{y}^*_{klm\eta}\neq \bm{0}
+\end{equation*}
+\color{red}{show sppComp distribution for some strata}
+%%\vspace{-0.3cm}
+%\hspace*{-0.8cm}
+%\includegraphics[width=1.15\textwidth]{bocBox1.pdf}
+\end{frame}
+
+%
+%
+
+\begin{frame}{}
+\color{red} Expansion
+\end{frame}
+
+%
+%
+
+\section{BMA}
+\subsection{}
+\begin{frame}
+\color{red} instructive example of port pooling w/ Bell number and constraints
+\end{frame}
+
+%\subsection{}
+\begin{frame}{}%{\color{red}ITH} Southern California\color{red}Model Selection Example (Weights, WAIC) $\rightarrow$ look for point conception}
+$~$\\
+%\vspace{-0.5cm}
+\hspace*{-1cm}
+\includegraphics[width=0.6\textwidth]{northern269.pdf}
+\includegraphics[width=0.6\textwidth]{southern269.pdf}\\
+\vspace{-0.5cm}
+\hspace*{-0.3cm}
+\includegraphics[height=0.37\textheight]{./space10MapTop.pdf}
+\includegraphics[height=0.37\textheight]{./space9MapTop.pdf}
+\includegraphics[height=0.37\textheight]{./space14MapTop.pdf}
+\includegraphics[height=0.37\textheight]{./space4MapTop.pdf}
+\hspace*{0.9cm}
+\includegraphics[height=0.37\textheight]{./space2MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{./space4MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{./space5MapBottom.pdf}
+\includegraphics[height=0.37\textheight]{./space1MapBottom.pdf}
+\end{frame}
+
+%
+%
+
+%\subsection{}
+\begin{frame}{Bayesian Model Averaging (BMA)}
+      	Consider a set of Models ($M$) indexed by $\iota$: % sharing a common distribution $f(y|\bm{\theta})$:
+      	\begin{equation*}
+	\omega_\iota = Pr(M_\iota|y) = \frac{ p(y|M_\iota)p(M_\iota) }{ \sum_\iota p(y|M_\iota)p(M_\iota) }
+      	%\omega_j = Pr(\mathbb{M}_j|\bm{y}) = \frac{ p(\bm{y}|\mathbb{M}_j)p\cancelto{\propto 1}{(\mathbb{M}_j)} }{ \sum_i p(\bm{y}|\mathbb{M}_i)p\cancelto{\propto 1}{(\mathbb{M}_i)}} = \frac{ p(\bm{y}|\mathbb{M}_j) }{ \sum_i p(\bm{y}|\mathbb{M}_i)}
+	\end{equation*}
+      	\begin{equation*}
+      	\bar p(\bm{\theta}|\bm{y}) = \sum_{\iota} \omega_\iota p(\bm{\theta}|\bm{y}, M_\iota)
+      	\end{equation*}
+	\indent if $f$ only depends on $M$ through $\bm{\theta}$, then
+      	\begin{equation*}
+      	\bar p(y^*|\bm{y}) = \bm{\int} f(y^*|\bm{\theta}) \bar p(\bm{\theta}|\bm{y}) \bm{d\theta}
+      	\end{equation*}
+$~$\\
+\fontsize{6pt}{7.2}\selectfont
+* Hoeting, J. A., Madigan, D., Raftery, A. E., and Volinsky, C. T. (1999). Bayesian model averaging: a tutorial. \textit{Statistical science}, 382-401.
+\end{frame}
+
+%
+%
+
+%\subsection{}
+\begin{frame}
+\centering
+\resizebox{1\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+        %\hline \multicolumn{6}{|c|}{MCAT 250} \\ \hline
+        \hline \multicolumn{11}{|c|}{MCAT 250} \\ \hline
+        %$\omega$&0.32&0.14&0.13&0.12&0.02 \\ \hline %&0.02&0.02&0.02&0.02&0.02 \\ \hline
+        $\omega$&0.32&0.14&0.13&0.12&0.02&0.02&0.02&0.02&0.02&0.02 \\ \hline
+        CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline%
+        ERK&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline%
+        BRG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+        BDG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+        OSF&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+        MNT&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
+        MRO&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
+        OSB&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00} \\ \hline%
+        OLA&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00} \\ \hline%
+        OSD&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00} \\ \hline%
+\end{tabular}}
+\end{frame}
+
+%
+%
+
+%\subsection{}
+\begin{frame}
+\color{red} select port pooling results
+\end{frame}
 
 \begin{frame}
 \begin{itemize}
-\item 1983-1990 Results
-\item BMA Procedure
-\item BMA Results
-\item Prediction/?Hindcasting?
-\item Species Composition
+\item {\color{red}Red stuff}
+\item Species Composition Proof
 \end{itemize}
 \end{frame}
+
 
 %%
 %\section{Performance}
@@ -299,6 +505,32 @@ MSE & 0.12724 & 0.12704 & 0.12680 & 0.12237 & 0.12723 & 0.12657 \\ %\hline
 %\begin{frame}
 %\end{frame}
 
+%
+%
+
+%
+\section{Extra}
+\subsection{}
+\begin{frame}
+\centering
+%\vspace{-1.2cm}
+\includegraphics[height=\textheight]{../pictures/1991to1999Bar3.pdf}
+%\includegraphics[width=0.43\textwidth]{../pictures/2000to2015Bar3.pdf}
+\includegraphics[height=\textheight]{../pictures/barplotLegend.pdf}
+\end{frame}
+
+%
+%
+
+%
+\subsection{}
+\begin{frame}
+\centering
+%\vspace{-1.2cm}
+%\includegraphics[height=\textheight]{../pictures/1991to1999Bar3.pdf}
+\includegraphics[height=\textheight]{../pictures/2000to2015Bar3.pdf}
+\includegraphics[height=\textheight]{../pictures/barplotLegend.pdf}
+\end{frame}
 
 
 %%
