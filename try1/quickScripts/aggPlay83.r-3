@@ -212,21 +212,21 @@ for(y in yearEff){
 
 #dic, waic, mlik
 
-#try year + qtr
-writeLines('FIXED MODEL')
-out = inla(weight~species + portComplex + gear + year + qtr, 
-	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-       	control.compute=list(
-        	config=T,
-               	waic=T,
-               	dic=T
-       	),
-	control.mode = list(
-        	restart=T
-	)
-)
-#out = inla.hyperpar(out)
-print(summary(out))
+##try year + qtr
+#writeLines('FIXED MODEL')
+#out = inla(weight~species + portComplex + gear + year + qtr, 
+#	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#       	control.compute=list(
+#        	config=T,
+#               	waic=T,
+#               	dic=T
+#       	),
+#	control.mode = list(
+#        	restart=T
+#	)
+#)
+##out = inla.hyperpar(out)
+#print(summary(out))
 
 ##try year + f(qtr)
 #writeLines('RANDOM QTR MODEL')
@@ -264,13 +264,13 @@ print(summary(out))
 #writeLines('BOTH RANDOM MODEL')
 #out = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
 #       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-#	#control.inla=list(
+#	control.inla=list(
 #	#	strategy='gaussian',
-#        #        int.strategy='eb',
+#                int.strategy='eb' #,
 #        #        tolerance=1e-10,
 #        #        h=1e-10,
 #        #        lincomb.derived.only=F
-#	#),
+#	),
 #	control.compute=list(
 #        	config=T,
 #                waic=T,
@@ -282,29 +282,29 @@ print(summary(out))
 #)
 ##out = inla.hyperpar(out)
 #print(summary(out))
+
 #
-##
-#writeLines('BOTH RANDOM PLUS V MODEL')
-#out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
-#       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
-#	#control.inla=list(
-#	#	 strategy='gaussian',
-#        #        int.strategy='eb',
-#        #        tolerance=1e-10,
-#        #        h=1e-10,
-#        #        lincomb.derived.only=F
-#	#),
-#	control.compute=list(
-#        	config=T,
-#                waic=T,
-#                dic=T
-#       	),
-#       	control.mode = list(
-#               restart=T
-#       	)
-#)
-##out = inla.hyperpar(out)
-#print(summary(out))
+writeLines('BOTH RANDOM PLUS V MODEL')
+out = inla(weight~species + portComplex + gear + f(year) + f(qtr) + f(QGivenY), 
+       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+	control.inla=list(
+	#	 strategy='gaussian',
+                int.strategy='eb',
+                tolerance=1e-10,
+                h=1e-10,
+                lincomb.derived.only=F
+	),
+	control.compute=list(
+        	config=T,
+                waic=T,
+                dic=T
+       	),
+       	control.mode = list(
+               restart=T
+       	)
+)
+#out = inla.hyperpar(out)
+print(summary(out))
 
 ##WAIC: 287330.74 mlike:-21886.61 DIC:-147634.41
 #writeLines('V + f(g:s) MODEL')
@@ -517,7 +517,7 @@ for(p in portEff){
                                 if( !is.na(where) ){
                                         mup   = sapply(postQY, function(logSam){
                                                 #
-                                                idxStr = sprintf('Predictor:%05d', where)
+                                                idxStr = sprintf('Predictor:%06d', where)
                                                 sam = inv.logit( logSam[['latent']][idxStr,] )
                                                 #
                                                 return( sam )
@@ -612,7 +612,8 @@ mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na
 writeLines(sprintf('MSE: %1.7f\n', mse)) #mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'mse')
-write.csv(format(metrics, scientific=T, digits=10), file="./aggMetrics83.csv", row.names=F, quote=F)
+write.csv(format(metrics, scientific=T, digits=10), file="./aggMetrics83.csv-3", row.names=F, quote=F)
+system('git add aggMetrics83.csv-3')
 
 
 
