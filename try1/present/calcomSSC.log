@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.23)  21 MAR 2018 22:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.23)  22 MAR 2018 09:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1239,12 +1239,7 @@ Overfull \hbox (49.16487pt too wide) in paragraph at lines 329--329
 [10
 
  <../pictures/priorPredict.pdf>]
-Overfull \hbox (10.65454pt too wide) in paragraph at lines 370--370
- |  [] 
- []
-
-
-Overfull \hbox (64.79617pt too wide) in paragraph at lines 370--370
+Overfull \hbox (10.65454pt too wide) in paragraph at lines 383--383
  |  [] 
  []
 
@@ -1253,10 +1248,10 @@ Overfull \hbox (64.79617pt too wide) in paragraph at lines 370--370
 ]
 
 LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 403.
+(Font)              using `OT1/cmss/bx/n' instead on input line 416.
 
 
-Overfull \hbox (19.47554pt too wide) detected at line 403
+Overfull \hbox (19.47554pt too wide) detected at line 416
  \OT1/cmss/m/it/10.95 p\OT1/cmss/m/n/10.95 (\OT1/cmss/m/it/10.95 y[]\OMS/cmsy/m
 /n/10.95 j[]\OT1/cmss/m/n/10.95 ) = []     []  [][]\OT1/cmss/m/it/10.95 y[]\OMS
 /cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 ^^V[]; ^^[[][]\OT1/cmss/m/it/10.95 P[]\OML
@@ -1268,12 +1263,12 @@ Overfull \hbox (19.47554pt too wide) detected at line 403
 File: ../pictures/bocBoxReDots.pdf Graphic file (type pdf)
 
 <use ../pictures/bocBoxReDots.pdf>
-Package pdftex.def Info: ../pictures/bocBoxReDots.pdf used on input line 403.
+Package pdftex.def Info: ../pictures/bocBoxReDots.pdf used on input line 416.
 (pdftex.def)             Requested size: 307.28987pt x 108.45105pt.
  [12
 
  <../pictures/bocBoxReDots.pdf>]
-Overfull \hbox (19.47554pt too wide) detected at line 403
+Overfull \hbox (19.47554pt too wide) detected at line 416
  \OT1/cmss/m/it/10.95 p\OT1/cmss/m/n/10.95 (\OT1/cmss/m/it/10.95 y[]\OMS/cmsy/m
 /n/10.95 j[]\OT1/cmss/m/n/10.95 ) = []     []  [][]\OT1/cmss/m/it/10.95 y[]\OMS
 /cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 ^^V[]; ^^[[][]\OT1/cmss/m/it/10.95 P[]\OML
@@ -1285,205 +1280,214 @@ Overfull \hbox (19.47554pt too wide) detected at line 403
 File: ../pictures/bocBoxRe.pdf Graphic file (type pdf)
 
 <use ../pictures/bocBoxRe.pdf>
-Package pdftex.def Info: ../pictures/bocBoxRe.pdf used on input line 403.
+Package pdftex.def Info: ../pictures/bocBoxRe.pdf used on input line 416.
 (pdftex.def)             Requested size: 307.28987pt x 108.45105pt.
  [13
 
  <../pictures/bocBoxRe.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
-<../pictures/vioStarOSBHKL.pdf, id=851, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOSBHKL.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOSBHKL.pdf, id=851, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSBHKL.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOSBHKL.pdf>
-Package pdftex.def Info: ../pictures/vioStarOSBHKL.pdf used on input line 471.
+<use ../pictures/vioStarAvgOSBHKL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSBHKL.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-<../pictures/vioStarOLAHKL.pdf, id=852, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOLAHKL.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOLAHKL.pdf, id=852, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOLAHKL.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOLAHKL.pdf>
-Package pdftex.def Info: ../pictures/vioStarOLAHKL.pdf used on input line 471.
+<use ../pictures/vioStarAvgOLAHKL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOLAHKL.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-<../pictures/vioStarOSDHKL.pdf, id=853, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOSDHKL.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOSDHKL.pdf, id=853, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSDHKL.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOSDHKL.pdf>
-Package pdftex.def Info: ../pictures/vioStarOSDHKL.pdf used on input line 471.
+<use ../pictures/vioStarAvgOSDHKL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSDHKL.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
-<../pictures/vioStarOSBNET.pdf, id=854, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOSBNET.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOSBNET.pdf, id=854, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSBNET.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOSBNET.pdf>
-Package pdftex.def Info: ../pictures/vioStarOSBNET.pdf used on input line 471.
+<use ../pictures/vioStarAvgOSBNET.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSBNET.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-<../pictures/vioStarOLANET.pdf, id=855, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOLANET.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOLANET.pdf, id=855, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOLANET.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOLANET.pdf>
-Package pdftex.def Info: ../pictures/vioStarOLANET.pdf used on input line 471.
+<use ../pictures/vioStarAvgOLANET.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOLANET.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-<../pictures/vioStarOSDNET.pdf, id=856, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOSDNET.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOSDNET.pdf, id=856, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSDNET.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOSDNET.pdf>
-Package pdftex.def Info: ../pictures/vioStarOSDNET.pdf used on input line 471.
+<use ../pictures/vioStarAvgOSDNET.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSDNET.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
-<../pictures/vioStarOSBTWL.pdf, id=857, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOSBTWL.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOSBTWL.pdf, id=857, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSBTWL.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOSBTWL.pdf>
-Package pdftex.def Info: ../pictures/vioStarOSBTWL.pdf used on input line 471.
+<use ../pictures/vioStarAvgOSBTWL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSBTWL.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-<../pictures/vioStarOLATWL.pdf, id=858, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOLATWL.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOLATWL.pdf, id=858, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOLATWL.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOLATWL.pdf>
-Package pdftex.def Info: ../pictures/vioStarOLATWL.pdf used on input line 471.
+<use ../pictures/vioStarAvgOLATWL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOLATWL.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-<../pictures/vioStarOSDTWL.pdf, id=859, 722.7pt x 505.89pt>
-File: ../pictures/vioStarOSDTWL.pdf Graphic file (type pdf)
+<../pictures/vioStarAvgOSDTWL.pdf, id=859, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSDTWL.pdf Graphic file (type pdf)
 
-<use ../pictures/vioStarOSDTWL.pdf>
-Package pdftex.def Info: ../pictures/vioStarOSDTWL.pdf used on input line 471.
+<use ../pictures/vioStarAvgOSDTWL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSDTWL.pdf used on input line 48
+4.
 (pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 
  []
 
 
-Overfull \hbox (26.54442pt too wide) in paragraph at lines 471--471
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 484--484
 [] 
  []
 
 
-Overfull \vbox (3.88806pt too high) detected at line 471
+Overfull \vbox (3.88806pt too high) detected at line 484
  []
 
 [14
 
- <../pictures/vioStarOSBHKL.pdf> <../pictures/vioStarOLAHKL.pdf> <../pictures/v
-ioStarOSDHKL.pdf> <../pictures/vioStarOSBNET.pdf> <../pictures/vioStarOLANET.pd
-f> <../pictures/vioStarOSDNET.pdf> <../pictures/vioStarOSBTWL.pdf> <../pictures
-/vioStarOLATWL.pdf> <../pictures/vioStarOSDTWL.pdf>] [15
+ <../pictures/vioStarAvgOSBHKL.pdf> <../pictures/vioStarAvgOLAHKL.pdf> <../pict
+ures/vioStarAvgOSDHKL.pdf> <../pictures/vioStarAvgOSBNET.pdf> <../pictures/vioS
+tarAvgOLANET.pdf> <../pictures/vioStarAvgOSDNET.pdf> <../pictures/vioStarAvgOSB
+TWL.pdf> <../pictures/vioStarAvgOLATWL.pdf> <../pictures/vioStarAvgOSDTWL.pdf>]
+ [15
 
 ] [16
 
-]
-<../pictures/mapFullBlank.pdf, id=1063, 505.89pt x 1084.05pt>
+] <../pictures/mapFullBlank.pdf, id=1063, 505.89pt x 1084.05pt>
 File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullBlank.pdf>
-Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
 <../pictures/mapFullHalfHalf.pdf, id=1064, 505.89pt x 1084.05pt>
 File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullHalfHalf.pdf>
-Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1491,11 +1495,11 @@ Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
 File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullConcMend.pdf>
-Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1504,10 +1508,10 @@ File: ../pictures/mapFullEveryOther.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullEveryOther.pdf>
 Package pdftex.def Info: ../pictures/mapFullEveryOther.pdf used on input line 7
-34.
+47.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1515,10 +1519,10 @@ Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
 File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullSparse.pdf>
-Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1529,45 +1533,45 @@ mapFullConcMend.pdf> <../pictures/mapFullEveryOther.pdf> <../pictures/mapFullSp
 arse.pdf>]
 File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
  <use ../pictures/mapFullBlank.pdf>
-Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullHalfHalf.pdf>
-Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
 <use ../pictures/mapFullConcMend.pdf>
-Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullEveryOther.pdf Graphic file (type pdf)
 <use ../pictures/mapFullEveryOther.pdf>
 Package pdftex.def Info: ../pictures/mapFullEveryOther.pdf used on input line 7
-34.
+47.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
 <use ../pictures/mapFullSparse.pdf>
-Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1576,44 +1580,44 @@ Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
 ]
 File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
  <use ../pictures/mapFullBlank.pdf>
-Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
  <use ../pictures/mapFullHalfHalf.pdf>
-Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
 <use ../pictures/mapFullConcMend.pdf>
-Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullEveryOther.pdf Graphic file (type pdf)
 <use ../pictures/mapFullEveryOther.pdf>
 Package pdftex.def Info: ../pictures/mapFullEveryOther.pdf used on input line 7
-34.
+47.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
 <use ../pictures/mapFullSparse.pdf>
-Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1623,7 +1627,7 @@ Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
 File: ../pictures/mapFullBlankNot.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullBlankNot.pdf>
-Package pdftex.def Info: ../pictures/mapFullBlankNot.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullBlankNot.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
@@ -1632,39 +1636,39 @@ File: ../pictures/mapFullHalfHalfNot.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullHalfHalfNot.pdf>
 Package pdftex.def Info: ../pictures/mapFullHalfHalfNot.pdf used on input line 
-734.
+747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
 <use ../pictures/mapFullConcMend.pdf>
-Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullEveryOther.pdf Graphic file (type pdf)
 <use ../pictures/mapFullEveryOther.pdf>
 Package pdftex.def Info: ../pictures/mapFullEveryOther.pdf used on input line 7
-34.
+47.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
 <use ../pictures/mapFullSparse.pdf>
-Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1677,25 +1681,25 @@ on: multiple pdfs with page group included in a single page
 >]
 File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
  <use ../pictures/mapFullBlank.pdf>
-Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
  <use ../pictures/mapFullHalfHalf.pdf>
-Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
 <use ../pictures/mapFullConcMend.pdf>
-Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1704,19 +1708,19 @@ File: ../pictures/mapFullEveryOtherNot.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullEveryOtherNot.pdf>
 Package pdftex.def Info: ../pictures/mapFullEveryOtherNot.pdf used on input lin
-e 734.
+e 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
 <use ../pictures/mapFullSparse.pdf>
-Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1726,45 +1730,45 @@ Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
 File: ../pictures/mapFullBlankNot.pdf Graphic file (type pdf)
 
 <use ../pictures/mapFullBlankNot.pdf>
-Package pdftex.def Info: ../pictures/mapFullBlankNot.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullBlankNot.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 File: ../pictures/mapFullHalfHalfNot.pdf Graphic file (type pdf)
  <use ../pictures/mapFullHalfHalfNot.pdf>
 Package pdftex.def Info: ../pictures/mapFullHalfHalfNot.pdf used on input line 
-734.
+747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (6.99713pt too wide) in paragraph at lines 734--734
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
 <use ../pictures/mapFullConcMend.pdf>
-Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 734
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 747
 .
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullEveryOtherNot.pdf Graphic file (type pdf)
 <use ../pictures/mapFullEveryOtherNot.pdf>
 Package pdftex.def Info: ../pictures/mapFullEveryOtherNot.pdf used on input lin
-e 734.
+e 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (21.22348pt too wide) in paragraph at lines 734--734
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
 File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
 <use ../pictures/mapFullSparse.pdf>
-Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 734.
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 747.
 (pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
 
-Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 747--747
 []|  [] 
  []
 
@@ -1787,30 +1791,7 @@ Overfull \hbox (28.33667pt too wide) in paragraph at lines 734--734
 File: ../pictures/1991to1999Bar3.pdf Graphic file (type pdf)
 
 <use ../pictures/1991to1999Bar3.pdf>
-Package pdftex.def Info: ../pictures/1991to1999Bar3.pdf used on input line 956.
-
-(pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
-File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
- <use ../pictures/barplotLegend.pdf>
-Package pdftex.def Info: ../pictures/barplotLegend.pdf used on input line 956.
-(pdftex.def)             Requested size: 104.5611pt x 224.88715pt.
-
-Overfull \hbox (22.16383pt too wide) in paragraph at lines 956--956
-[][][]  
- []
-
-
-Overfull \vbox (1.0pt too high) detected at line 956
- []
-
-[29
-
- <../pictures/1991to1999Bar3.pdf>]
-<../pictures/2000to2015Bar3.pdf, id=1819, 505.89pt x 505.89pt>
-File: ../pictures/2000to2015Bar3.pdf Graphic file (type pdf)
-
-<use ../pictures/2000to2015Bar3.pdf>
-Package pdftex.def Info: ../pictures/2000to2015Bar3.pdf used on input line 969.
+Package pdftex.def Info: ../pictures/1991to1999Bar3.pdf used on input line 969.
 
 (pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
 File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
@@ -1826,34 +1807,57 @@ Overfull \hbox (22.16383pt too wide) in paragraph at lines 969--969
 Overfull \vbox (1.0pt too high) detected at line 969
  []
 
+[29
+
+ <../pictures/1991to1999Bar3.pdf>]
+<../pictures/2000to2015Bar3.pdf, id=1819, 505.89pt x 505.89pt>
+File: ../pictures/2000to2015Bar3.pdf Graphic file (type pdf)
+
+<use ../pictures/2000to2015Bar3.pdf>
+Package pdftex.def Info: ../pictures/2000to2015Bar3.pdf used on input line 982.
+
+(pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
+File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
+ <use ../pictures/barplotLegend.pdf>
+Package pdftex.def Info: ../pictures/barplotLegend.pdf used on input line 982.
+(pdftex.def)             Requested size: 104.5611pt x 224.88715pt.
+
+Overfull \hbox (22.16383pt too wide) in paragraph at lines 982--982
+[][][]  
+ []
+
+
+Overfull \vbox (1.0pt too high) detected at line 982
+ []
+
 [30
 
  <../pictures/2000to2015Bar3.pdf>]
-Overfull \hbox (12.63843pt too wide) in paragraph at lines 1016--1016
+Overfull \hbox (12.63843pt too wide) in paragraph at lines 1029--1029
  []|  [] 
  []
 
 
-Overfull \hbox (2.77419pt too wide) in paragraph at lines 1016--1016
+Overfull \hbox (2.77419pt too wide) in paragraph at lines 1029--1029
  []|  [] 
  []
 
 [31
 
 ]
-Overfull \hbox (12.63193pt too wide) in paragraph at lines 1066--1066
+Overfull \hbox (12.63193pt too wide) in paragraph at lines 1079--1079
  []|  [] 
  []
 
 
-Overfull \hbox (2.77753pt too wide) in paragraph at lines 1066--1066
+Overfull \hbox (2.77753pt too wide) in paragraph at lines 1079--1079
  []|  [] 
  []
 
 [32
 
 ]
-Overfull \hbox (26.96736pt too wide) detected at line 1091
+Overfull \hbox (26.96736pt too wide) detected at line 1104
 | [] [] [][] [] [] [] \OT1/cmss/m/n/10.95 = [] [][] [][] = [] = [] = 1\OML/cmm/
 m/it/10.95 : [] [] []\U/msa/m/n/10.95 ^^D
  []
@@ -1870,11 +1874,11 @@ m/it/10.95 : [] [] []\U/msa/m/n/10.95 ^^D
 \tf@snm=\write8
 \openout8 = `calcomSSC.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1575.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1575.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1588.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1588.
  (./calcomSSC.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1575.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1575.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1588.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1588.
 
 Package rerunfilecheck Info: File `calcomSSC.out' has not changed.
 (rerunfilecheck)             Checksum: 5871F7FDD4EDC1EB3DFD96FAE350DC1F;211.
@@ -1886,11 +1890,11 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1575.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1588.
  ) 
 Here is how much of TeX's memory you used:
  20836 strings out of 493304
- 422254 string characters out of 6139871
+ 422389 string characters out of 6139871
  591069 words of memory out of 5000000
  23663 multiletter control sequences out of 15000+600000
  20937 words of font info for 75 fonts, out of 8000000 for 9000
@@ -1912,7 +1916,7 @@ mssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on calcomSSC.pdf (33 pages, 807827 bytes).
+Output written on calcomSSC.pdf (33 pages, 807449 bytes).
 PDF statistics:
  2115 PDF objects out of 2487 (max. 8388607)
  1948 compressed objects within 20 object streams

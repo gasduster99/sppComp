@@ -350,22 +350,35 @@ MSE & 0.12725 & 0.12704 & 0.12680 & 0.12237 & 0.12724 & 0.12657 \\ %\hline
 \end{tabular}
 
 $~$\\
-\color{red}{
+%\color{red}{
 \textbf{1983-1990*}
 \hspace*{-0.4cm}
+%\begin{tabular}[c]{@{}lcccccc@{}}
+%%\toprule
+%\hline
+%& M1 & M2 & M3 & M4 & M5 & M6 \\ \hline
+%%\midrule
+%%\endhead
+%MSE & ? & ? & 0.0126044 & 0.0126041 & 0.0125935 & 0.0127302 \\ %\hline
+%\(\Delta\) DIC & -210579.44 &  & -238952.74 & -210648.29 & -210614.84 & -210612.74 &  \\ %\hline
+%\(\Delta\) WAIC & -8760.76+2500 & -21296.40 & -6325.51 & -8641.92 & -6866.90 &  \\ %\hline
+%\(pr(M|y)\) & -76000.02 & -75966.82 & -76003.24 & -75970.74 & -76015.79 & \(\approx0\) \\ \hline
+%%\bottomrule
+%\end{tabular}
 \begin{tabular}[c]{@{}lcccccc@{}}
 %\toprule
 \hline
 & M1 & M2 & M3 & M4 & M5 & M6 \\ \hline
 %\midrule
 %\endhead
-MSE & ? & ? & ? & ? & ? & ? \\ %\hline
-\(\Delta\) DIC & -312058.47 & -312104.63 & -210648.29 & -210614.84 & -210612.74 &  \\ %\hline
-\(\Delta\) WAIC & 455961.15 & 450718.16 & -6325.51 & -8641.92 & -6866.90 &  \\ %\hline
-\(pr(M|y)\) & -75989.25 & -75966.82 & -76003.24 & -75970.74 & -76015.79 & \(\approx0\) \\ \hline
+% 0.12968 0.13087  
+MSE & 0.12968 & ? & 0.12604 & 0.12604 & 0.12594 & ? \\ %\hline
+\(\Delta\) DIC &  68.85 & ? & 0 & 33.45 & 35.55 & ? \\ %\hline
+\(\Delta\) WAIC & 2381.16 & ? & 2316.41 & 0 & 1775.02 & ? \\ %\hline
+\(pr(M|y)\) & $\approx0$ & ? & $\approx0$ & $\approx1$ & $\approx0$ & ? \\ \hline
 %\bottomrule
 \end{tabular}
-}
+%}
 \end{center}
 \end{frame}
 
@@ -423,7 +436,7 @@ p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_
 %Model 4    Model 1
 %0.01205337 0.98794663
 %\subsection{}
-\begin{frame}{Single Quarter Hindcast (MCAT 250) {\color{red} update}}
+\begin{frame}{Single Quarter Hindcast (MCAT 250)} % {\color{red} update}}
 %%\vspace{-0.3cm}
 \hspace*{-1cm}
 \begin{minipage}{0.09\textwidth}
@@ -438,11 +451,11 @@ p(y^*_{jklm\eta}|\bm{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_
 $~~~~~~~~~$\textbf{HKL}
 \end{center}
 \vspace*{-0.75cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOSBHKL.pdf}\\
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOSBHKL.pdf}\\
 \vspace*{-1.3cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOLAHKL.pdf}\\
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOLAHKL.pdf}\\
 \vspace*{-1.3cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOSDHKL.pdf}
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOSDHKL.pdf}
 \end{minipage}
 \hspace*{0.5cm}
 \begin{minipage}{0.29\textwidth}
@@ -450,11 +463,11 @@ $~~~~~~~~~$\textbf{HKL}
 $~~~~~~~~~$\textbf{NET}
 \end{center}
 \vspace*{-0.75cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOSBNET.pdf}\\
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOSBNET.pdf}\\
 \vspace*{-1.3cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOLANET.pdf}\\
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOLANET.pdf}\\
 \vspace*{-1.3cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOSDNET.pdf}
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOSDNET.pdf}
 \end{minipage}
 \hspace*{0.5cm}
 \begin{minipage}{0.29\textwidth}
@@ -462,11 +475,11 @@ $~~~~~~~~~$\textbf{NET}
 $~~~~~~~~~$\textbf{TWL}
 \end{center}
 \vspace*{-0.75cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOSBTWL.pdf}\\
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOSBTWL.pdf}\\
 \vspace*{-1.3cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOLATWL.pdf}\\
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOLATWL.pdf}\\
 \vspace*{-1.3cm}
-\includegraphics[height=0.36\textheight]{../pictures/vioStarOSDTWL.pdf}
+\includegraphics[height=0.36\textheight]{../pictures/vioStarAvgOSDTWL.pdf}
 \end{minipage}
 \end{frame}
 
