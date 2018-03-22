@@ -304,7 +304,7 @@ out = inla(weight~species + portComplex + gear + f(QGivenY),
                restart=T
        	)
 )
-out = inla.hyperpar(out)
+#out = inla.hyperpar(out)
 print(summary(out))
 
 ##WAIC: 287330.74 mlike:-21886.61 DIC:-147634.41
