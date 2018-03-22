@@ -434,7 +434,8 @@ out = inla(weight~species + portComplex + gear + f(yGiven1) + f(yGiven2) + f(yGi
 	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 	control.inla=list(
         #        strategy='gaussian',
-                int.strategy='eb',
+                diagonal=0.01,
+		int.strategy='eb',
                 tolerance=1e-10,
                 h=1e-10,
                 lincomb.derived.only=F

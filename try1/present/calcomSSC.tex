@@ -360,9 +360,9 @@ $~$\\
 %\midrule
 %\endhead
 MSE & ? & ? & ? & ? & ? & ? \\ %\hline
-\(\Delta\) DIC & -312058.47 & -312104.63 & -210648.29 & -210614.84 &  &  \\ %\hline
-\(\Delta\) WAIC & 455961.15 & 450718.16 & -6325.51 & -8641.92 &  &  \\ %\hline
-\(pr(M|y)\) & -75989.25 & -75966.82 & -76003.24 & -75970.74 & \(\approx0\) & \(\approx0\) \\ \hline
+\(\Delta\) DIC & -312058.47 & -312104.63 & -210648.29 & -210614.84 & -210612.74 &  \\ %\hline
+\(\Delta\) WAIC & 455961.15 & 450718.16 & -6325.51 & -8641.92 & -6866.90 &  \\ %\hline
+\(pr(M|y)\) & -75989.25 & -75966.82 & -76003.24 & -75970.74 & -76015.79 & \(\approx0\) \\ \hline
 %\bottomrule
 \end{tabular}
 }
@@ -1064,6 +1064,32 @@ MCAT & Mean & Median & SD     \\ \hline
 \\$~$\\\hspace*{1cm}\textbf{1983-1990}
 \end{minipage}
 \end{frame}
+
+%
+%
+
+%
+\begin{frame}{Proof: Species Comps Sum to One... as do Their Means.}
+%\begin{proof}{Species Compositions Sum to One}
+%
+If $y_{jk}$ is the $k^{\text{th}}$ draw, $k\in\{1,...,~K\}$, of the posterior predictive weight of species $j$ in a particular stratum. Then,
+%
+\begin{equation}
+\pi_{jk} = \frac{y_{jk}}{\sum_j y_{jk}} ~~~ \bm{y}_{k}\neq \bm{0}.
+\end{equation}
+The predictive mean for species $j$ is,
+\begin{equation}
+        \hat\pi_{j} = \frac{\sum_k^K \pi_{jk}}{K}. 
+\end{equation}
+Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
+\begin{equation*}
+        \hspace*{-0.8cm}
+        \sum_j \hat\pi_{j} ~\substack{(2)\\=}~ \sum_j\frac{\sum_k^K \pi_{jk}}{K} = \frac{\sum_k^K \sum_j \pi_{jk}}{K}~\substack{(1)\\=}~\frac{\sum_k^K \sum_j \frac{y_{jk}}{\sum_j y_{jk}}}{K} = \frac{\sum_k^K 1}{K} = \frac{K}{K}=1. ~~~\blacksquare
+\end{equation*}
+%\end{proof}
+%
+\end{frame}
+
 
 
 %%
