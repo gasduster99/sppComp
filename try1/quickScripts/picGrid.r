@@ -10,8 +10,8 @@ library(RColorBrewer)
 
 
 #MCAT250/Top/Space[14]/OLA/TWL/star/1990/sppComp.csv                                  vvvvvv avgModel
-pathHead = '/home/nick/Documents/sppComp/inla/space_MCAT250_83to90HindTry/MCAT250/Top/Space1/'
-pathTail = '/star/1990/sppComp.csv'
+pathHead = '/home/nick/Documents/sppComp/inla/space_MCAT250_83to90HindTry/MCAT250/Top/Space4/'
+pathTail = '/qStar/yStar/sppComp.csv'#'/star/1990/sppComp.csv'
 #
 num = 5
 reds = rev(head(tail(brewer.pal(9, 'YlOrRd'), 4), 3))
@@ -28,9 +28,11 @@ for(p in ports){
 	for(g in gears){
 		#
 		sp = read.csv(sprintf('%s%s/%s%s', pathHead, p, g, pathTail))
+		sp = sp[!is.na(sp[,1]),]
+		sp[is.na(sp)] = 0
 		sp = sp[,head(rev(order(colMeans(sp))), num)] 
 		#
-		pdf(sprintf('../pictures/vio%s%s.pdf', p, g), width=10)
+		pdf(sprintf('../pictures/vioStar%s%s.pdf', p, g), width=10)
 		par(cex=1.5)
 		vioplot(sp[,spp[1]], sp[,spp[2]], sp[,spp[3]], sp[,spp[4]], sp[,spp[5]], #sp[,6],
         		names=spp,#colnames(sp),
