@@ -54,6 +54,8 @@ for(p in ports){
 	        	col=cols[j,i],
 	        	drawRect=F
 		)
+		print(colMeans(spAvg))
+		points(colMeans(spAvg), pch=21, bg='white', lwd=3, cex=2)
 		dev.off()
 		#
 		j = j + 1

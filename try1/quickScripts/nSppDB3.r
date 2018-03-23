@@ -15,8 +15,8 @@ library(RColorBrewer)
 
 
 #
-minYear = 1991 # 2000 # 1978 # 1983 #
-maxYear = 1999 # 2015 # 1982 # 1990 #
+minYear = 1978 # 1983 # 1991 # 2000 # 
+maxYear = 1982 # 1990 # 1999 # 2015 # 
 #mcat = 250
 
 #driver
@@ -214,14 +214,16 @@ plot((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob],
 	xlim=c(1, sum(mcatQProbs<prob)+1),
 	ylab='Proportion',
 	xlab='',
-	main=sprintf('%s-%s', minYear, maxYear)
+	main=sprintf('%s-%s', minYear, maxYear),
+	lwd=2,
+	col=cols[3]
 	#xlim=c(1-0.5, sum(mcatQProbs<prob)+0.5), 
 	#xlab='Market Category'
 )
-points((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], cex=0.7, pch=19)
-lines((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], col='blue')
-points((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], cex=0.7, pch=19, col='blue')
+points((1:sum(mcatQProbs<prob))+0.5, mcatProbs[mcatQProbs<prob], cex=1, pch=19, col=cols[3])
+lines((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], col=cols[7], lwd=2)
+points((1:sum(mcatQProbs<prob))+0.5, samProbs[mcatQProbs<prob], cex=1, pch=19, col=cols[7])
 axis(2, at=seq(0, 1, 0.2), las=1)
-legend('right', legend=c("Landed Weight", "# of Samples"), col=c('black', 'blue'), lty=c(1, 1), pch=c(19, 19), cex=1.5, bty='n')
+legend('right', legend=c("Landed Weight", "# of Samples"), col=c(cols[3], cols[7]), lty=c(1, 1), pch=c(19, 19), cex=1.5, bty='n', lwd=c(2, 2))
 dev.off()
 
