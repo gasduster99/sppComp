@@ -2,5 +2,5 @@
 \beamer@sectionintoc {1}{Introduction}{1}{0}{1}
 \beamer@sectionintoc {2}{Modeling}{5}{0}{2}
 \beamer@sectionintoc {3}{Prediction}{12}{0}{3}
-\beamer@sectionintoc {4}{BMA}{16}{0}{4}
-\beamer@sectionintoc {5}{End}{20}{0}{5}
+\beamer@sectionintoc {4}{BMA}{18}{0}{4}
+\beamer@sectionintoc {5}{End}{29}{0}{5}

@@ -45,7 +45,7 @@ getMSE = function(data, means){
 #
 
 #
-cores = 20 #30 #48 #25 #15 #8 #4
+cores = 48 #20 #30 #48 #25 #15 #8 #4
 
 #
 #CLEAN DATA
@@ -411,7 +411,7 @@ out = inla(weight~species + portComplex + gear + f(qGiven1983) + f(qGiven1984) +
 	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
        	control.inla=list(
         	#strategy='gaussian',
-        	diag=0.001,
+		#diagonal=0.001,
                 int.strategy='ccd',
                 tolerance=1e-10,
                 h=1e-10,
