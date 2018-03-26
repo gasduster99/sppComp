@@ -218,8 +218,8 @@ out = inla(weight~species + portComplex + gear + year + qtr,
 	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 	control.inla=list(
         	#strategy='gaussian',
-                diagonal=0.001,
-                int.strategy='eb',
+                #diagonal=0.001,
+                int.strategy='ccd',
                 tolerance=1e-10,
                 h=1e-10,
                 lincomb.derived.only=F

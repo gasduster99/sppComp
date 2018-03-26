@@ -265,9 +265,9 @@ writeLines('BOTH RANDOM MODEL')
 out = inla(weight~species + portComplex + gear + f(year) + f(qtr), 
        	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 	control.inla=list(
-	#	strategy='gaussian',
-                diagonal=0.001,
-		int.strategy='eb',
+		#strategy='gaussian',
+                #diagonal=0.01,
+		int.strategy='ccd',
                 tolerance=1e-10,
                 h=1e-10,
                 lincomb.derived.only=F
