@@ -362,7 +362,7 @@ MSE & 0.12725 & 0.12704 & 0.12680 & 0.12237 & 0.12724 & 0.12657 \\ %\hline
 
 $~$\\
 %\color{red}{
-\textbf{1983-1990*}
+\textbf{1983-1990}
 \hspace*{-0.4cm}
 %\begin{tabular}[c]{@{}lcccccc@{}}
 %%\toprule
@@ -383,10 +383,10 @@ $~$\\
 %\midrule
 %\endhead
 % 0.12968 0.13087  
-MSE & 0.12968 & ? & 0.12604 & 0.12604 & 0.12594 & ? \\ %\hline
-\(\Delta\) DIC &  68.85 & ? & 0 & 33.45 & 35.55 & ? \\ %\hline
-\(\Delta\) WAIC & 2381.16 & ? & 2316.41 & 0 & 1775.02 & ? \\ %\hline
-\(pr(M|y)\) & $\approx0$ & ? & $\approx0$ & $\approx1$ & $\approx0$ & ? \\ \hline
+MSE & 0.12968 & 0.12820 & 0.12604 & 0.12604 & 0.12795 & 0.12724 \\ %\hline
+\(\Delta\) DIC & 2865.17 & 2851.10 & 0 & 217.21 & 152.67 & 352.29 \\ %\hline
+\(\Delta\) WAIC & 2847.76 & 2836.00 & 0 & 625.09 & 512.61 & 2170.39 \\ %\hline
+\(pr(M|y)\) & $\approx0$ & $\approx0$ & $\approx0.289$ & $\approx0.319$ & $\approx0.322$ & $\approx0.070$ \\ \hline
 %\bottomrule
 \end{tabular}
 %}
@@ -1018,10 +1018,49 @@ $~$\\
 
 \section{End}
 \begin{frame}{Conclusion}
+\only<1>{
+\begin{minipage}[h!]{0.6\textwidth}
+\underline{Bayesian Model Based Statistics:}
 \begin{itemize}
-\item {\color{red}Red stuff}
-\item Species Composition Proof
+\item Model Overdispersion
+\item Uncertainty Estimation
+\item Mechanisms for Pooling
+\item Out-of-Sample Predictions
 \end{itemize}
+$~$\\$~$\\$~$\\$~$\\$~$\\ 
+%Future Directions:
+%\begin{itemize}
+%\item Additional Predictors
+%\item Multivariate Models
+%\item Time Series Hindcasting
+%\item Dirichlet Process Models
+%\end{itemize}
+\end{minipage}
+\begin{minipage}[h!]{0.29\textwidth}
+\includegraphics[width=2\textwidth, angle=-90]{../pictures/fishChest.png}
+\end{minipage}
+}
+\only<2>{
+\begin{minipage}[h!]{0.6\textwidth}
+\underline{Bayesian Model Based Statistics:}
+\begin{itemize}
+\item Model Overdispersion
+\item Uncertainty Estimation
+\item Mechanisms for Pooling
+\item Out-of-Sample Predictions
+\end{itemize}
+\underline{Future Directions:}
+\begin{itemize}
+\item Additional Predictors
+\item Multivariate Models
+\item Time Series Hindcasting
+\item Dirichlet Process Models
+\end{itemize}
+\end{minipage}
+\begin{minipage}[h!]{0.29\textwidth}
+\includegraphics[width=2\textwidth, angle=-90]{../pictures/fishChest.png}
+\end{minipage}
+}
 \end{frame}
 
 %
@@ -1172,6 +1211,178 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 %
 \end{frame}
 
+%
+\setcounter{equation}{0}
+%
+
+%
+\begin{frame}{Landings Weighted}
+\vspace*{-0.5cm}
+%\begin{align*}
+\begin{equation*}
+        y_{ijklm\eta} \sim \text{Beta-Binomial}\Big(\mu( \theta_{jklm\eta}),~\sigma^2( \theta_{jklm\eta}, \rho) \Big)
+\end{equation*}
+%\vspace{-0.7cm}
+%\begin{gather*}
+%%       \vspace{0.2cm}
+%        \mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})\\
+%        %=n~\frac{\alpha_{jklm\eta}}{\alpha_{jklm\eta}+\beta_{jklm\eta}}  
+%        \sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n}\Big)\Big(1+(n-1)~\rho\Big)
+%        %\sigma^2_{jklm\eta} = \bigg(\mu_{jklm\eta}-\frac{\mu^2_{jklm\eta}}{n}\bigg)\bigg(1+(n-1)~\rho\bigg
+%%       \vspace{0.2cm}
+%\end{gather*}
+%\vspace{-0.2cm}
+\begin{equation*}
+        \theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta} \bm{+ \beta^{(\ell)}\ell} 
+\end{equation*}
+$~$\\
+\vspace*{-0.25cm}
+\hspace*{-0.5cm}
+\begin{minipage}[h!]{0.3\textwidth}
+	\begin{align*}
+	\beta_0 &\propto 1\\
+	\beta^{(s)}_j &\sim N(0, 32^2)\\
+	\beta^{(p)}_k &\sim N(0, 32^2)\\
+	\beta^{(g)}_l &\sim N(0, 32^2)\\
+	\bm{\beta^{(\ell)}} &\bm{\sim N(0, 32^2)}
+	\end{align*}
+\end{minipage}
+\begin{minipage}[h!]{0.39\textwidth}
+	\begin{align*}
+        \text{logit}(\rho) &\sim N(0, 2^2)\\
+	&&\\
+	\beta^{(y:q)}_{m\eta} &\sim N(0,v)\\
+        v\sim I&G(1,2x10^{3})\\
+	&\forall ~~ v 
+        \end{align*}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+%\vspace{-0.5cm}
+%\hspace{4cm}
+\begin{eqnarray*}
+j &\in&\left\{1, ..., J\right\} \text{Species}\\
+k &\in&\left\{1, ..., K\right\} \text{Ports}\\
+l &\in&\left\{1, ..., L\right\} \text{Gears}\\
+m &\in&\left\{1, ..., M\right\} \text{Years}\\
+\eta &\in&\left\{1, ..., H\right\} \text{Quarters}
+\end{eqnarray*}
+\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{Vessel Effects}
+\vspace*{-0.5cm}
+%\begin{align*}
+\begin{equation*}
+        y_{ijklm\eta\nu} \sim \text{Beta-Binomial}\Big(\mu( \theta_{jklm\eta\nu}),~\sigma^2( \theta_{jklm\eta\nu}, \rho) \Big)
+\end{equation*}
+%\vspace{-0.7cm}
+%\begin{gather*}
+%%       \vspace{0.2cm}
+%        \mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})\\
+%        %=n~\frac{\alpha_{jklm\eta}}{\alpha_{jklm\eta}+\beta_{jklm\eta}}  
+%        \sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n}\Big)\Big(1+(n-1)~\rho\Big)
+%        %\sigma^2_{jklm\eta} = \bigg(\mu_{jklm\eta}-\frac{\mu^2_{jklm\eta}}{n}\bigg)\bigg(1+(n-1)~\rho\bigg
+%%       \vspace{0.2cm}
+%\end{gather*}
+%\vspace{-0.2cm}
+\begin{equation*}
+        \theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta} \bm{+ \beta^{(v)}_\nu} 
+\end{equation*}
+$~$\\
+\vspace*{-0.25cm}
+\hspace*{-0.5cm}
+\begin{minipage}[h!]{0.3\textwidth}
+	\begin{align*}
+	\beta_0 &\propto 1\\
+	\beta^{(s)}_j &\sim N(0, 32^2)\\
+	\beta^{(p)}_k &\sim N(0, 32^2)\\
+	\beta^{(g)}_l &\sim N(0, 32^2)
+	\end{align*}
+\end{minipage}
+\begin{minipage}[h!]{0.39\textwidth}
+	\begin{align*}
+        \text{logit}(\rho) &\sim N(0, 2^2)\\
+	&\\
+	\beta^{(y:q)}_{m\eta} &\sim N(0,v)\\
+	\bm{\beta^{(v)}_\nu} &\bm{\sim N(0,v)}\\ 
+        v\sim I&G(1,2x10^{3})\\
+	&\forall ~~ v 
+        \end{align*}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+%\vspace{-0.5cm}
+%\hspace{4cm}
+\begin{eqnarray*}
+j &\in&\left\{1, ..., J\right\} \text{Species}\\
+k &\in&\left\{1, ..., K\right\} \text{Ports}\\
+l &\in&\left\{1, ..., L\right\} \text{Gears}\\
+m &\in&\left\{1, ..., M\right\} \text{Years}\\
+\eta &\in&\left\{1, ..., H\right\} \text{Quarters}\\
+\bm{\nu} &\bm{\in}&\bm{\left(1, ..., N\right)} \textbf{Vessels}
+\end{eqnarray*}
+\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{Species:Gear Interactions}
+\vspace*{-0.5cm}
+%\begin{align*}
+\begin{equation*}
+        y_{ijklm\eta} \sim \text{Beta-Binomial}\Big(\mu( \theta_{jklm\eta}),~\sigma^2( \theta_{jklm\eta}, \rho) \Big)
+\end{equation*}
+%\vspace{-0.7cm}
+%\begin{gather*}
+%%       \vspace{0.2cm}
+%        \mu_{jklm\eta} = n~\text{logit}^{-1}(\theta_{jklm\eta})\\
+%        %=n~\frac{\alpha_{jklm\eta}}{\alpha_{jklm\eta}+\beta_{jklm\eta}}  
+%        \sigma^2_{jklm\eta} = \mu_{jklm\eta}\Big(1-\frac{\mu_{jklm\eta}}{n}\Big)\Big(1+(n-1)~\rho\Big)
+%        %\sigma^2_{jklm\eta} = \bigg(\mu_{jklm\eta}-\frac{\mu^2_{jklm\eta}}{n}\bigg)\bigg(1+(n-1)~\rho\bigg
+%%       \vspace{0.2cm}
+%\end{gather*}
+%\vspace{-0.2cm}
+\begin{equation*}
+        \theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta} \bm{+ \beta^{(s:g)}_{jl}} 
+\end{equation*}
+$~$\\
+\vspace*{-0.25cm}
+\hspace*{-0.5cm}
+\begin{minipage}[h!]{0.3\textwidth}
+	\begin{align*}
+	\beta_0 &\propto 1\\
+	\beta^{(s)}_j &\sim N(0, 32^2)\\
+	\beta^{(p)}_k &\sim N(0, 32^2)\\
+	\beta^{(g)}_l &\sim N(0, 32^2)
+	\end{align*}
+\end{minipage}
+\begin{minipage}[h!]{0.39\textwidth}
+	\begin{align*}
+        \text{logit}(\rho) &\sim N(0, 2^2)\\
+	&\\
+	\beta^{(y:q)}_{m\eta} &\sim N(0,v)\\
+	\bm{\beta^{(s:g)}_{jl}} &\bm{\sim N(0,v)}\\ 
+        v\sim I&G(1,2x10^{3})\\
+	&\forall ~~ v 
+        \end{align*}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+%\vspace{-0.5cm}
+%\hspace{4cm}
+\begin{eqnarray*}
+j &\in&\left\{1, ..., J\right\} \text{Species}\\
+k &\in&\left\{1, ..., K\right\} \text{Ports}\\
+l &\in&\left\{1, ..., L\right\} \text{Gears}\\
+m &\in&\left\{1, ..., M\right\} \text{Years}\\
+\eta &\in&\left\{1, ..., H\right\} \text{Quarters}
+\end{eqnarray*}
+\end{minipage}
+\end{frame}
 
 
 %%

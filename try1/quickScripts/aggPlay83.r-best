@@ -283,9 +283,33 @@ for(y in yearEff){
 ##out = inla.hyperpar(out)
 #print(summary(out))
 
+##
+#writeLines('V MODEL')
+#out = inla(weight~species + portComplex + gear + f(QGivenY), 
+#       	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
+#	control.inla=list(
+#		#strategy='gaussian',
+#		diagonal=0.000001,
+#                int.strategy='ccd',
+#                tolerance=1e-10,
+#                h=1e-10,
+#                lincomb.derived.only=F
+#	),
+#	control.compute=list(
+#        	config=T,
+#                waic=T,
+#                dic=T
+#       	),
+#       	control.mode = list(
+#               restart=T
+#       	)
+#)
+##out = inla.hyperpar(out)
+#print(summary(out))
+
 #
-writeLines('V MODEL')
-out = inla(weight~species + portComplex + gear + f(QGivenY), 
+writeLines('main + V MODEL')
+out = inla(weight~species + portComplex + gear + year + qtr + f(QGivenY), 
        	Ntrials=DAT$clustSize, family='betabinomial', data=DAT, num.threads=cores,
 	control.inla=list(
 		#strategy='gaussian',
@@ -613,8 +637,8 @@ mse = sum(pred$mse[!is.na(pred$mse)]*pred$n[!is.na(pred$mse)])/sum(pred$n[!is.na
 writeLines(sprintf('MSE: %1.7f\n', mse)) #mseQY))
 metrics = t(c(out$mlik[1], out$waic$waic, out$dic$dic, mse))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'mse')
-write.csv(format(metrics, scientific=T, digits=10), file="./aggMetrics83.csv-4", row.names=F, quote=F)
-system('git add aggMetrics83.csv-4')
+write.csv(format(metrics, scientific=T, digits=10), file="./aggMetrics83.csv-best", row.names=F, quote=F)
+system('git add aggMetrics83.csv-best')
 
 
 
