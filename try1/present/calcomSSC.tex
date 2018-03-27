@@ -9,6 +9,7 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{tabularx}
+\usepackage{stackengine}
 \usetikzlibrary{positioning, shapes, snakes}
 
 %\usepackage{ctable}
@@ -73,18 +74,56 @@
 %
 \subsection{}
 \begin{frame}
-\centering
-$~$\\
-\vspace{-0.5cm}
-\includegraphics[width=\textwidth]{../pictures/mcatColors.png}
-$~$\\
-\vspace*{-1cm}
-\hspace*{-0.2cm}
-\includegraphics[width=1.055\textwidth]{../pictures/stratAvgSamp.pdf}
-$~$\\
-\vspace*{-2.1cm}
-\hspace*{-0.2cm}
-\includegraphics[width=1.055\textwidth]{../pictures/nMcatsEMA.pdf}
+\only<1>{
+\vspace*{0.3cm}
+\hspace*{-0.1cm}
+%\stackinset{r}{2.58in}{r}{0.1in}{\color{blue}\rotatebox{90}{\rule{3in}{1.5pt}}}{
+%{\color{blue}\stackinset{r}{3.27in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+%{\color{red}\stackinset{r}{3.8in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+%{\color{red}\stackinset{r}{3.2in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+\includegraphics[width=\textwidth]{../pictures/mcatSampleComplex.png}
+%}}
+%}}
+%}}
+%}
+}
+\only<2>{
+\hspace*{-0.345cm}
+%\stackinset{r}{2.58in}{r}{0.1in}{\color{blue}\rotatebox{90}{\rule{3in}{1.5pt}}}{
+%{\color{blue}\stackinset{r}{3.27in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+{\color{red}\stackinset{r}{3.8in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+{\color{red}\stackinset{r}{3.2in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+\includegraphics[width=\textwidth]{../pictures/mcatSampleComplex.png}
+}}
+}}
+%}}
+%}
+}
+\only<3>{
+\hspace*{-0.6cm}
+\stackinset{r}{2.58in}{r}{0.1in}{\color{blue}\rotatebox{90}{\rule{3in}{1.5pt}}}{
+{\color{blue}\stackinset{r}{3.27in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+{\color{red}\stackinset{r}{3.8in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+{\color{red}\stackinset{r}{3.2in}{r}{0.1in}{\rotatebox{90}{\rule{3in}{1.5pt}}}{
+\includegraphics[width=\textwidth]{../pictures/mcatSampleComplex.png}
+}}
+}}
+}}
+}
+}
+%\centering
+%$~$ \\
+%\vspace{-0.5cm}
+%\includegraphics[width=\textwidth]{../pictures/mcatColors.png}
+%$~$ \\
+%\vspace*{-1cm}
+%\hspace*{-0.2cm}
+%\includegraphics[width=1.055\textwidth]{../pictures/stratAvgSamp.pdf}
+%$~$ \\
+%\vspace*{-2.1cm}
+%\hspace*{-0.2cm}
+%\includegraphics[width=1.055\textwidth]{../pictures/nMcatsEMA.pdf}
+%}
 \end{frame}
 
 %
@@ -517,7 +556,7 @@ Market Category	& Tons Landed & 68\% & 95\% & 99\% \\ \hline
 265: Yelloweye	   &774.8  & 69.6\% & 96.0\% & 97.8\% \\
 270: Splitnose	   &458.7  & 68.6\% & 93.6\% & 96.7\% \\
 959: G. Red	   &225.1  & 68.5\% & 96.3\% & 98.1\% \\
-961: G. Rosefish   &162.1  & 69.3\% & 93.2\% & 95.3\% \\
+961: G. Rosefish   &162.1  & 69.3\% & 93.2\% & 95.3\% \\ \hline
 Average* 	   &       & 68.3\% & 94.5\% & 96.7\% \\ \hline
 %\bottomrule
 \end{tabular}
@@ -598,7 +637,7 @@ Market Category & Tons Landed & 68\% & 95\% & 99\% \\ \hline
 259: Yellowtail    & 868   & 83.8\% & 91.9\% & 92.9\% \\
 663: Bank 	   & 432   & 68.1\% & 94.1\% & 96.3\% \\
 245: Cowcod 	   & 273   & 60.8\% & 94.9\% & 97.7\% \\
-270: Splitnose 	   & 3     & 67.9\% & 94.2\% & 96.7\% \\
+270: Splitnose 	   & 3     & 67.9\% & 94.2\% & 96.7\% \\ \hline
 Average*	   &	   & 68.9\% & 94.9\% & 96.9\% \\ \hline
 %%\bottomrule
 \end{tabular}}
@@ -938,9 +977,9 @@ $~$\\
         $\omega$&0.73&0.25&0.00&0.00&0.00&0.00&0.00 \\ \hline
         CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline 
         ERK&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline
-        BRG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline
+        BRG*&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline
         BDG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline
-        OSF&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline
+        OSF*&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline
         MNT&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3} \\ \hline
         MRO&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline
         OSB&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00} \\ \hline
@@ -958,9 +997,9 @@ $~$\\
         $\omega$&0.26&0.21&0.19&0.11&0.10\\ \hline %&0.08&0.00&0.00&0.00&0.00 \\ \hline
         CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}\\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellco
         ERK&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}\\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellco
-        BRG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellco
+        BRG*&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellco
         BDG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellco
-        OSF&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellco
+        OSF*&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellco
         MNT&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellco
         MRO&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellco
         OSB&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}\\ \hline %&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellco
@@ -988,9 +1027,9 @@ $~$\\
         $\omega$&0.64&0.12&0.07&0.06&0.04\\ \hline %&0.03&0.01&0.01&0.01&0.00 \\ \hline
         CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}\\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellco
         ERK&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}\\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellco
-        BRG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellco
+        BRG*&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellco
         BDG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellco
-        OSF&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellco
+        OSF*&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellco
         MNT&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellco
         MRO&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellco
         OSB&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellco
