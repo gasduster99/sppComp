@@ -12,7 +12,7 @@ suppressMessages(library(foreach, quietly=FALSE))
 #
 
 #
-predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath, threads, adj){
+predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath, threads, adj=1){
 	#fillD		: the result of makeD(...)
 	#portGold	: a list of gold standard ports
 	#gearGold	: a list of gold standard gears
@@ -103,24 +103,62 @@ tuneDensity = function(){
 #
 aggPerf = function(preds, by){
 	#preds	: the predictive performance data structure returned by predPerf
-	#by	: a list as given in the aggregate function
+	#by	: a list as given in the aggregate function; if names are provided in the 'by' parameter the output will also contain column names
 	#
 	#value: an aggregated version of preds
 	
 	#
-	byNames = na
 	nCover = aggregate(preds$coverage*preds$n, by=by, FUN=sum)
 	nAgg   = aggregate(preds$n, by=by, FUN=sum)
-	
+	#
+	c = dim(nCover)[2]
+	nCover[,c] = nCover[,c]/nAgg[,c]
+	#
+	out = merge(nCover, nAgg, by=colnames(nCover)[-c])	
+	colnames(out) = c(names(by), 'coverage', 'n')
+	#
+	return( out )
 }
 
 #
-plotPerf = function(preds){
-	#preds: the predictive performance data structure returned by predPerf
+plotPerf = function(preds, level){
+	#preds	: the predictive performance data structure returned by predPerf
+	#level	: a reference level comparing predictions	
 	#
 	#value: a series of page sized plots
 	
-	
+	#
+	r = dim(preds)[1]
+	c = dim(preds)[2]
+	l = c(-0.05, -0.02, 0, 0.02, 0.05)
+	#
+	opar = par(srt=90)
+	plot(preds$coverage, 1:r, 
+		xlim = c(max(0, min(level+l-0.01, preds$coverage)), min(1, max(level+l+0.01, preds$coverage))), 
+		yaxt = 'n', 
+		ann  = F, 
+		axes = F
+	)
+	axis(side=1, 
+		at = round(c(
+			quantile(preds$coverage, 0.01), 
+			l+level, 
+			quantile(preds$coverage, 0.99)
+		), 2)
+	) 
+	abline( v = sapply(l+level, FUN=function(x){min(max(x, 0), 1)}), 
+		col = c('red', 'blue', 'black', 'blue', 'red'),
+		lwd = c(1, 2, 3, 2, 1) 
+	)	
+	par(opar)
+	mtext(preds[,1], at=1:r, side=2)
+	#text( y = r, 
+	#	par("usr")[1], 
+	#	labels = preds[,1], 
+	#	srt = 90, 
+	#	pos = 2, 
+	#	xpd = TRUE
+	#)
 }
 
 

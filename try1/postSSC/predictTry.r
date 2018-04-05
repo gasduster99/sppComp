@@ -44,15 +44,16 @@ D = makeD(sppGold, D)
 path = '/media/nick/extraBig/fullTimeComplete/'
 avgPath = sprintf("%s/%sto%s/MCAT%d/Top/avgModel/", path, substring(minYear, 3, 4), substring(maxYear, 3, 4), mcat)
 #
-nominal = 0.68
+nominal = 0.95 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath, 10, 4/12)
 actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
-#aggregate(pp$coverage, by=list(pp$port, pp$gear, pp$species), FUN=mean)
-#sum(pp$coverage*pp$n)/sum(pp$n)
+#
 
+#
+#PLOT
+#
 
-
-
+plotPerf(aggPerf(pp, by=list(port=pp$port)), level=nominal)
 
 
 
