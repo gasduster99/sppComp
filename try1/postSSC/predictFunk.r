@@ -121,7 +121,11 @@ aggPerf = function(preds, by){
 }
 
 #
-plotPerf = function(preds, level){
+plotPerf = function(preds, level, 
+	llv=c(0.05),# 0.02), 
+	col = c('red')# 'blue') 
+	#lwd = c(2, 3, 2)
+	){
 	#preds	: the predictive performance data structure returned by predPerf
 	#level	: a reference level comparing predictions	
 	#
@@ -130,35 +134,72 @@ plotPerf = function(preds, level){
 	#
 	r = dim(preds)[1]
 	c = dim(preds)[2]
-	l = c(-0.05, -0.02, 0, 0.02, 0.05)
 	#
-	opar = par(srt=90)
-	plot(preds$coverage, 1:r, 
-		xlim = c(max(0, min(level+l-0.01, preds$coverage)), min(1, max(level+l+0.01, preds$coverage))), 
+	cexs = preds$n/mean(preds$n)
+	cols = rep('black', r)
+	cols[abs(preds$coverage[]-level)>llv] = col
+	#
+	par(mar=c(5.1,4*(c-2),4.1,2.1))
+	plot(preds$coverage, r:1,
+		pch  = 19,
+		cex  = cexs,
+		col  = cols,
+		xlim = c(0, 1), #c(max(0, min(level+llv-0.01, preds$coverage)), min(1, max(level+llv+0.01, preds$coverage))), 
 		yaxt = 'n', 
 		ann  = F, 
 		axes = F
 	)
-	axis(side=1, 
-		at = round(c(
-			quantile(preds$coverage, 0.01), 
-			l+level, 
-			quantile(preds$coverage, 0.99)
-		), 2)
-	) 
-	abline( v = sapply(l+level, FUN=function(x){min(max(x, 0), 1)}), 
-		col = c('red', 'blue', 'black', 'blue', 'red'),
-		lwd = c(1, 2, 3, 2, 1) 
-	)	
-	par(opar)
-	mtext(preds[,1], at=1:r, side=2)
-	#text( y = r, 
-	#	par("usr")[1], 
-	#	labels = preds[,1], 
-	#	srt = 90, 
-	#	pos = 2, 
-	#	xpd = TRUE
+	#
+	if( any(abs(level-c(0, 0.5, 1))<0.15) ){
+		axis(side=1, 
+			at = round(c(
+				0, #quantile(preds$coverage, 0.01), 
+				0.5,
+				#max(0, min(1, level)), 
+				1 #quantile(preds$coverage, 0.99)
+			), 2)
+		)
+	}else{
+		axis(side=1, 
+			at = round(c(
+				0, #quantile(preds$coverage, 0.01), 
+				0.5,
+				max(0, min(1, level)), 
+				1 #quantile(preds$coverage, 0.99)
+			), 2)
+		)
+	}
+	#
+	for(i in 1:r){ 	segments(level, i, rev(preds$coverage)[i], i, col=rev(cols)[i]) }
+	#
+	abline( v  = level, 
+               col = 'black',
+               lwd = 2
+        )
+	## 
+	#abline( v = sapply(llv+level, FUN=function(x){min(max(x, 0), 1)}), 
+	#	col = col,
+	#	lwd = lwd
 	#)
+	##
+	for(i in 1:(c-2)){
+		#column header
+		text( y = 0,
+			x = 0.05 - ((c-2)^2*0.05) + ((i-1)*0.05*(c-2)),
+			labels = colnames(preds)[i], 
+			srt = 0, 
+			pos = 2, 
+			xpd = TRUE
+		)
+		#column entries
+		text( y = r:1, 
+			0.05 - ((c-2)^2*0.05) + ((i-1)*0.05*(c-2)), 
+			labels = preds[,i], 
+			srt = 0, 
+			pos = 2, 
+			xpd = TRUE
+		)
+	}
 }
 
 

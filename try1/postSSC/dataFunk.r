@@ -2,7 +2,8 @@
 #DEPENDENCIES
 #
 
-suppressMessages(library(RJDBC, quietly=FALSE)) #requires "./sqljdbc4.jar"
+#
+#suppressMessages(library(RJDBC, quietly=FALSE)) #requires "./sqljdbc4.jar"
 suppressMessages(library(getPass, quietly=FALSE))
 
 #
