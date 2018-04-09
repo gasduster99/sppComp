@@ -23,13 +23,14 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#adj		: tune the density estimation
 	#
 	#value		: a data.frame of predictive coverages
+	writeLines('predPerf...\n')
 	
 	#
 	registerDoParallel(cores=threads)
 	preds = foreach( p=portGold )%dopar%{
 		#
 		end = 1
-		pred = list() #data.frame(port=character(), gear=character(), qtr=integer(), year=integer(), spp=character(), propPredHDI=numeric(), n=numeric())
+		pred = list() 
 		#
 		for(g in gearGold){
 		for(q in qtrGold ){
@@ -38,7 +39,7 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 			sp = read.csv(sprintf('%s/%s/%s/%s/%s/sppComp.csv', avgPath, p, g, q, y), stringsAsFactors=F)
 			W = fillD[fillD$port==p & fillD$gear==g & fillD$qtr==q & fillD$year==y,]
 			W$weight  = as.numeric(W$weight)
-			W$aggSize = as.numeric(W$aggSize)
+			W$aggClustSize = as.numeric(W$aggClustSize)
 			#avoid the case where no data exists
 			if( dim(W)[1]>0 ){
 				#
@@ -49,7 +50,7 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 					WS = W[W$species==s,]
 					if( dim(WS)[1]>0 ){
 						#make comps
-						cp = WS$weight/WS$aggSize
+						cp = WS$weight/WS$aggClustSize
 						#cp = c()
 					        #wp = c()
 					        #for(sam in WS$sampleNumber){
@@ -72,8 +73,9 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 						pred$qtr[end] 	  = q
 						pred$year[end]	  = y
 						pred$species[end] = as.character(s)
-						pred$coverage[end]= cpHdiMean
 						pred$n[end]	  = length(cp)
+						pred$landing[end] = WS[1,'landing']
+						pred$coverage[end]= cpHdiMean	
 						#
 						end = end + 1
 					}
@@ -86,7 +88,7 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#reduce preds
 	preds = do.call(rbind, preds)
 	preds = as.data.frame(preds)
-	colnames(preds) = c('port', 'gear', 'qtr', 'year', 'species', 'coverage', 'n')
+	colnames(preds) = c('port', 'gear', 'qtr', 'year', 'species', 'n', 'landing', 'coverage')
 	#
 	#preds$coverage = as.numeric(preds$coverage)
 	#preds$n = as.numeric(preds$n)
@@ -101,12 +103,24 @@ tuneDensity = function(){
 }
 
 #
-aggPerf = function(preds, by){
+aggPerf = function(preds, by, whichIsSpp=numeric(0) ){
 	#preds	: the predictive performance data structure returned by predPerf
 	#by	: a list as given in the aggregate function; if names are provided in the 'by' parameter the output will also contain column names
+	#isSpp 	: a vector indicating which 'by'
 	#
 	#value: an aggregated version of preds
+	writeLines('aggPerf...\n')
 	
+	#		
+	sppGold = unique(preds$species)
+	nSpp 	= length(sppGold)
+	#sum across species: evenly divide and sum
+	if( length(whichIsSpp)>0 ){
+		agLand 	= aggregate(preds$landing/nSpp, by=by[-whichIsSpp])
+	}
+	#sum by species: unique of hole values
+
+
 	#
 	nCover = aggregate(preds$coverage*preds$n, by=by, FUN=sum)
 	nAgg   = aggregate(preds$n, by=by, FUN=sum)
@@ -130,12 +144,13 @@ plotPerf = function(preds, level,
 	#level	: a reference level comparing predictions	
 	#
 	#value: a series of page sized plots
+	writeLines('plotPerf...\n')
 	
 	#
 	r = dim(preds)[1]
 	c = dim(preds)[2]
 	#
-	cexs = preds$n/mean(preds$n)
+	cexs = preds$landing/mean(preds$landing)
 	cols = rep('black', r)
 	cols[abs(preds$coverage[]-level)>llv] = col
 	#
