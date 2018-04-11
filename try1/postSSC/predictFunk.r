@@ -103,33 +103,36 @@ tuneDensity = function(){
 }
 
 #
-aggPerf = function(preds, by, whichIsSpp=numeric(0) ){
-	#preds	: the predictive performance data structure returned by predPerf
-	#by	: a list as given in the aggregate function; if names are provided in the 'by' parameter the output will also contain column names
-	#isSpp 	: a vector indicating which 'by'
+aggPerf = function(preds, byNames){ #by, byNames=names(by)){ #whichPredSpp=numeric(0), whichBySpp=numeric(0)){
+	#preds		: the predictive performance data structure returned by predPerf
+	#by		: a list as given in the aggregate function; if names are provided in the 'by' parameter the output will also contain column names
+	#byNames	: the names of the by list
+	#whichPredSpp 	: whcih column of 'preds' is species 
+	#whichBySpp	: whcih column of 'by' is species
 	#
 	#value: an aggregated version of preds
 	writeLines('aggPerf...\n')
 	
-	#		
-	sppGold = unique(preds$species)
-	nSpp 	= length(sppGold)
-	#sum across species: evenly divide and sum
-	if( length(whichIsSpp)>0 ){
-		agLand 	= aggregate(preds$landing/nSpp, by=by[-whichIsSpp])
-	}
-	#sum by species: unique of hole values
-
-
 	#
+	by = preds[which(colnames(preds)%in%byNames)]
+	#aggregate landings
+	sppUnique = preds
+	colnames(sppUnique)[colnames(sppUnique)=='landing'] = 'x'	
+	#first unique across species if it is beting summed over
+	if( !('species'%in%byNames) ){ sppUnique=aggregate(preds$landing, by=preds[-which(colnames(preds)=='species')], FUN=unique) }	
+	#next sum across what ever is left
+	sppAgg = aggregate(sppUnique$x, by=sppUnique[which(colnames(sppUnique)%in%byNames)], FUN=sum)
+	#aggregate coverage
 	nCover = aggregate(preds$coverage*preds$n, by=by, FUN=sum)
+	#aggregate n
 	nAgg   = aggregate(preds$n, by=by, FUN=sum)
 	#
 	c = dim(nCover)[2]
 	nCover[,c] = nCover[,c]/nAgg[,c]
 	#
-	out = merge(nCover, nAgg, by=colnames(nCover)[-c])	
-	colnames(out) = c(names(by), 'coverage', 'n')
+	out = merge(nAgg, sppAgg, by=colnames(sppAgg)[-c])#, nCover, by=colnames(nCover)[-c])	
+	out = merge(out, nCover, by=colnames(nCover)[-c])	
+	colnames(out) = c(colnames(out)[1:(dim(out)[2]-3)], 'n', 'landing', 'coverage')	
 	#
 	return( out )
 }

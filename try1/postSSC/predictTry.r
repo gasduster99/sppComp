@@ -38,7 +38,7 @@ D = makeD(sppGold, D)
 path = '/media/nick/extraBig/fullTimeComplete/'
 avgPath = sprintf("%s/%sto%s/MCAT%d/Top/avgModel/", path, substring(minYear, 3, 4), substring(maxYear, 3, 4), mcat)
 #
-nominal = 0.5 #0.68
+nominal = 0.68 #0.5 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath, 10, 4/12)
 #actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
 ##
