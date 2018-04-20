@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.7)  28 MAR 2018 21:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.4.19)  19 APR 2018 17:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **calcomSSC.tex
 (./calcomSSC.tex
 LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 3 language(s) loaded.
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasercs.sty
 Package: beamerbasercs 2015/03/08 (rcs-revision 368aa9ba9d38)
@@ -503,6 +503,12 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/sansmathaccent.sty
+Package: sansmathaccent 2013/03/28
+
+(/usr/share/texlive/texmf-dist/tex/latex/filehook/filehook.sty
+Package: filehook 2011/10/12 v0.5d Hooks for input files
 )))
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetranslator.sty
 Package: beamerbasetranslator 2010/06/11  (rcs-revision 85fd1cc7fc42)
@@ -734,11 +740,17 @@ Package: beamercolorthemeorchid 2010/06/17  (rcs-revision d02a7cf4d8ae)
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/themes/inner/beamerinnerthemere
 ctangles.sty
 Package: beamerinnerthemerectangles 2010/06/17  (rcs-revision d02a7cf4d8ae)
-)) (/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
+))
+\sympureletters=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
+ut line 7.
+ (/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2014/10/28 v1.1c Bold Symbol Support (DPC/FMi)
-\symboldoperators=\mathgroup6
-\symboldletters=\mathgroup7
-\symboldsymbols=\mathgroup8
+\symboldoperators=\mathgroup7
+\symboldletters=\mathgroup8
+\symboldsymbols=\mathgroup9
+\symboldpureletters=\mathgroup10
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 207.
 )
@@ -821,29 +833,1412 @@ Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
 \TX@cols=\count163
 \TX@ftn=\toks47
 )
+(/usr/share/texlive/texmf-dist/tex/latex/stackengine/stackengine.sty
+Package: stackengine 2014/01/06 v3.24\ Stacking text and objects in convenient 
+ways
 
-! LaTeX Error: File `stackengine.sty' not found.
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count164
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count165
+\calc@Bcount=\count166
+\calc@Adimen=\dimen262
+\calc@Bdimen=\dimen263
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count167
+\calc@Cskip=\skip62
+)
+\c@@stackindex=\count168
+\@boxshift=\skip63
+\stack@tmplength=\skip64
+\temp@stkl=\skip65
+\@stackedboxwidth=\skip66
+\@addedbox=\box58
+\@anchorbox=\box59
+\stackedbox=\box60
+\@centerbox=\box61
+\c@ROWcellindex@=\count169
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.code.tex
+File: tikzlibraryshapes.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1
+)
 
-Enter file name: x
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2008/06/26 v3.0.1a (rcs-revision 1.1)
 
- )
-(\end occurred when \ifx on line 13 was incomplete)
-(\end occurred when \ifx on line 13 was incomplete) 
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.misc.code.tex
+File: tikzlibraryshapes.misc.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.misc.code.tex
+File: pgflibraryshapes.misc.code.tex 2013/07/18 v3.0.1a (rcs-revision 1.5)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.symbols.code.tex
+File: tikzlibraryshapes.symbols.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.symbols.code.tex
+File: pgflibraryshapes.symbols.code.tex 2013/09/11 v3.0.1a (rcs-revision 1.6)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.arrows.code.tex
+File: tikzlibraryshapes.arrows.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.arrows.code.tex
+File: pgflibraryshapes.arrows.code.tex 2008/06/26 v3.0.1a (rcs-revision 1.1)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.callouts.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.callouts.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2010/01/07 v3.0.1a (rcs-revision 1.2)
+
+\pgfnodepartlowerbox=\box62
+\pgfnodeparttwobox=\box63
+\pgfnodepartthreebox=\box64
+\pgfnodepartfourbox=\box65
+\pgfnodeparttwentybox=\box66
+\pgfnodepartnineteenbox=\box67
+\pgfnodeparteighteenbox=\box68
+\pgfnodepartseventeenbox=\box69
+\pgfnodepartsixteenbox=\box70
+\pgfnodepartfifteenbox=\box71
+\pgfnodepartfourteenbox=\box72
+\pgfnodepartthirteenbox=\box73
+\pgfnodeparttwelvebox=\box74
+\pgfnodepartelevenbox=\box75
+\pgfnodeparttenbox=\box76
+\pgfnodepartninebox=\box77
+\pgfnodeparteightbox=\box78
+\pgfnodepartsevenbox=\box79
+\pgfnodepartsixbox=\box80
+\pgfnodepartfivebox=\box81
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarysnakes.code.tex
+File: tikzlibrarysnakes.code.tex 2013/07/15 v3.0.1a (rcs-revision 1.7)
+
+
+Package pgf Warning: Snakes have been superseded by decorations. Please use the
+ decoration libraries instead of the snakes library on input line 14.
+
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.pathmorphing.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.cod
+e.tex
+\pgfdecoratedcompleteddistance=\dimen264
+\pgfdecoratedremainingdistance=\dimen265
+\pgfdecoratedinputsegmentcompleteddistance=\dimen266
+\pgfdecoratedinputsegmentremainingdistance=\dimen267
+\pgf@decorate@distancetomove=\dimen268
+\pgf@decorate@repeatstate=\count170
+\pgfdecorationsegmentamplitude=\dimen269
+\pgfdecorationsegmentlength=\dimen270
+)
+\tikz@lib@dec@box=\box82
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
+decorations.pathmorphing.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.pathreplacing.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
+decorations.pathreplacing.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.shapes.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
+decorations.shapes.code.tex)))
+No file calcomSSC.aux.
+\openout1 = `calcomSSC.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: includehead includefoot 
+* h-part:(L,W,R)=(28.45274pt, 307.28987pt, 28.45274pt)
+* v-part:(T,H,B)=(0.0pt, 273.14662pt, 0.0pt)
+* \paperwidth=364.19536pt
+* \paperheight=273.14662pt
+* \textwidth=307.28987pt
+* \textheight=244.6939pt
+* \oddsidemargin=-43.81725pt
+* \evensidemargin=-43.81725pt
+* \topmargin=-72.26999pt
+* \headheight=14.22636pt
+* \headsep=0.0pt
+* \topskip=11.0pt
+* \footskip=14.22636pt
+* \marginparwidth=4.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count171
+\scratchdimen=\dimen271
+\scratchbox=\box83
+\nofMPsegments=\count172
+\nofMParguments=\count173
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count174
+\MPscratchDim=\dimen272
+\MPnumerator=\count175
+\makeMPintoPDFobject=\count176
+\everyMPtoPDFconversion=\toks49
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+ABD: EveryShipout initializing macros
+\AtBeginShipoutBox=\box84
+Package hyperref Info: Link coloring OFF on input line 28.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count177
+)
+LaTeX Info: Redefining \ref on input line 28.
+LaTeX Info: Redefining \pageref on input line 28.
+LaTeX Info: Redefining \nameref on input line 28.
+
+(./calcomSSC.out) (./calcomSSC.out)
+\@outlinefile=\write5
+\openout5 = `calcomSSC.out'.
+
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 28.
+\symnumbers=\mathgroup11
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/cmss/m/it on input line 2
+8.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/mathkerncmss/bx/sl --> OT1/cmss/m/it on input line 
+28.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 28.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 28.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 28.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 28.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 2
+8.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 
+28.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
+ut line 28.
+
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bas
+ic-dictionary/translator-basic-dictionary-English.dict
+Dictionary: translator-basic-dictionary, Language: English 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bib
+liography-dictionary/translator-bibliography-dictionary-English.dict
+Dictionary: translator-bibliography-dictionary, Language: English 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-env
+ironment-dictionary/translator-environment-dictionary-English.dict
+Dictionary: translator-environment-dictionary, Language: English 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-mon
+ths-dictionary/translator-months-dictionary-English.dict
+Dictionary: translator-months-dictionary, Language: English 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-num
+bers-dictionary/translator-numbers-dictionary-English.dict
+Dictionary: translator-numbers-dictionary, Language: English 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-the
+orem-dictionary/translator-theorem-dictionary-English.dict
+Dictionary: translator-theorem-dictionary, Language: English 
+)
+LaTeX Info: Redefining \includegraphics on input line 28.
+ (./calcomSSC.nav)
+
+Package hyperref Warning: Option `pdfauthor' has already been used,
+(hyperref)                setting the option has no effect on input line 42.
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
+(Font)              size <5> substituted on input line 69.
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+]
+<../pictures/mcatSampleComplex.png, id=126, 847.165pt x 594.22pt>
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+
+Overfull \vbox (13.78174pt too high) detected at line 127
+ []
+
+[2
+
+ <../pictures/mcatSampleComplex.png>]
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+
+Overfull \hbox (3.5671pt too wide) in paragraph at lines 127--127
+[]|  [][][] 
+ []
+
+
+Overfull \vbox (13.75029pt too high) detected at line 127
+ []
+
+[3
+
+]
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+ <use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+File: ../pictures/mcatSampleComplex.png Graphic file (type png)
+
+<use ../pictures/mcatSampleComplex.png>
+Package pdftex.def Info: ../pictures/mcatSampleComplex.png used on input line 1
+27.
+(pdftex.def)             Requested size: 307.28987pt x 215.53297pt.
+
+Overfull \hbox (10.91147pt too wide) in paragraph at lines 127--127
+[]|  [] 
+ []
+
+
+Overfull \vbox (13.75029pt too high) detected at line 127
+ []
+
+[4
+
+] <../pictures/1978to1982Bar3.pdf, id=291, 505.89pt x 505.89pt>
+File: ../pictures/1978to1982Bar3.pdf Graphic file (type pdf)
+
+<use ../pictures/1978to1982Bar3.pdf>
+Package pdftex.def Info: ../pictures/1978to1982Bar3.pdf used on input line 140.
+
+(pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
+
+<../pictures/barplotLegend.pdf, id=292, 252.945pt x 544.0325pt>
+File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
+
+<use ../pictures/barplotLegend.pdf>
+Package pdftex.def Info: ../pictures/barplotLegend.pdf used on input line 140.
+(pdftex.def)             Requested size: 104.5611pt x 224.88715pt.
+
+Overfull \hbox (22.16383pt too wide) in paragraph at lines 140--140
+ [][][] 
+ []
+
+
+Overfull \vbox (1.0pt too high) detected at line 140
+ []
+
+[5
+
+ <../pictures/1978to1982Bar3.pdf> <../pictures/barplotLegend.pdf>]
+<../pictures/1983to1990Bar3.pdf, id=359, 505.89pt x 505.89pt>
+File: ../pictures/1983to1990Bar3.pdf Graphic file (type pdf)
+
+<use ../pictures/1983to1990Bar3.pdf>
+Package pdftex.def Info: ../pictures/1983to1990Bar3.pdf used on input line 153.
+
+(pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
+File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
+ <use ../pictures/barplotLegend.pdf>
+Package pdftex.def Info: ../pictures/barplotLegend.pdf used on input line 153.
+(pdftex.def)             Requested size: 104.5611pt x 224.88715pt.
+
+Overfull \hbox (22.16383pt too wide) in paragraph at lines 153--153
+ [][][] 
+ []
+
+
+Overfull \vbox (1.0pt too high) detected at line 153
+ []
+
+[6
+
+ <../pictures/1983to1990Bar3.pdf>]
+LaTeX Font Info:    Try loading font information for U+msa on input line 210.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 210.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
+line 210.
+
+(/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
+File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
+thkerncmss.
+)
+Overfull \hbox (7.56pt too wide) in alignment at lines 210--210
+ [][][] []
+ []
+
+
+Overfull \hbox (4.15337pt too wide) in alignment at lines 210--210
+ [][][] []
+ []
+
+
+Overfull \hbox (15.02733pt too wide) in alignment at lines 210--210
+ [][][] []
+ []
+
+
+Overfull \hbox (14.57106pt too wide) in alignment at lines 210--210
+ [][][] []
+ []
+
+[7
+
+] <../pictures/compPlot1982Qtr2.png, id=483, 505.89pt x 505.89pt>
+File: ../pictures/compPlot1982Qtr2.png Graphic file (type png)
+
+<use ../pictures/compPlot1982Qtr2.png>
+Package pdftex.def Info: ../pictures/compPlot1982Qtr2.png used on input line 21
+7.
+(pdftex.def)             Requested size: 184.3758pt x 184.37427pt.
+
+<../pictures/compVioplotQtr2.png, id=484, 505.89pt x 505.89pt>
+File: ../pictures/compVioplotQtr2.png Graphic file (type png)
+
+<use ../pictures/compVioplotQtr2.png>
+Package pdftex.def Info: ../pictures/compVioplotQtr2.png used on input line 217
+.
+(pdftex.def)             Requested size: 184.3758pt x 184.37427pt.
+
+Overfull \hbox (34.01958pt too wide) in paragraph at lines 217--217
+[]|  [][]  
+ []
+
+[8
+
+ <../pictures/compPlot1982Qtr2.png> <../pictures/compVioplotQtr2.png>]
+[9
+
+] [10
+
+]
+Overfull \hbox (11.19476pt too wide) in alignment at lines 354--354
+ [][][] []
+ []
+
+
+Overfull \hbox (1.89713pt too wide) in alignment at lines 354--354
+ [][][] []
+ []
+
+
+Overfull \hbox (11.19476pt too wide) in alignment at lines 354--354
+ [][][] []
+ []
+
+
+Overfull \hbox (5.76299pt too wide) in alignment at lines 354--354
+ [][][] []
+ []
+
+
+Overfull \hbox (50.32657pt too wide) in alignment at lines 354--354
+ [][][] []
+ []
+
+
+Overfull \hbox (8.09401pt too wide) in alignment at lines 354--354
+ [][][] []
+ []
+
+[11
+
+] <../pictures/priorPredict.pdf, id=707, 361.35pt x 361.35pt>
+File: ../pictures/priorPredict.pdf Graphic file (type pdf)
+
+<use ../pictures/priorPredict.pdf>
+Package pdftex.def Info: ../pictures/priorPredict.pdf used on input line 379.
+(pdftex.def)             Requested size: 172.07893pt x 172.07861pt.
+
+Overfull \hbox (49.16487pt too wide) in paragraph at lines 379--379
+[][] 
+ []
+
+[12
+
+ <../pictures/priorPredict.pdf>]
+Overfull \hbox (10.65454pt too wide) in paragraph at lines 433--433
+ |  [] 
+ []
+
+
+Overfull \hbox (13.0877pt too wide) in paragraph at lines 433--433
+ |  [] 
+ []
+
+[13
+
+]
+Overfull \hbox (21.61555pt too wide) detected at line 466
+ \OT1/mathkerncmss/m/sl/10.95 p\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.9
+5 y[]\OMS/cmsy/m/n/10.95 j\OT1/mathkerncmss/bx/sl/10.95 y\OT1/cmss/m/n/10.95 ) 
+= []     []  [][]\OT1/mathkerncmss/m/sl/10.95 y[]\OMS/cmsy/m/n/10.95 j\OML/cmm/
+m/it/10.95 ^^V[]; ^^[[][]\OT1/mathkerncmss/m/sl/10.95 P[]\OML/cmm/m/it/10.95 ^^
+V[]; ^^[[]\OMS/cmsy/m/n/10.95 j\OT1/mathkerncmss/bx/sl/10.95 y[]\OT1/mathkerncm
+ss/m/sl/10.95 d\OML/cmm/m/it/10.95 ^^V[]\OT1/mathkerncmss/m/sl/10.95 d\OML/cmm/
+m/it/10.95 ^^[[]
+ []
+
+<../pictures/bocBoxReDots.pdf, id=823, 1228.59pt x 433.62pt>
+File: ../pictures/bocBoxReDots.pdf Graphic file (type pdf)
+
+<use ../pictures/bocBoxReDots.pdf>
+Package pdftex.def Info: ../pictures/bocBoxReDots.pdf used on input line 466.
+(pdftex.def)             Requested size: 307.28987pt x 108.45105pt.
+ [14
+
+ <../pictures/bocBoxReDots.pdf>]
+Overfull \hbox (21.61555pt too wide) detected at line 466
+ \OT1/mathkerncmss/m/sl/10.95 p\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.9
+5 y[]\OMS/cmsy/m/n/10.95 j\OT1/mathkerncmss/bx/sl/10.95 y\OT1/cmss/m/n/10.95 ) 
+= []     []  [][]\OT1/mathkerncmss/m/sl/10.95 y[]\OMS/cmsy/m/n/10.95 j\OML/cmm/
+m/it/10.95 ^^V[]; ^^[[][]\OT1/mathkerncmss/m/sl/10.95 P[]\OML/cmm/m/it/10.95 ^^
+V[]; ^^[[]\OMS/cmsy/m/n/10.95 j\OT1/mathkerncmss/bx/sl/10.95 y[]\OT1/mathkerncm
+ss/m/sl/10.95 d\OML/cmm/m/it/10.95 ^^V[]\OT1/mathkerncmss/m/sl/10.95 d\OML/cmm/
+m/it/10.95 ^^[[]
+ []
+
+<../pictures/bocBoxRe.pdf, id=887, 1228.59pt x 433.62pt>
+File: ../pictures/bocBoxRe.pdf Graphic file (type pdf)
+
+<use ../pictures/bocBoxRe.pdf>
+Package pdftex.def Info: ../pictures/bocBoxRe.pdf used on input line 466.
+(pdftex.def)             Requested size: 307.28987pt x 108.45105pt.
+ [15
+
+ <../pictures/bocBoxRe.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+<../pictures/vioStarAvgOSBHKL.pdf, id=948, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSBHKL.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOSBHKL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSBHKL.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+<../pictures/vioStarAvgOLAHKL.pdf, id=949, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOLAHKL.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOLAHKL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOLAHKL.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+<../pictures/vioStarAvgOSDHKL.pdf, id=950, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSDHKL.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOSDHKL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSDHKL.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+<../pictures/vioStarAvgOSBNET.pdf, id=951, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSBNET.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOSBNET.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSBNET.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+<../pictures/vioStarAvgOLANET.pdf, id=952, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOLANET.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOLANET.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOLANET.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+<../pictures/vioStarAvgOSDNET.pdf, id=953, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSDNET.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOSDNET.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSDNET.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+<../pictures/vioStarAvgOSBTWL.pdf, id=954, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSBTWL.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOSBTWL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSBTWL.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+<../pictures/vioStarAvgOLATWL.pdf, id=955, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOLATWL.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOLATWL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOLATWL.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+<../pictures/vioStarAvgOSDTWL.pdf, id=956, 722.7pt x 505.89pt>
+File: ../pictures/vioStarAvgOSDTWL.pdf Graphic file (type pdf)
+
+<use ../pictures/vioStarAvgOSDTWL.pdf>
+Package pdftex.def Info: ../pictures/vioStarAvgOSDTWL.pdf used on input line 53
+4.
+(pdftex.def)             Requested size: 115.65642pt x 80.9595pt.
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+
+ []
+
+
+Overfull \hbox (26.54442pt too wide) in paragraph at lines 534--534
+[] 
+ []
+
+
+Overfull \vbox (3.88806pt too high) detected at line 534
+ []
+
+[16
+
+ <../pictures/vioStarAvgOSBHKL.pdf> <../pictures/vioStarAvgOLAHKL.pdf> <../pict
+ures/vioStarAvgOSDHKL.pdf> <../pictures/vioStarAvgOSBNET.pdf> <../pictures/vioS
+tarAvgOLANET.pdf> <../pictures/vioStarAvgOSDNET.pdf> <../pictures/vioStarAvgOSB
+TWL.pdf> <../pictures/vioStarAvgOLATWL.pdf> <../pictures/vioStarAvgOSDTWL.pdf>]
+ [17
+
+] [18
+
+] [19
+
+]
+<../pictures/mapFullBlank.pdf, id=1226, 505.89pt x 1084.05pt>
+File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullBlank.pdf>
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+<../pictures/mapFullHalfHalf.pdf, id=1227, 505.89pt x 1084.05pt>
+File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullHalfHalf.pdf>
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+<../pictures/mapFullConcMend.pdf, id=1228, 505.89pt x 1084.05pt>
+File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullConcMend.pdf>
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+<../pictures/mapLeapFrog.pdf, id=1229, 505.89pt x 1084.05pt>
+File: ../pictures/mapLeapFrog.pdf Graphic file (type pdf)
+
+<use ../pictures/mapLeapFrog.pdf>
+Package pdftex.def Info: ../pictures/mapLeapFrog.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+<../pictures/mapFullSparse.pdf, id=1230, 505.89pt x 1084.05pt>
+File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullSparse.pdf>
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+[20
+
+ <../pictures/mapFullBlank.pdf> <../pictures/mapFullHalfHalf.pdf> <../pictures/
+mapFullConcMend.pdf> <../pictures/mapLeapFrog.pdf> <../pictures/mapFullSparse.p
+df>]
+File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
+ <use ../pictures/mapFullBlank.pdf>
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullHalfHalf.pdf>
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
+<use ../pictures/mapFullConcMend.pdf>
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapLeapFrog.pdf Graphic file (type pdf)
+<use ../pictures/mapLeapFrog.pdf>
+Package pdftex.def Info: ../pictures/mapLeapFrog.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
+<use ../pictures/mapFullSparse.pdf>
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+[21
+
+]
+File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
+ <use ../pictures/mapFullBlank.pdf>
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
+ <use ../pictures/mapFullHalfHalf.pdf>
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
+<use ../pictures/mapFullConcMend.pdf>
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapLeapFrog.pdf Graphic file (type pdf)
+<use ../pictures/mapLeapFrog.pdf>
+Package pdftex.def Info: ../pictures/mapLeapFrog.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
+<use ../pictures/mapFullSparse.pdf>
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+[22
+
+] <../pictures/mapFullBlankNot.pdf, id=1424, 505.89pt x 1084.05pt>
+File: ../pictures/mapFullBlankNot.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullBlankNot.pdf>
+Package pdftex.def Info: ../pictures/mapFullBlankNot.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+<../pictures/mapFullHalfHalfNot.pdf, id=1425, 505.89pt x 1084.05pt>
+File: ../pictures/mapFullHalfHalfNot.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullHalfHalfNot.pdf>
+Package pdftex.def Info: ../pictures/mapFullHalfHalfNot.pdf used on input line 
+855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
+<use ../pictures/mapFullConcMend.pdf>
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapLeapFrog.pdf Graphic file (type pdf)
+<use ../pictures/mapLeapFrog.pdf>
+Package pdftex.def Info: ../pictures/mapLeapFrog.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
+<use ../pictures/mapFullSparse.pdf>
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+[23
+
+ <../pictures/mapFullBlankNot.pdf> <../pictures/mapFullHalfHalfNot.pdf
+
+pdfTeX warning: pdflatex (file ../pictures/mapFullHalfHalfNot.pdf): PDF inclusi
+on: multiple pdfs with page group included in a single page
+>]
+File: ../pictures/mapFullBlank.pdf Graphic file (type pdf)
+ <use ../pictures/mapFullBlank.pdf>
+Package pdftex.def Info: ../pictures/mapFullBlank.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+File: ../pictures/mapFullHalfHalf.pdf Graphic file (type pdf)
+ <use ../pictures/mapFullHalfHalf.pdf>
+Package pdftex.def Info: ../pictures/mapFullHalfHalf.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
+<use ../pictures/mapFullConcMend.pdf>
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+<../pictures/mapLeapFrogNot.pdf, id=1494, 505.89pt x 1084.05pt>
+File: ../pictures/mapLeapFrogNot.pdf Graphic file (type pdf)
+
+<use ../pictures/mapLeapFrogNot.pdf>
+Package pdftex.def Info: ../pictures/mapLeapFrogNot.pdf used on input line 855.
+
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
+<use ../pictures/mapFullSparse.pdf>
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+[24
+
+ <../pictures/mapLeapFrogNot.pdf>]
+File: ../pictures/mapFullBlankNot.pdf Graphic file (type pdf)
+ <use ../pictures/mapFullBlankNot.pdf>
+Package pdftex.def Info: ../pictures/mapFullBlankNot.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+File: ../pictures/mapFullHalfHalfNot.pdf Graphic file (type pdf)
+
+<use ../pictures/mapFullHalfHalfNot.pdf>
+Package pdftex.def Info: ../pictures/mapFullHalfHalfNot.pdf used on input line 
+855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (6.99713pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullConcMend.pdf Graphic file (type pdf)
+<use ../pictures/mapFullConcMend.pdf>
+Package pdftex.def Info: ../pictures/mapFullConcMend.pdf used on input line 855
+.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapLeapFrogNot.pdf Graphic file (type pdf)
+<use ../pictures/mapLeapFrogNot.pdf>
+Package pdftex.def Info: ../pictures/mapLeapFrogNot.pdf used on input line 855.
+
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (21.22348pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+File: ../pictures/mapFullSparse.pdf Graphic file (type pdf)
+<use ../pictures/mapFullSparse.pdf>
+Package pdftex.def Info: ../pictures/mapFullSparse.pdf used on input line 855.
+(pdftex.def)             Requested size: 70.06279pt x 150.12837pt.
+
+Overfull \hbox (28.33667pt too wide) in paragraph at lines 855--855
+[]|  [] 
+ []
+
+[25
+
+] [26
+
+] [27
+
+] [28
+
+] [29
+
+] [30
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1103--1103
+
+ []
+
+<../pictures/fishChest.png, id=1882, 514.92375pt x 289.08pt>
+File: ../pictures/fishChest.png Graphic file (type png)
+
+<use ../pictures/fishChest.png>
+Package pdftex.def Info: ../pictures/fishChest.png used on input line 1103.
+(pdftex.def)             Requested size: 178.224pt x 100.0547pt.
+
+Overfull \hbox (10.9427pt too wide) in paragraph at lines 1103--1103
+[][] 
+ []
+
+[31
+
+ <../pictures/fishChest.png>]
+File: ../pictures/fishChest.png Graphic file (type png)
+ <use ../pictures/fishChest.png>
+Package pdftex.def Info: ../pictures/fishChest.png used on input line 1103.
+(pdftex.def)             Requested size: 178.224pt x 100.0547pt.
+
+Overfull \hbox (10.9427pt too wide) in paragraph at lines 1103--1103
+[][] 
+ []
+
+[32
+
+] <../pictures/1991to1999Bar3.pdf, id=1992, 505.89pt x 505.89pt>
+File: ../pictures/1991to1999Bar3.pdf Graphic file (type pdf)
+
+<use ../pictures/1991to1999Bar3.pdf>
+Package pdftex.def Info: ../pictures/1991to1999Bar3.pdf used on input line 1116
+.
+(pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
+File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
+ <use ../pictures/barplotLegend.pdf>
+Package pdftex.def Info: ../pictures/barplotLegend.pdf used on input line 1116.
+
+(pdftex.def)             Requested size: 104.5611pt x 224.88715pt.
+
+Overfull \hbox (22.16383pt too wide) in paragraph at lines 1116--1116
+ [][][] 
+ []
+
+
+Overfull \vbox (1.0pt too high) detected at line 1116
+ []
+
+[33
+
+ <../pictures/1991to1999Bar3.pdf>]
+<../pictures/2000to2015Bar3.pdf, id=2053, 505.89pt x 505.89pt>
+File: ../pictures/2000to2015Bar3.pdf Graphic file (type pdf)
+
+<use ../pictures/2000to2015Bar3.pdf>
+Package pdftex.def Info: ../pictures/2000to2015Bar3.pdf used on input line 1129
+.
+(pdftex.def)             Requested size: 224.89261pt x 224.88715pt.
+File: ../pictures/barplotLegend.pdf Graphic file (type pdf)
+ <use ../pictures/barplotLegend.pdf>
+Package pdftex.def Info: ../pictures/barplotLegend.pdf used on input line 1129.
+
+(pdftex.def)             Requested size: 104.5611pt x 224.88715pt.
+
+Overfull \hbox (22.16383pt too wide) in paragraph at lines 1129--1129
+ [][][] 
+ []
+
+
+Overfull \vbox (1.0pt too high) detected at line 1129
+ []
+
+[34
+
+ <../pictures/2000to2015Bar3.pdf>]
+Overfull \hbox (12.63843pt too wide) in paragraph at lines 1176--1176
+ []|  [] 
+ []
+
+
+Overfull \hbox (2.77419pt too wide) in paragraph at lines 1176--1176
+ []|  [] 
+ []
+
+[35
+
+]
+Overfull \hbox (12.63193pt too wide) in paragraph at lines 1226--1226
+ []|  [] 
+ []
+
+
+Overfull \hbox (2.77753pt too wide) in paragraph at lines 1226--1226
+ []|  [] 
+ []
+
+[36
+
+]
+Overfull \hbox (26.96736pt too wide) detected at line 1251
+| [] [] [][] [] [] [] \OT1/cmss/m/n/10.95 = [] [][] [][] = [] = [] = 1\OML/cmm/
+m/it/10.95 : [] [] []\U/msa/m/n/10.95 ^^D
+ []
+
+[37
+
+]
+Overfull \hbox (28.93353pt too wide) in alignment at lines 1309--1309
+ [][][] []
+ []
+
+[38
+
+]
+Overfull \hbox (30.02846pt too wide) in alignment at lines 1367--1367
+ [][][] []
+ []
+
+[39
+
+]
+Overfull \hbox (28.93353pt too wide) in alignment at lines 1424--1424
+ [][][] []
+ []
+
+[40
+
+]
+Overfull \hbox (1.0308pt too wide) in alignment at lines 1465--1465
+ [][][] []
+ []
+
+
+Overfull \hbox (81.01205pt too wide) in paragraph at lines 1465--1465
+[] 
+ []
+
+[41
+
+]
+\tf@nav=\write6
+\openout6 = `calcomSSC.nav'.
+
+\tf@toc=\write7
+\openout7 = `calcomSSC.toc'.
+
+\tf@snm=\write8
+\openout8 = `calcomSSC.snm'.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1948.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1948.
+ (./calcomSSC.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1948.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1948.
+
+
+
+Package rerunfilecheck Warning: File `calcomSSC.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `calcomSSC.out':
+(rerunfilecheck)             Before: 4CA0FF56E3EE124326A4720E136735D1;47
+(rerunfilecheck)             After:  5871F7FDD4EDC1EB3DFD96FAE350DC1F;211.
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.0pt have occurred.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1948.
+ ) 
 Here is how much of TeX's memory you used:
- 18452 strings out of 494953
- 363986 string characters out of 6180978
- 441593 words of memory out of 5000000
- 21363 multiletter control sequences out of 15000+600000
- 4245 words of font info for 16 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 55i,1n,54p,389b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
-
-No pages of output.
+ 23340 strings out of 493029
+ 488062 string characters out of 6136234
+ 648591 words of memory out of 5000000
+ 26183 multiletter control sequences out of 15000+600000
+ 27520 words of font info for 84 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 56i,19n,80p,952b,766s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+extra/cmmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfso0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfso1000.pf
+b>
+Output written on calcomSSC.pdf (41 pages, 1573334 bytes).
 PDF statistics:
- 9 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2594 PDF objects out of 2984 (max. 8388607)
+ 2411 compressed objects within 25 object streams
+ 97 named destinations out of 1000 (max. 500000)
+ 196 words of extra memory for PDF output out of 10000 (max. 10000000)
 
