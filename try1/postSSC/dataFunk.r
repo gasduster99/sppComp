@@ -42,7 +42,6 @@ getRawData = function(mcat, minYear, maxYear, save=F){
 	                port_complex			as portComplex,
 	                gear_grp			as gearGroup,
 	                mark_cat			as marketCategory,
-	                total_wgt			as sampledLanding,
 	                live_fish			as live
 	        
 	        from master_samples inner join master_clusts
@@ -53,6 +52,7 @@ getRawData = function(mcat, minYear, maxYear, save=F){
 			DATEPART(yyyy, sample_date) <= %d 	and 
 			mark_cat=%d 				and
 			check_me='0'				and
+			live_fish='N'				and
 			gear_grp in ('HKL', 'TWL', 'FPT', 'NET', 'MDT')
 	        ", minYear, maxYear, mcat)
 	)
@@ -65,48 +65,34 @@ getRawData = function(mcat, minYear, maxYear, save=F){
 	                quarter 	as qtr,
 	                gear_grp 	as gearGroup, 
 	                port_complex	as portComplex,
-	                sum(pounds) 	as totalLanding
-	
+			species		as species,
+			live		as live,
+	                sum(pounds)	as comLands
+		
 	        FROM [calcom].[dbo].[COM_LANDS]	
-
+		
 	        where 
                         year >= %d       and 
                         year <= %d       and 
                         mark_cat=%d      and
                         live='N'	 and
-                        gear_grp in ('HKL', 'TWL', 'FPT', 'NET', 'MDT')	
-			
+                        gear_grp in ('HKL', 'TWL', 'FPT', 'NET', 'MDT')
+		
 		group by 
-			mark_cat, 
-			year, 
-			quarter, 
-			gear_grp, 
-			port_complex
+			mark_cat,
+			year,
+			quarter,
+			gear_grp,
+			port_complex,
+			live,
+			species
+			
 	        ", minYear, maxYear, mcat)
 	)
+	
 	#merge
-	raw = cbind(raw, totalLanding=rep(NA, dim(raw)[1]))
-	for(m in unique(lands$marketCategory)){
-	for(y in unique(lands$year)){
-	for(q in unique(lands$qtr)){
-	for(g in unique(lands$gearGroup)){
-	for(p in unique(lands$portComplex)){
-		raw[
-			raw$marketCategory==m	&
-			raw$year==y		&
-			raw$qtr==q		&
-			raw$gearGroup==g	&
-			raw$portComplex==p, 
-			'totalLanding'
-		] = lands [
-			lands$marketCategory==m   &     
-        	        lands$year==y             &     
-        	        lands$qtr==q              &     
-        	        lands$gearGroup==g        &     
-        	        lands$portComplex==p,
-			'totalLanding'
-		]
-	}}}}}	
+	raw = merge(raw, lands, by=c('species', 'year', 'qtr', 'portComplex', 'gearGroup', 'marketCategory', 'live'), all.x=T)
+	raw$comLands[is.na(raw$comLands)] = 0	
 
 	#
 	#SAVE
@@ -136,28 +122,52 @@ makeD = function(sppGold, raw){
 	#
 	#PREP D
 	#
+	
+	#print( aggregate(raw$comLands, by=list(raw$port), sum) )
+	#by = list(
+	#	id	= raw$sampleNumber,
+	#	species	= raw$species,
+	#	year	= raw$year, 
+	#	qtr	= raw$qtr, 
+	#	port	= raw$portComplex, 
+	#	gear	= raw$gearGroup, 
+	#	live	= raw$live, 
+	#	landing	= raw$comLands
+	#)
+	#THIS AGGREGATEION DROP LBS
+	#D = aggregate(raw$weight, by=by, FUN=sum)		
+	#print(tail(D))
+	#print( aggregate(D$comLands, by=list(D$port), sum) )
+	
+	#data.frame(raw$year, raw$qtr, raw$portComplex, raw$gearGroup, raw$live, raw$comLands), by=list(raw$sampleNumber, raw$species), FUN=unique )
+	#D2 = aggregate( raw$weight, by=list(raw$sampleNumber, raw$species), FUN=sum)
 
-	#aggregate the categorical variables so we have one observation per species per sample (aggregate cluster samples)
-	D = aggregate( data.frame(raw$year, raw$qtr, raw$portComplex, raw$gearGroup, raw$live, raw$totalLanding), by=list(raw$sampleNumber, raw$species), FUN=unique )
-	#aggregate add weights such that there is one weight per species per sample (aggregate cluster samples)
-	D = cbind(D, aggregate(data.frame(raw$weight), by=list(raw$sampleNumber, raw$species), FUN=sum)[,3])	
+	##aggregate the categorical variables so we have one observation per species per sample (aggregate cluster samples)
+	#D = aggregate( data.frame(raw$year, raw$qtr, raw$portComplex, raw$gearGroup, raw$live, raw$comLands), by=list(raw$sampleNumber, raw$species), FUN=unique )	
+	##aggregate add weights such that there is one weight per species per sample (aggregate cluster samples)
+	#D = cbind(D, aggregate( raw$weight, by=list(raw$sampleNumber, raw$species), FUN=sum)[,3] )	
+	#print( aggregate(D$raw.comLands, by=list(D$raw.portComplex), sum) )
+	
+	#sum weight across cluster
+	D = aggregate(raw$weight, raw[-which(colnames(raw)%in%c('clusterNumber', 'weight'))], sum)
+	colnames(D) = c( 
+                        'species',
+                        'year',
+                        'qtr',
+                        'port',
+                        'gear',
+			'mcat',
+                        'live',
+			'id',
+                        'landing',
+                        'weight'
+        )
 	#sum of weights of cluster in each sample
-	clustWeight = aggregate( data.frame(raw$weight), by=list(raw$sampleNumber), FUN=sum )
+	clustWeight = aggregate( raw$weight, by=list(id=raw$sampleNumber), FUN=sum )
 	#match up total sampled weight with species weights by ids
-	D = merge(D, clustWeight, by='Group.1')
-	#rename D columns
-	colnames(D) = c(
-	                'id',
-	                'species',
-	                'year',
-	                'qtr',
-	                'port',
-	                'gear',
-	                'live',
-			'landing',
-	                'weight',
-	                'aggClustSize'
-	)
+	D = merge(D, clustWeight, by='id')
+	colnames(D)[colnames(D)=='x'] = 'nBB'
+	#
 	D$live = as.character(D$live)
 	D$port = as.character(D$port)
 	D$gear = as.character(D$gear)
@@ -178,34 +188,36 @@ makeD = function(sppGold, raw){
 	        #
 	        wid = which(D$id==id)
 		#
-	        aggClustSize = D$aggClustSize[wid[1]]
+	        nBB	= D$nBB[wid[1]]
 	        port 	= D$port[wid[1]]
 	        gear 	= D$gear[wid[1]]
 	        year 	= D$year[wid[1]]
 	        qtr  	= D$qtr[wid[1]]
+		mcat	= D$mcat[wid[1]]
 		live 	= D$live[wid[1]]
-		landing	= D$landing[wid[1]]
+		#landing	= raw[Draw$port=='OSF' & Draw$gear=='TWL' & Draw$year==1980 & Draw$qtr==1 & raw$species=='CLPR','comLands'])
 		#each sample should have at least a zero for each species
 	        for(sn in sppGold[!sppGold%in%D$species[wid]]){
 			#
 	                end = end + 1
 	                #
 	                D$id[end]   	= id
-	                D$aggClustSize[end] 	= aggClustSize
+	                D$nBB[end] 	= nBB
 	                D$port[end] 	= port
 	                D$gear[end] 	= gear
 	                D$year[end] 	= year
 	                D$qtr[end]  	= qtr
 	                D$species[end]  = sn
+			D$mcat[end]	= mcat
 			D$live[end]	= live
-			D$landing[end]  = landing
-	                #
+			D$landing[end]  = max(0, raw[raw$port==port & raw$gear==gear & raw$year==year & raw$qtr==qtr & raw$species==sn,'comLands'])
+			#
 	                D$weight[end] 	= 0
 	        }
 	}
 	#
 	D = as.data.frame(D)
-	D = D[, c('id', 'species', 'year', 'qtr', 'port', 'gear', 'live', 'aggClustSize', 'landing',	'weight')]
+	D = D[, c('id', 'mcat', 'live', 'year', 'qtr', 'port', 'gear', 'species', 'nBB', 'landing', 'weight')]
 	#
 	return( D )
 }

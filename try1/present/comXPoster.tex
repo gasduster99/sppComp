@@ -1,13 +1,21 @@
 \documentclass[a0paper,portrait]{baposter}
 
-
-
 \usepackage{wrapfig}
 \usepackage{lmodern}
-
 \usepackage[utf8]{inputenc} %unicode support
 \usepackage[T1]{fontenc}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{stackengine}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
 
+\usetikzlibrary{positioning, shapes, snakes}
 
 \selectcolormodel{cmyk}
 
@@ -59,36 +67,142 @@ linewidth=2pt % Width of the border lines around content boxes
 }
 {}
 %
-%----------------------------------------------------------------------------------------
-%	TITLE AND AUTHOR NAME
-%----------------------------------------------------------------------------------------
+%TITLE
 %
-{\includegraphics[width=0.2\textwidth]{../pictures/noaa.jpeg}}
 {
-\textsf %Sans Serif
-{DeCAF -- Discrimination, Comparison, Alignment algorithm for small molecules.
+\vspace{3cm}
+\begin{minipage}{0.14\textwidth}
+	\includegraphics[width=1\textwidth]{../pictures/noaa.jpeg}
+\end{minipage}
+\begin{minipage}{0.7\textwidth}
+	%\vspace*{-3cm}
+	%\hspace*{1cm}
+	\begin{center}
+	{\huge \textbf{A Bayesian Model Averaging Approach For Improving Catch Estimation Methods.}}\\ % in Sparsely Sampled, Mixed Stock Fisheries.}\\
+	\vspace{0.5cm}
+	{\Large Nicholas Grunloh$^a$, Edward Dick$^b$, and John Feild$^b$}
+	\end{center}
+\end{minipage}
+\begin{minipage}{0.14\textwidth}
+	\hspace*{-0.5cm}
+	\includegraphics[width=1.2\textwidth]{../pictures/fiatSlug.jpg}
+\end{minipage}
+\normalsize
+\\ \sf
+$^a$ UC Santa Cruz - Center for Stock Assessment Research. $^b$ NOAA - Southwest Fisheries Science Center, Fisheries Ecology Division, Santa Cruz, CA.\\
 }
-} % Poster title
-% {\vspace{1em} Marta Stepniewska, Pawel Siedlecki\\ % Author names
-% {\small \vspace{0.7em} Department of Bioinformatics, Institute of Biochemistry and Biophysics, PAS, Warsaw, Pawinskiego 5a}} % Author email addresses
-{\sf\vspace{0.5em}\\
-Marta Stepniewska* and Pawel Siedlecki
-\vspace{0.1em}\\
-\small{Department of Bioinformatics, Institute of Biochemistry and Biophysics, PAS, Pawinskiego 5a, 02-106 Warsaw, Poland
-\vspace{0.2em}\\
-martasd@ibb.waw.pl}
+\\
+
+%
+\headerbox{1. Introduction}{name=introduction,column=0,row=0.06,span=3}{
+Effective management of exploited fish populations requires accurate estimates
+of commercial fisheries catches to inform monitoring and assessment efforts. In
+California, the high degree of heterogeneity in the species composition of many
+groundfish fisheries, particularly those targeting rockfish (genus Sebastes), 
+leads to challenges in sampling all potential strata, or species, adequately. 
+Limited resources and increasingly complex stratification of the sampling system 
+inevitably leads to gaps in sample data. In the presence of sampling gaps, 
+current methods for speciating commercial landings provide ad-hoc point estimates 
+of species compositions in unsampled strata by “borrowing” data across adjacent 
+stratum in time and space. Due to complex interactions between biogeography and
+market category sorting dynamics, it is not possible to be certain about optimal 
+a’priori pooling strategies. Here we introduce a Bayesian Model Averaging (BMA) 
+method for discovering quantitatively justifiable pooling strategies by averaging 
+across exhaustive sets of spatially partitioned models. In combination with Bayesian 
+hierarchical modeling, these methods allow us to infer pooling strategies from port 
+sampling data. Furthermore combining Bayesian hierarchical models with BMA allows for 
+a complete statistical summary of the major sources of uncertainty in species 
+composition estimates.
 }
-{\includegraphics[width=0.2\textwidth]{../pictures/fiatSlug.jpg}}%{\includegraphics{logo}} % University/lab logo
+
+%
+\headerbox{2. Model}{name=model,column=0,below=introduction,span=1}{
+	%\underline{$~~$Likelihood$~~~~~~~~~~~~$}
+	\underline{\textbf{Likelihood:}}
+	\[y_{ijklm\eta} \sim BB\big(\mu(\theta_{jklm\eta}),~\sigma^2(\theta_{jklm\eta},~\rho);~n_{ijklm\eta}\big)\]
+	\[\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\eta}\]
+	%\underline{$~~~~~~$Prior$~~~~~~~~~~~~~~~$}
+	\underline{\textbf{Prior:}}
+	\[\beta_0 \propto 1 ~~~~~~ \beta^{(s, p, g)}_{j, k, l} \sim N(0, 32^2) ~~~~~~ \beta^{(y:q)}_{m\eta} \sim N(0, v)\]
+	\[logit(\rho) \sim N(0, 2^2) ~~~~~~ v\sim IG(1,~2x10^{3})\]
+	\vspace{0.04cm}
+}
 
 
-\headerbox{1. Introduction}{name=introduction,column=0,row=0, span=3}{
-Predicting biological activity of small molecules is a key element of computer-aided drug design.
-Existing methods often fail to identify ligands with similar physicochemical properties but different structures.
-Many of the current approaches rely on generating 3D conformations, which leads to sampling problems and unacceptably high computational costs for large sets of molecules.
-Herein we present DeCAF -- a novel method for describing ligand properties and a fast and effective tool for comparing multiple molecules, and merging them into a single pharmacophore model.
-DeCAF is written as an open source Python module (\textbf{\color{darkblue}http://bitbucket.org/marta-sd/decaf}) and can be easily combined with RDKit to facilitate ligand-based drug design.
+%
+\headerbox{3. Model Exploration}{name=explore,column=1,below=introduction,span=1}{
+	\underline{\textbf{Number of Partitioned Models:}}
+	\[\text{B}_K=\sum_{\kappa=0}^{K} \frac{1}{\kappa!} \left( \sum_{j=0}^{\kappa} (-1)^{\kappa-j} \left(\substack{\kappa \\ j}\right) j^K \right).\]
+	\underline{\textbf{Spatial Constraints:}}\\\\
+	$\bar{\text{B}}_{K}$: Groupings are small (<3 Ports) 		\\
+	$\hat{\text{B}}_{K}$: Groupings are contiguous			\\
+	$\hat{\bar{\text{B}}}_{K}$: Groupings are small and contiguous	\\
+	\vspace{0.1cm}
 }
 
+%
+\headerbox{4. Bayesian Model Averaging}{name=bma,column=2,below=introduction,span=1}{
+	\[ \omega_\iota = Pr(M_\iota|y) = \frac{ p(y|M_\iota)p(M_\iota) }{ \sum_\iota p(y|M_\iota)p(M_\iota) } \]
+	\[ \bar p(\bm{\theta}|\bm{y}) = \sum_{\iota} \omega_\iota p(\bm{\theta}|\bm{y}, M_\iota) \]
+	\[ \bar p(y^*|\bm{y}) = \bm{\int} BB(y^*|\bm{\theta}) \bar p(\bm{\theta}|\bm{y}) \bm{d\theta}\]
+	\underline{\textbf{Species Composition:}}\\
+	\[ \pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.\]
+	\vspace{0.01cm}
+}
+
+%
+\headerbox{$\text{B}_{10}=115975$ $~~~~~$ $\bar{\text{B}}_{10}=61136$ $~~~~~$ $\hat{\text{B}}_{10}=512$ $~~~~~$ $\hat{\bar{\text{B}}}_{10}=274$}{name=examples,column=0,below=bma,span=2}{
+	\begin{minipage}[h!]{0.19\textwidth}
+	        %\hspace*{-0.5cm}
+	        \includegraphics[width=0.8\textwidth]{../pictures/mapFullBlank.pdf}
+	\end{minipage}
+	\begin{minipage}[h!]{0.19\textwidth}
+	        %\hspace*{-0.25cm}
+	        \includegraphics[width=0.8\textwidth]{../pictures/mapFullHalfHalf.pdf}
+	\end{minipage}
+	\begin{minipage}[h!]{0.19\textwidth}
+	        %\hspace*{0.25cm}
+	        \includegraphics[width=0.8\textwidth]{../pictures/mapLeapFrog.pdf}
+	\end{minipage}
+	\begin{minipage}[h!]{0.19\textwidth}
+	        %\hspace*{0.25cm}
+	        \includegraphics[width=0.8\textwidth]{../pictures/mapFullConcMend.pdf}
+	\end{minipage}	
+	\begin{minipage}[h!]{0.19\textwidth}
+	        %\hspace*{0.5cm}                %1.2
+	        \includegraphics[width=0.8\textwidth]{../pictures/mapFullSparse.pdf}
+	\end{minipage}
+}
+
+%%
+%\headerbox{Unspecified Rockfish: 1978-1982}{name=250,column=2,below=bma,span=1}{
+%	\resizebox{1\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+%        %\hline \multicolumn{6}{|c|}{MCAT 250} \\ \hline
+%        \hline \multicolumn{11}{|c|}{MCAT 250} \\ \hline
+%        %$\omega$&0.32&0.14&0.13&0.12&0.02 \\ \hline %&0.02&0.02&0.02&0.02&0.02 \\ \hline
+%        $\omega$&0.32&0.14&0.13&0.12&0.02&0.02&0.02&0.02&0.02&0.02 \\ \hline
+%        CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline%
+%        ERK&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline%
+%        BRG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+%        BDG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+%        OSF&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+%        MNT&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
+%        MRO&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
+%        OSB&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00} \\ \hline%
+%        OLA&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00} \\ \hline%
+%        OSD&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00} \\ \hline%
+%	\end{tabular}}
+%}
+
+%%
+%\headerbox{5. Results}{name=results,column=1,below=bma,span=2}{
+%
+%}
+%
+%%
+%\headerbox{6. Conclusion}{name=conclusion,column=0,below=results,span=3}{
+%
+%}
 
 %\headerbox{2. Pharmacophore model}{name=model,column=0,below=introduction,span=1}{
 %
