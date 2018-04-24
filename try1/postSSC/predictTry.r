@@ -43,7 +43,8 @@ nominal = 0.5 #0.2 #0.5 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
 actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
 print(actAgg)
-plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 #plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 
 #
@@ -51,7 +52,8 @@ nominal = 0.68 #0.2 #0.5 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
 actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
 print(actAgg)
-plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 #plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 
 #
@@ -59,7 +61,8 @@ nominal = 0.90 #0.2 #0.5 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
 actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
 print(actAgg)
-plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 #plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 
 #
@@ -67,7 +70,8 @@ nominal = 0.95 #0.2 #0.5 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
 actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
 print(actAgg)
-plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 #plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 
 #
@@ -75,7 +79,8 @@ nominal = 0.99 #0.2 #0.5 #0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
 actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
 print(actAgg)
-plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 #plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 
 

@@ -13,7 +13,7 @@ suppressMessages(library(foreach, quietly=FALSE))
 
 #
 predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
-	levels=c(0.5, 0.68, 0.90), #c(0.2, 0.50, 0.68, 0.9, 0.95), 
+	levels=c(0.5, 0.68), #c(0.2, 0.50, 0.68, 0.9, 0.95), 
 	saveFile='tuned.log', #'tuned.hand',
 	startFile='tuned.hand'
 	){
@@ -78,8 +78,8 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		#
 		registerDoParallel(cores=length(levels))
 		ppSS = foreach( l=levels )%dopar%{
-			pp = predPerf(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath, adjHard=adj)
-			return( (sum(pp$coverage*pp$n)/sum(pp$n) - l) )
+			pp = predPerf(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath, threads=1, adjHard=adj)
+			return( abs(sum(pp$coverage*pp$n)/sum(pp$n) - l) )
 		}
 		ppSS = do.call(rbind, ppSS)
 		return( mean(ppSS) )
@@ -134,7 +134,7 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	};
 
 	#
-	registerDoParallel(cores=1)#threads)
+	registerDoParallel(cores=threads)
 	preds = foreach( p=portGold )%dopar%{
 		#
 		end = 1
@@ -202,12 +202,6 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#preds$n = as.numeric(preds$n)
 	#
 	return(preds)	
-}
-
-#
-tuneDensity = function(){
-	#
-	
 }
 
 #

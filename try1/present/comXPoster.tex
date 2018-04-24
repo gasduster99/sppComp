@@ -33,7 +33,8 @@
   {\begin{enumerate}\renewcommand\labelenumi{\textbf\theenumi.}}
   {\end{enumerate}}
 
-
+\newcommand{\redhat}[1]{\color{red}\hat{\text{$#1$}}}
+\newcommand{\orangebar}[1]{\color{orange}\bar{\text{$#1$}}}
 
 \begin{document}
 
@@ -43,7 +44,7 @@
 \definecolor{darkblue}{HTML}{000080}%{1A5276}%{2471A3}
 \definecolor{lightblue}{HTML}{0000FF}%{2E86C1}
 \definecolor{black}{HTML}{000000}
-
+\definecolor{violet}{HTML}{8000FF}
 
 \begin{poster}
 {
@@ -111,9 +112,10 @@ a’priori pooling strategies. Here we introduce a Bayesian Model Averaging (BMA
 method for discovering quantitatively justifiable pooling strategies by averaging 
 across exhaustive sets of spatially partitioned models. In combination with Bayesian 
 hierarchical modeling, these methods allow us to infer pooling strategies from port 
-sampling data. Furthermore combining Bayesian hierarchical models with BMA allows for 
-a complete statistical summary of the major sources of uncertainty in species 
-composition estimates.
+sampling data. Furthermore these methods allow for a complete statistical summary 
+of several major sources of uncertainty. % in species composition estimates.
+%a complete statistical summary of the major sources of uncertainty in species 
+%composition estimates.
 }
 
 %
@@ -135,9 +137,9 @@ composition estimates.
 	\underline{\textbf{Number of Partitioned Models:}}
 	\[\text{B}_K=\sum_{\kappa=0}^{K} \frac{1}{\kappa!} \left( \sum_{j=0}^{\kappa} (-1)^{\kappa-j} \left(\substack{\kappa \\ j}\right) j^K \right).\]
 	\underline{\textbf{Spatial Constraints:}}\\\\
-	$\bar{\text{B}}_{K}$: Groupings are small ($\le$3 Ports) 		\\
-	$\hat{\text{B}}_{K}$: Groupings are contiguous			\\
-	$\hat{\bar{\text{B}}}_{K}$: Groupings are small and contiguous	\\
+	$\bar{\text{B}}_{K}$: Groupings are {\color{green}\textbf{small}} ($\le$3 Ports) 		\\
+	$\hat{\text{B}}_{K}$: Groupings are {\color{orange}\textbf{contiguous}}		\\
+	$\hat{\bar{\text{B}}}_{K}$: Groupings are {\color{green}\textbf{small}} and {\color{orange}\textbf{contiguous}}	\\
 	\vspace{0.1cm}
 }
 
@@ -155,53 +157,87 @@ composition estimates.
 \headerbox{$\text{B}_{10}=115975$ $~~~~~$ $\bar{\text{B}}_{10}=61136$ $~~~~~$ $\hat{\text{B}}_{10}=512$ $~~~~~$ $\hat{\bar{\text{B}}}_{10}=274$}{name=examples,column=0,below=bma,span=2}{
 	\begin{minipage}[h!]{0.19\textwidth}
 	        %\hspace*{-0.5cm}
-	        \includegraphics[width=0.94\textwidth]{../pictures/mapFullBlank.pdf}
+	        \includegraphics[width=0.91\textwidth]{../pictures/mapFullBlankNotGreen.pdf}
 	\end{minipage}
 	\begin{minipage}[h!]{0.19\textwidth}
 	        %\hspace*{-0.25cm}
-	        \includegraphics[width=0.94\textwidth]{../pictures/mapFullHalfHalf.pdf}
+	        \includegraphics[width=0.91\textwidth]{../pictures/mapFullHalfHalfNotGreen.pdf}
 	\end{minipage}
 	\begin{minipage}[h!]{0.19\textwidth}
 	        \hspace*{0.125cm}
-	        \includegraphics[width=0.94\textwidth]{../pictures/mapLeapFrog.pdf}
+	        \includegraphics[width=0.91\textwidth]{../pictures/mapLeapFrogNotOrange.pdf}
 	\end{minipage}
 	\begin{minipage}[h!]{0.19\textwidth}
 	        \hspace*{0.25cm}
-	        \includegraphics[width=0.94\textwidth]{../pictures/mapFullConcMend.pdf}
+	        \includegraphics[width=0.91\textwidth]{../pictures/mapFullConcMend.pdf}
 	\end{minipage}	
 	\begin{minipage}[h!]{0.19\textwidth}
 	        \hspace*{0.5cm}                %1.2
-	        \includegraphics[width=0.94\textwidth]{../pictures/mapFullSparse.pdf}
+	        \includegraphics[width=0.91\textwidth]{../pictures/mapFullSparse.pdf}
 	\end{minipage}
 }
 
 %
-\headerbox{Unspecified Rockfish: 1978-1982}{name=250,column=2,below=bma,span=1}{
-	\resizebox{1\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|}%c|c|c|c|}
-        \hline \multicolumn{6}{|c|}{MCAT 250} \\ \hline
-        %\hline \multicolumn{11}{|c|}{MCAT 250} \\ \hline
-        %$\omega$&0.32&0.14&0.13&0.12&0.02 \\ \hline %&0.02&0.02&0.02&0.02&0.02 \\ \hline
-        $\omega$&0.32&0.14&0.13&0.12&0.02 \\ \hline %&0.02&0.02&0.02&0.02&0.02 \\ \hline
-        CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline%
-        ERK&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline%
-        BRG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
-        BDG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
-        OSF&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A} \\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
-        MNT&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
-        MRO&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
-        OSB&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00} \\ \hline %&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00} \\ \hline%
-        OLA&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00} \\ \hline %&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00} \\ \hline%
-        OSD&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33} \\ \hline %&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00} \\ \hline%
-	\end{tabular}}
+\headerbox{Group Bocaccio/Chili: 1983-1990}{name=colorTable,column=2,below=bma,span=1}{
+	\resizebox{1\textwidth}{!}{
+	\begin{tabular}{|c|c|c|c|c|c|}%|c|c|c|c|c|}
+         \hline \multicolumn{6}{|c|}{MCAT 956} \\ \hline
+         $\omega$&0.26&0.21&0.19&0.11&0.10\\ \hline %&0.08&0.00&0.00&0.00&0.00 \\ \hline
+        CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}\\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]
+        ERK&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{E41A1C}\\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]
+        BRG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]
+        BDG&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]
+        OSF&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{377EB8}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]
+        MNT&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]
+        MRO&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}\\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]
+        OSB&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}\\ \hline %&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]
+        OLA&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}\\ \hline %&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]
+        OSD&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}\\ \hline %&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]
+	\end{tabular}	
+	}
+%\\$~$\\$~$\\
+%	\resizebox{1\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|}%c|c|c|c|}
+%        \hline \multicolumn{6}{|c|}{MCAT 250} \\ \hline
+%        %\hline \multicolumn{11}{|c|}{MCAT 250} \\ \hline
+%        %$\omega$&0.32&0.14&0.13&0.12&0.02 \\ \hline %&0.02&0.02&0.02&0.02&0.02 \\ \hline
+%        $\omega$&0.32&0.14&0.13&0.12&0.02 \\ \hline %&0.02&0.02&0.02&0.02&0.02 \\ \hline
+%        CRS&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline %&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C}&\cellcolor[HTML]{E41A1C} \\ \hline%
+%        ERK&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline %&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8}&\cellcolor[HTML]{377EB8} \\ \hline%
+%        BRG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+%        BDG&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+%        OSF&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A} \\ \hline %&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{4DAF4A}&\cellcolor[HTML]{4DAF4A} \\ \hline%
+%        MNT&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
+%        MRO&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline %&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{984EA3} \\ \hline%
+%        OSB&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00} \\ \hline %&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{984EA3}&\cellcolor[HTML]{FF7F00} \\ \hline%
+%        OLA&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00} \\ \hline %&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FF7F00} \\ \hline%
+%        OSD&\cellcolor[HTML]{FF7F00}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33} \\ \hline %&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{A65628}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FFFF33}&\cellcolor[HTML]{FF7F00} \\ \hline%
+%	\end{tabular}}
 }
 
 %
 \headerbox{5. Results}{name=results,column=0,below=examples,span=2}{
-
+	\begin{minipage}[h!]{0.49\textwidth}
+                \hspace*{-0.2cm}
+                \includegraphics[width=1\textwidth]{../pictures/avgOrNotBox.pdf}
+        \end{minipage}
+        \begin{minipage}[h!]{0.49\textwidth}
+		\hspace*{-0.75cm}
+		\includegraphics[width=1.1\textwidth, height=8cm]{../pictures/sp-yr/BCAC.png}
+%\caption{ComX distributions of expanded annual landings for Bocaccio
+%(\textit{S. paucispinis}), all gears combined. Distribution percentiles shown in grey
+%(light grey = 10th to 90th, dark grey = 25th to 50th), along with the mean
+%(solid black line), and median (dashed black line). Point estimates of
+%expanded landings from CALCOM (blue line) shown for comparison.}
+                %\hspace*{-0.25cm}
+                %\includegraphics[width=0.91\textwidth]{../pictures/mapFullHalfHalfNotGreen.pdf}
+        \end{minipage}
+	It seems like this panel needs some word. I'm not sure yet which would be the best words, 
+	but these words can serve as a place holder. I really don;t know how many words I need. I 
+	think I need more words. Nooooo moooooorre words. I need more damn wooords.
 }
 
 %
-\headerbox{6. Conclusion}{name=conclusion,column=2,below=250,span=1}{
+\headerbox{6. Conclusion}{name=conclusion,column=2,below=colorTable,span=1}{
 
 }
 
