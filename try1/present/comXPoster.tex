@@ -96,7 +96,7 @@ $^a$ UC Santa Cruz - Center for Stock Assessment Research. $^b$ NOAA - Southwest
 \\
 
 %
-\headerbox{1. Introduction}{name=introduction,column=0,row=0.06,span=3}{
+\headerbox{Introduction}{name=introduction,column=0,row=0.06,span=3}{
 Effective management of exploited fish populations requires accurate estimates
 of commercial fisheries catches to inform monitoring and assessment efforts. In
 California, the high degree of heterogeneity in the species composition of many
@@ -113,13 +113,13 @@ method for discovering quantitatively justifiable pooling strategies by averagin
 across exhaustive sets of spatially partitioned models. In combination with Bayesian 
 hierarchical modeling, these methods allow us to infer pooling strategies from port 
 sampling data. Furthermore these methods allow for a complete statistical summary 
-of several major sources of uncertainty. % in species composition estimates.
+of several of the most important sources of uncertainty. % in species composition estimates.
 %a complete statistical summary of the major sources of uncertainty in species 
 %composition estimates.
 }
 
 %
-\headerbox{2. Model}{name=model,column=0,below=introduction,span=1}{
+\headerbox{1. Model}{name=model,column=0,below=introduction,span=1}{
 	%\underline{$~~$Likelihood$~~~~~~~~~~~~$}
 	\underline{\textbf{Likelihood:}}
 	\[y_{ijklm\eta} \sim BB\big(\mu(\theta_{jklm\eta}),~\sigma^2(\theta_{jklm\eta},~\rho);~n_{ijklm\eta}\big)\]
@@ -133,8 +133,8 @@ of several major sources of uncertainty. % in species composition estimates.
 
 
 %
-\headerbox{3. Model Exploration}{name=explore,column=1,below=introduction,span=1}{
-	\underline{\textbf{Number of Partitioned Models:}}
+\headerbox{2. Explore Spatially Pooled Models}{name=explore,column=1,below=introduction,span=1}{
+	\underline{\textbf{Ways to Partition Ports:}}
 	\[\text{B}_K=\sum_{\kappa=0}^{K} \frac{1}{\kappa!} \left( \sum_{j=0}^{\kappa} (-1)^{\kappa-j} \left(\substack{\kappa \\ j}\right) j^K \right).\]
 	\underline{\textbf{Spatial Constraints:}}\\\\
 	$\bar{\text{B}}_{K}$: Groupings are {\color{green}\textbf{small}} ($\le$3 Ports) 		\\
@@ -144,7 +144,7 @@ of several major sources of uncertainty. % in species composition estimates.
 }
 
 %
-\headerbox{4. Bayesian Model Averaging}{name=bma,column=2,below=introduction,span=1}{
+\headerbox{3. Bayesian Model Averaging}{name=bma,column=2,below=introduction,span=1}{
 	\[ \omega_\iota = Pr(M_\iota|y) = \frac{ p(y|M_\iota)p(M_\iota) }{ \sum_\iota p(y|M_\iota)p(M_\iota) } \]
 	\[ \bar p(\bm{\theta}|\bm{y}) = \sum_{\iota} \omega_\iota p(\bm{\theta}|\bm{y}, M_\iota) \]
 	\[ \bar p(y^*|\bm{y}) = \bm{\int} BB(y^*|\bm{\theta}) \bar p(\bm{\theta}|\bm{y}) \bm{d\theta}\]
@@ -215,7 +215,7 @@ of several major sources of uncertainty. % in species composition estimates.
 }
 
 %
-\headerbox{5. Results}{name=results,column=0,below=examples,span=2}{
+\headerbox{Results}{name=results,column=0,below=examples,span=2}{
 	\begin{minipage}[h!]{0.49\textwidth}
                 \hspace*{-0.2cm}
                 \includegraphics[width=1\textwidth]{../pictures/avgOrNotBox.pdf}
@@ -237,7 +237,7 @@ of several major sources of uncertainty. % in species composition estimates.
 }
 
 %
-\headerbox{6. Conclusion}{name=conclusion,column=2,below=colorTable,span=1}{
+\headerbox{Conclusion}{name=conclusion,column=2,below=colorTable,span=1}{
 
 }
 
