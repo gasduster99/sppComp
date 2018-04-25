@@ -47,7 +47,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	
 	#
 	lower = 0
-	upper = 1
+	upper = 10
 	if( file.exists(startFile) ){
 		#
 		log = read.csv(startFile)
@@ -96,14 +96,15 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		min = lower, 
 		max = upper, 
 		popSize = gaThread,
-		run = 30,
-		maxiter = 100,
+		run = 10,
+		maxiter = 10,
 		suggestions = out$adj,
 		parallel = gaThread#, #16,
 		#monitor = F	
-	)
-	out$adj = gaOut@solution
-	plot(gaOut)
+	)	
+	print(summary(gaOut))
+	print(gaOut@solution)
+	out$adj = gaOut@solution[1,]
 
 	#
 	if( file.exists(saveFile) ){ write.table(out, saveFile, sep=',', append=T, quote=F, row.names=F, col.names=F)
