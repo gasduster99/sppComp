@@ -307,7 +307,7 @@ for(y in yearEff){
 #print(summary(out))
 
 #
-sdPrior = abs(rcauchy(10^6, 0, 10^-2))
+sdPrior = abs(rcauchy(10^6, 0, 10^3))#-2))
 pPrior = log( (1/(sdPrior^2)) ) #[(1/(sdPrior^2))<10^6] )
 pPrior = density(pPrior, n=10^4) #, from=0, to=10^6)
 y = pPrior$y #[1:which(pPrior$y==max(pPrior$y))]=max(pPrior$y)
@@ -335,7 +335,8 @@ out = inla(weight~species + portComplex + gear +
                restart=T
        	)
 )
-#out = inla.hyperpar(out)
+print('Hype Model')
+out = inla.hyperpar(out)
 print(summary(out))
 
 
