@@ -15,9 +15,13 @@ source('predictFunk.r')
 #
 
 #
-mcat = 250
-minYear = 1978 #
-maxYear = 1982 #
+stuff = read.csv('tuned.hand')
+for(i in 1:dim(stuff)[1]){
+#
+mcat = stuff$mcat[i]		#269
+minYear = stuff$minYear[i]	#1978 #83 #
+maxYear = stuff$maxYear[i]	#1982 #90 #
+print(stuff[i,])
 #gold standards for defining strata
 portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
 yearGold = minYear:maxYear
@@ -38,14 +42,14 @@ D = makeD(sppGold, Draw)
 path = '/media/nick/extraBig/fullTimeComplete/'
 avgPath = sprintf("%s/%sto%s/MCAT%d/Top/avgModel/", path, substring(minYear, 3, 4), substring(maxYear, 3, 4), mcat)
 
-#
-nominal = 0.5 #0.2 #0.5 #0.68
-pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
-actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
-print(actAgg)
-plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
-plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
-#plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+##
+#nominal = 0.5 #0.2 #0.5 #0.68
+#pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) #, 10, 4/12)
+#actAgg = sum(pp$coverage*pp$n)/sum(pp$n)
+#print(actAgg)
+#plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+#plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
+##plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 
 #
 nominal = 0.68 #0.2 #0.5 #0.68
@@ -82,8 +86,7 @@ print(actAgg)
 plotPerf(aggPerf(pp, c('year', 'gear')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 plotPerf(aggPerf(pp, c('year', 'gear', 'species')), level=nominal, llv=0.1, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
 #plotPerf(aggPerf(pp, c('year', 'qtr', 'port', 'gear')), level=nominal, llv=0.07, save=T, saveString=sprintf('-%s-%s', mcat, minYear))
-
-
+}
 
 
 

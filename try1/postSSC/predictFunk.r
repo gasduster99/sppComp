@@ -13,7 +13,7 @@ suppressMessages(library(foreach, quietly=FALSE))
 
 #
 predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
-	levels=c(0.5, 0.68), #c(0.2, 0.50, 0.68, 0.9, 0.95), 
+	levels=c(0.68), #c(0.2, 0.50, 0.68, 0.9, 0.95), 
 	saveFile='tuned.log', #'tuned.hand',
 	startFile='tuned.hand'
 	){
@@ -79,7 +79,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		registerDoParallel(cores=length(levels))
 		ppSS = foreach( l=levels )%dopar%{
 			pp = predPerf(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath, threads=1, adjHard=adj)
-			return( abs(sum(pp$coverage*pp$n)/sum(pp$n) - l)^2 )
+			return( abs(sum(pp$coverage*pp$n)/sum(pp$n) - l) )
 		}
 		ppSS = do.call(rbind, ppSS)
 		return( mean(ppSS) )
@@ -102,8 +102,6 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		parallel = gaThread#, #16,
 		#monitor = F	
 	)	
-	print(summary(gaOut))
-	print(gaOut@solution)
 	out$adj = gaOut@solution[1,]
 
 	#
@@ -288,8 +286,8 @@ plotPerf = function(preds, level,
 				height = 11/(8.5+11)*scale	
 			)
 		} else{	dev.new(width=8.5/(8.5+11)*scale, height=11/(8.5+11)*scale) }
-		#
-		par(mar=c(5.1,4.2*(c-2),4.1,2.1))
+		#4.2
+		par(mar=c(5.1,4.2*(c-2)^1.06,4.1,2.1))
 		plot(pp$coverage, r:1,
 			pch  = 19,
 			cex  = cexs[rows],
