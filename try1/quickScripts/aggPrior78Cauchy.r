@@ -335,7 +335,7 @@ out = inla(weight~species + portComplex + gear +
                restart=T
        	)
 )
-print('Hype Model')
+writeLines('Hype Model')
 out = inla.hyperpar(out)
 print(summary(out))
 
