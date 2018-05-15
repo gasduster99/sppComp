@@ -1,0 +1,12 @@
+wget dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+sudo rpm -ihv epel-release-7-11.noarch.rpm
+sudo yum install htop
+sudo yum install vim
+sudo yum install git
+sudo yum install screen 
+sudo yum install R
+R
+> install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+
+
+
