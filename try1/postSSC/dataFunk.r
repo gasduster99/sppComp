@@ -28,7 +28,7 @@ getRawData = function(mcat, minYear, maxYear, save=F){
 	#driver
 	drv = JDBC('com.microsoft.sqlserver.jdbc.SQLServerDriver', './sqljdbc4.jar', identifier.quote="'");
 	#connection
-	ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=calcom', 'nick.grunloh', 'Nmfsswfsc!2018') #getPass('User:'), getPass('Password:'))#
+	ch = dbConnect(drv, 'jdbc:sqlserver://128.114.3.187;databaseName=COMX_DB', 'nick.grunloh', 'Nmfsswfsc!2018') #getPass('User:'), getPass('Password:'))#
 	#port sample data query
 	raw = dbGetQuery(ch,
 	        sprintf("
@@ -69,7 +69,7 @@ getRawData = function(mcat, minYear, maxYear, save=F){
 			live		as live,
 	                sum(pounds)	as comLands
 		
-	        FROM [calcom].[dbo].[COM_LANDS]	
+	        FROM [COMX_DB].[dbo].[COM_LANDS]	
 		
 	        where 
                         year >= %d       and 
@@ -236,6 +236,9 @@ addPredStrat = function(sppGold, portGold, gearGold, yearGold, qtrGold, D){
 
 	#D is easyier to modify as a list
 	D = as.list(D)
+	D$port = as.character(D$port)
+	D$gear = as.character(D$gear)
+	D$species = as.character(D$species)
 	#an index to grow D to fill holes       
         end = length(D$id)
 	#prediction sum cluster size 
@@ -261,19 +264,25 @@ addPredStrat = function(sppGold, portGold, gearGold, yearGold, qtrGold, D){
 	                #
 	                D$id[end]     = NA
 	                D$weight[end] = NA
-	                D$aggClustSize[end]= fill
+	                D$nBB[end]    = fill
 	                D$port[end]   = p
 	                D$gear[end]   = g
 	                D$year[end]   = y
 	                D$qtr[end]    = q
 	                D$species[end]= s
-                        D$live[end]   = 'N'	
+                        D$live[end]   = 'N'
+			D$mcat[end]   = D$mcat[1]
+			D$landing[end]= NA
 	        }
 	
 	}}}}
 	}
 	#
-	return( as.data.frame(D) )
+	D = as.data.frame(D)
+	D$port = as.character(D$port)
+        D$gear = as.character(D$gear)
+        D$species = as.character(D$species)
+	return( D )
 }
 
 
