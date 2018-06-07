@@ -224,6 +224,14 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, D, M=10^4, core
 		        write.table(t(sppGold), file=sprintf("%slpPost.csv",  path), row.names=F, col.names=F, quote=F, sep=',')
 		        write.table(t(sppGold), file=sprintf("%ssppComp.csv", path), row.names=F, col.names=F, quote=F, sep=',')
 			#
+			pgqyWhere = which(
+                               D$port==p &
+                               D$gear==g &
+                               D$year==y &
+                               D$qtr==q  
+                        )
+			pgqyD = D[pgqyWhere,]
+			#
 			MZer = 0
 			MTot = 0
 			MYes = 0
@@ -233,13 +241,16 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, D, M=10^4, core
                         	sppT = matrix(NA, nrow=M, ncol=S)
                         	for(s in 1:S){
 					#
-                        		where = which(
-                        		        D$port==p &
-                        		        D$gear==g &
-                        		        D$year==y &
-                        		        D$qtr==q  &
-						D$species==sppGold[s]
-                        		)[1]
+					sWhere = which( pgqyD$species==sppGold[s] )
+					where = pgqyWhere[sWhere][1]
+					##
+                        		#where = which(
+                        		#        D$port==p &
+                        		#        D$gear==g &
+                        		#        D$year==y &
+                        		#        D$qtr==q  &
+					#	D$species==sppGold[s]
+                        		#)[1]
 					#
                         		sMup[,s] = sapply(postSamples, function(logSam){
                         		        #

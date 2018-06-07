@@ -359,6 +359,127 @@ plotPerf = function(preds, level,
 	}
 }
 
+#
+plotPerfMod = function(..., level, 
+	#llv=c(0.05),# 0.02), 
+	#col=c('red'),# 'blue') 
+	save=F,
+	saveString=''
+	#lwd = c(2, 3, 2)
+	){
+	#...	: as many predictive performance data structures that are desired to compare
+	#level	: a reference level comparing predictions	
+	#
+	#value: a series of page sized plots
+	
+	#
+	l = list(...)
+	preds = l[[1]]
+	#
+	scale = 20#18.5	
+	#
+	perPage = 20
+	R = dim(preds)[1]
+	c = dim(preds)[2]
+	#
+	cexs = preds$landing/mean(preds$landing)
+	cols = rep('black', R)
+	cols[abs(preds$coverage[]-level)>llv] = col
+	#
+	formString = sprintf('%%s/%%s-%1.2f-Diagnostic-%%%dd%%s.pdf', round(level, 2), nchar(as.character(ceiling(R/perPage))) )
+	#print(formString)
+	for( pg in 1:ceiling(R/perPage) ){
+		#details to subset preds to a page
+		rows = ((pg-1)*(perPage)+1):((pg)*(perPage))
+		pp = preds[rows,]
+		r = dim(pp)[1]
+		#
+		if( save ){ 
+			path = paste(colnames(pp)[1:(c-3)], collapse='-')
+			dir.create(path, showWarnings = FALSE)
+			pdf( sprintf(formString, path, path, pg, saveString),
+				width  = 8.5/(8.5+11)*scale,
+				height = 11/(8.5+11)*scale	
+			)
+		} else{	dev.new(width=8.5/(8.5+11)*scale, height=11/(8.5+11)*scale) }
+		#
+		for(preds in l){
+			pp = preds[rows,]
+			#4.2
+			par(mar=c(5.1,4.2*(c-2)^1.06,4.1,2.1))
+			plot(pp$coverage, r:1,
+				pch  = 19,
+				cex  = cexs[rows],
+				col  = cols[rows],
+				xlim = c(0, 1), #c(max(0, min(level+llv-0.01, pp$coverage)), min(1, max(level+llv+0.01, pp$coverage))), 
+				yaxt = 'n', 
+				ann  = F, 
+				axes = F
+			)
+			#
+			if( any(abs(level-c(0, 0.5, 1))<0.15) ){
+				axis(side=1, 
+					at = round(c(
+						0, #quantile(pp$coverage, 0.01), 
+						0.5,
+						#max(0, min(1, level)), 
+						1 #quantile(pp$coverage, 0.99)
+					), 2)
+				)
+			}else{
+				axis(side=1, 
+					at = round(c(
+						0, #quantile(pp$coverage, 0.01), 
+						0.5,
+						max(0, min(1, level)), 
+						1 #quantile(pp$coverage, 0.99)
+					), 2)
+				)
+			}
+			#
+			for(i in 1:r){ 	segments(level, i, rev(pp$coverage)[i], i, col=rev(cols[rows])[i]) }
+			#
+			abline( v  = level, 
+        		       col = 'black',
+        		       lwd = 2
+        		)
+			## 
+			#abline( v = sapply(llv+level, FUN=function(x){min(max(x, 0), 1)}), 
+			#	col = col,
+			#	lwd = lwd
+			#)
+			##
+			for(i in 1:(c-2)){
+				#column header
+				text( y = 0,
+					x = 0.05 - ((c-2)^2*0.05) + ((i-1)*0.05*(c-2)),
+					labels = colnames(pp)[i], 
+					srt = 0, 
+					pos = 2, 
+					xpd = TRUE
+				)
+				#column entries
+				text( y = r:1, 
+					0.05 - ((c-2)^2*0.05) + ((i-1)*0.05*(c-2)), 
+					labels = pp[,i], 
+					srt = 0, 
+					pos = 2, 
+					xpd = TRUE
+				)
+			}
+		}
+		#
+		if( save ){ dev.off() }
+	}
+	#
+	if( save ){
+		# 
+		system(sprintf('pdftk %s/%s-%1.2f-Diagnostic-*%s.pdf output %s/%s-%1.2f-Diagnostic%s.pdf', path, path, round(level,2), saveString, path, path, round(level,2), saveString)) 
+		#system(sprintf('convert %s/%s-Diagnostic.pdf %s/%s-Diagnostic.png', path, path, path, path))
+	}
+}
+
+
 
 ##
 #postOpt = function(adj, mcat){

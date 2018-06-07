@@ -15,8 +15,8 @@ source('modelFunk.r')
 ##
 mcat = 250	#stuff$mcat[i]		
 minYear = 1978	#stuff$minYear[i]	
-maxYear = 1982	#stuff$maxYear[i]
-samplePath = sprintf('./%s%s/', mcat, minYear)
+maxYear = 1983	#stuff$maxYear[i]
+samplePath = sprintf('./%s%s%s/', mcat, minYear, maxYear)
 #gold standards for defining strata
 portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
 yearGold = minYear:maxYear
@@ -28,27 +28,27 @@ gearGold = c('HKL', 'TWL', 'NET') #c('HKL', 'TWL', 'FPT', 'NET', 'MDT')
 #
 
 ##call to database
-Draw = getRawData(mcat, minYear, maxYear, save=T)
-#Draw = read.csv('data78To82_2018-04-04.csv')
+#Draw = getRawData(mcat, minYear, maxYear, save=T)
+Draw = read.csv('data78To83_2018-06-06.csv') #data78To82_2018-04-04.csv')
 #now I define sppGold from the data
-#sppGold  = unique(Draw$species)
-##add implied multinomial species structure
-#D = makeD(sppGold, Draw)
-##add predictive structure 
-#DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
+sppGold  = unique(Draw$species)
+#add implied multinomial species structure
+D = makeD(sppGold, Draw)
+#add predictive structure 
+DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
+
 #
-##
-##MODEL
-##
+#MODEL
 #
-##
-#DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
-#DPred$SP = as.character(interaction(DPred$species, DPred$port))
-#fit = runModel(weight~species+gear+port+f(YQ), DPred, 48)
-#samTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=1))
-##postSamples = inla.posterior.sample(10^3, fit)
-##hypeSamples = inla.hyperpar.sample(10^3, fit)
-##sampleModel(fit, portGold, gearGold, qtrGold, yearGold, DPred, samplePath='./M4/')
+
+#
+DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
+DPred$SP = as.character(interaction(DPred$species, DPred$port))
+fit = runModel(weight~species+gear+port+f(YQ), DPred, 48)
+samTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=2))
+#postSamples = inla.posterior.sample(10^3, fit)
+#hypeSamples = inla.hyperpar.sample(10^3, fit)
+#sampleModel(fit, portGold, gearGold, qtrGold, yearGold, DPred, samplePath='./M4/')
 
 
 ##path to samples
