@@ -14,7 +14,7 @@ suppressMessages(library(foreach, quietly=FALSE))
 #
 predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	levels=c(0.68), #c(0.2, 0.50, 0.68, 0.9, 0.95), 
-	saveFile='tuned.log', #'tuned.hand',
+	saveFile='tuned.log', #tuned.hand
 	startFile='tuned.hand'
 	){
 	#
@@ -362,7 +362,8 @@ plotPerf = function(preds, level,
 #
 plotPerfMod = function(..., level, 
 	#llv=c(0.05),# 0.02), 
-	#col=c('red'),# 'blue') 
+	col='black', #c('red'),# 'blue') 
+	pch=19,
 	save=F,
 	saveString=''
 	#lwd = c(2, 3, 2)
@@ -384,7 +385,7 @@ plotPerfMod = function(..., level,
 	#
 	cexs = preds$landing/mean(preds$landing)
 	cols = rep('black', R)
-	cols[abs(preds$coverage[]-level)>llv] = col
+	#cols[abs(preds$coverage[]-level)>llv] = col
 	#
 	formString = sprintf('%%s/%%s-%1.2f-Diagnostic-%%%dd%%s.pdf', round(level, 2), nchar(as.character(ceiling(R/perPage))) )
 	#print(formString)
@@ -403,30 +404,35 @@ plotPerfMod = function(..., level,
 			)
 		} else{	dev.new(width=8.5/(8.5+11)*scale, height=11/(8.5+11)*scale) }
 		#
+		il = 1
 		for(preds in l){
-			pp = preds[rows,]
+			#
+			pp = preds[rows,]	
+			print(il)
+			#
+			if( il>1 ){ par(new=TRUE) }
 			#4.2
 			par(mar=c(5.1,4.2*(c-2)^1.06,4.1,2.1))
 			plot(pp$coverage, r:1,
-				pch  = 19,
+				pch  = pch[il],
 				cex  = cexs[rows],
-				col  = cols[rows],
+				col  = col[il], #cols[rows],
 				xlim = c(0, 1), #c(max(0, min(level+llv-0.01, pp$coverage)), min(1, max(level+llv+0.01, pp$coverage))), 
 				yaxt = 'n', 
 				ann  = F, 
 				axes = F
 			)
-			#
-			if( any(abs(level-c(0, 0.5, 1))<0.15) ){
-				axis(side=1, 
-					at = round(c(
-						0, #quantile(pp$coverage, 0.01), 
-						0.5,
-						#max(0, min(1, level)), 
-						1 #quantile(pp$coverage, 0.99)
-					), 2)
-				)
-			}else{
+			##
+			#if( any(abs(level-c(0, 0.5, 1))<0.15) ){
+			#	axis(side=1, 
+			#		at = round(c(
+			#			0, #quantile(pp$coverage, 0.01), 
+			#			0.5,
+			#			#max(0, min(1, level)), 
+			#			1 #quantile(pp$coverage, 0.99)
+			#		), 2)
+			#	)
+			#}else{
 				axis(side=1, 
 					at = round(c(
 						0, #quantile(pp$coverage, 0.01), 
@@ -435,12 +441,12 @@ plotPerfMod = function(..., level,
 						1 #quantile(pp$coverage, 0.99)
 					), 2)
 				)
-			}
+			#}
 			#
-			for(i in 1:r){ 	segments(level, i, rev(pp$coverage)[i], i, col=rev(cols[rows])[i]) }
+			for(i in 1:r){ 	segments(level, i, rev(pp$coverage)[i], i, col=col[il]) } #rev(cols[rows])[i]) }
 			#
 			abline( v  = level, 
-        		       col = 'black',
+        		       col = col[il], #"black",
         		       lwd = 2
         		)
 			## 
@@ -467,6 +473,8 @@ plotPerfMod = function(..., level,
 					xpd = TRUE
 				)
 			}
+			#
+			il = il+1
 		}
 		#
 		if( save ){ dev.off() }
