@@ -39,7 +39,7 @@ D = makeD(sppGold, Draw)
 ##D = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
 
 #path to samples
-path =  "/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/" #"/media/nick/extraBig/fullTimeComplete/"
+path =  "/media/nick/extraBig/fullTimeComplete/" #"/media/nick/67cffa21-c600-49a3-91a1-3f7567c21507/fullTimeComplete/" #
 avgPath = sprintf("%s/%sto%s/MCAT%d/Top/avgModel/", path, substring(minYear, 3, 4), substring(maxYear, 3, 4), mcat)
 
 ##

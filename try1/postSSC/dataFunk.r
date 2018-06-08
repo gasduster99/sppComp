@@ -101,7 +101,7 @@ getRawData = function(mcat, minYear, maxYear, save=F){
 	#	
 	if( save ){	
 		#save a local version of data for future reference
-		write.csv(raw, sprintf('data%sTo%s_%s.csv', substring(minYear, 3, 4), substring(maxYear, 3, 4), Sys.Date()), 
+		write.csv(raw, sprintf('%sdata%sTo%s_%s.csv', mcat, substring(minYear, 3, 4), substring(maxYear, 3, 4), Sys.Date()), 
 			row.names=F,
 			quote=F
 		)
