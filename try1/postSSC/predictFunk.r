@@ -6,6 +6,7 @@
 suppressMessages(library(HDInterval, quietly=FALSE))
 suppressMessages(library(doParallel, quietly=FALSE))
 suppressMessages(library(foreach, quietly=FALSE))
+suppressMessages(library(GA, quietly=FALSE))
 
 #
 #FUNCTIONS
@@ -97,7 +98,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		max = upper, 
 		popSize = gaThread,
 		run = 30,
-		maxiter = 200,
+		maxiter = 192, #200,
 		suggestions = out$adj,
 		parallel = gaThread#, #16,
 		#monitor = F	
@@ -361,15 +362,15 @@ plotPerf = function(preds, level,
 
 #
 plotPerfMod = function(..., level, 
-	#llv=c(0.05),# 0.02), 
-	col='black', #c('red'),# 'blue') 
+	col='black',
 	pch=19,
 	save=F,
 	saveString=''
-	#lwd = c(2, 3, 2)
 	){
 	#...	: as many predictive performance data structures that are desired to compare
-	#level	: a reference level comparing predictions	
+	#level	: a reference level comparing predictions
+	#col	: colors for the ... structures
+	#pch	: point shape for the ... structures
 	#
 	#value: a series of page sized plots
 	
@@ -379,16 +380,14 @@ plotPerfMod = function(..., level,
 	#
 	scale = 20#18.5	
 	#
-	perPage = 20
+	perPage = 22
 	R = dim(preds)[1]
 	c = dim(preds)[2]
 	#
 	cexs = preds$landing/mean(preds$landing)
 	cols = rep('black', R)
-	#cols[abs(preds$coverage[]-level)>llv] = col
 	#
 	formString = sprintf('%%s/%%s-%1.2f-Diagnostic-%%%dd%%s.pdf', round(level, 2), nchar(as.character(ceiling(R/perPage))) )
-	#print(formString)
 	for( pg in 1:ceiling(R/perPage) ){
 		#details to subset preds to a page
 		rows = ((pg-1)*(perPage)+1):((pg)*(perPage))
@@ -407,8 +406,7 @@ plotPerfMod = function(..., level,
 		il = 1
 		for(preds in l){
 			#
-			pp = preds[rows,]	
-			print(il)
+			pp = preds[rows,]
 			#
 			if( il>1 ){ par(new=TRUE) }
 			#4.2
@@ -416,32 +414,21 @@ plotPerfMod = function(..., level,
 			plot(pp$coverage, r:1,
 				pch  = pch[il],
 				cex  = cexs[rows],
-				col  = col[il], #cols[rows],
-				xlim = c(0, 1), #c(max(0, min(level+llv-0.01, pp$coverage)), min(1, max(level+llv+0.01, pp$coverage))), 
+				col  = col[il], 
+				xlim = c(0, 1),  
 				yaxt = 'n', 
 				ann  = F, 
 				axes = F
 			)
-			##
-			#if( any(abs(level-c(0, 0.5, 1))<0.15) ){
-			#	axis(side=1, 
-			#		at = round(c(
-			#			0, #quantile(pp$coverage, 0.01), 
-			#			0.5,
-			#			#max(0, min(1, level)), 
-			#			1 #quantile(pp$coverage, 0.99)
-			#		), 2)
-			#	)
-			#}else{
-				axis(side=1, 
-					at = round(c(
-						0, #quantile(pp$coverage, 0.01), 
-						0.5,
-						max(0, min(1, level)), 
-						1 #quantile(pp$coverage, 0.99)
-					), 2)
-				)
-			#}
+			#
+			axis(side=1, 
+				at = round(c(
+					0, #quantile(pp$coverage, 0.01), 
+					0.5,
+					max(0, min(1, level)), 
+					1 #quantile(pp$coverage, 0.99)
+				), 2)
+			)
 			#
 			for(i in 1:r){ 	segments(level, i, rev(pp$coverage)[i], i, col=col[il]) } #rev(cols[rows])[i]) }
 			#
@@ -449,12 +436,7 @@ plotPerfMod = function(..., level,
         		       col = col[il], #"black",
         		       lwd = 2
         		)
-			## 
-			#abline( v = sapply(llv+level, FUN=function(x){min(max(x, 0), 1)}), 
-			#	col = col,
-			#	lwd = lwd
-			#)
-			##
+			#
 			for(i in 1:(c-2)){
 				#column header
 				text( y = 0,
@@ -487,7 +469,32 @@ plotPerfMod = function(..., level,
 	}
 }
 
+#
+mad = function(coverage, level, landing){#preds, level){#mean( abs(preds$coverage-level) * pp$landing/sum(pp$landing) )
+	#coverage	: the observed covera,ge as seen in the predictive performance data structure returned by predPerf
+	#level  	: a reference level for comparing predictions 
+	#landing	: the landing sizes associated with each coverage, as seen in the predictive performance data structure returned by predPerf
+	#
+	#value	: returns the landing weighted average of the absolute deviations from level
+	
+	#
+	mean( abs(coverage-level) * landing/sum(landing) )
+}
 
+#
+aggMad = function(preds, by, level){ 
+	#preds  : the predictive performance data structure returned by predPerf
+	#by	: a list as given in the aggregate function; if names are provided in the 'by' parameter the output will also contain column names
+	#level  : a reference level for comparing predictions
+	#
+	#value	: returns the mad aggregated coverage 
+
+	#should coveraaccount for the number of samples in each category
+	out = aggregate(preds$coverage, by=by, FUN=mad, level=level, landing=preds$landing)
+	colnames(out)[dim(out)[2]] = 'mad'
+	#
+	return(out)
+}
 
 ##
 #postOpt = function(adj, mcat){
