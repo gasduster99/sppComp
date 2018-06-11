@@ -97,8 +97,8 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#if( optOut$convergence ){ optOut=optim(runif(1, 0, 1), f, method="L-BFGS-B", lower=0, upper=10) }
 	gaThread = floor(48/length(levels)) #16
 	gaOut = ga("real-valued", function(x){-f(x)}, 
-		min = lower, 
-		max = upper, 
+		lower = lower, 
+		upper = upper, 
 		popSize = gaThread,
 		run = 30,
 		maxiter = 192, #200,
