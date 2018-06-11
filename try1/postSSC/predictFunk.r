@@ -77,12 +77,15 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#
 	f = function(adj){
 		#
-		registerDoParallel(cores=length(levels))
-		ppSS = foreach( l=levels )%dopar%{
+		#registerDoParallel(cores=length(levels))
+		#ppSS = foreach( l=levels )%dopar%{
+		ppSS = c()
+		for(l in levels){
 			pp = predPerf(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath, threads=1, adjHard=adj)
-			return( abs(sum(pp$coverage*pp$n)/sum(pp$n) - l) )
+			out = abs(sum(pp$coverage*pp$n)/sum(pp$n) - l)
+			ppSS = c(ppSS, out)
 		}
-		ppSS = do.call(rbind, ppSS)
+		#ppSS = do.call(rbind, ppSS)
 		return( mean(ppSS) )
 	}
 	#
