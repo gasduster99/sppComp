@@ -220,9 +220,9 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, D, M=10^4, core
 		for(q in qtrGold ){ path = sprintf('./%s/%s/%s/%s/', samplePath, p, g, q); dir.create(path)
 		for(y in yearGold){ path = sprintf('./%s/%s/%s/%s/%s/', samplePath, p, g, q, y); dir.create(path)
 			#
-			write.table(t(sppGold), file=sprintf("%slpPred.csv",  path), row.names=F, col.names=F, quote=F, sep=',')
-		        write.table(t(sppGold), file=sprintf("%slpPost.csv",  path), row.names=F, col.names=F, quote=F, sep=',')
-		        write.table(t(sppGold), file=sprintf("%ssppComp.csv", path), row.names=F, col.names=F, quote=F, sep=',')
+			write.table(t(as.character(sppGold)), file=sprintf("%slpPred.csv",  path), row.names=F, col.names=F, quote=F, sep=',')
+		        write.table(t(as.character(sppGold)), file=sprintf("%slpPost.csv",  path), row.names=F, col.names=F, quote=F, sep=',')
+		        write.table(t(as.character(sppGold)), file=sprintf("%ssppComp.csv", path), row.names=F, col.names=F, quote=F, sep=',')
 			#
 			pgqyWhere = which(
                                D$port==p &

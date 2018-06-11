@@ -31,7 +31,7 @@ gearGold = c('HKL', 'TWL', 'NET') #c('HKL', 'TWL', 'FPT', 'NET', 'MDT')
 #Draw = getRawData(mcat, minYear, maxYear, save=T)
 Draw = read.csv(dataFile)
 #now I define sppGold from the data
-sppGold  = unique(Draw$species)
+sppGold  = as.character(unique(Draw$species))
 #add implied multinomial species structure
 D = makeD(sppGold, Draw)
 #add predictive structure 
