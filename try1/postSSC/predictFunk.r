@@ -102,8 +102,8 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		popSize = gaThread,
 		run = 30,
 		maxiter = 192, #200,
-		suggestions = out$adj,
-		parallel = gaThread#, #16,
+		suggestions = out$adj#,
+		#parallel = gaThread#, #16,
 		#monitor = F	
 	)	
 	out$adj = gaOut@solution[1,]
