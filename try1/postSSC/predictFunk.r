@@ -102,8 +102,8 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		popSize = gaThread,
 		run = 30,
 		maxiter = 192, #200,
-		suggestions = out$adj#,
-		#parallel = gaThread#, #16,
+		suggestions = out$adj,
+		parallel = gaThread#, #16,
 		#monitor = F	
 	)	
 	out$adj = gaOut@solution[1,]
@@ -136,11 +136,11 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		adj = predTune(fillD, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) 
 	};
 
-	##
-	#registerDoParallel(cores=threads)
-	#preds = foreach( p=portGold )%dopar%{
-	preds = list()
-	for(p in portGold){
+	#
+	registerDoParallel(cores=threads)
+	preds = foreach( p=portGold )%dopar%{
+	#preds = list()
+	#for(p in portGold){
 		#
 		end = 1
 		pred = list() 
@@ -196,8 +196,8 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 			}
 		}}}
 		#
-		#return( as.data.frame(pred) )
-		preds = c(preds, list(as.data.frame(pred)))
+		return( as.data.frame(pred) )
+		#preds = c(preds, list(as.data.frame(pred)))
 	}
 	#reduce preds
 	preds = do.call(rbind, preds)
