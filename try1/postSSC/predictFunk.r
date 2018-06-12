@@ -136,9 +136,11 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 		adj = predTune(fillD, portGold, gearGold, yearGold, qtrGold, nominal, avgPath) 
 	};
 
-	#
-	registerDoParallel(cores=threads)
-	preds = foreach( p=portGold )%dopar%{
+	##
+	#registerDoParallel(cores=threads)
+	#preds = foreach( p=portGold )%dopar%{
+	preds = list()
+	for(p in portGold){
 		#
 		end = 1
 		pred = list() 
@@ -194,7 +196,8 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 			}
 		}}}
 		#
-		return( as.data.frame(pred) )
+		#return( as.data.frame(pred) )
+		preds = c(preds, list(as.data.frame(pred)))
 	}
 	#reduce preds
 	preds = do.call(rbind, preds)
