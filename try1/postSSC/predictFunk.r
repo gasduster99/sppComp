@@ -471,7 +471,7 @@ plotPerfMod = function(..., level,
 	#
 	if( save ){
 		#
-		system(sprintf('convert %s/%s-%1.2f-Diagnostic-*%s.pdf %s/%s-%1.2f-Diagnostic%s.pdf', path, path, round(level,2), saveString, path, path, round(level,2), saveString) 
+		system(sprintf('convert %s/%s-%1.2f-Diagnostic-*%s.pdf %s/%s-%1.2f-Diagnostic%s.pdf', path, path, round(level,2), saveString, path, path, round(level,2), saveString)) 
 		#system(sprintf('pdftk %s/%s-%1.2f-Diagnostic-*%s.pdf output %s/%s-%1.2f-Diagnostic%s.pdf', path, path, round(level,2), saveString, path, path, round(level,2), saveString)) 
 		#system(sprintf('convert %s/%s-Diagnostic.pdf %s/%s-Diagnostic.png', path, path, path, path))
 	}
