@@ -2,6 +2,7 @@ sudo yum install git
 wget dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 sudo rpm -ihv epel-release-7-11.noarch.rpm
 sudo yum install htop
+sudo yum install ImageMagick
 sudo yum install screen
 sudo vim /etc/yum/pluginconf.d/search-disabled-repos.conf
 	set 'notify_only=0' 
