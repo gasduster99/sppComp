@@ -206,8 +206,11 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, D, M=10^4, core
 	nd = nchar(as.character(d))
 	dStr = sprintf('Predictor:%%0%dd', nd)
 	#sample #NOTE: split up samples upto M is neccessary
-	postSamples = inla.posterior.sample(M, fit)
-	hypeSamples = inla.hyperpar.sample(M, fit)
+	postSamples = inla.posterior.sample(M, model)
+	hypeSamples = inla.hyperpar.sample(M, model)
+	rm(fit)
+	rm(model)
+	gc()
 	#
 	S = length(sppGold)
 	rho = hypeSamples[,1]

@@ -45,14 +45,26 @@ DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
 DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
 DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
+for(y in yearGold){
+	name = sprintf('%sQ', y)
+	DPred[[name]] = rep(NA, length(DPred$YQ))
+	DPred[[name]][DPred$year==y] = y
+	DPred[[name]] = interaction(DPred[[name]], DPred$qtr)
+}
+for(q in qtrGold){
+	name = sprintf('%sY', q)
+	DPred[[name]] = rep(NA, length(DPred$YQ))
+	DPred[[name]][DPred$qtr==q] = q
+	DPred[[name]] = interaction(DPred[[name]], DPred$year)
+}
 #model
-modelDef = weight~species+gear+port+f(year)+f(qtr)
+modelDef = weight~species+gear+port+f(1Y)+f(2Y)+f(3Y)+f(4Y)
 fit = runModel(modelDef, DPred, 48)
+#sample
+sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=3))
 metrics = t(c(fit$mlik[1], fit$waic$waic, fit$dic$dic, fit$cpu.used['Total']))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'time')
 write.csv(format(metrics, scientific=T, digits=22), file="./metrics.csv", row.names=F, quote=F)
-#sample
-sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=2))
 
 #
 #DIAGNOSTICS
