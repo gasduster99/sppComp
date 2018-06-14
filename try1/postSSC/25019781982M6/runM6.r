@@ -46,19 +46,19 @@ DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
 DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
 for(y in yearGold){
-	name = sprintf('%sQ', y)
+	name = sprintf('Q%s', y)
 	DPred[[name]] = rep(NA, length(DPred$YQ))
 	DPred[[name]][DPred$year==y] = y
 	DPred[[name]] = interaction(DPred[[name]], DPred$qtr)
 }
 for(q in qtrGold){
-	name = sprintf('%sY', q)
+	name = sprintf('Y%s', q)
 	DPred[[name]] = rep(NA, length(DPred$YQ))
 	DPred[[name]][DPred$qtr==q] = q
 	DPred[[name]] = interaction(DPred[[name]], DPred$year)
 }
 #model
-modelDef = weight~species+gear+port+f(1978Q)+f(1979Q)+f(1980Q)+f(1981Q)+f(1982Q)
+modelDef = weight~species+gear+port+f(Q1978)+f(Q1979)+f(Q1980)+f(Q1981)+f(Q1982)
 fit = runModel(modelDef, DPred, 48)
 #sample
 sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=3))
