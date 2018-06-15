@@ -208,7 +208,6 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, D, M=10^4, core
 	#sample #NOTE: split up samples upto M is neccessary
 	postSamples = inla.posterior.sample(M, model)
 	hypeSamples = inla.hyperpar.sample(M, model)
-	rm(fit)
 	rm(model)
 	gc()
 	#
