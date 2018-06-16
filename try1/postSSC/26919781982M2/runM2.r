@@ -10,7 +10,7 @@ source('../modelFunk.r')
 #
 
 #
-mcat = 253            
+mcat = 269            
 minYear = 1978        
 maxYear = 1982  
 #
@@ -46,13 +46,13 @@ DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
 DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
 #model
-modelDef = weight~species+gear+port+f(year)+f(qtr)+f(YQ)
+modelDef = weight~species+gear+port+f(year)+f(qtr)
 fit = runModel(modelDef, DPred, 48)
-#sample
-sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=2))
 metrics = t(c(fit$mlik[1], fit$waic$waic, fit$dic$dic, fit$cpu.used['Total']))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'time')
 write.csv(format(metrics, scientific=T, digits=22), file="./metrics.csv", row.names=F, quote=F)
+#sample
+sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=2))
 
 #
 #DIAGNOSTICS
