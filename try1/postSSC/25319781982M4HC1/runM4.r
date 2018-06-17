@@ -10,7 +10,7 @@ source('../modelFunk.r')
 #
 
 #
-mcat = 269 
+mcat = 253 
 minYear = 1978        
 maxYear = 1982  
 #
