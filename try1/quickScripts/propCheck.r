@@ -11,7 +11,7 @@ set.seed(1)
 
 #
 n = 1000
-alpha = c(1, 2, 3, 400)
+alpha = c(1, 2, 3, 4)
 P = length(alpha)
 mn = 1000
 #
@@ -28,12 +28,14 @@ D = data.frame(nSpp = as.vector(dat), spp=as.character(c(rep(1, n), rep(2, n), r
 #
 
 #
-cpus = 8
+cpus = 4
 
 #poisson model
 pOut = inla(nSpp~spp-1, family='poisson', data=D, num.threads=cpus, control.compute=list(dic=T, waic=T, config=T))
 #negative binomial model
 nbOut = inla(nSpp~spp-1, family='nbinomial', data=D, num.threads=cpus, control.compute=list(dic=T, waic=T, config=T))
+#negative binomial model
+bbOut = inla(nSpp~spp-1, family='betabinomial', data=D, num.threads=cpus, control.compute=list(dic=T, waic=T, config=T), Ntrials=mn)
 
 #
 #PROPS
@@ -54,6 +56,11 @@ colnames(nbMat) = c('size', as.character(1:4))
 nbMat[,2:5] = exp(nbMat[,2:5])
 nOdds = nbMat[,2:5]/nbMat[,1]
 #
+bbSam = inla.posterior.sample(m, bbOut)
+bbSam = t(matrix(unlist(bbSam), ncol=m))[,c(1, 402:405)]
+bbMat[,2:5] = inv.logit(bbMat)
+#bbSam = t(matrix(unlist(nbSam), ncol=m))[,c(1, 402:405)]
+#
 lam = matrix(NA, nrow=m, ncol=P)
 pred = matrix(NA, nrow=m, ncol=P)
 for(l in 1:4){ 
@@ -64,4 +71,4 @@ nbP = lam/rowSums(lam)
 predP = pred/rowSums(pred)
 #
 dev.new();
-boxplot(cbind(ps, pP, nbP, predP))
+boxplot(cbind(ps, pP, nbP))

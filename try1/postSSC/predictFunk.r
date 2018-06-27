@@ -210,6 +210,58 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	return(preds)	
 }
 
+##
+#sppPredPerf = function(W, sp, prob){
+#	#W 	: a single stratum of D continaing the names species, nBB, and weight
+#	#sp	: a matrix of posterior predictive distribution for each spp
+#	
+#	#
+#	W$weight = as.numeric(W$weight)
+#	W$nBB = as.numeric(W$nBB)
+#	#avoid the case where no data exists
+#	if( dim(W)[1]>0 ){
+#	        #
+#	        for(s in colnames(sp)){
+#	                # 
+#	                #spIntHDI = hdi(density(sp[,s], from=0, to=1, adjust=adj), credMass=prob, allowSplit=T)
+#	                spIntHDI = hdi(density(sp[,s], from=0, to=1), credMass=prob, allowSplit=T)
+#			#
+#	                WS = W[W$species==s,]
+#	                if( dim(WS)[1]>0 ){
+#	                        #make comps
+#	                        cp = WS$weight/WS$nBB
+#	                        #cp = c()
+#	                        #wp = c()
+#	                        #for(sam in WS$sampleNumber){
+#	                        #        for(clust in WS[WS$sampleNumber==sam, 'clusterNumber']){
+#	                        #               #cp = c(cp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight']/clustSize[clustSize$sampleNumber==sam & clustSize$clusterNumber==clust,'size'])
+#	                        #               #wp = c(wp, WS[WS$sampleNumber==sam & WS$clusterNumber==clust, 'weight'])
+#	                        #               cp = c(cp, WS[WS$sampleNumber==sam, 'weight']/WS[WS$sampleNumber==sam, 'clustSize'])
+#	                        #               print(WS[WS$sampleNumber==sam, 'weight']/WS[WS$sampleNumber==sam, 'clustSize'])
+#	                        #       }
+#	                        #}
+#	                        #print(cp)
+#	                        #print(wp)
+#	                        #spHDI
+#	                        inOut = rep(0, length(cp))    #check if in interval, convert to proper bool, and unite with other intervals
+#	                        for(i in 1:dim(spIntHDI)[1]){ inOut=findInterval(cp, spIntHDI[i,])==1 | inOut }
+#	                        cpHdiMean = mean(inOut)
+#	                        #
+#	                        pred$port[end]    = as.character(p)
+#	                        pred$gear[end]    = as.character(g)
+#	                        pred$qtr[end]     = q
+#	                        pred$year[end]    = y
+#	                        pred$species[end] = as.character(s)
+#	                        pred$n[end]       = length(cp)
+#	                        pred$landing[end] = WS[1,'landing']
+#	                        pred$coverage[end]= cpHdiMean
+#	                        #
+#	                        end = end + 1
+#	                }
+#	        }
+#	}
+#}
+
 #
 aggPerf = function(preds, byNames){ #by, byNames=names(by)){ #whichPredSpp=numeric(0), whichBySpp=numeric(0)){
 	#preds		: the predictive performance data structure returned by predPerf
