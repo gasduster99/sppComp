@@ -12,6 +12,8 @@ source('../modelFunk.r')
 #
 globPath = "/media/nick/extraBig/"
 runPaths = Sys.glob(sprintf("%s/2*M*/", globPath))
+not = c( "/media/nick/extraBig//25019781984M4/" )
+runPaths = runPaths[!runPaths%in%not] #!="/media/nick/extraBig//25019781984M4/"]
 #
 for(run in runPaths){
 	baseDir = getwd()
