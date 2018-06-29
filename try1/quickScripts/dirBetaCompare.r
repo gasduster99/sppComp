@@ -73,8 +73,117 @@ sppPredPerf = function(W, sp, prob, adj){
 	return( as.data.frame(pred) )
 }
 
+#
+plotPerfMod = function(..., level,
+        col='black',
+        pch=19,
+        save=F,
+        saveString=''
+        ){
+        #...    : as many predictive performance data structures that are desired to compare
+        #level  : a reference level comparing predictions
+        #col    : colors for the ... structures
+        #pch    : point shape for the ... structures
+        #
+        #value: a series of page sized plots
 
-
+        #
+        l = list(...)
+        preds = l[[1]]
+        #
+        scale = 20#18.5 
+        #
+        perPage = 22
+        R = dim(preds)[1]
+        c = dim(preds)[2]
+        #
+        cexs = preds$landing/mean(preds$landing)
+        cols = rep('black', R)
+        #
+        formString = sprintf('%%s/%%s-%1.2f-Diagnostic-%%%dd%%s.pdf', round(level, 2), nchar(as.character(ceiling(R/perPage))) )
+        for( pg in 1:ceiling(R/perPage) ){
+                #details to subset preds to a page
+                rows = ((pg-1)*(perPage)+1):((pg)*(perPage))
+                pp = preds[rows,]
+                r = dim(pp)[1]
+                #
+                if( save ){
+                        path = paste(colnames(pp)[1:(c-3)], collapse='-')
+                        dir.create(path, showWarnings = FALSE)
+                        pdf( sprintf(formString, path, path, pg, saveString),
+                                width  = 8.5/(8.5+11)*scale,
+                                height = 11/(8.5+11)*scale
+                        )
+                } else{ dev.new(width=8.5/(8.5+11)*scale, height=11/(8.5+11)*scale) }
+                #
+                il = 1
+                for(preds in l){
+                        #
+                        pp = preds[rows,]
+                        #
+                        if( il>1 ){ par(new=TRUE) }
+                        #4.2
+                        par(mar=c(5.1,4.2*(c-2)^1.06,4.1,2.1))
+                        plot(pp$coverage, r:1,
+                                pch  = pch[il],
+                                cex  = cexs[rows],
+                                col  = col[il],
+                                xlim = c(0, 1),
+                                yaxt = 'n',
+                                ann  = F,
+                                axes = F
+                        )
+			print(cexs[rows])
+			print(rows)
+                        #
+                        axis(side=1,
+                                at = round(c(
+                                        0, #quantile(pp$coverage, 0.01), 
+                                        0.5,
+                                        max(0, min(1, level)),
+                                        1 #quantile(pp$coverage, 0.99)
+                                ), 2)
+                        )
+                        #
+                        for(i in 1:r){  segments(level, i, rev(pp$coverage)[i], i, col=col[il]) } #rev(cols[rows])[i]) }
+                        #
+                        abline( v  = level,
+                               col = "black",
+                               lwd = 2
+                        )
+                        #
+                        for(i in 1:(c-2)){
+                                #column header
+                                text( y = 0,
+                                        x = 0.05 - ((c-2)^2*0.05) + ((i-1)*0.05*(c-2)),
+                                        labels = colnames(pp)[i],
+                                        srt = 0,
+                                        pos = 2,
+                                        xpd = TRUE
+                                )
+                                #column entries
+                                text( y = r:1,
+                                        0.05 - ((c-2)^2*0.05) + ((i-1)*0.05*(c-2)),
+                                        labels = pp[,i],
+                                        srt = 0,
+                                        pos = 2,
+                                        xpd = TRUE
+                                )
+                        }
+                        #
+                        il = il+1
+                }
+                #
+                if( save ){ dev.off() }
+        }
+        #
+        if( save ){
+                #
+                system(sprintf('convert %s/%s-%1.2f-Diagnostic-*%s.pdf %s/%s-%1.2f-Diagnostic%s.pdf', path, path, round(level,2), saveString, path, path, round(level,2), saveString))
+                #system(sprintf('pdftk %s/%s-%1.2f-Diagnostic-*%s.pdf output %s/%s-%1.2f-Diagnostic%s.pdf', path, path, round(level,2), saveString, path, path, round(level,2), saveString)) 
+                #system(sprintf('convert %s/%s-Diagnostic.pdf %s/%s-Diagnostic.png', path, path, path, path))
+        }
+}
 
 #
 #DATA
@@ -83,11 +192,11 @@ sppPredPerf = function(W, sp, prob, adj){
 #
 set.seed(1)
 #
-alpha = c(200, 150, 100, 150, 120, 100, 90)  #c(100, 10, 10, 5, 1, 1, 0.1, 0.1, 0.001)
+alpha = c(100, 10, 10, 5, 1, 1, 0.1, 0.1, 0.001) #seq(10, 20, length.out=5) #c(200, 150, 150, 120, 100)  #
 #
-n  = 100
+n  = 30
 P  = length(alpha)
-mn = 50
+mn = 100
 #
 ps  = matrix(NA, nrow=n, ncol=P)
 dat = matrix(NA, nrow=n, ncol=P)
@@ -114,7 +223,7 @@ for(i in 1:P){
 
 #
 M    = 10^3
-cpus = 4
+cpus = 8
 D = data.frame(
 	nSpp = as.vector(dat), 
 	spp  = as.character(spp), 
@@ -157,7 +266,8 @@ D = list(
 DMOut = stan( file = "dirMult.stan",
 	data  = D,
 	iter  = M,
-        cores = cpus
+        cores = cpus,
+	chains= cpus
 )
 
 #
@@ -202,32 +312,56 @@ W = data.frame(
 	nBB 	= rep(mn, length(as.vector(dat))),
 	weight 	= as.vector(dat)
 )
+
 #
+#PLOT
+#
+
+#
+level = 0.68
 betaAdj = optimize(
 	function(x){
-		pp = sppPredPerf(W, ppBBClean, 0.68, x)
+		pp = sppPredPerf(W, ppBBClean, level, x)
 		return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
 	},
 	c(0, 10)
 )$minimum
 diriAdj = optimize(
 	function(x){
-		pp = sppPredPerf(W, propDMClean, 0.68, x)
+		pp = sppPredPerf(W, propDMClean, level, x)
 		return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
 	},
 	c(0, 10)
 )$minimum
 #
-ppBeta = sppPredPerf(W, ppBBClean, 0.68, betaAdj)
-ppDiri = sppPredPerf(W, propDMClean, 0.68, diriAdj)
+ppBeta = sppPredPerf(W, ppBBClean, level, betaAdj)
+ppBeta$landing = rep(1, length(ppBeta$n))
+ppDiri = sppPredPerf(W, propDMClean, level, diriAdj)
+ppDiri$landing = rep(1, length(ppDiri$n))
+#
+plotPerfMod(ppBeta, ppDiri, level=level, col=c('black', 'red'))
+
+##
+#level = 0.95
+##
+#ppBeta = sppPredPerf(W, ppBBClean, level, betaAdj)
+#ppBeta$landing = rep(1, length(ppBeta$n))
+#ppDiri = sppPredPerf(W, propDMClean, level, diriAdj)
+#ppDiri$landing = rep(1, length(ppDiri$n))
+##
+#plotPerfMod(ppBeta, ppDiri, level=level, col=c('black', 'red'))
+
+
+
 
 #
 #PLOT
 #
 
-boxplot(W$weight/W$nBB~W$species, ylim=c(0,1), range=0)
-boxplot(propDMClean, col='blue', add=T, range=0)
-boxplot(ppBBClean, col='red', add=T, range=0)
+#
+#boxplot(W$weight/W$nBB~W$species, ylim=c(0,1), range=0)
+#boxplot(propDMClean, col='blue', add=T, range=0)
+#boxplot(ppBBClean, col='red', add=T, range=0)
 
 ##
 #dev.new()
