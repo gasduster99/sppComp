@@ -132,5 +132,9 @@ for(run in runPaths){
 	}
 	#
 	setwd(baseDir)
+	#
+	dir = strsplit(run, '//')[[1]][2]
+	system(sprintf('mkdir %s', dir))
+	system(sprintf('mv tuned.log %s', dir))
 }
 
