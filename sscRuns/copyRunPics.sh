@@ -19,7 +19,7 @@ copyRun(){
 	git commit -am "added $1"
 }
 
-#
+#250 time models
 #copyRun 25019781982M1
 #copyRun 25019781982M2
 #copyRun 25019781982M3
@@ -27,10 +27,21 @@ copyRun(){
 #copyRun 25019781982M5
 #copyRun 25019781982M6
 
-#
-copyRun 25319781982M1
-copyRun 25319781982M2
-copyRun 25319781982M3
-copyRun 25319781982M4
-copyRun 25319781982M5
-copyRun 25319781982M6
+##253 time models
+#copyRun 25319781982M1
+#copyRun 25319781982M2
+#copyRun 25319781982M3
+#copyRun 25319781982M4
+#copyRun 25319781982M5
+#copyRun 25319781982M6
+
+#269 time models
+copyRun 26919781982M1
+copyRun 26919781982M2
+copyRun 26919781982M3
+copyRun 26919781982M4
+copyRun 26919781982M5
+copyRun 26919781982M6
+
+
+
