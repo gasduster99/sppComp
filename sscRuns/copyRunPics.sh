@@ -19,5 +19,9 @@ copyRun(){
 	git commit -am "added $1"
 }
 
-#
-copyRun 25019781982M2
+#copyRun 25019781982M1
+#copyRun 25019781982M2
+copyRun 25019781982M3
+copyRun 25019781982M4
+copyRun 25019781982M5
+copyRun 25019781982M6
