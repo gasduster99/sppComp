@@ -47,7 +47,7 @@ DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
 #model
 modelDef = weight~species+gear+port+f(year)+f(qtr)+f(YQ)
-fit = runModel(modelDef, DPred, 48)
+fit = runModel(modelDef, DPred, 10)
 #sample
 sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=1))
 metrics = t(c(fit$mlik[1], fit$waic$waic, fit$dic$dic, fit$cpu.used['Total']))
