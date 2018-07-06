@@ -1,8 +1,14 @@
 \BOOKMARK [1][-]{section.1}{Diagnostic template and full predictive performance}{}% 1
 \BOOKMARK [1][-]{section.2}{Time model and prior sensitivities}{}% 2
-\BOOKMARK [1][-]{section.3}{Diagnostic sensitivity to alternative time-blocking}{}% 3
-\BOOKMARK [1][-]{section.4}{Species:Port and Species:Gear interactions}{}% 4
-\BOOKMARK [1][-]{section.5}{Landings Comparision}{}% 5
-\BOOKMARK [1][-]{section.6}{Time block species sample sizes}{}% 6
-\BOOKMARK [1][-]{section.7}{Model mispecification self-test}{}% 7
-\BOOKMARK [1][-]{section.8}{Diagnostic template and fully stratified predictive performance}{}% 8
+\BOOKMARK [2][-]{subsection.2.1}{MCAT 250 Time Models}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{M3, M4, M6 Comparision}{subsection.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.2}{MCAT 250 Priors}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.1}{M4HC1, M4HC3, M4U4 Comparision}{subsection.2.2}% 6
+\BOOKMARK [2][-]{subsection.2.3}{MCAT 253 Time Models}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.4}{M4, M5, M6 Comparision}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.5}{MCAT 253 Priors}{section.2}% 9
+\BOOKMARK [3][-]{subsubsection.2.5.1}{M4HC1, M4HC3, M4U4 Comparision}{subsection.2.5}% 10
+\BOOKMARK [2][-]{subsection.2.6}{MCAT 269 Time Models}{section.2}% 11
+\BOOKMARK [3][-]{subsubsection.2.6.1}{M4, M5, M6 Comparision}{subsection.2.6}% 12
+\BOOKMARK [2][-]{subsection.2.7}{MCAT 269 Priors}{section.2}% 13
+\BOOKMARK [3][-]{subsubsection.2.7.1}{M4HC1, M4HC3, M4U4 Comparision}{subsection.2.7}% 14
