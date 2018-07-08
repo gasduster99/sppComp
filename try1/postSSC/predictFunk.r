@@ -19,7 +19,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	startFile='tuned.hand'
 	){
 	#
-	writeLines('\tTuning...\n')	
+	#writeLines('\tTuning...\n')	
 	
 	#
 	out = data.frame(
@@ -32,6 +32,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#
 	if( file.exists(saveFile) ){
 		#
+		writeLines('\tMemmo...\n') 
 		log = read.csv(saveFile)
 		log = log[
 			out$mcat==log$mcat 		&
@@ -45,6 +46,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 			return(log$adj)
 		}
 	}
+	writeLines('\tTuning...\n')
 	
 	#
 	lower = 0
@@ -94,7 +96,7 @@ predTune = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	#optOut = optim(4/12, f, method="L-BFGS-B", lower=0, upper=10)
 	#print(optOut)
 	#out$adj = optOut$par
-	#if( optOut$convergence ){ optOut=optim(runif(1, 0, 1), f, method="L-BFGS-B", lower=0, upper=10) }
+	#if( optOut$convergence ){ optOut=optim(runif(1, 0, 1), f, method="L-BFGS-B", lower=0, upper=10) }	
 	gaThread = floor(48/length(levels)) #16
 	gaOut = ga("real-valued", function(x){-f(x)}, 
 		lower = lower, 
@@ -203,6 +205,7 @@ predPerf = function(fillD, portGold, gearGold, yearGold, qtrGold, prob, avgPath,
 	preds = do.call(rbind, preds)
 	preds = as.data.frame(preds)
 	colnames(preds) = c('port', 'gear', 'qtr', 'year', 'species', 'n', 'landing', 'coverage')
+	preds = preds[, c('species', 'port', 'gear', 'year', 'qtr', 'n', 'landing', 'coverage')]
 	#
 	#preds$coverage = as.numeric(preds$coverage)
 	#preds$n = as.numeric(preds$n)
@@ -371,6 +374,8 @@ plotPerf = function(preds, level,
 plotPerfMod = function(..., level, 
 	col='black',
 	pch=19,
+	legend='',
+	main='', 
 	save=F,
 	saveString=''
 	){
@@ -378,6 +383,9 @@ plotPerfMod = function(..., level,
 	#level	: a reference level comparing predictions
 	#col	: colors for the ... structures
 	#pch	: point shape for the ... structures
+	#legend	: a legend label for the ... structures
+	#save	: should plot be saved?
+	#saveString : a string to use in creating the saved file
 	#
 	#value: a series of page sized plots
 	
@@ -422,7 +430,8 @@ plotPerfMod = function(..., level,
 				pch  = pch[il],
 				cex  = cexs[rows],
 				col  = col[il], 
-				xlim = c(0, 1),  
+				xlim = c(0, 1),
+				main = main, 
 				yaxt = 'n', 
 				ann  = F, 
 				axes = F
@@ -437,7 +446,7 @@ plotPerfMod = function(..., level,
 				), 2)
 			)
 			#
-			for(i in 1:r){ 	segments(level, i, rev(pp$coverage)[i], i, col=col[il]) } #rev(cols[rows])[i]) }
+			for(i in 1:r){ 	segments(level, i, rev(pp$coverage)[i], i, col=col[il]) } 
 			#
 			abline( v  = level, 
         		       col = "black", #col[il], #
@@ -465,6 +474,7 @@ plotPerfMod = function(..., level,
 			#
 			il = il+1
 		}
+		legend('topleft', legend=legend, horiz=T, inset=c(0, -0.01), bty='n', fill=col)
 		#
 		if( save ){ dev.off() }
 	}

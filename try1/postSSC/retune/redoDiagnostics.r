@@ -12,8 +12,11 @@ source('../modelFunk.r')
 #
 globPath = "/media/nick/extraBig/"
 runPaths = Sys.glob(sprintf("%s/2*M*/", globPath))
-not = c( "/media/nick/extraBig//25019781984M4/" )
-runPaths = runPaths[!runPaths%in%not] #!="/media/nick/extraBig//25019781984M4/"]
+maybes = sapply(strsplit(runPaths, '//'), function(x){x[2]})
+tunedRuns = Sys.glob('*/')
+#not = c( "/media/nick/extraBig//25019781984M4/" )
+#!="/media/nick/extraBig//25019781984M4/"]
+runPaths = runPaths[!maybes%in%tunedRuns] 
 #
 for(run in runPaths){
 	baseDir = getwd()
@@ -53,84 +56,95 @@ for(run in runPaths){
 	#
 	
 	#
+	dir = strsplit(run, '//')[[1]][2]
+	
+	#
 	setwd(baseDir)
 	nominal = 0.68
 	pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
 	setwd(run)
 	#
-	plotPerfMod(pp, col=c('black'), pch=c(19), level=nominal, save=T)
-	write.csv(pp, file='disaggregated68.csv', row.names=F)
-	plotPerfMod(aggPerf(pp, c('year', 'gear', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
-	write.csv(aggPerf(pp, c('year', 'gear', 'species')), file='gearYearSpp68.csv', row.names=F)
-	plotPerfMod(aggPerf(pp, c('year', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
-	write.csv(aggPerf(pp, c('year', 'species')), file='yearSpp68.csv', row.names=F)
-	#
-	mads = aggMad(pp, by=list(species=pp$species), nominal)
-	mads = mads[order(mads$mad),]
-	write.csv(mads, file='sppMad68.csv', row.names=F)
-	pdf(sprintf('sppMad68.pdf'), width=15)
-	barplot(tail(mads$mad, 15), names=tail(mads$species, 15), ylab='MAD', main='MAD Ordered by Species')
-	dev.off()
-	#
-	for( s in sppGold ){
-	        #
-	        pps = pp[pp$species==s,]
-	        #
-	        portMarg = aggPerf(pps, c('port'))
-	        colnames(portMarg)[1] = sprintf('marginal%s', s)
-	        gearMarg = aggPerf(pps, c('gear'))
-	        colnames(gearMarg)[1] = sprintf('marginal%s', s)
-	        yearMarg = aggPerf(pps, c('year'))
-	        colnames(yearMarg)[1] = sprintf('marginal%s', s)
-	        yearMarg[,1] = as.character(yearMarg[,1])
-	        qtrMarg  = aggPerf(pps, c('qtr'))
-	        colnames(qtrMarg)[1] = sprintf('marginal%s', s)
-	        qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
-	        #
-	        marginals = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
-	        plotPerfMod(marginals, col=c('black'), pch=c(19), level=nominal, save=T)
-	        write.csv(marginals, file=sprintf('marginal%s/marginal%s68.csv', s, s), row.names=F)
-	}
+        plotPerfMod(pp, col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+        write.csv(pp, file='disaggregated68.csv', row.names=F, quote=F)
+        plotPerfMod(aggPerf(pp, c('species', 'gear', 'year')), col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+        write.csv(aggPerf(pp, c('species', 'gear', 'year')), file='gearYearSpp68.csv', row.names=F, quote=F)
+        plotPerfMod(aggPerf(pp, c('species', 'year')), col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+        write.csv(aggPerf(pp, c('species', 'year')), file='yearSpp68.csv', row.names=F, quote=F)
+        #
+        mads = aggMad(pp, by=list(species=pp$species), nominal)
+        mads = mads[!mads$species%in%c('REX', 'EGLS', 'CBZN', 'SABL', 'LCOD', 'LSPN', 'SSPN', 'URCK'),]
+        mads = mads[order(mads$mad),]
+        write.csv(mads, file='sppMad68.csv', row.names=F, quote=F)
+        pdf(sprintf('sppHeadMad68.pdf'), width=5, height=5)
+        barplot(head(mads$mad, 5), names=head(mads$species, 5), ylim=c(0, max(tail(mads$mad, 5))), ylab='MAD', main='MAD Ordered by Species')
+        dev.off()
+        pdf(sprintf('sppTailMad68.pdf'), width=5, height=5)
+        barplot(tail(mads$mad, 5), names=tail(mads$species, 5), ylim=c(0, max(tail(mads$mad, 5))), ylab='MAD', main='MAD Ordered by Species')
+        dev.off()
+        #
+        for( s in sppGold ){
+                #
+                pps = pp[pp$species==s,]
+                #
+                portMarg = aggPerf(pps, c('port'))
+                colnames(portMarg)[1] = sprintf('marg%s', s)
+                gearMarg = aggPerf(pps, c('gear'))
+                colnames(gearMarg)[1] = sprintf('marg%s', s)
+                yearMarg = aggPerf(pps, c('year'))
+                colnames(yearMarg)[1] = sprintf('marg%s', s)
+                yearMarg[,1] = as.character(yearMarg[,1])
+                qtrMarg  = aggPerf(pps, c('qtr'))
+                colnames(qtrMarg)[1] = sprintf('marg%s', s)
+                qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
+                #
+                marginals = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
+                plotPerfMod(marginals, col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+                write.csv(marginals, file=sprintf('marginal%s/marginal%s68.csv', s, s), row.names=F, quote=F)
+        }	
 	#
 	setwd(baseDir)
 	nominal = 0.95
 	pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
 	setwd(run)
 	#
-	plotPerfMod(pp, col=c('black'), pch=c(19), level=nominal, save=T)
-	write.csv(pp, file='disaggregated95.csv', row.names=F)
-	plotPerfMod(aggPerf(pp, c('year', 'gear', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
-	write.csv(aggPerf(pp, c('year', 'gear', 'species')), file='gearYearSpp95.csv', row.names=F)
-	plotPerfMod(aggPerf(pp, c('year', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
-	write.csv(aggPerf(pp, c('year', 'species')), file='yearSpp95.csv', row.names=F)
-	#
-	mads = aggMad(pp, by=list(species=pp$species), nominal)
-	mads = mads[order(mads$mad),]
-	write.csv(mads, file='sppMad95.csv', row.names=F)
-	pdf(sprintf('sppMad95.pdf'), width=15)
-	barplot(tail(mads$mad, 15), names=tail(mads$species, 15), ylab='MAD', main='MAD Ordered by Species')
-	dev.off()
-	#
-	for( s in sppGold ){
-	        #
-	        pps = pp[pp$species==s,]
-	        #
-	        portMarg = aggPerf(pps, c('port'))
-	        colnames(portMarg)[1] = sprintf('marginal%s', s)
-	        gearMarg = aggPerf(pps, c('gear'))
-	        colnames(gearMarg)[1] = sprintf('marginal%s', s)
-	        yearMarg = aggPerf(pps, c('year'))
-	        colnames(yearMarg)[1] = sprintf('marginal%s', s)
-	        yearMarg[,1] = as.character(yearMarg[,1])
-	        qtrMarg  = aggPerf(pps, c('qtr'))
-	        colnames(qtrMarg)[1] = sprintf('marginal%s', s)
-	        qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
-	        #
-	        marginals = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
-	        plotPerfMod(marginals, col=c('black'), pch=c(19), level=nominal, save=T)
-	        write.csv(marginals, file=sprintf('marginal%s/marginal%s95.csv', s, s), row.names=F)
-	}
-	#
+        plotPerfMod(pp, col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+        write.csv(pp, file='disaggregated95.csv', row.names=F, quote=F)
+        plotPerfMod(aggPerf(pp, c('species', 'gear', 'year')), col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+        write.csv(aggPerf(pp, c('species', 'gear', 'year')), file='gearYearSpp95.csv', row.names=F, quote=F)
+        plotPerfMod(aggPerf(pp, c('species', 'year')), col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+        write.csv(aggPerf(pp, c('species', 'year')), file='yearSpp95.csv', row.names=F, quote=F)
+        #
+        mads = aggMad(pp, by=list(species=pp$species), nominal)
+        mads = mads[!mads$species%in%c('REX', 'EGLS', 'CBZN', 'SABL', 'LCOD', 'LSPN', 'SSPN', 'URCK'),]
+        mads = mads[order(mads$mad),]
+        write.csv(mads, file='sppMad95.csv', row.names=F, quote=F)
+        pdf(sprintf('sppHeadMad95.pdf'), width=5, height=5)
+        barplot(head(mads$mad, 5), names=head(mads$species, 5), ylim=c(0, max(tail(mads$mad, 5))), ylab='MAD', main='MAD Ordered by Species')
+        dev.off()
+        pdf(sprintf('sppTailMad95.pdf'), width=5, height=5)
+        barplot(tail(mads$mad, 5), names=tail(mads$species, 5), ylim=c(0, max(tail(mads$mad, 5))), ylab='MAD', main='MAD Ordered by Species')
+        dev.off()
+        #
+        for( s in sppGold ){
+                #
+                pps = pp[pp$species==s,]
+                #
+                portMarg = aggPerf(pps, c('port'))
+                colnames(portMarg)[1] = sprintf('marg%s', s)
+                gearMarg = aggPerf(pps, c('gear'))
+                colnames(gearMarg)[1] = sprintf('marg%s', s)
+                yearMarg = aggPerf(pps, c('year'))
+                colnames(yearMarg)[1] = sprintf('marg%s', s)
+                yearMarg[,1] = as.character(yearMarg[,1])
+                qtrMarg  = aggPerf(pps, c('qtr'))
+                colnames(qtrMarg)[1] = sprintf('marg%s', s)
+                qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
+                #
+                marginals = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
+                plotPerfMod(marginals, col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
+                write.csv(marginals, file=sprintf('marginal%s/marginal%s95.csv', s, s), row.names=F, quote=F)
+        }
+	#	
 	setwd(baseDir)
 	#
 	dir = strsplit(run, '//')[[1]][2]
