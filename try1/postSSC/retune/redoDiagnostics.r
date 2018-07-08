@@ -14,9 +14,10 @@ globPath = "/media/nick/extraBig/"
 runPaths = Sys.glob(sprintf("%s/2*M*/", globPath))
 maybes = sapply(strsplit(runPaths, '//'), function(x){x[2]})
 tunedRuns = Sys.glob('*/')
-#not = c( "/media/nick/extraBig//25019781984M4/" )
+not = c( "/media/nick/extraBig//25019781984M4/" )
 #!="/media/nick/extraBig//25019781984M4/"]
 runPaths = runPaths[!maybes%in%tunedRuns] 
+runPaths = runPaths[!runPaths%in%not]
 #
 for(run in runPaths){
 	baseDir = getwd()
@@ -99,7 +100,7 @@ for(run in runPaths){
                 #
                 marginals = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
                 plotPerfMod(marginals, col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
-                write.csv(marginals, file=sprintf('marginal%s/marginal%s68.csv', s, s), row.names=F, quote=F)
+                write.csv(marginals, file=sprintf('marg%s/marginal%s68.csv', s, s), row.names=F, quote=F)
         }	
 	#
 	setwd(baseDir)
@@ -142,7 +143,7 @@ for(run in runPaths){
                 #
                 marginals = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
                 plotPerfMod(marginals, col=c('black'), legend=dir, pch=c(19), level=nominal, save=T)
-                write.csv(marginals, file=sprintf('marginal%s/marginal%s95.csv', s, s), row.names=F, quote=F)
+                write.csv(marginals, file=sprintf('marg%s/marginal%s95.csv', s, s), row.names=F, quote=F)
         }
 	#	
 	setwd(baseDir)

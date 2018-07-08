@@ -19,6 +19,14 @@ copyRun(){
 	git commit -am "added $1"
 }
 
+modRun(){
+	rm -r $1/marginal*
+	rm -r $1/year-species/
+	rm -r $1/gear-year-species/
+	rm -r $1/port-gear-qtr-year-species/
+	rm $1/sppMad*.pdf
+}
+
 ##250 time models
 #copyRun 25019781982M1
 #copyRun 25019781982M2
