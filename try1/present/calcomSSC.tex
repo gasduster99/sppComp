@@ -1583,7 +1583,28 @@ m &\in&\left\{1, ..., M\right\} \text{Years}\\
 %%%                \item handles overdispersion 
 %%%                \item independent models of weight fit via inla are fast
 %%%                \item prediction and normalization $=>$ sppComp
-%%%        \end{itemize}
+%%%        \end{itemizeubsection{}
+\begin{frame}{Priors}
+$~$
+\hspace*{-1.5cm}
+\begin{minipage}{0.55\textwidth}
+%\vspace{-0.5cm}
+\begin{align*}
+\beta_0 &\propto 1\\
+\beta^{(s)}_j &\sim N(0, 32^2)\\
+\beta^{(p)}_k &\sim N(0, 32^2)\\
+\beta^{(g)}_l &\sim N(0, 32^2)\\
+&\\
+\text{logit}(\rho) &\sim N(0, 2^2)\\
+&\\
+v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v 
+\end{align*}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\includegraphics[width=1.4\textwidth]{../pictures/priorPredict.pdf}
+\end{minipage}
+\end{frame}
+
 %%\end{itemize}
 %%\end{frame}
 %%

@@ -45,7 +45,7 @@ deltaForm = function(icVec){
 #
 
 #
-runs = Sys.glob('26919781982M4[HU]*')
+runs = Sys.glob('26919781982M4*')
 R = length(runs)
 
 #
@@ -65,7 +65,7 @@ runMetricsDelta[,'mlik'] = round(goodRatios(runMetrics[,'mlik']), 2)
 #
 writeLines(sprintf('\\(\\Delta\\) DIC & %s \\\\', paste(runMetricsDelta[,'dic'], collapse=' & ')))
 writeLines(sprintf('\\(\\Delta\\) WAIC & %s \\\\', paste(runMetricsDelta[,'waic'], collapse=' & ')))
-writeLines(sprintf('\\(pr(M|y)\\) & %s ', paste(runMetricsDelta[,'mlik'], collapse=' & ')))
+writeLines(sprintf('\\(pr(M|y)\\) & %s \\\\ \\hline', paste(runMetricsDelta[,'mlik'], collapse=' & ')))
 
 
 
