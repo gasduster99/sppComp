@@ -27,16 +27,25 @@ modRun(){
 	rm $1/sppMad*.pdf
 }
 
-##250 time models
-#modRun 25019781982M1
-#copyRun 25019781982M1
+#250 time models
+modRun /media/nick/extraBig/25019781982M1/
+modRun 25019781982M1
+copyRun 25019781982M1
 modRun /media/nick/extraBig/25019781982M2/
 modRun 25019781982M2
 copyRun 25019781982M2
-#copyRun 25019781982M3
-#copyRun 25019781982M4
-#copyRun 25019781982M5
-#copyRun 25019781982M6
+modRun /media/nick/extraBig/25019781982M3/
+modRun 25019781982M3
+copyRun 25019781982M3
+modRun /media/nick/extraBig/25019781982M4/
+modRun 25019781982M4
+copyRun 25019781982M4
+modRun /media/nick/extraBig/25019781982M5/
+modRun 25019781982M5
+copyRun 25019781982M5
+modRun /media/nick/extraBig/25019781982M6/
+modRun 25019781982M6
+copyRun 25019781982M6
 
 ##250 prior models
 #copyRun 25019781982M4HC1
