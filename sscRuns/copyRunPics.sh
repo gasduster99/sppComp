@@ -11,10 +11,10 @@ copyRun(){
 	mkdir $1
 	cp /media/nick/extraBig/$1/*.csv $1/
 	cp /media/nick/extraBig/$1/*.pdf $1/
-	cp -r /media/nick/extraBig/$1/marginal* $1/
-	cp -r /media/nick/extraBig/$1/year-species/ $1/
-	cp -r /media/nick/extraBig/$1/gear-year-species/ $1/
-	cp -r /media/nick/extraBig/$1/port-gear-qtr-year-species/ $1/
+	cp -r /media/nick/extraBig/$1/marg* $1/
+	cp -r /media/nick/extraBig/$1/species-year/ $1/
+	cp -r /media/nick/extraBig/$1/species-gear-year/ $1/
+	cp -r /media/nick/extraBig/$1/species-port-gear-year-qtr/ $1/
 	git add $1/
 	git commit -am "added $1"
 }
@@ -30,6 +30,7 @@ modRun(){
 ##250 time models
 #modRun 25019781982M1
 #copyRun 25019781982M1
+modRun /media/nick/extraBig/25019781982M2/
 modRun 25019781982M2
 copyRun 25019781982M2
 #copyRun 25019781982M3
