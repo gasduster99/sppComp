@@ -51,7 +51,7 @@ D = makeD(sppGold, Draw)
 legend = c()
 baseDir = getwd()
 #
-run = "/media/nick/extraBig//25019781982M2"
+run = "/media/nick/extraBig//25019781982M4HC1"
 legend = c(legend, substrRight(strsplit(run, '//')[[1]][2], 12))
 samplePath = sprintf('%s/%s%s%s/', run, mcat, minYear, maxYear)
 runDir = sprintf('../retune/%s', strsplit(run, '//')[[1]][2])
@@ -60,7 +60,7 @@ nominal = 0.68
 ppM3 = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
 setwd(baseDir)
 #
-run = "/media/nick/extraBig//25019781982M3"
+run = "/media/nick/extraBig//25019781982M4HC3"
 legend = c(legend, substrRight(strsplit(run, '//')[[1]][2], 12))
 samplePath = sprintf('%s/%s%s%s/', run, mcat, minYear, maxYear)
 runDir = sprintf('../retune/%s', strsplit(run, '//')[[1]][2])
@@ -69,7 +69,7 @@ nominal = 0.68
 ppM4 = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
 setwd(baseDir)
 #
-run = "/media/nick/extraBig//25019781982M4"
+run = "/media/nick/extraBig//25019781982M4U4"
 legend = c(legend, substrRight(strsplit(run, '//')[[1]][2], 12))
 samplePath = sprintf('%s/%s%s%s/', run, mcat, minYear, maxYear)
 runDir = sprintf('../retune/%s', strsplit(run, '//')[[1]][2])

@@ -10,6 +10,11 @@ source('../modelFunk.r')
 #
 
 #
+substrRight = function(x, n){
+	substr(x, n, nchar(x))
+}
+
+#
 #KNOBS
 #
 
@@ -43,9 +48,11 @@ D = makeD(sppGold, Draw)
 #
 
 #
+legend = c()
 baseDir = getwd()
 #
 run = "/media/nick/extraBig//26919781982M4"
+legend = c(legend, substrRight(strsplit(run, '//')[[1]][2], 12))
 samplePath = sprintf('%s/%s%s%s/', run, mcat, minYear, maxYear)
 runDir = sprintf('../retune/%s', strsplit(run, '//')[[1]][2])
 setwd(runDir)
@@ -54,6 +61,7 @@ ppM3 = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
 setwd(baseDir)
 #
 run = "/media/nick/extraBig//26919781982M5"
+legend = c(legend, substrRight(strsplit(run, '//')[[1]][2], 12))
 samplePath = sprintf('%s/%s%s%s/', run, mcat, minYear, maxYear)
 runDir = sprintf('../retune/%s', strsplit(run, '//')[[1]][2])
 setwd(runDir)
@@ -62,6 +70,7 @@ ppM4 = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
 setwd(baseDir)
 #
 run = "/media/nick/extraBig//26919781982M6"
+legend = c(legend, substrRight(strsplit(run, '//')[[1]][2], 12))
 samplePath = sprintf('%s/%s%s%s/', run, mcat, minYear, maxYear)
 runDir = sprintf('../retune/%s', strsplit(run, '//')[[1]][2])
 setwd(runDir)
@@ -75,21 +84,24 @@ setwd(baseDir)
 
 #
 plotPerfMod(ppM3, ppM4, ppM6, 
-	col=c('black', 'red', 'blue'), 
+	col=c('black', 'red', 'blue'),
+	legend=legend,
 	pch=c(19, 19, 19), 
 	level=nominal, 
 	save=T
 )
 #write.csv(pp, file='disaggregated68.csv', row.names=F)
-plotPerfMod(aggPerf(ppM3, c('year', 'gear', 'species')), aggPerf(ppM4, c('year', 'gear', 'species')), aggPerf(ppM6, c('year', 'gear', 'species')),
+plotPerfMod(aggPerf(ppM3, c('species', 'gear', 'year')), aggPerf(ppM4, c('species', 'gear', 'year')), aggPerf(ppM6, c('species', 'gear', 'year')),
 	col=c('black', 'red', 'blue'),
+	legend=legend,
 	pch=c(19, 19, 19), 
 	level=nominal, 
 	save=T
 )
 #write.csv(aggPerf(pp, c('year', 'gear', 'species')), file='gearYearSpp68.csv', row.names=F)
-plotPerfMod(aggPerf(ppM3, c('year', 'species')), aggPerf(ppM4, c('year', 'species')), aggPerf(ppM6, c('year', 'species')),
+plotPerfMod(aggPerf(ppM3, c('species', 'year')), aggPerf(ppM4, c('species', 'year')), aggPerf(ppM6, c('species', 'year')),
 	col=c('black', 'red', 'blue'), 
+	legend=legend,
 	pch=c(19, 19, 19), 
 	level=nominal, 
 	save=T
@@ -107,46 +119,47 @@ for( s in sppGold ){
 	#
 	pps = ppM3[ppM3$species==s,]
         portMarg = aggPerf(pps, c('port'))
-        colnames(portMarg)[1] = sprintf('marginal%s', s)
+        colnames(portMarg)[1] = sprintf('marg%s', s)
         gearMarg = aggPerf(pps, c('gear'))
-        colnames(gearMarg)[1] = sprintf('marginal%s', s)
+        colnames(gearMarg)[1] = sprintf('marg%s', s)
         yearMarg = aggPerf(pps, c('year'))
-        colnames(yearMarg)[1] = sprintf('marginal%s', s)
+        colnames(yearMarg)[1] = sprintf('marg%s', s)
         yearMarg[,1] = as.character(yearMarg[,1])
         qtrMarg  = aggPerf(pps, c('qtr'))
-        colnames(qtrMarg)[1] = sprintf('marginal%s', s)
+        colnames(qtrMarg)[1] = sprintf('marg%s', s)
         qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
    	marginalsM3 = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
 	#
 	pps = ppM4[ppM4$species==s,]
         portMarg = aggPerf(pps, c('port'))
-        colnames(portMarg)[1] = sprintf('marginal%s', s)
+        colnames(portMarg)[1] = sprintf('marg%s', s)
         gearMarg = aggPerf(pps, c('gear'))
-        colnames(gearMarg)[1] = sprintf('marginal%s', s)
+        colnames(gearMarg)[1] = sprintf('marg%s', s)
         yearMarg = aggPerf(pps, c('year'))
-        colnames(yearMarg)[1] = sprintf('marginal%s', s)
+        colnames(yearMarg)[1] = sprintf('marg%s', s)
         yearMarg[,1] = as.character(yearMarg[,1])
         qtrMarg  = aggPerf(pps, c('qtr'))
-        colnames(qtrMarg)[1] = sprintf('marginal%s', s)
+        colnames(qtrMarg)[1] = sprintf('marg%s', s)
         qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
         marginalsM4 = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
 	#
         pps = ppM6[ppM4$species==s,]
         portMarg = aggPerf(pps, c('port'))
-        colnames(portMarg)[1] = sprintf('marginal%s', s)
+        colnames(portMarg)[1] = sprintf('marg%s', s)
         gearMarg = aggPerf(pps, c('gear'))
-        colnames(gearMarg)[1] = sprintf('marginal%s', s)
+        colnames(gearMarg)[1] = sprintf('marg%s', s)
         yearMarg = aggPerf(pps, c('year'))
-        colnames(yearMarg)[1] = sprintf('marginal%s', s)
+        colnames(yearMarg)[1] = sprintf('marg%s', s)
         yearMarg[,1] = as.character(yearMarg[,1])
         qtrMarg  = aggPerf(pps, c('qtr'))
-        colnames(qtrMarg)[1] = sprintf('marginal%s', s)
+        colnames(qtrMarg)[1] = sprintf('marg%s', s)
         qtrMarg[,1] = sprintf('Q%s', qtrMarg[,1])
         marginalsM6 = rbind(portMarg, gearMarg, yearMarg, qtrMarg)
 	#
         plotPerfMod(marginalsM3, marginalsM4, marginalsM6, 
 		col=c('black', 'red', 'blue'), 
-		pch=c(19, 19, 19), 
+		pch=c(19, 19, 19),
+		legend=legend,
 		level=nominal, 
 		save=T
 	)
