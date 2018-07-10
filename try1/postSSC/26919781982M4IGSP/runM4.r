@@ -46,14 +46,14 @@ DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
 DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
 #prior
-sdPrior = abs(rcauchy(10^6, 0, 10^3))
+sdPrior = runif(10^6, 0, 10^4) #abs(rcauchy(10^6, 0, 10^3))
 pPrior = log( (1/(sdPrior^2)) ) #[(1/(sdPrior^2))<10^6] )
 pPrior = density(pPrior, n=10^4) #, from=0, to=10^6)
 y = pPrior$y 
 y[1:which(y==max(y))]=max(y)
 pPriorTable = INLA:::inla.paste(c("table:", cbind(pPrior$x, y)))
 #model
-modelDef = weight~species+gear+port+f(YQ, model='iid', hyper=list(prec=list(prior=pPriorTable)))+f(SP, model='iid', hyper=list(prec=list(prior=pPriorTable)))
+modelDef = weight~species+gear+port+f(YQ)+f(SP)#, model='iid', hyper=list(prec=list(prior=pPriorTable)))+f(SP, model='iid', hyper=list(prec=list(prior=pPriorTable)))
 fit = runModel(modelDef, DPred, 48)
 #sample
 sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=3))
