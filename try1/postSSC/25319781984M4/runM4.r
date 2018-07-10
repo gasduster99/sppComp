@@ -60,7 +60,7 @@ write.csv(format(metrics, scientific=T, digits=22), file="./metrics.csv", row.na
 
 #
 nominal = 0.68
-pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
+pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath, adjHard=0.271)
 plotPerfMod(pp, col=c('black'), pch=c(19), level=nominal, save=T)
 write.csv(pp, file='disaggregated68.csv', row.names=F)
 plotPerfMod(aggPerf(pp, c('year', 'gear', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
@@ -96,7 +96,7 @@ for( s in sppGold ){
 }
 #
 nominal = 0.95
-pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
+pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath, adjHard=0.271)
 plotPerfMod(pp, col=c('black'), pch=c(19), level=nominal, save=T)
 write.csv(pp, file='disaggregated95.csv', row.names=F)
 plotPerfMod(aggPerf(pp, c('year', 'gear', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)

@@ -10,15 +10,15 @@ source('../modelFunk.r')
 #
 
 #
-mcat = 956
-minYear = 1983       
-maxYear = 1990  
+mcat = 269 
+minYear = 1978        
+maxYear = 1982  
 #
 dataFile = sprintf('../%sdata%sTo%s_2018-06-08.csv', mcat, substring(minYear, 3, 4), substring(maxYear, 3, 4))
 samplePath = sprintf('./%s%s%s/', mcat, minYear, maxYear)
 #gold standards for defining strata
-portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
-#portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO')
+#portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
+portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO')
 yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET') #c('HKL', 'TWL', 'FPT', 'NET', 'MDT')
@@ -45,8 +45,15 @@ DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
 DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
 DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
+#prior
+sdPrior = runif(10^6, 0, 10^4) #abs(rcauchy(10^6, 0, 10^3))
+pPrior = log( (1/(sdPrior^2)) ) #[(1/(sdPrior^2))<10^6] )
+pPrior = density(pPrior, n=10^4) #, from=0, to=10^6)
+y = pPrior$y 
+y[1:which(y==max(y))]=max(y)
+pPriorTable = INLA:::inla.paste(c("table:", cbind(pPrior$x, y)))
 #model
-modelDef = weight~species+gear+port+f(YQ)
+modelDef = weight~species+gear+port+f(YQ, model='iid', hyper=list(prec=list(prior=pPriorTable)))+f(SG, model='iid', hyper=list(prec=list(prior=pPriorTable)))
 fit = runModel(modelDef, DPred, 48)
 #sample
 sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=3))
