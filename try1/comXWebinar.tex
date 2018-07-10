@@ -843,13 +843,16 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 
 %
 \begin{frame}{Proof: Species Comps are Negatively Correlated Cont.}
-	\mbox{Consider the strictly concave function: $f(\bm{x})=\prod_i x_i : \sum_i x_i \le 1,~x_i \ge 0$.}\\  	
+	Consider the strictly concave function:
+	\begin{equation*}
+		 f(\bm{x})=\textstyle{\prod_i} x_i : \bm{x}\subset\Big\{\textstyle{\sum_i} y_i = 1,~y_i \ge 0\Big\} 
+	\end{equation*}  	
 	Jensen's Inequality for $f$ is,
 	\begin{equation}
 		f(\mathbb{E}[\bm{x}]) \ge \mathbb{E}[f(\bm{x})].
 		\label{jensen}
 	\end{equation}
-	\mbox{From the previous proof: $\sum_j \pi_{j}\le 1,~\pi_j \ge 0$ and $\sum_j \hat\pi_{j}\le 1,~\hat\pi_j \ge 0$.}\\
+	\mbox{From the previous proof: $\sum_j \pi_{j} = 1,~\pi_j \ge 0$ and $\sum_j \hat\pi_{j} = 1,~\hat\pi_j \ge 0$.}\\
         Thus applying (\ref{jensen}) to $\bm{\pi}$ gives  
 	\begin{equation}
 		\mathbb{E}[\pi_{l}]\mathbb{E}[\pi_{m}] \ge \mathbb{E}[\pi_{l}\pi_{m}]
