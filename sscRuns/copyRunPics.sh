@@ -64,7 +64,7 @@ modRun /media/nick/extraBig/25019781982M4HC3SG/
 copyRun 25019781982M4HC3SG
 modRun /media/nick/extraBig/25019781982M4HC3SP/
 #modRun 25019781982M4HC3
-copyRun 25019781982M4HC3SG
+copyRun 25019781982M4HC3SP
 
 ##253 time models
 modRun /media/nick/extraBig/25319781982M1/
