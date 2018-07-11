@@ -105,7 +105,7 @@ copyRun 25319781982M4IGSG
 #modRun 25319781982M4IGSP
 copyRun 25319781982M4IGSP
 
-#253 time models
+#253 time blocks
 modRun /media/nick/extraBig/25319781983M4/
 ##modRun 25319781983M4
 copyRun 25319781983M4
@@ -155,4 +155,16 @@ copyRun 26919781982M4IGSG
 #modRun /media/nick/extraBig/26919781982M4IGSP/
 #modRun 26919781982M4IGSP
 copyRun 26919781982M4IGSP
+
+#269 time blocks
+modRun /media/nick/extraBig/26919781983M4/
+##modRun 26919781983M4
+copyRun 26919781983M4
+modRun /media/nick/extraBig/26919781984M4/
+##modRun 26919781984M4
+copyRun 26919781984M4
+modRun /media/nick/extraBig/26919781985M4/
+##modRun 26919781985M4
+copyRun 26919781985M4
+
 
