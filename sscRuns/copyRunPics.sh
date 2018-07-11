@@ -28,35 +28,43 @@ modRun(){
 }
 
 ##250 time models
-##modRun /media/nick/extraBig/25019781982M1/
+modRun /media/nick/extraBig/25019781982M1/
 ##modRun 25019781982M1
 #copyRun 25019781982M1
-##modRun /media/nick/extraBig/25019781982M2/
+modRun /media/nick/extraBig/25019781982M2/
 ##modRun 25019781982M2
 #copyRun 25019781982M2
-##modRun /media/nick/extraBig/25019781982M3/
+modRun /media/nick/extraBig/25019781982M3/
 ##modRun 25019781982M3
 #copyRun 25019781982M3
-##modRun /media/nick/extraBig/25019781982M4/
+modRun /media/nick/extraBig/25019781982M4/
 ##modRun 25019781982M4
 #copyRun 25019781982M4
-##modRun /media/nick/extraBig/25019781982M5/
+modRun /media/nick/extraBig/25019781982M5/
 ##modRun 25019781982M5
 #copyRun 25019781982M5
-##modRun /media/nick/extraBig/25019781982M6/
+modRun /media/nick/extraBig/25019781982M6/
 ##modRun 25019781982M6
 #copyRun 25019781982M6
 
-##250 prior models
-#modRun /media/nick/extraBig/25019781982M4HC1/
+#250 prior models
+modRun /media/nick/extraBig/25019781982M4HC1/
 #modRun 25019781982M4HC1
 #copyRun 25019781982M4HC1
-#modRun /media/nick/extraBig/25019781982M4HC3/
+modRun /media/nick/extraBig/25019781982M4HC3/
 #modRun 25019781982M4HC3
 #copyRun 25019781982M4HC3
-#modRun /media/nick/extraBig/25019781982M4U4/
+modRun /media/nick/extraBig/25019781982M4U4/
 #modRun 25019781982M4U4
 #copyRun 25019781982M4U4
+
+#250 interaction models
+modRun /media/nick/extraBig/25019781982M4HC3SG/
+#modRun 25019781982M4HC1
+copyRun 25019781982M4HC3SG
+modRun /media/nick/extraBig/25019781982M4HC3SP/
+#modRun 25019781982M4HC3
+copyRun 25019781982M4HC3SG
 
 ##253 time models
 modRun /media/nick/extraBig/25319781982M1/
