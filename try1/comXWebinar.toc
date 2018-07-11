@@ -3,5 +3,5 @@
 \beamer@sectionintoc {2}{Time Model}{4}{0}{2}
 \beamer@sectionintoc {3}{Prior Model}{26}{0}{3}
 \beamer@sectionintoc {4}{Interaction Model}{48}{0}{4}
-\beamer@sectionintoc {5}{Time Block}{49}{0}{5}
-\beamer@sectionintoc {6}{Proofs}{50}{0}{6}
+\beamer@sectionintoc {5}{Time Block}{70}{0}{5}
+\beamer@sectionintoc {6}{Proofs}{83}{0}{6}
