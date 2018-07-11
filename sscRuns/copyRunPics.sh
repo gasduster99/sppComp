@@ -137,5 +137,11 @@ modRun /media/nick/extraBig/26919781982M4U4/
 #modRun 26919781982M4U4
 #copyRun 26919781982M4U4
 
-
+#269 interaction models
+#modRun /media/nick/extraBig/26919781982M4IGSG/
+#modRun 26919781982M4IGSG
+copyRun 26919781982M4IGSG
+#modRun /media/nick/extraBig/26919781982M4IGSP/
+#modRun 26919781982M4IGSP
+copyRun 26819781982M4IGSP
 
