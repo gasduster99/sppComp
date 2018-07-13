@@ -68,9 +68,11 @@ modRun /run/media/nickg/data/25019781982M4U4/
 #copyRun 25019781982M4U4
 
 #250 interaction models
+modRun /run/media/nickg/data/25019781982M4HC3SG/
 #modRun /media/nick/extraBig/25019781982M4HC3SG/
 #modRun 25019781982M4HC1SG
 #copyRun 25019781982M4HC3SG
+modRun /run/media/nickg/data/25019781982M4HC3SP/
 #modRun /media/nick/extraBig/25019781982M4HC3SP/
 #modRun 25019781982M4HC3SP
 #copyRun 25019781982M4HC3SP
