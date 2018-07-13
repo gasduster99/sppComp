@@ -345,9 +345,8 @@ expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, q
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY3 = summarizeByYear(sumDistY, yearGold)
 
-
 #
-dirName = 'M4M5M6/' #subRight(runPaths[1], 34)
+dirName = './' #'M4M5M6/' #subRight(runPaths[1], 34)
 plotLands(summarizeDistY1, summarizeDistY2, summarizeDistY3, dirName=dirName, col=c('blue', 'red', 'darkgreen'), legend=legend)
 
 
