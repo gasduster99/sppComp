@@ -73,8 +73,9 @@ for(run in runPaths){
         write.csv(aggPerf(pp, c('species', 'year')), file='yearSpp68.csv', row.names=F, quote=F)
         #
         mads = aggMad(pp, by=list(species=pp$species), nominal)
-        mads = mads[!mads$species%in%c('REX', 'EGLS', 'CBZN', 'SABL', 'LCOD', 'LSPN', 'SSPN', 'URCK'),]
-        mads = mads[order(mads$mad),]
+        #mads = mads[!mads$species%in%c('REX', 'EGLS', 'CBZN', 'SABL', 'LCOD', 'LSPN', 'SSPN', 'URCK'),]
+        mads = mads[mads$species%in%c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'CMEL', 'MXRF'),]
+	mads = mads[order(mads$mad),]
         write.csv(mads, file='sppMad68.csv', row.names=F, quote=F)
         pdf(sprintf('sppHeadMad68.pdf'), width=5, height=5)
         barplot(head(mads$mad, 5), names=head(mads$species, 5), ylim=c(0, max(tail(mads$mad, 5))), ylab='MAD', main='MAD Ordered by Species')
@@ -116,7 +117,8 @@ for(run in runPaths){
         write.csv(aggPerf(pp, c('species', 'year')), file='yearSpp95.csv', row.names=F, quote=F)
         #
         mads = aggMad(pp, by=list(species=pp$species), nominal)
-        mads = mads[!mads$species%in%c('REX', 'EGLS', 'CBZN', 'SABL', 'LCOD', 'LSPN', 'SSPN', 'URCK'),]
+        #mads = mads[!mads$species%in%c('REX', 'EGLS', 'CBZN', 'SABL', 'LCOD', 'LSPN', 'SSPN', 'URCK'),]
+	mads = mads[mads$species%in%c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'CMEL', 'MXRF'),]
         mads = mads[order(mads$mad),]
         write.csv(mads, file='sppMad95.csv', row.names=F, quote=F)
         pdf(sprintf('sppHeadMad95.pdf'), width=5, height=5)

@@ -45,7 +45,7 @@ deltaForm = function(icVec){
 #
 
 #
-runs = Sys.glob('26919781982M4*')
+runs = Sys.glob('26919781982M4*')[c(1,4,5)]
 R = length(runs)
 
 #
