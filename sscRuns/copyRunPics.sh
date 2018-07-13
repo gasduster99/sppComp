@@ -182,12 +182,15 @@ modRun /run/media/nickg/data/26919781982M4U4/
 #copyRun 26919781982M4IGSP
 
 #269 time blocks
+modRun /run/media/nickg/data/26919781983M4/
 #modRun /media/nick/extraBig/26919781983M4/
 #modRun 26919781983M4
 #copyRun 26919781983M4
+modRun /run/media/nickg/data/26919781984M4/
 #modRun /media/nick/extraBig/26919781984M4/
 ##modRun 26919781984M4
 #copyRun 26919781984M4
+modRun /run/media/nickg/data/26919781985M4/
 #modRun /media/nick/extraBig/26919781985M4/
 ##modRun 26919781985M4
 #copyRun 26919781985M4
