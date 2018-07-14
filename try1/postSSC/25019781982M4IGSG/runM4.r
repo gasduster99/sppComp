@@ -57,7 +57,7 @@ modelDef = weight~species+gear+port+f(YQ)+f(SG)
 #, model='iid', hyper=list(prec=list(prior=pPriorTable)))+f(SG, model='iid', hyper=list(prec=list(prior=pPriorTable)))
 fit = runModel(modelDef, DPred, 48)
 #sample
-sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=3))
+sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=2))
 metrics = t(c(fit$mlik[1], fit$waic$waic, fit$dic$dic, fit$cpu.used['Total']))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'time')
 write.csv(format(metrics, scientific=T, digits=22), file="./metrics.csv", row.names=F, quote=F)
