@@ -69,14 +69,26 @@ modRun /media/nick/extraBig/25019781982M4U4/
 #copyRun 25019781982M4U4
 
 #250 interaction models
-modRun /run/media/nickg/data/25019781982M4IGSG/
+#modRun /run/media/nickg/data/25019781982M4IGSG/
 modRun /media/nick/extraBig/25019781982M4IGSG/
-modRun 25019781982M4IGSG
-copyRun 25019781982M4IGSG
-modRun /run/media/nickg/data/25019781982M4IGSP/
+#modRun 25019781982M4IGSG
+#copyRun 25019781982M4IGSG
+#modRun /run/media/nickg/data/25019781982M4IGSP/
 modRun /media/nick/extraBig/25019781982M4IGSP/
-modRun 25019781982M4IGSP
-copyRun 25019781982M4IGSP
+#modRun 25019781982M4IGSP
+#copyRun 25019781982M4IGSP
+
+#250 time blocks
+modRun /media/nick/extraBig/25019781983M4/
+modRun 25019781983M4
+copyRun 25019781983M4
+modRun /media/nick/extraBig/25019781984M4/
+modRun 25019781984M4
+copyRun 25019781984M4
+modRun /media/nick/extraBig/25019781985M4/
+modRun 25019781985M4
+copyRun 25019781985M4
+
 
 #253 time models
 #modRun /run/media/nickg/data/25319781982M1/
