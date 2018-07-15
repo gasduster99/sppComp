@@ -23,9 +23,10 @@ modRun(){
 	rm -r $1/marginal*
 	rm -r $1/year-species/
 	rm -r $1/gear-year-species/
-	rm -r $1/port-gear-qtr-year-species/
-	rm $1/*/*Diagnostic-*.pdf
+	rm -r $1/port-gear-qtr-year-species/ 
 	rm $1/sppMad*.pdf
+	rm $1/*/*Diagnostic-*.pdf
+	git reset $1/*/*Diagnostic-*.pdf
 }
 
 #250 time models
