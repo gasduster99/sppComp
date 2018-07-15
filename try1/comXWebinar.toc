@@ -1,7 +1,25 @@
 \beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {1}{Introduction}{1}{0}{1}
-\beamer@sectionintoc {2}{Time Model}{4}{0}{2}
-\beamer@sectionintoc {3}{Prior Model}{26}{0}{3}
-\beamer@sectionintoc {4}{Interaction Model}{48}{0}{4}
-\beamer@sectionintoc {5}{Time Block}{70}{0}{5}
-\beamer@sectionintoc {6}{Proofs}{83}{0}{6}
+\beamer@subsectionintoc {1}{2}{Diagnostic Tutorial}{3}{0}{1}
+\beamer@sectionintoc {2}{Time Model}{12}{0}{2}
+\beamer@subsectionintoc {2}{2}{MCAT 250}{15}{0}{2}
+\beamer@subsectionintoc {2}{3}{MCAT 253}{22}{0}{2}
+\beamer@subsectionintoc {2}{4}{MCAT 269}{29}{0}{2}
+\beamer@sectionintoc {3}{Prior Model}{36}{0}{3}
+\beamer@subsectionintoc {3}{2}{MCAT 250}{37}{0}{3}
+\beamer@subsectionintoc {3}{3}{MCAT 253}{44}{0}{3}
+\beamer@subsectionintoc {3}{4}{MCAT 269}{51}{0}{3}
+\beamer@sectionintoc {4}{Interaction Model}{58}{0}{4}
+\beamer@subsectionintoc {4}{2}{MCAT 250}{60}{0}{4}
+\beamer@subsectionintoc {4}{3}{MCAT 253}{61}{0}{4}
+\beamer@subsectionintoc {4}{4}{MCAT 269}{68}{0}{4}
+\beamer@sectionintoc {5}{Time Block}{75}{0}{5}
+\beamer@subsectionintoc {5}{2}{MCAT 250}{77}{0}{5}
+\beamer@subsectionintoc {5}{3}{MCAT 253}{83}{0}{5}
+\beamer@subsectionintoc {5}{4}{MCAT 269}{89}{0}{5}
+\beamer@sectionintoc {6}{Landings Sensitivity}{95}{0}{6}
+\beamer@subsectionintoc {6}{2}{Time Model}{96}{0}{6}
+\beamer@subsectionintoc {6}{3}{Prior Model}{103}{0}{6}
+\beamer@subsectionintoc {6}{4}{Interaction Model}{110}{0}{6}
+\beamer@subsectionintoc {6}{5}{Time Block}{111}{0}{6}
+\beamer@sectionintoc {7}{Proofs}{118}{0}{7}
