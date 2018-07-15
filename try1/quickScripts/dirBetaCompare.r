@@ -2,11 +2,13 @@ rm(list=ls())
 
 #
 suppressMessages(library(HDInterval, quietly=FALSE))
+library(bridgesampling)
 library(MCMCpack)
 library(rstan)
 library(boot)
 library(INLA)
 library(loo)
+library(GA)
 #
 INLA:::inla.dynload.workaround()
 
@@ -133,8 +135,7 @@ plotPerfMod = function(..., level,
                                 ann  = F,
                                 axes = F
                         )
-			print(cexs[rows])
-			print(rows)
+			#print(pp$coverage)	
                         #
                         axis(side=1,
                                 at = round(c(
@@ -190,22 +191,19 @@ plotPerfMod = function(..., level,
 #
 
 #
-set.seed(1)
+#set.seed(1)
 #
-alpha = c(100, 10, 10, 5, 1, 1, 0.1, 0.1, 0.001) #seq(10, 20, length.out=5) #c(200, 150, 150, 120, 100)  #
+alpha = rexp(22)#seq(10, 0.01, length.out=10) #c(10, 1, 0.1) #c(100, 10, 10, 5, 1, 1, 0.1, 0.1, 0.001) #seq(10, 20, length.out=5) #c(200, 150, 150, 120, 100)  #
 #
-n  = 30
+n  = 100
 P  = length(alpha)
 mn = 100
 #
 ps  = matrix(NA, nrow=n, ncol=P)
 dat = matrix(NA, nrow=n, ncol=P)
 as  = alpha/sum(alpha)
-#alphas = matrix(NA, nrow=n, ncol=P)
-#colnames(ps) = c('dat1', 'dat2', 'dat3', 'dat4')
+#
 for(i in 1:n){
-        #alphas[i, ] = rdirichlet(1, alpha)
-        #ps[i,] = rdirichlet(1, alphas[i,])
         ps[i,]  = rdirichlet(1, alpha)
         dat[i,] = rmultinom(1, mn, ps[i,])
 }
@@ -223,7 +221,7 @@ for(i in 1:P){
 
 #
 M    = 10^3
-cpus = 8
+cpus = 4
 D = data.frame(
 	nSpp = as.vector(dat), 
 	spp  = as.character(spp), 
@@ -238,14 +236,14 @@ pOut = inla(nSpp~spp-1,
 	num.threads	= cpus, 
 	control.compute	= list(dic=T, waic=T, config=T)
 )
-#negative binomial model
-nbOut = inla(nSpp~spp-1, 
-	family		= 'nbinomial', 
-	data		= D, 
-	#offset		= rep(mn, n),
-	num.threads	= cpus, 
-	control.compute = list(dic=T, waic=T, config=T)
-)
+##negative binomial model
+#nbOut = inla(nSpp~spp-1, 
+#	family		= 'nbinomial', 
+#	data		= D, 
+#	#offset		= rep(mn, n),
+#	num.threads	= cpus, 
+#	control.compute = list(dic=T, waic=T, config=T)
+#)
 #beta-binomial model
 bbOut = inla( nSpp~spp-1, 
 	family          = 'betabinomial', 
@@ -254,6 +252,7 @@ bbOut = inla( nSpp~spp-1,
         num.threads     = cpus,
         control.compute = list(dic=T, waic=T, config=T)
 )
+BBwaic = bbOut$waic$waic
 #dirichelet-multinomial model
 D = list(
         nSpp = as.array(dat),
@@ -269,6 +268,15 @@ DMOut = stan( file = "dirMult.stan",
         cores = cpus,
 	chains= cpus
 )
+DMwaic = waic(extract_log_lik(DMOut))$waic
+#stanmodel = stan_model("dirMult.stan", model_name="stanmodel")
+#stanfit = sampling(stanmodel, 
+#	data = D,
+#        iter  = M,
+#        cores = cpus,
+#        chains= cpus
+#)
+#DMmlik = bridge_sampler(stanfit)
 
 #
 #PREDICTION
@@ -319,27 +327,38 @@ W = data.frame(
 
 #
 level = 0.68
-betaAdj = optimize(
-	function(x){
-		pp = sppPredPerf(W, ppBBClean, level, x)
-		return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
-	},
-	c(0, 10)
-)$minimum
-diriAdj = optimize(
-	function(x){
-		pp = sppPredPerf(W, propDMClean, level, x)
-		return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
-	},
-	c(0, 10)
-)$minimum
+fBeta = function(x){
+                pp = sppPredPerf(W, ppBBClean, level, x)
+                return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
+        }
+betaAdj = ga("real-valued", function(x){-fBeta(x)}, lower=0, upper=10, run=30, maxiter=200, popSize=100, parallel=cpus)@solution[1,]
+#betaAdj = optimize(
+#	function(x){
+#		pp = sppPredPerf(W, ppBBClean, level, x)
+#		return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
+#	},
+#	c(0, 10)
+#)$minimum
+fDiri = function(x){
+                pp = sppPredPerf(W, propDMClean, level, x)
+                return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
+        }
+diriAdj = ga("real-valued", function(x){-fDiri(x)}, lower=0, upper=10, run=30, maxiter=200, popSize=100, parallel=cpus)@solution[1,]
+#diriAdj = optimize(
+#	function(x){
+#		pp = sppPredPerf(W, propDMClean, level, x)
+#		return(abs(sum(pp$coverage*pp$n)/sum(pp$n) - 0.68))
+#	},
+#	c(0, 10)
+#)$minimum
+
 #
 ppBeta = sppPredPerf(W, ppBBClean, level, betaAdj)
 ppBeta$landing = rep(1, length(ppBeta$n))
 ppDiri = sppPredPerf(W, propDMClean, level, diriAdj)
 ppDiri$landing = rep(1, length(ppDiri$n))
 #
-plotPerfMod(ppBeta, ppDiri, level=level, col=c('black', 'red'))
+plotPerfMod(ppBeta, ppDiri, level=level, col=c('black', 'red'), pch=c(19, 19))
 
 ##
 #level = 0.95
@@ -358,7 +377,7 @@ plotPerfMod(ppBeta, ppDiri, level=level, col=c('black', 'red'))
 #PLOT
 #
 
-#
+##
 #boxplot(W$weight/W$nBB~W$species, ylim=c(0,1), range=0)
 #boxplot(propDMClean, col='blue', add=T, range=0)
 #boxplot(ppBBClean, col='red', add=T, range=0)
