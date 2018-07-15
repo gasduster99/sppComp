@@ -1,6 +1,9 @@
 \documentclass[ xcolor = pdftex, dvipsnames, table ]{beamer}
 
-\usetheme[compress]{Berlin}
+%one line dots
+%\usetheme[compress]{Berlin}
+%one line per subsexction
+\usetheme{Berlin}
 \usecolortheme{whale}
 \setlength{\parskip}{0.1in}
 \usepackage{bm}
@@ -33,12 +36,12 @@
 \title{\textbf{Improving Catch Estimation Methods in Sparsely Sampled, Mixed Stock Fisheries.}}
 
 \author{
-\textbf{\mbox{Nick Grunloh}}
+%\textbf{\mbox{Nick Grunloh}}
 %%$~$\\
 %%\vspace{-0.5cm}
-%\textbf{Nicholas Grunloh, }\\%\vspace{0.3cm}
-%%\textbf{In Cooperation With:}\\
-%\textbf{E.J. Dick, Don Pearson, John Field, Marc Mangel}
+\textbf{Nicholas Grunloh }\\\vspace{0.3cm}
+\textbf{In Cooperation With:}\\
+\textbf{E.J. Dick, Don Pearson, John Field, Marc Mangel}
 }
 
 \institute[]{\textbf{UCSC :: CSTAR :: SWFSC :: NMFS}}
@@ -61,17 +64,6 @@
 \end{frame}
 
 %
-%
-
-\begin{frame}{Diagnostic}
-	Show Example
-\end{frame}
-
-%
-%
-
-%\section{}
-\subsection{}
 \begin{frame}{Beta-Binomial Model}
 \vspace{-0.5cm}
 %\begin{align*}
@@ -112,12 +104,160 @@
 \end{minipage}
 \end{frame}
 
+
+%
+%
+
+\subsection{Diagnostic Tutorial}
+\begin{frame}
+\textbf{Request:} 
+As a diagnostic template, for each sampled stratum compare the posterior 
+predictive distributions at the 68th, 95th, and 99th percentiles with the 
+current observed species proportions (create fully stratified versions of 
+tables 2 and 3 in the Grunloh et al. methods documentation).  With each row, 
+include sample sizes and associated landing weights with a graphical display 
+to highlight problems and outliers (circle size proportional to landing 
+weights).
+  
+\textbf{Rationale:}  
+The Team provided broad-scale summary metrics (e.g., MSE and DIC) for 
+evaluating the goodness-of-fit of the different model forms and structures.  
+Fine-scale diagnostics are needed to help identify aspects of the data that 
+are not adequately addressed by the different models.  The diagnostic template 
+will provide a mechanism for fine-scale exploration of goodness-of-fit.
+
+\textbf{Response:}  
+The following slides show the requested diagnostic plot and demonstrate how to 
+maneuver and interpret them.
+
+\end{frame}
+
+%
+\begin{frame}{Likelihood}
+	
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{Information Criterion}
+
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{MAD Diagnostic}
+	$MAD$
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{Marginal Plot}
+	
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{Stratum Plot}
+	
+\end{frame}
+
+%
+%
+
+%
+\subsection{}
+\begin{frame}
+\textbf{Request:}
+Provide a summary table of species’ sample sizes in each market category by 
+time block.
+
+\textbf{Rationale:}
+The requested information will assist in understanding where there are gaps in 
+the available data that the model is filling in by means of its pooling 
+structure.
+
+\textbf{Response:} 
+The following slides show tables of total sample sizes and the frequency of 
+occurrence by species within each sample (across all years, gears, ports and 
+quarters within a time period) for the three rockfish market categories that 
+we focus on in the presentation, as well as elasmobranchs and flatfish.  
+Supplementary excel files include data summaries and pivot tables that can be 
+used to review the same information for all other market categories, as well 
+as these and other market categories at higher levels of stratification (year, 
+port complex, gear, quarter) to address specific questions or concerns. 
+
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}
+\end{frame}
+
+
 %
 %
 
 %
 \section{Time Model}
 \subsection{}
+\begin{frame}
+\textbf{Request:}
+Redo the modeling of the early time block without southern CA ports. Explore 
+spatially and temporally (i.e., alternative time blocks).
+
+\textbf{Rationale:}
+The available dataset does not have any sample data in the early time block 
+from the southern CA ports. It was unclear how this lack of data influenced 
+the model results. The requested analysis will clarify the situation.
+
+\textbf{Response:}
+All of the model runs and plots from this point forward only model ports 
+north of point conception. 
+
+\end{frame}
+
+
+%
+%
+
+\begin{frame}
+\textbf{Request:}
+The diagnostic template should be developed for each of the sensitivity runs 
+(vary across a range of plausible time models and priors and limit to the top 
+2-3 market categories).  
+
+\textbf{Rationale:}
+Application of the diagnostics across a wide range of models will form a test 
+of how well the diagnostics illustrate whether the models capture important 
+structural features that are thought to be embedded in the data.
+
+\textbf{Response:}
+The following slides show the requested diagnostic plots as applied to models 
+across a range of time models and prior choices.
+
+\end{frame}
+
+%
+%
+
+%
 \begin{frame}{Time Models}
 \hspace*{-0.5cm}
 \begin{minipage}{0.3\textwidth}
@@ -186,8 +326,8 @@
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 250}
+\subsection{MCAT 250}
+\begin{frame}{}
 	\begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
@@ -195,8 +335,8 @@
         \hline
         & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M1}{M1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M2}{M2} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M3}{M3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M5}{M5} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M6}{M6} \\ \hline
         \(\Delta\) DIC & 6448.98 & 0.33 & 0 & 4.45 & 9.3 & 7.42 \\
-        \(\Delta\) WAIC & 6421.5 & 0.37 & 0 & 4.52 & 8.25 & 6.55 \\
-        \(pr(M|y)\) & 0 & 0 & 0 & 0.03 & 0 & 0.97 \\ \hline
+        \(\Delta\) WAIC & 6421.5 & 0.37 & 0 & 4.52 & 8.25 & 6.55 \\ \hline
+        %\(pr(M|y)\) & 0 & 0 & 0 & 0.03 & 0 & 0.97 \\ \hline
         \end{tabular}
         \end{table}
 \end{frame}
@@ -300,16 +440,17 @@
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 253}
+\subsection{MCAT 253}
+
+\begin{frame}{}
 	\begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
         \hline
         & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M1}{M1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M2}{M2} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M3}{M3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M5}{M5} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M6}{M6} \\ \hline
 	\(\Delta\) DIC & 1409.81 & 0.09 & 0.1 & 0.07 & 0.05 & 0 \\                        
-	\(\Delta\) WAIC & 1391.66 & 0.16 & 0.18 & 0 & 0.13 & 0.08 \\
-	\(pr(M|y)\) & 0 & 0 & 0 & 1 & 0 & 0 \\ \hline
+	\(\Delta\) WAIC & 1391.66 & 0.16 & 0.18 & 0 & 0.13 & 0.08 \\ \hline
+	%\(pr(M|y)\) & 0 & 0 & 0 & 1 & 0 & 0 \\ \hline
         \end{tabular}
         \end{table}
 \end{frame}
@@ -401,16 +542,16 @@
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 269}
+\subsection{MCAT 269}
+\begin{frame}{}
 	\begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
         \hline
         & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M1}{M1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M2}{M2} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M3}{M3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M5}{M5} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M6}{M6} \\ \hline
 	\(\Delta\) DIC & 572.51 & 176.63 & 599.41 & 0.57 & 0 & 193.35 \\
-	\(\Delta\) WAIC & 427.48 & 69.37 & 454.41 & 0.23 & 0 & 78.07 \\
-	\(pr(M|y)\) & 0 & 0 & 0 & 0 & 0 & 1 \\ \hline
+	\(\Delta\) WAIC & 427.48 & 69.37 & 454.41 & 0.23 & 0 & 78.07 \\ \hline
+	%\(pr(M|y)\) & 0 & 0 & 0 & 0 & 0 & 1 \\ \hline
         \end{tabular}
         \end{table}
 \end{frame}
@@ -507,38 +648,46 @@
 \begin{frame}{Priors}
 $~$
 \hspace*{-1.5cm}
-\begin{minipage}{0.55\textwidth}
+\begin{minipage}{0.45\textwidth}
 %\vspace{-0.5cm}
 \begin{align*}
+&\\
 \beta_0 &\propto 1\\
 \beta^{(s)}_j &\sim N(0, 32^2)\\
 \beta^{(p)}_k &\sim N(0, 32^2)\\
 \beta^{(g)}_l &\sim N(0, 32^2)\\
-&\\
 \text{logit}(\rho) &\sim N(0, 2^2)\\
-&\\
-v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v 
 \end{align*}
 \end{minipage}
-\begin{minipage}{0.4\textwidth}
-\includegraphics[width=1.4\textwidth]{pictures/priorPredict.pdf}
+\begin{minipage}{0.55\textwidth}
+\begin{align*}
+\text{IG}  &: ~~v \sim \text{Inv-Gamma}(1,~2x10^{3}) ~~~\forall~~~v \\ 
+\text{HC1} &: \sqrt{v} \sim \text{Half-Cauchy}(10^1) \hspace{0.05cm}~~~~~~~~\forall~~~v \\
+\text{HC3} &: \sqrt{v} \sim \text{Half-Cauchy}(10^3) \hspace{0.05cm}~~~~~~~~\forall~~~v \\
+\text{U4}  &: \sqrt{v} \sim \text{Uniform}(0, 10^4) ~~~~~~~~~~~\forall~~~v
+%v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v 
+%v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v 
+%v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v 
+%&\sqrt{v} \sim \text{Half-Cauchy}(\gamma)&\\ %10)&\\
+%&\sqrt{v} \sim \text{Unif}(0, 10^4)&
+\end{align*}
 \end{minipage}
 \end{frame}
 
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 250}
+\subsection{MCAT 250}
+\begin{frame}{}
         \begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
         %\toprule
         \hline
-        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC1}{M4HC1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4U4}{M4U4} \\ \hline
+        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4}{M4IG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC1}{M4HC1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4U4}{M4U4} \\ \hline
         \(\Delta\) DIC & 3.87 & 0.02 & 0.1 & 0 \\                                         
-	\(\Delta\) WAIC & 3.78 & 0.03 & 0.11 & 0 \\                                       
-	\(pr(M|y)\) & 0 & 0.21 & 0.37 & 0.42 \\ \hline
+	\(\Delta\) WAIC & 3.78 & 0.03 & 0.11 & 0 \\ \hline                                      
+	%\(pr(M|y)\) & 0 & 0.21 & 0.37 & 0.42 \\ \hline
 	\end{tabular}
         \end{table}
 \end{frame}
@@ -630,17 +779,17 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 253}
+\subsection{MCAT 253}
+\begin{frame}{}
         \begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
         %\toprule
         \hline
-        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4HC1}{M4HC1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4U4}{M4U4} \\ \hline
+        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{M4IG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4HC1}{M4HC1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4U4}{M4U4} \\ \hline
 	\(\Delta\) DIC & 0.88 & 0.8 & 0.8 & 0 \\                                          
-	\(\Delta\) WAIC & 0.76 & 0.83 & 0.83 & 0 \\                                       
-	\(pr(M|y)\) & 0.01 & 0.99 & 0 & 0 \\ \hline 
+	\(\Delta\) WAIC & 0.76 & 0.83 & 0.83 & 0 \\ \hline                                       
+	%\(pr(M|y)\) & 0.01 & 0.99 & 0 & 0 \\ \hline 
 	\end{tabular}
         \end{table}
 \end{frame}
@@ -732,17 +881,17 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 269}
+\subsection{MCAT 269}
+\begin{frame}{}
         \begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
         %\toprule
         \hline
-        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4HC1}{M4HC1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
+        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{M4IG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4HC1}{M4HC1} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
 	\(\Delta\) DIC & 0.18 & 176.33 & 0.2 & 0 \\
-	\(\Delta\) WAIC & 0.08 & 69.19 & 0.08 & 0 \\
-	\(pr(M|y)\) & 0 & 1 & 0 & 0 \\ \hline
+	\(\Delta\) WAIC & 0.08 & 69.19 & 0.08 & 0 \\ \hline
+	%\(pr(M|y)\) & 0 & 1 & 0 & 0 \\ \hline
 	\end{tabular}
         \end{table}
 \end{frame}
@@ -836,6 +985,28 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 
 \section{Interaction Model}
 \subsection{}
+\begin{frame}
+\textbf{Request:}
+Explore various two-way interactions (beyond the current explorations; e.g., 
+Species : Port and Species : Gear). 
+
+\textbf{Rationale:}  
+The Team did not have time to search across the multitude of possible 
+interaction terms that they could have included in the model.  From various 
+anecdotal comments made during the review it seemed likely that the model 
+would benefit from the inclusion of other interaction terms.  Explorations 
+with the diagnostic template may suggest potentially beneficial terms.
+
+\textbf{Response:}
+The following slides show the diagnostic plots as applied to models exploring 
+the inclusion of species:port and species:gear interaction terms.
+
+\end{frame}
+
+
+%
+%
+
 \begin{frame}{Port and Gear Interactions}
 	Model Description
 \end{frame}
@@ -843,110 +1014,109 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 250}
+\subsection{MCAT 250}
+\begin{frame}{}
 	\begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
         %\toprule
         \hline
-        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SG}{M4HC3SG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SP}{M4HC3SP} \\ \hline %& \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
-	\(\Delta\) DIC & 537.64 & 0 & 536.22 \\
-	\(\Delta\) WAIC & 541.26 & 0 & 538.48 \\
-	\(pr(M|y)\) & 0 & 1 & 0 \\ \hline
+        & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4IGSG}{M4IGSG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4IGSP}{M4IGSP} \\ \hline %& \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
+	\(\Delta\) DIC & 58229.78 & 21403.07 & 0 \\
+	\(\Delta\) WAIC & 24203.2 & 10186.57 & 0 \\ \hline
 	\end{tabular}
         \end{table}
 \end{frame}
 
+%%
+%%
 %
+%\begin{frame}{$~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} $~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SG}{M4HC3SG} $~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SP}{M4HC3SP} }
+%        \begin{figure}[ht!]
+%        \centering
+%        \hspace*{-1cm}
+%        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3/sppHeadMad68.pdf}
+%        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SG/sppHeadMad68.pdf}
+%        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SP/sppHeadMad68.pdf}
+%        \end{figure}
+%	\vspace{-1cm}
+%	\begin{center}
+%	\Large
+%	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982M4HC3SPSG}{Combined}
+%	\end{center}
+%\end{frame}
 %
+%%
+%%
+%
+%%
+%\begin{frame}
+%        \begin{figure}[ht!]
+%        \centering
+%        \vspace{-0.75cm}
+%        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margBCAC/margBCAC-0.68-Diagnostic}.pdf}
+%        \end{figure}   
+%\end{frame}
+%
+%%
+%%
+%
+%%
+%\begin{frame}
+%       \begin{figure}[ht!]
+%       \centering
+%       \vspace{-0.75cm}
+%       \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margWDOW/margWDOW-0.68-Diagnostic}.pdf}
+%       \end{figure}
+%\end{frame}
+%
+%%
+%%
+%
+%\begin{frame}{$~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} $~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SG}{M4HC3SG} $~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SP}{M4HC3SP} }
+%        \begin{figure}[ht!]
+%        \centering
+%        \hspace*{-1cm}
+%        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3/sppTailMad68.pdf}
+%        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SG/sppTailMad68.pdf}
+%        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SP/sppTailMad68.pdf}
+%        \end{figure}
+%	\vspace{-1cm}
+%	\begin{center}
+%	\Large
+%	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982M4HC3SPSG}{Combined}
+%	\end{center}
+%\end{frame}
+%
+%%
+%%
+%
+%%
+%\begin{frame}
+%        \begin{figure}[ht!]
+%        \centering
+%        \vspace{-0.75cm}
+%        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margBRNZ/margBRNZ-0.68-Diagnostic}.pdf}
+%        \end{figure}   
+%\end{frame}
+%
+%%
+%%
+%
+%%
+%\begin{frame}
+%       \begin{figure}[ht!]
+%       \centering
+%       \vspace{-0.75cm}
+%       \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margMXRF/margMXRF-0.68-Diagnostic}.pdf}
+%       \end{figure}
+%\end{frame}
+%
+%%
+%%
 
-\begin{frame}{$~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} $~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SG}{M4HC3SG} $~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SP}{M4HC3SP} }
-        \begin{figure}[ht!]
-        \centering
-        \hspace*{-1cm}
-        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3/sppHeadMad68.pdf}
-        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SG/sppHeadMad68.pdf}
-        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SP/sppHeadMad68.pdf}
-        \end{figure}
-	\vspace{-1cm}
-	\begin{center}
-	\Large
-	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982M4HC3SPSG}{Combined}
-	\end{center}
-\end{frame}
-
-%
-%
-
-%
-\begin{frame}
-        \begin{figure}[ht!]
-        \centering
-        \vspace{-0.75cm}
-        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margBCAC/margBCAC-0.68-Diagnostic}.pdf}
-        \end{figure}   
-\end{frame}
-
-%
-%
-
-%
-\begin{frame}
-       \begin{figure}[ht!]
-       \centering
-       \vspace{-0.75cm}
-       \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margWDOW/margWDOW-0.68-Diagnostic}.pdf}
-       \end{figure}
-\end{frame}
-
-%
-%
-
-\begin{frame}{$~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3}{M4HC3} $~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SG}{M4HC3SG} $~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4HC3SP}{M4HC3SP} }
-        \begin{figure}[ht!]
-        \centering
-        \hspace*{-1cm}
-        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3/sppTailMad68.pdf}
-        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SG/sppTailMad68.pdf}
-        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4HC3SP/sppTailMad68.pdf}
-        \end{figure}
-	\vspace{-1cm}
-	\begin{center}
-	\Large
-	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982M4HC3SPSG}{Combined}
-	\end{center}
-\end{frame}
-
-%
-%
-
-%
-\begin{frame}
-        \begin{figure}[ht!]
-        \centering
-        \vspace{-0.75cm}
-        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margBRNZ/margBRNZ-0.68-Diagnostic}.pdf}
-        \end{figure}   
-\end{frame}
-
-%
-%
-
-%
-\begin{frame}
-       \begin{figure}[ht!]
-       \centering
-       \vspace{-0.75cm}
-       \includegraphics[height=1.1\textheight]{{./postSSC/25019781982M4HC3SPSG/margMXRF/margMXRF-0.68-Diagnostic}.pdf}
-       \end{figure}
-\end{frame}
-
-%
-%
-
-\subsection{}
-\begin{frame}{MCAT 253}
+\subsection{MCAT 253}
+\begin{frame}{}
 	\begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
@@ -954,8 +1124,8 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
         \hline
         & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4IGSG}{M4SG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4IGSP}{M4SP} \\ \hline %& \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
 	\(\Delta\) DIC & 403.42 & 308.65 & 0 \\
-	\(\Delta\) WAIC & 872.35 & 778.17 & 0 \\
-	\(pr(M|y)\) & 0 & 1 & 0 \\ \hline
+	\(\Delta\) WAIC & 872.35 & 778.17 & 0 \\ \hline
+	%\(pr(M|y)\) & 0 & 1 & 0 \\ \hline
 	\end{tabular}
         \end{table}
 \end{frame}
@@ -1047,8 +1217,8 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 269}
+\subsection{MCAT 269}
+\begin{frame}{}
 	\begin{table}[ht!]
         \centering
         \begin{tabular}[c]{@{}lcccccc@{}}
@@ -1056,8 +1226,8 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
         \hline
         & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4IGSG}{M4SG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4IGSP}{M4SP} \\ \hline %& \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
 	\(\Delta\) DIC & 0 & 0.31 & 182.15 \\
-	\(\Delta\) WAIC & 0 & 0.13 & 68.48 \\
-	\(pr(M|y)\) & 0 & 0 & 1 \\ \hline
+	\(\Delta\) WAIC & 0 & 0.13 & 68.48 \\ \hline
+	%\(pr(M|y)\) & 0 & 0 & 1 \\ \hline
 	\end{tabular}
         \end{table}
 \end{frame}
@@ -1151,6 +1321,31 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 
 \section{Time Block}
 \subsection{}
+\begin{frame}
+\textbf{Request:}  
+Explore an alternative time block: an extension of 1983 and 1984 to the first 
+time block.
+
+\textbf{Rationale:}
+The panel expressed concerns about how the model would perform when applied to 
+shorter time periods, as will occur when the model is used with data more 
+recent than 1990.  Results from the above recommendation could be compared to 
+the results from the current two time blocks (1978-1982; 1983-1990) to explore 
+how fits to data from the late period degrade when the model for the late 
+period is based on fewer years of data.  Also, comparisons of the two forms of 
+blocking serve as a sensitivity evaluation of the selection of the block 
+boundary, which was chosen on a fairly arbitrary basis.
+
+\textbf{Response:} 
+The following slides show the diagnostic plots as applied to model M4 when fit 
+to data from 78-82 as well as data from 78-83, 78-84, and 78-85.
+
+\end{frame}
+
+%
+%
+
+%
 \begin{frame}{Time Blocks}
 	$~$
 \end{frame}
@@ -1158,27 +1353,95 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\subsection{}
-\begin{frame}{MCAT 250}
-	%\begin{table}[ht!]
-        %\centering
-        %\begin{tabular}[c]{@{}lcccccc@{}}
-        %%\toprule
-        %\hline
-        %& \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{M4} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4IGSG}{M4SG} & \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4IGSP}{M4SP} \\ \hline %& \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4U4}{M4U4} \\ \hline
-	%\(\Delta\) DIC & 0 & 0.31 & 182.15 \\
-	%\(\Delta\) WAIC & 0 & 0.13 & 68.48 \\
-	%\(pr(M|y)\) & 0 & 0 & 1 \\ \hline
-	%\end{tabular}
-        %\end{table}
+\subsection{MCAT 250}
+\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4}{78-82} $~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781984M4}{78-84} }	
+	\begin{figure}[ht!]
+        \centering
+	\hspace*{-1cm}
+        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4/sppHeadMad68.pdf}
+        \includegraphics[width=.4\textwidth]{../sscRuns/25019781983M4/sppHeadMad68.pdf}
+	\includegraphics[width=.4\textwidth]{../sscRuns/25019781984M4/sppHeadMad68.pdf}
+	\end{figure}
+	\vspace{-1cm}
+	\begin{center}
+	\Large
+	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982345M4}{Combined}
+	\end{center}
 \end{frame}
 
 %
 %
 
 %
-\subsection{}
-\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{78-82} $~~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781984M4}{78-84} }
+\begin{frame}
+        \begin{figure}[ht!]
+        \centering
+        \vspace{-0.75cm}
+        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982345M4/margBCAC/margBCAC-0.68-Diagnostic}.pdf}
+        \end{figure}	
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}
+	\begin{figure}[ht!]
+        \centering
+	\vspace{-0.75cm}	
+	\includegraphics[height=1.1\textheight]{{./postSSC/25019781982345M4/margWDOW/margWDOW-0.68-Diagnostic}.pdf}
+        \end{figure}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781982M4}{78-82} $~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25019781984M4}{78-84} }	
+	\begin{figure}[ht!]
+        \centering
+	\hspace*{-1cm}
+        \includegraphics[width=.4\textwidth]{../sscRuns/25019781982M4/sppTailMad68.pdf}
+        \includegraphics[width=.4\textwidth]{../sscRuns/25019781983M4/sppTailMad68.pdf}
+	\includegraphics[width=.4\textwidth]{../sscRuns/25019781984M4/sppTailMad68.pdf}
+	\end{figure}
+	\vspace{-1cm}
+	\begin{center}
+	\Large
+	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982345M4}{Combined}
+	\end{center}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}
+        \begin{figure}[ht!]
+        \centering
+        \vspace{-0.75cm}
+        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982345M4/margCWCD/margCWCD-0.68-Diagnostic}.pdf}
+        \end{figure}    
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}
+        \begin{figure}[ht!]
+        \centering
+        \vspace{-0.75cm}
+        \includegraphics[height=1.1\textheight]{{./postSSC/25019781982345M4/margMXRF/margMXRF-0.68-Diagnostic}.pdf}
+        \end{figure}
+\end{frame}
+
+%
+%
+
+%
+\subsection{MCAT 253}
+\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{78-82} $~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781984M4}{78-84} }
         \begin{figure}[ht!]
         \centering
         \hspace*{-1cm}
@@ -1220,7 +1483,7 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{78-82} $~~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781984M4}{78-84} }
+\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781982M4}{78-82} $~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/25319781984M4}{78-84} }
         \begin{figure}[ht!]
         \centering
         \hspace*{-1cm}
@@ -1247,22 +1510,23 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
         \end{figure}   
 \end{frame}
 
-%%
-%%
 %
-%%
-%\begin{frame}
-%       \begin{figure}[ht!]
-%       \centering
-%       \vspace{-0.75cm}
-%       \includegraphics[height=1.1\textheight]{{./postSSC/25319781982M4/margWDOW/margWDOW-0.68-Diagnostic}.pdf}
-%       \end{figure}
-%\end{frame}
 %
-%%
-%%
 
-\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{78-82} $~~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781984M4}{78-84} }
+%
+\begin{frame}
+       \begin{figure}[ht!]
+       \centering
+       \vspace{-0.75cm}
+       \includegraphics[height=1.1\textheight]{{./postSSC/25319781982345M4/margWDOW/margWDOW-0.68-Diagnostic}.pdf}
+       \end{figure}
+\end{frame}
+
+%
+%
+
+\subsection{MCAT 269}
+\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{78-82} $~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781984M4}{78-84} }
         \begin{figure}[ht!]
         \centering
         \hspace*{-1cm}
@@ -1307,7 +1571,7 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
 %
 %
 
-\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{78-82} $~~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781984M4}{78-84} }
+\begin{frame}{$~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781982M4}{78-82} $~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781983M4}{78-83} $~~~~~~~~~~~~~~~~~$ \href{https://github.com/gasduster99/sppComp/tree/master/sscRuns/26919781984M4}{78-84} }
         \begin{figure}[ht!]
         \centering
         \hspace*{-1cm}
@@ -1344,6 +1608,423 @@ v\sim IG(1,~&2x10^{3}) ~~~\forall~~~v
        \vspace{-0.75cm}
        \includegraphics[height=1.1\textheight]{{./postSSC/26919781982345M4/margWDOW/margWDOW-0.68-Diagnostic}.pdf}
        \end{figure}
+\end{frame}
+
+%
+%
+
+%
+\section{Landings Sensitivity}
+\subsection{}
+\begin{frame}
+\textbf{Request:}
+Compare alternative ComX outputs and the current time series of estimated 
+catches.
+
+\textbf{Rationale:}  
+It would be informative to see the landings estimates corresponding to the 
+additional models developed in response to the above requests.  The landings 
+estimates can be generated for a small set of illustrative species and do not 
+need to be comprehensive.
+
+\textbf{Response:}
+The following slides show explanded landings (by year and by year:gear) from 
+the early time period, summing across market categories 250, 253, and 269 
+associated with time model, prior, intereaction model, and time block 
+sensativity runs.
+
+\end{frame}
+
+
+\subsection{Time Model}
+\begin{frame}
+	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/landDiagnostics/M2M3M4M5M6}{All Species}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M2M3M4M5M6/WDOW/yearWDOW.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/WDOW/yearGearWDOW-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/WDOW/yearGearWDOW-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/WDOW/yearGearWDOW-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M2M3M4M5M6/BCAC/yearBCAC.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/BCAC/yearGearBCAC-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/BCAC/yearGearBCAC-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/BCAC/yearGearBCAC-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M2M3M4M5M6/CLPR/yearCLPR.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/CLPR/yearGearCLPR-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/CLPR/yearGearCLPR-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/CLPR/yearGearCLPR-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M2M3M4M5M6/DBRK/yearDBRK.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/DBRK/yearGearDBRK-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/DBRK/yearGearDBRK-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/DBRK/yearGearDBRK-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M2M3M4M5M6/CWCD/yearCWCD.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/CWCD/yearGearCWCD-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/CWCD/yearGearCWCD-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/CWCD/yearGearCWCD-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M2M3M4M5M6/MXRF/yearMXRF.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/MXRF/yearGearMXRF-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/MXRF/yearGearMXRF-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M2M3M4M5M6/MXRF/yearGearMXRF-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\subsection{Prior Model}
+\begin{frame}
+	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/landDiagnostics/M4IGHC1HC3U4}{All Species}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M4IGHC1HC3U4/WDOW/yearWDOW.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/WDOW/yearGearWDOW-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/WDOW/yearGearWDOW-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/WDOW/yearGearWDOW-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M4IGHC1HC3U4/BCAC/yearBCAC.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/BCAC/yearGearBCAC-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/BCAC/yearGearBCAC-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/BCAC/yearGearBCAC-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M4IGHC1HC3U4/CLPR/yearCLPR.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/CLPR/yearGearCLPR-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/CLPR/yearGearCLPR-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/CLPR/yearGearCLPR-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M4IGHC1HC3U4/DBRK/yearDBRK.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/DBRK/yearGearDBRK-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/DBRK/yearGearDBRK-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/DBRK/yearGearDBRK-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M4IGHC1HC3U4/CWCD/yearCWCD.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/CWCD/yearGearCWCD-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/CWCD/yearGearCWCD-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/CWCD/yearGearCWCD-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/M4IGHC1HC3U4/MXRF/yearMXRF.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/MXRF/yearGearMXRF-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/MXRF/yearGearMXRF-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/M4IGHC1HC3U4/MXRF/yearGearMXRF-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\subsection{Interaction Model}
+\begin{frame}
+\end{frame}
+
+%
+%
+
+%
+\subsection{Time Block}
+\begin{frame}
+	\href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/landDiagnostics/82345M4}{All Species}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/82345M4/WDOW/yearWDOW.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/WDOW/yearGearWDOW-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/WDOW/yearGearWDOW-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/WDOW/yearGearWDOW-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/82345M4/BCAC/yearBCAC.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/BCAC/yearGearBCAC-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/BCAC/yearGearBCAC-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/BCAC/yearGearBCAC-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/82345M4/CLPR/yearCLPR.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/CLPR/yearGearCLPR-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/CLPR/yearGearCLPR-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/CLPR/yearGearCLPR-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/82345M4/DBRK/yearDBRK.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/DBRK/yearGearDBRK-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/DBRK/yearGearDBRK-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/DBRK/yearGearDBRK-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/82345M4/CWCD/yearCWCD.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/CWCD/yearGearCWCD-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/CWCD/yearGearCWCD-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/CWCD/yearGearCWCD-HKL}.pdf}
+	\end{minipage}
+\end{frame}
+
+%
+%
+
+%
+\begin{frame}	
+	\vspace{-0.15cm}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=0.54\textheight]{./postSSC/landDiagnostics/82345M4/MXRF/yearMXRF.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/MXRF/yearGearMXRF-TWL}.pdf}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering	
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/MXRF/yearGearMXRF-NET}.pdf}
+		\\\vspace{-0.25cm}
+		\includegraphics[height=0.54\textheight]{{./postSSC/landDiagnostics/82345M4/MXRF/yearGearMXRF-HKL}.pdf}
+	\end{minipage}
 \end{frame}
 
 
@@ -1420,7 +2101,7 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 		Corr(\pi_{l}, \pi_{m}) &= \frac{Cov(\pi_{l}, \pi_{m})}{\sigma_{\pi_{l}}\sigma_{\pi_{m}}} ~~~ \sigma_{\pi_{l}}\ge0,~ \sigma_{\pi_{m}}\ge0 \nonumber\\
 		Corr(\pi_{l}, \pi_{m}) &\le 0 \iff Cov(\pi_{l}, \pi_{m}) \le 0 \nonumber\\\nonumber\\
 		Cov(\pi_{l}, \pi_{m}) &= \mathbb{E}[(\pi_{l}-\mathbb{E}[\pi_{l}])(\pi_{m}-\mathbb{E}[\pi_{m}])] \nonumber\\ 
-		&= \mathbb{E}[\pi_{l}\pi_{m}])] - \mathbb{E}[\pi_{l}]\mathbb{E}[\pi_{m}] \nonumber\\\nonumber\\
+		&= \mathbb{E}[\pi_{l}\pi_{m}] - \mathbb{E}[\pi_{l}]\mathbb{E}[\pi_{m}] \nonumber\\\nonumber\\
 		Cov(\pi_{l}, \pi_{m}) &\le0 \iff \mathbb{E}[\pi_{l}]\mathbb{E}[\pi_{m}] \ge \mathbb{E}[\pi_{l}\pi_{m}]
 	\end{align*}
 	%Consider $f(\bm{x})=\prod_i x_i : \sum_i x_i=1$. *A strictly concave function on $\sum_i x_i=1$.\\
@@ -1449,9 +2130,7 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 	\end{equation}
 	with equality only if $\pi$ is a constant. Since $\pi$ is never a constant, 
 	\begin{align*}
-		\mathbb{E}[\pi_{l}]\mathbb{E}[\pi_{m}] &> \mathbb{E}[\pi_{l}\pi_{m}]\\
-		Cov(\pi_{l}, \pi_{m})&<0\\ 
-		Corr(\pi_{l}, \pi_{m})&<0. ~~~\blacksquare
+		\mathbb{E}[\pi_{l}]\mathbb{E}[\pi_{m}] > \mathbb{E}[\pi_{l}\pi_{m}] \implies Cov(\pi_{l}, \pi_{m})<0 \implies Corr(\pi_{l}, \pi_{m})<0. ~~\blacksquare
 	\end{align*} 
 \end{frame}
 
