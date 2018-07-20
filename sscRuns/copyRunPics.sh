@@ -94,6 +94,9 @@ copyRun 25019781982M4IGSP
 #copyRun 25019781985M4
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982345M4/
 
+#250 
+modRun /media/nick/extraBig/25019781982M4SO/
+
 #253 time models
 #modRun /run/media/nickg/data/25319781982M1/
 #modRun /media/nick/extraBig/25319781982M1/
