@@ -14,135 +14,19 @@ fontsize: 14pt
 
 * describe our modeling efforts for estimating ssp comps.
 
-# MCATs in Time
+# Diagnostic Request
 
-* **Top Panel:** Number of samples in rockfish market categories (1978-2015)
-	
-	* Colors represent different market categories
-	* Thickness shows the number of samples
+* Create fully stratified performace diagnostics based on my tabulated (tables 2 and 3) aggragate performance numbers.
 
-* **Bottom Panel:** Number of rockfish market categories
-	
-	* Count the colors
-	* ~20 mcats in the late 70s
-	* ~50 mcats in the recent times
+* Quickly refresh on the model in question
 
-* **Middle Panel:** Average number of samples per stratum
-	
-	* Find samples for each stratum (mcat, gear, port, year, qtr)
-	* Average them
+* Tools for sorting through all of this information
 
-* 1978-1982 
-
-* 1983-1990  
+* Diagnostics for evaluating performance
 
 \clearpage
-
-# 78-82 Bars
-
-* **Top Panel:** 
-	
-	* For each market category accounting for 99% of landings  
-		* (blue) Proportion landings by weight
-		* (red) Proportion samples by #
-
-* **Bottom Panel:** Aggregated Species Compositions
-	* Colors represent 13 select species (others grey)
-	* Number above is the # species present
-	* Hatching is MCAT nominal species 
-
-* MCATs not pure
-	* often nominal species is not even the major species
-		* BCAC
-		* BRWN
-
-* Sampling Opportunistic
-	* Sampling co-occurs with landings
-	* Often as more species are present there are more samples
-	* This is lucky for modeling
-		* More samples than parameters (largely driven by spp)
-		* Most landings are modeled (78-82: 96.8%)
-
-* No sampling south of Conception
-
-# 83-90 Bars
-
-* Same picture but 83-90
-	
-	* (blue) Proportion landings by weight
-	* (red) Proportion samples by #
-	* Aggregated Species Compositions
-
-* Top 99% of landings in more market categories
-	
-	* MCATs still largely impure
-
-* 83-90: 98.3% of landings modeled
-
-
-\clearpage
-
-# Likelihood Forms
-
-* First modeling choice: Pick a Likelihood
-
-* Shelton etal. 2012 Fit Multinomial via the Multinomial-Poisson trans.
-	
-	* Piece together independent Poissons
-
-* We are not limited to Multinomial distribution
-	
-	* quantify uncertainty (residual variability)
-	* consider modeling overdispersion
-	* additional parameter ($\phi$) to disentangle mean from variance
-
-* $y_{ij}$: $i^{\text{th}}$ sample of the $j^{\text{th}}$ species' integer
-weight
-
-* Remove all other modeling decisions by modeling a single stratum
-	
-	* MCAT 250
-	* Montery
-	* Trawl
-	* 1982/Q2
-
-# Likelihood Graphs
-
-* Fit models and look are how they predict
-
-* **Left Pannel:** 95% HDI from each model along side observed sppComp data
-
-	* black horizontal lines are observed species comps
-	* blue is Possion (i.e. Multinomial) Model
-	* red is Binomial
-	* green is the Negative Binomial Model
-	* yellow is the Beta-binomial Model
-
-* **Right Panel:** Entire Beta-binomial predictive distribution
-
-* Overdispersion is present (spp comps from [0,1])
-
-* ~50 obsevations => 2.5 missing in 95% interval
-
-	* Maybe NB missing a few to many, and BB missing a few to few
-	* BB certaintly finding the most variance
-	* split intervals but... very appropriate density
-
-# Likelihood Table
-
-* Consider MSE, DIC, WAIC, and Marginal Likelihood Bayesian Model Prob.
-
-* Varied model selection criterion (Nothing is perfect!) 
-
-* Consistent and large support for the Overdispersion Models
-	
-	* Most support for BB
-
-* Moving forward I develop the BB model   
 
 # Beta-Binomial Model
-
-* A Full Operationalized Model!
 
 * $y_{ijklm\eta}$: $i^{\text{th}}$ sample of the $j^{\text{th}}$ species' integer weight, in the $k^{\text{th}}$ port, caught with the $l^{\text{th}}$ gear, in the $\eta^{\text{th}}$ \mbox{quarter,} of year $m$, for a particular market \mbox{category.}
 
@@ -159,7 +43,71 @@ weight
 	* Additive offsets for: Species, Port, Gear
 	* Consider multiple time models
 
+# Diagnostic Files
+
+* Consider a toy example to get our hands dirty with the diagnostic.
+
+* Recall the model (M4).
+
+* Recall we had some model selection criterion. Here I show the DIC and WAIC information criterion not as a diagnostic, but merely to guide our search through the numerous models under consideration.
+
+* Through out this document you will see green underlined tags. 
+	
+	* Depending on your pdf viewer, these lines may look slightly different and you may get slightly different behavior when clicking.
+	* In any case these should be clickable links to various github pages.
+	* If you are veiwing this in a browser you may prefer to [ctrl]-click to avoid redirecting away from the presentation tab.
+
+* **click** We'll talk more about them later
+	
+	* marginal species directories (BCAC pdf and csv)
+	* directories of various levels of stratification (pdfs) species-gear-year	
+	* stratifcation csvs gearYearSpp68.csv
+
 \clearpage
+
+# MAD Diagnostic
+
+* As we add more models there is a lot of information to sort through, consider the MAD diagnostic as a tool for sorting.
+	
+	* $\ell_i$: the landings in stratum $i$, 
+	* $\mathcal{O}_{ij}$: the observed predictive accuracy of species $j$ in stratum $i$
+	* $\aleph$: the nominal level of prediction for a particular model run
+
+* Low MAD scores occur when $\ell_i$ is low -or- $\left|\mathcal{O}_{ij}-\aleph\right|$ is small.
+
+* High MAD scores occur when $\ell_i$ is large and $\left|\mathcal{O}_{ij}-\aleph\right|$ is large.
+
+* ???? example ????
+	* High MAD v. Low MAD
+
+# Stratum Plots
+
+* Prediction shown at three levels of stratification
+	
+	* Disaggregated
+	* By species, gear group, and year aggregating across port complexes, and quarters. ("data-rich assessment")
+	* By species, and year aggregating across port complexes, gears, and quarters. ("data-moderate/poor assessment")
+	* csv versions of these files are in base run directory.
+
+* **click each**
+
+# Diagnostic Wrap-up
+
+* Marginal plots organized by species, each marginal stratum summed over everything else.
+
+* Sort species by MAD, explore margins via margin plots
+
+* Explore within margins via previously described stratum plots 
+
+\clearpage
+
+# Sample Size Request
+
+# MCAT 250 Sample Sizes
+
+# MCAT 253 & 269 Sample Sizes
+
+<!--
 
 # Time Models
 
@@ -438,19 +386,142 @@ weight
 	
 	* Cluster and integrate out spatial parameters via DP?
 
-
-<!--
-# 91-99 Bars
-
-# 00-15 Bars
-
-# $\rho$ Posterior
-
-# $v$ Posterior
-
-# Spp Comps Sum to 1
 -->
 
 
 
 
+
+
+<!--
+# MCATs in Time
+
+* **Top Panel:** Number of samples in rockfish market categories (1978-2015)
+	
+	* Colors represent different market categories
+	* Thickness shows the number of samples
+
+* **Bottom Panel:** Number of rockfish market categories
+	
+	* Count the colors
+	* ~20 mcats in the late 70s
+	* ~50 mcats in the recent times
+
+* **Middle Panel:** Average number of samples per stratum
+	
+	* Find samples for each stratum (mcat, gear, port, year, qtr)
+	* Average them
+
+* 1978-1982 
+
+* 1983-1990  
+
+\clearpage
+
+# 78-82 Bars
+
+* **Top Panel:** 
+	
+	* For each market category accounting for 99% of landings  
+		* (blue) Proportion landings by weight
+		* (red) Proportion samples by #
+
+* **Bottom Panel:** Aggregated Species Compositions
+	* Colors represent 13 select species (others grey)
+	* Number above is the # species present
+	* Hatching is MCAT nominal species 
+
+* MCATs not pure
+	* often nominal species is not even the major species
+		* BCAC
+		* BRWN
+
+* Sampling Opportunistic
+	* Sampling co-occurs with landings
+	* Often as more species are present there are more samples
+	* This is lucky for modeling
+		* More samples than parameters (largely driven by spp)
+		* Most landings are modeled (78-82: 96.8%)
+
+* No sampling south of Conception
+
+# 83-90 Bars
+
+* Same picture but 83-90
+	
+	* (blue) Proportion landings by weight
+	* (red) Proportion samples by #
+	* Aggregated Species Compositions
+
+* Top 99% of landings in more market categories
+	
+	* MCATs still largely impure
+
+* 83-90: 98.3% of landings modeled
+
+
+\clearpage
+
+# Likelihood Forms
+
+* First modeling choice: Pick a Likelihood
+
+* Shelton etal. 2012 Fit Multinomial via the Multinomial-Poisson trans.
+	
+	* Piece together independent Poissons
+
+* We are not limited to Multinomial distribution
+	
+	* quantify uncertainty (residual variability)
+	* consider modeling overdispersion
+	* additional parameter ($\phi$) to disentangle mean from variance
+
+* $y_{ij}$: $i^{\text{th}}$ sample of the $j^{\text{th}}$ species' integer
+weight
+
+* Remove all other modeling decisions by modeling a single stratum
+	
+	* MCAT 250
+	* Montery
+	* Trawl
+	* 1982/Q2
+
+# Likelihood Graphs
+
+* Fit models and look are how they predict
+
+* **Left Pannel:** 95% HDI from each model along side observed sppComp data
+
+	* black horizontal lines are observed species comps
+	* blue is Possion (i.e. Multinomial) Model
+	* red is Binomial
+	* green is the Negative Binomial Model
+	* yellow is the Beta-binomial Model
+
+* **Right Panel:** Entire Beta-binomial predictive distribution
+
+* Overdispersion is present (spp comps from [0,1])
+
+* ~50 obsevations => 2.5 missing in 95% interval
+
+	* Maybe NB missing a few to many, and BB missing a few to few
+	* BB certaintly finding the most variance
+	* split intervals but... very appropriate density
+
+# Likelihood Table
+
+* Consider MSE, DIC, WAIC, and Marginal Likelihood Bayesian Model Prob.
+
+* Varied model selection criterion (Nothing is perfect!) 
+
+* Consistent and large support for the Overdispersion Models
+	
+	* Most support for BB
+
+* Moving forward I develop the BB model   
+
+
+
+
+
+-->
