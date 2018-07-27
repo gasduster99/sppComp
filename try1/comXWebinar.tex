@@ -1949,6 +1949,10 @@ the inclusion of species:port and species:gear interaction terms.
 	\item Both Species:Gear and Species:Port interactions may be appropriate.
 	\item Interactions appear to be market category dependent.
 	\item Possibly include both with shrinkage priors to allow each to fit on a MCAT-to-MCAT basis. 
+		\begin{itemize}
+		\item \href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25019781982M4IGSPSG}{250} ~~ \href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/25319781982M4IGSPSG}{253} ~~ \href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/26919781982M4IGSPSG}{269}
+		\item \href{https://github.com/gasduster99/sppComp/tree/master/try1/postSSC/landDiagnostics/M4IGSPSG}{Landings}
+		\end{itemize}
 	\end{itemize}
 	\end{minipage}
         \begin{minipage}{0.49\textwidth}
@@ -2370,6 +2374,7 @@ to data from 78-82 as well as data from 78-83, 78-84, and 78-85.
 %
 %
 
+%
 \begin{frame}{Time Blocking Summary}	
         \begin{minipage}{0.49\textwidth}
 	\begin{itemize}
@@ -2392,27 +2397,50 @@ to data from 78-82 as well as data from 78-83, 78-84, and 78-85.
 %
 
 %
-\section{Proofs}
+\section{Correlation}
 \subsection{}
-\begin{frame}{Proof: Species Comps Sum to One... as do Their Means.}
-%\begin{proof}{Species Compositions Sum to One}
+\begin{frame}
+	For the sake of clarifying the correlation structure implied by the Multinomial-Poisson Transformation, consider the following:
+	\begin{align*}
+		X_{1} \sim \text{Poisson}(\theta_1) ~~~ X_{2} \sim \text{Poisson}(\theta_2)
+	\end{align*}
+	The random variables $X_{1}$ and $X_{2}$ \textit{are not} necessarily 
+	negatively correlated. They simply allow us to learn $\theta_1$ 
+	and $\theta_2$. $\theta_1$ and $\theta_2$ \textit{are not} 
+	necessarily negatively correlated. However, via the Multinomial-Poisson 
+	transformation ($f(\bm{x})=\frac{x_i}{\sum_j x_j}$), $\theta_1$ and $\theta_2$ 
+	jointly contain the same information as the Multinomial $\bm{\pi}$ parameter. 
+	The individual components of $\bm{\pi}$ \textit{are} neccesarily negatively 
+	correlated (I prove this later). The componentes of a new (multivariate) random variable 
+	$\bm{Y} \sim \text{MN}(\bm{\pi})$ \textit{are} necessarily negatively correlated. 
+\end{frame}
+
 %
-If $y_{jk}$ is the $k^{\text{th}}$ draw, $k\in\{1,...,~K\}$, of the posterior predictive weight of species $j$ in a particular stratum. Then,
 %
-\begin{equation}
-\pi_{jk} = \frac{y_{jk}}{\sum_j y_{jk}} ~~~ \bm{y}_{k}\neq \bm{0}.
-\end{equation}
-The predictive mean for species $j$ is,
-\begin{equation}
-        \hat\pi_{j} = \frac{\sum_k^K \pi_{jk}}{K}. 
-\end{equation}
-Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
-\begin{equation*}
-        \hspace*{-0.8cm}
-        \sum_j \hat\pi_{j} ~\substack{(2)\\=}~ \sum_j\frac{\sum_k^K \pi_{jk}}{K} = \frac{\sum_k^K \sum_j \pi_{jk}}{K}~\substack{(1)\\=}~\frac{\sum_k^K \sum_j \frac{y_{jk}}{\sum_j y_{jk}}}{K} = \frac{\sum_k^K 1}{K} = \frac{K}{K}=1. ~~~\blacksquare
-\end{equation*}
-%\end{proof}
+
 %
+\begin{frame}
+	\footnotesize
+	In our modeling strategy we replace the Poisson distributions with Beta-Binomial distributions,
+	\begin{align*}
+		X_{1} \sim \text{BB}(\theta_1, \rho) ~~~ X_{2} \sim \text{BB}(\theta_2, \rho).
+	\end{align*}
+	%The appropriate parallels for our modeling strategy 
+	%In the same way that is done in the Multinomial-Poisson Transformation we model
+	%For the sake of clarifying the correlation structure implied by the Multinomial-Poisson Transformation, consider the following:
+
+	Just as in the previous slide, the random variables $X_{1}$ and $X_{2}$ 
+	\textit{are not} necessarily negatively correlated. $\theta_1$ and $\theta_2$
+	\textit{are not} necessarily negatively correlated. However computing species 
+	compositions using the $f(\bm{x})=\frac{x_i}{\sum_j x_j}$ transformation, 
+	provides negative correlation among our species compositions, just as it does 
+	in the previous case. In the next slides I show that it is the structure of 
+	the $f(\bm{x})=\frac{x_i}{\sum_j x_j}$ transformation that produces this negative 
+	correlation. The Multinomial-Poisson transformation is only special in that it's
+	particular application of this transformation among the parameters of Poisson 
+	distributions, analytically results in the Multinomial distribution. The particular 
+	form of the Poisson distribution is not required to guarantee negative correlation, 
+	the transformation itself provides the negative correlation.
 \end{frame}
 
 %
@@ -2423,7 +2451,7 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 \begin{frame}{Species Comps are Negatively Correlated.}
 	Consider a two species system. 
 	\begin{equation*}
-	\pi_1=\frac{y_1}{y_1+y_2} ~~~ \pi_2=\frac{y_2}{y_1+y_2} ~~~ \Rightarrow ~~~ \pi_1+\pi_2=1
+	\pi_1=\frac{x_1}{x_1+x_2} ~~~ \pi_2=\frac{x_2}{x_1+x_2} ~~~ \Rightarrow ~~~ \pi_1+\pi_2=1
 	\end{equation*}
 	%From the previous proof we have $\sum_j \pi_{j}\le 1,~\pi_j \ge 0$.\\ 
 	\\$~$\\$~$\\
@@ -2444,6 +2472,7 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 %
 %
 
+%
 \begin{frame}
 	\begin{minipage}{0.69\textwidth}
 	\begin{align*}
@@ -2484,7 +2513,32 @@ Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
 %
 
 %
-\subsection{}
+\subsection{Proofs}
+\begin{frame}{Proof: Species Comps Sum to One... as do Their Means.}
+%\begin{proof}{Species Compositions Sum to One}
+%
+If $y_{jk}$ is the $k^{\text{th}}$ draw, $k\in\{1,...,~K\}$, of the posterior predictive weight of species $j$ in a particular stratum. Then,
+%
+\begin{equation}
+\pi_{jk} = \frac{y_{jk}}{\sum_j y_{jk}} ~~~ \bm{y}_{k}\neq \bm{0}.
+\end{equation}
+The predictive mean for species $j$ is,
+\begin{equation}
+        \hat\pi_{j} = \frac{\sum_k^K \pi_{jk}}{K}. 
+\end{equation}
+Summing $\hat\pi_{j}$ across species, it follows from (1) and (2) that,
+\begin{equation*}
+        \hspace*{-0.8cm}
+        \sum_j \hat\pi_{j} ~\substack{(2)\\=}~ \sum_j\frac{\sum_k^K \pi_{jk}}{K} = \frac{\sum_k^K \sum_j \pi_{jk}}{K}~\substack{(1)\\=}~\frac{\sum_k^K \sum_j \frac{y_{jk}}{\sum_j y_{jk}}}{K} = \frac{\sum_k^K 1}{K} = \frac{K}{K}=1. ~~~\blacksquare
+\end{equation*}
+%\end{proof}
+%
+\end{frame}
+
+%
+%
+
+%
 \begin{frame}{Proof: Species Comps are Negatively Correlated.}
 	%From the previous proof we have $\sum_j \pi_{j}\le 1,~\pi_j \ge 0$.\\ 
 	Here we seek to show for any two species $l\neq m$, $Corr(\pi_{l}, \pi_{m})<0$.\\
