@@ -84,6 +84,7 @@ copyRun 25019781982M4IGSP
 modRun /media/nick/extraBig/25019781982M4IGSPG/
 #modRun 25019781982M4IGSPG
 copyRun 25019781982M4IGSPG
+#modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4IGSPSG/
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4IGSPSGSPG/
 
 #250 time blocks
@@ -150,6 +151,7 @@ modRun /media/nick/extraBig/25019781982M4SO/
 #modRun 25319781982M4IGSP
 #copyRun 25319781982M4IGSP
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25319781982M4IGSPSG/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25319781982M4IGSPSGSPG/
 
 #253 time blocks
 #modRun /media/nick/extraBig/25319781983M4/
@@ -212,6 +214,8 @@ modRun /media/nick/extraBig/25019781982M4SO/
 #modRun 26919781982M4IGSP
 #copyRun 26919781982M4IGSP
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/26919781982M4IGSPSG/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/26919781982M4IGSPSGSPG/
+
 
 #269 time blocks
 #modRun /run/media/nickg/data/26919781983M4/
