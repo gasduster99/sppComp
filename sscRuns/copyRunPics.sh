@@ -84,7 +84,7 @@ copyRun 25019781982M4IGSP
 modRun /media/nick/extraBig/25019781982M4IGSPG/
 #modRun 25019781982M4IGSPG
 copyRun 25019781982M4IGSPG
-modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4IGSPSGSPG/
+#modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4IGSPSGSPG/
 
 #250 time blocks
 #modRun /media/nick/extraBig/25019781983M4/
