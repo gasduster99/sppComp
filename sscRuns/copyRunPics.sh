@@ -99,8 +99,9 @@ copyRun 25019781982M4IGSPG
 #copyRun 25019781985M4
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982345M4/
 
-#250 
+#250 SoCal Play
 modRun /media/nick/extraBig/25019781982M4SO/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4NOSO/
 
 #253 time models
 #modRun /run/media/nickg/data/25319781982M1/
