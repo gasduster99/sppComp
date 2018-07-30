@@ -1,25 +1,25 @@
-\beamer@endinputifotherversion {3.24pt}
+\beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {1}{Introduction}{1}{0}{1}
 \beamer@subsectionintoc {1}{2}{Diagnostic Tutorial}{2}{0}{1}
-\beamer@sectionintoc {2}{Time Model}{14}{0}{2}
-\beamer@subsectionintoc {2}{2}{MCAT 250}{16}{0}{2}
-\beamer@subsectionintoc {2}{3}{MCAT 253}{23}{0}{2}
-\beamer@subsectionintoc {2}{4}{MCAT 269}{30}{0}{2}
-\beamer@subsectionintoc {2}{5}{Landings Sensitivity}{37}{0}{2}
-\beamer@sectionintoc {3}{Prior Model}{45}{0}{3}
-\beamer@subsectionintoc {3}{2}{MCAT 250}{46}{0}{3}
-\beamer@subsectionintoc {3}{3}{MCAT 253}{53}{0}{3}
-\beamer@subsectionintoc {3}{4}{MCAT 269}{60}{0}{3}
-\beamer@subsectionintoc {3}{5}{Landings Sensitivity}{67}{0}{3}
-\beamer@sectionintoc {4}{Interaction Model}{74}{0}{4}
-\beamer@subsectionintoc {4}{2}{MCAT 250}{75}{0}{4}
-\beamer@subsectionintoc {4}{3}{MCAT 253}{82}{0}{4}
-\beamer@subsectionintoc {4}{4}{MCAT 269}{89}{0}{4}
-\beamer@subsectionintoc {4}{5}{Landings Sensitivity}{96}{0}{4}
-\beamer@sectionintoc {5}{Time Block}{103}{0}{5}
-\beamer@subsectionintoc {5}{2}{MCAT 250}{104}{0}{5}
-\beamer@subsectionintoc {5}{3}{MCAT 253}{110}{0}{5}
-\beamer@subsectionintoc {5}{4}{MCAT 269}{116}{0}{5}
-\beamer@subsectionintoc {5}{5}{Landings Sensitivity}{122}{0}{5}
-\beamer@sectionintoc {6}{Correlation}{129}{0}{6}
-\beamer@subsectionintoc {6}{3}{Proofs}{134}{0}{6}
+\beamer@sectionintoc {2}{Time Model}{19}{0}{2}
+\beamer@subsectionintoc {2}{2}{MCAT 250}{21}{0}{2}
+\beamer@subsectionintoc {2}{3}{MCAT 253}{28}{0}{2}
+\beamer@subsectionintoc {2}{4}{MCAT 269}{35}{0}{2}
+\beamer@subsectionintoc {2}{5}{Landings Sensitivity}{42}{0}{2}
+\beamer@sectionintoc {3}{Prior Model}{50}{0}{3}
+\beamer@subsectionintoc {3}{2}{MCAT 250}{51}{0}{3}
+\beamer@subsectionintoc {3}{3}{MCAT 253}{58}{0}{3}
+\beamer@subsectionintoc {3}{4}{MCAT 269}{65}{0}{3}
+\beamer@subsectionintoc {3}{5}{Landings Sensitivity}{72}{0}{3}
+\beamer@sectionintoc {4}{Interaction Model}{79}{0}{4}
+\beamer@subsectionintoc {4}{2}{MCAT 250}{80}{0}{4}
+\beamer@subsectionintoc {4}{3}{MCAT 253}{87}{0}{4}
+\beamer@subsectionintoc {4}{4}{MCAT 269}{94}{0}{4}
+\beamer@subsectionintoc {4}{5}{Landings Sensitivity}{101}{0}{4}
+\beamer@sectionintoc {5}{Time Block}{108}{0}{5}
+\beamer@subsectionintoc {5}{2}{MCAT 250}{109}{0}{5}
+\beamer@subsectionintoc {5}{3}{MCAT 253}{115}{0}{5}
+\beamer@subsectionintoc {5}{4}{MCAT 269}{121}{0}{5}
+\beamer@subsectionintoc {5}{5}{Landings Sensitivity}{127}{0}{5}
+\beamer@sectionintoc {6}{Correlation}{134}{0}{6}
+\beamer@subsectionintoc {6}{3}{Proofs}{139}{0}{6}

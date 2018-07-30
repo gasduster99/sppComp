@@ -14,7 +14,7 @@ fontsize: 14pt
 
 * describe our modeling efforts for estimating ssp comps.
 
-# Diagnostic Request
+# Request: Diagnostic
 
 * Create fully stratified performace diagnostics based on my tabulated (tables 2 and 3) aggragate performance numbers.
 
@@ -101,13 +101,78 @@ fontsize: 14pt
 
 \clearpage
 
-# Sample Size Request
+# Request: Sample Size 
+
+* a request for Sample sizes by mcat and time block
+
+* through out the rest of the requests we work with the top 3 landed mcats in 1978-1982
+	
+	* 250, 253, 269
+
+* tables show number of port sampling sightings
+
+* other mcats and higher stratifications are provided as supplemental excel files.
 
 # MCAT 250 Sample Sizes
 
+* observed species all time in mcat 250
+
+	* note these are not multinomial sample sizes, but rather sighting occurances.
+	* multinomial structure fills in zeros for all unsighted species in a particular sample id.
+
+* We'll see that model performance will get some of the common species, while the less common species are very hard to predict.
+
+	* Common: BCAC, CLPR, CNRY, WDOW, YTRK
+	* Intermediate: BANK, BLGL, CWCD *often worrisome
+	* Uncommon: BRNZ, MXRF
+
+\clearpage
+
 # MCAT 253 & 269 Sample Sizes
 
-<!--
+* MCAT 253:
+
+	* Common: BCAC, CLPR, WDOW
+	* Intermediate: SNOS, YTRK
+	* Uncommon: BLGL, CWCD
+
+* MCAT 269:
+
+	* Common: WDOW
+	* Intermediate: CLPR, YTRK // BCAC, CNRY
+	* Uncommon: DBRK, POP
+
+# Flatfish and Elasmobranchs
+
+* number of port sampling sightings
+
+* Largest landed Flatfish and Elasmobranchs
+
+	* Sampling Flatfish since 2002
+	* Sampling Elasmobranchs since 2009
+
+* **See Flat/Elasmobranch Table**
+
+# Request: Redo modeling w/o So-Cal
+
+* Redo modeling in early time block MCAT 250 w/o Southern California
+* Here we look at predictions from top species:
+	* CLPR, CNRY, WDOW, YTRK
+
+# Redo SoCal Summary
+
+* Out of sample predictions do not effect observed strata.
+
+* Small difference just come from slight run-by run variation
+
+* When Sample sizes become very sparce it can cause slight model instability. 
+
+# Request: Time Model & Prior Sensitivity
+
+* Top landings MCATS in early time period: 250, 253, 269 
+	
+	* M models
+	* Prior models
 
 # Time Models
 
@@ -130,9 +195,131 @@ fontsize: 14pt
 
 * (M6) Random interactions yearly variances pooling across quarters 
 
+* All with default IG prior
+
+\clearpage
+
+# TIME MODEL: 250
+
+* M2, M3, M4
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, CNRY
+	
+	* BCAC: 
+		* Most of landings in TWL, in later years, in all qtrs, 
+		* largest landings in BRG
+		* generally good performance
+	* WDOW:
+		* Most landings in ERK, TWL, 1986, all qtrs
+		* very good performance
+
+* Most MAD worrisome: BRNZ, MXRF, BLGL, CWCD, BANK * consistent
+
+	* CWCD:
+		* MRO, HKL (some TWL), all years, spring
+		* Over fitting: mostly 0s and interval contains 0
+	* MXRF:
+		* BRG, TWL, 1980, Winter/Spring
+		* Very small sample sizes
+			* wouldn't be surprised if some of difference are due to model instability
+			* large variance: even a little instability could cause some what larger predictive differences.
+			* flat likelihood in MXRK axis => small $\Delta$ likelihood across wide area.
+
+\clearpage
+
+# TIME MODEL: 253
+
+* M4, M5, M6
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, CNRY, BANK * consistent
+
+	* BCAC: 
+		* TWL
+		* predictions are relatively good
+		* not a huge difference between models
+	* WDOW:
+		* TWL
+		* slight overfitting, not bad fit
+
+* Most MAD worrisome: DBRK, CWCD, YTRK, BLGL, SNOS * consistent
+
+	* CWCD:
+		* OSF/MRO, TWL, 1978/1981, winter/summer
+		* Overfitting: Simpler models do better
+			* Mostly zeros
+	* DBRK:
+		* OSF/MNT, TWL, 1980, summer
+		* Underfitting: More complex model works better
+
+\clearpage
+
+# TIME MODEL: 269
+
+* M4, M5, M6
+
+* Few species, some spp show on best and worst
+* Least MAD worrisome: YTRK, BCAC, CLPR, CNRY 
+		
+	* CNRY:
+		* CRS, TWL, 1982, Q3
+		* Overfitting: simpler model  
+	* YTRK:
+		* CRS/MRO, TWL, 1982, spring
+		* almost no model sensativity
+	
+* Most MAD worrisome: WDOW, DBRK, POP
+	* BCAC:
+		* ERK/MNT, TWL, 1982, Fall/Summer
+		* Overfitting
+		* almost no model sensativity  
+	* WDOW:  
+		* BDG, TWL, 1982, spring
+		* underfitting:?? 
+
+\clearpage
+
+# Request: Landings
+
+* Aggregate across MCATs 250, 253, 269 by year and year:gear for each spp.
+	* new model runs against calcom in black
+
+* Only show select species realevant for management
+
+* **WDOW**
+	* little sensativity to M model
+	* low estimates in TWL, 1979, 1980, 1981
+
+* **BCAC**
+	* little sensativeity
+	* driven by TWL
+	* reasonably small differences
+
+* **CLPR**
+	* little sensativity
+	* driven by TWL (very similar)
+	* other gears off a bit (S:G)
+
+* **DBRK & CWCD**
+	* little sensativity
+	* lots of variance but basically similar
+	* we can estimate variance! wouldn't be able to say that from calcom
+
+* **MXRK**
+	* suuuper skewed distributions
+		* 9000 samples at 0 and some up to 1
+		* high variance 
+	
+	* Bayesian inference estimating higher moments 	
+		* complex posterior as a result of extreme lack of information
+		* statistics are breaking down, yet mean not far from calcom. 
+		* all of the instability is masked in calcom but the model can seee it.
+			* we should want to see those failures in the data; the model does.
+
+\clearpage
+
 # Priors
 
-* Very diffuse priors
+* Diffuse priors
 
 * Main effects diffuse Normals
 
@@ -141,14 +328,16 @@ fontsize: 14pt
 	* $\text{logit}(\rho) \rightarrow (-3.91, 3.91)$
 	* $\rho \rightarrow (0.02, 0.98)$  
 
-* Any heirarchical variance gets the same IG prior
+* Any heirarchical variances:
 	
-	* Considered others:
-		* $\sqrt{v}~$~ Half-Cauchy$(10^{-2})$
-		* $\sqrt{v}~$~ Unif$(0, 10^5)$
+	* Default: IG prior
+	* Informative: $\sqrt{v}~$~ Half-Cauchy$(10^{1})$
+	* Diffuse: $\sqrt{v}~$~ Half-Cauchy$(10^{3})$
+	* Flat: $\sqrt{v}~$~ Unif$(0, 10^4)$
 
 \clearpage
 
+<!--
 # Beta-Binomial Fits
 
 * Fit model separately in 78-82 and 83-90 and compare model selection criterion
