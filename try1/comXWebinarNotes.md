@@ -210,7 +210,7 @@ fontsize: 14pt
 		* largest landings in BRG
 		* generally good performance
 	* WDOW:
-		* Most landings in ERK, TWL, 1986, all qtrs
+		* Most landings in ERK, TWL, 1980, all qtrs
 		* very good performance
 
 * Most MAD worrisome: BRNZ, MXRF, BLGL, CWCD, BANK * consistent
@@ -337,120 +337,194 @@ fontsize: 14pt
 
 \clearpage
 
+# PRIOR MODEL: 250
+
+* M4HC1, M4HC3, M4U4
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, DBRK
+	* BCAC:
+		
+		* Most of landings in TWL, in later years, in all qtrs; largest landings in BRG; generally good performance
+		* almost no sensativity to prior
+	
+	* WDOW: 
+	
+		* Most landings in ERK, TWL, 1980, all qtrs; very good performance
+		* again almost no sensativity to prior
+
+* Most MAD worrisome: CWCD, MXRK, BRNZ, BANK, BLGL * consitent
+	* CWCD:
+		
+		* MRO, HKL (some TWL), all years, spring; Overfitting: mostly 0s and interval contains 0
+		* zero prior effect
+
+	* MXRF:
+                
+		* BRG, TWL, 1980, Winter/Spring
+		* Very small sample sizes (could some model instability)
+			* prior could be making an influence here
+			* U4 prior seems best
+
+\clearpage
+
+# PRIOR MODEL: 253
+
+* M4HC1, M4HC3, M4U4 (truely no difference, M4IG)
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, CNRY, BANK * consistent (same)
+
+	* BCAC:
+		* TWL; predictions are relatively good
+		* A bit of difference between models (more than M choice)
+        
+	* CLPR:
+		* TWL
+		* good performance, not a ton of influence from priors
+
+* Most MAD worrisome: DBRK, CWCD, YTRK, BLGL, SNOS * consistent
+
+	* CWCD:
+		* OSF/MRO, TWL, 1978/1981, winter/summer; mostly zeros  
+		* again Overfitting: Simpler models do better
+			* M4HC1 promotes most pooling => simplest models
+			* M4U4 promotes least pooling => complex models => tends to overfit
+        
+	* DBRK:
+		* OSF/MNT, TWL, 1980, summer
+		* Underfitting: More complex model works better
+			* M4U4 promotes most complex model
+
+\clearpage
+
+# PRIOR MODEL: 269
+
+* M4IG, M4HC3, M4U4 (M4HC1 tooo much pooling)
+
+* Few species, some spp show on best and worst
+* Least MAD worrisome: again YTRK, BCAC, CLPR, CNRY
+
+	* CLPR:
+		
+		* MRO/MNT, TWL, 1982, spring/summer
+		* Overfitting: although prior doesn't do a lot
+		* MRO lot of landings, but almost no samples
+			* one sample and we missed it
+        
+	* YTRK:
+                
+		* CRS/MRO, TWL, 1982, spring
+		* prior simplifies model and all coverages get smaller
+
+* Most MAD worrisome: WDOW, DBRK, POP
+
+	* BCAC:
+		* ERK/MNT, TWL, 1982, Fall/Summer
+		* Overfitting
+		* again almost no model sensativity
+
+	* WDOW:
+		* BDG, TWL, 1982, spring
+		* still underfitting
+		* slight preference for HC3 prior 
+		* I think it wants a more complex model but M4 is not enough to get us there
+
+\clearpage
+
+# Landings
+
+* again Aggregate across MCATs 250, 253, 269 by year and year:gear for each spp.
+	* new model runs against calcom in black
+
+* Only show select species realevant for management
+
+* **WDOW**
+	* again little sensativity to Prior model
+	* still low estimates in TWL, 1979, 1980, 1981 compared to calcom
+
+* **BCAC**
+	* a little sensativeity from prior as seen in MCAT 253
+	* still driven by TWL
+	* still reasonably small differences
+
+* **CLPR**
+	* almost no sensativity
+	* still driven by TWL (very similar)
+	* still other gears off a bit (S:G)
+
+* **DBRK & CWCD**
+	* little sensativity
+	* still lots of variance estimated but basically similar
+	* CWCD a bit more sensative to prior, with only real changes occuring in 253
+
+* **MXRK**
+	* still suuuper skewed distributions
+		* 9000 samples at 0 and some up to 1
+		* high variance 
+        
+	* HC1 giving most shrinkage, you can see it picking up on something in 1981.
+
+\clearpage
+
+# Request: Interaction Modeles
+
+* Model M4
+* IG prior
+* early time block 
+* MCATs 250, 253 and 269
+* w/o Southern California
+* try adding Spp:Gear and Spp:Port interactions
+
+# INTERACTION MODEL: 250
+
+* M4, M4SG, **M4SP**
+
+\clearpage
+
+# INTERACTION MODEL: 253
+
+* M4, M4SG, **M4SP**
+
+\clearpage
+
+# INTERACTION MODEL: 269
+
+* M4, M4SG, M4SP
+
+\clearpage
+
 <!--
-# Beta-Binomial Fits
+# Conclusions
 
-* Fit model separately in 78-82 and 83-90 and compare model selection criterion
-
-* 78-82:
-
-	* Consistent support for more pooling
-	* All measures point to (M4)
-
-* 83-90:
+* Using Bayesian models we have:
 	
-	* Consistent support for interaction models
-	* Uncertainty between (M3), (M4), and (M5)
-	* Lesser support for (M6)
+	* Account for overdispersion
+	* Estimate uncertainty (full distribution)
+	* Formal Mechanisms for pooling
+	* provide structure for making out-of-sample prediction
 
-* We fit model (M4) everywhere
+* Future Modeling
 	
-	* Stable and relatively fast model to fit
-	* Given its support in 78-82, I am drawn to (M4)
-		* Each time period seems to have a mind of its own  
-\begin{eqnarray*}
-&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta} & \\
-&\beta^{(y)}_{m} \sim N(0, 32) & \\
-&\beta^{(q)}_{\eta} \sim N(0, 32) & \\
-&\beta^{(y:q)}_{m\eta} \sim N(0, v) &
-\end{eqnarray*}
-
-# ?? LUNCH ??
-
-\clearpage
-
-# Posterior Predictive Species Comps.
-
-* Having settled on (M4) in both time periods, how do we build species comps?
-
-* Inference results in samples from posterior distribution $P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big)$
-
-* Run samples back through BB likelihood to compute Monte Carlo integral and get posterior predictive distribution of sampled weight.
-
-* Use draws from model posterior predictive weight to compute species comp. distribution
+	* Explore additional predictore in $\theta$
+		* Landing weighting
+		* Vessel Effects
+		* Speceies:Gear interactions
 	
-	* Plot shows average species compositions 
-	* Full distribution for $y^*$ as well as $\pi^*$
-	* Each sample sums to 1 and $\sum_j\mathbb{E}[\pi^*_j]$=1
-
-* By adding an unobserved latent time period we can make out-of-sample predictions
-	* (M4): unobserved $\beta^{(y)^*}$ and $\beta^{(q)^*}$
-
-# Single Quarter Hindcast
-
-* Recall for 1978-1982 there was no sampling south of point conception.
-
-* Adding an unobserved year and quarter
-
-	* make predictions for each species in each combo of: 
-		* three observed gear groups 
-		* three southern port complexes
-
-\clearpage
-
-# 78-82 Prediction
-
-* Modeled MCATs
-
-* MCATs in the rows **(ordered by landings)** w/ 3 nominal HDI prediction levels
-
-	* For each stratum of each MCAT compare data to prediction intervals
-	* Observed level should match Nomial
-	* Prediction higher than nominal => Overfitting
-	* Prediction lower => Underfitting (not enough residual variance) 
+	* Overdispersion Multivate models
+		* Dirichelette-Multinomial Model
 	
-* Most do well
-	* Average performance is reasonable
-	* Note this is a unweighted, simple, average
-	* More accurate would weight average by samples at each stratum 
-
-* Particularly well in heavily landed stratum
-
-	* correlation of sampling effort w/ landings
-
-* Widow is a wild child
-	* only example that is off by more than 5% points at any level
-
-# 83-90 Prediction
-
-* Same Table
-	* Modeled MCATs **(ordered by landings)** w/ 3 nominal pred. levels
-
-* Again most do well
-
-* Recall landings were spread across more MCATs in 83-90
-	* Enough samples to also model more MCATs
-
-* Blackgill, Yellowtail, Cowcod: off by 5% points at some level
-	* Negligable Landings
-
-# Speciating Landings
-
-* $\lambda_{\cdot klm\eta}$ is reported on landing reciepts
-
-* $\lambda^*_{jklm\eta}$ stored in DB
-
-* Aggregate to any level
+	* Maybe Time Series Models
 	
-	* across quarter, port complex, gear group
-	* Also MCAT (I ran out of index variables :/)
+	* Cluster and integrate out spatial parameters via DP?
 
-* E.J. will show the speciated time series with predictive intervals 
-	
-	* summed across MCAT
-	* as it might be used in asessment
+-->
 
-\clearpage
+
+
+
+
+
+<!--
+
 
 # BMA Story
 
@@ -552,37 +626,9 @@ fontsize: 14pt
 	* Cape Mendicino Break
 
 
-# Conclusions
-
-* Using Bayesian models we have:
-	
-	* Account for overdispersion
-	* Estimate uncertainty (full distribution)
-	* Formal Mechanisms for pooling
-	* provide structure for making out-of-sample prediction
-
-* Future Modeling
-	
-	* Explore additional predictore in $\theta$
-		* Landing weighting
-		* Vessel Effects
-		* Speceies:Gear interactions
-	
-	* Overdispersion Multivate models
-		* Dirichelette-Multinomial Model
-	
-	* Maybe Time Series Models
-	
-	* Cluster and integrate out spatial parameters via DP?
-
--->
 
 
 
-
-
-
-<!--
 # MCATs in Time
 
 * **Top Panel:** Number of samples in rockfish market categories (1978-2015)
@@ -709,6 +755,120 @@ weight
 
 * Moving forward I develop the BB model   
 
+
+# Beta-Binomial Fits
+
+* Fit model separately in 78-82 and 83-90 and compare model selection criterion
+
+* 78-82:
+
+	* Consistent support for more pooling
+	* All measures point to (M4)
+
+* 83-90:
+	
+	* Consistent support for interaction models
+	* Uncertainty between (M3), (M4), and (M5)
+	* Lesser support for (M6)
+
+* We fit model (M4) everywhere
+	
+	* Stable and relatively fast model to fit
+	* Given its support in 78-82, I am drawn to (M4)
+		* Each time period seems to have a mind of its own  
+\begin{eqnarray*}
+&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\eta} & \\
+&\beta^{(y)}_{m} \sim N(0, 32) & \\
+&\beta^{(q)}_{\eta} \sim N(0, 32) & \\
+&\beta^{(y:q)}_{m\eta} \sim N(0, v) &
+\end{eqnarray*}
+
+# ?? LUNCH ??
+
+\clearpage
+
+# Posterior Predictive Species Comps.
+
+* Having settled on (M4) in both time periods, how do we build species comps?
+
+* Inference results in samples from posterior distribution $P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big)$
+
+* Run samples back through BB likelihood to compute Monte Carlo integral and get posterior predictive distribution of sampled weight.
+
+* Use draws from model posterior predictive weight to compute species comp. distribution
+	
+	* Plot shows average species compositions 
+	* Full distribution for $y^*$ as well as $\pi^*$
+	* Each sample sums to 1 and $\sum_j\mathbb{E}[\pi^*_j]$=1
+
+* By adding an unobserved latent time period we can make out-of-sample predictions
+	* (M4): unobserved $\beta^{(y)^*}$ and $\beta^{(q)^*}$
+
+# Single Quarter Hindcast
+
+* Recall for 1978-1982 there was no sampling south of point conception.
+
+* Adding an unobserved year and quarter
+
+	* make predictions for each species in each combo of: 
+		* three observed gear groups 
+		* three southern port complexes
+
+\clearpage
+
+# 78-82 Prediction
+
+* Modeled MCATs
+
+* MCATs in the rows **(ordered by landings)** w/ 3 nominal HDI prediction levels
+
+	* For each stratum of each MCAT compare data to prediction intervals
+	* Observed level should match Nomial
+	* Prediction higher than nominal => Overfitting
+	* Prediction lower => Underfitting (not enough residual variance) 
+	
+* Most do well
+	* Average performance is reasonable
+	* Note this is a unweighted, simple, average
+	* More accurate would weight average by samples at each stratum 
+
+* Particularly well in heavily landed stratum
+
+	* correlation of sampling effort w/ landings
+
+* Widow is a wild child
+	* only example that is off by more than 5% points at any level
+
+# 83-90 Prediction
+
+* Same Table
+	* Modeled MCATs **(ordered by landings)** w/ 3 nominal pred. levels
+
+* Again most do well
+
+* Recall landings were spread across more MCATs in 83-90
+	* Enough samples to also model more MCATs
+
+* Blackgill, Yellowtail, Cowcod: off by 5% points at some level
+	* Negligable Landings
+
+# Speciating Landings
+
+* $\lambda_{\cdot klm\eta}$ is reported on landing reciepts
+
+* $\lambda^*_{jklm\eta}$ stored in DB
+
+* Aggregate to any level
+	
+	* across quarter, port complex, gear group
+	* Also MCAT (I ran out of index variables :/)
+
+* E.J. will show the speciated time series with predictive intervals 
+	
+	* summed across MCAT
+	* as it might be used in asessment
+
+\clearpage
 
 
 
