@@ -474,9 +474,39 @@ fontsize: 14pt
 * w/o Southern California
 * try adding Spp:Gear and Spp:Port interactions
 
+\clearpage
+
 # INTERACTION MODEL: 250
 
 * M4, M4SG, **M4SP**
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, DBRK
+	* BCAC:
+		
+		* again Most of landings in TWL, in later years, in all qtrs; largest landings in BRG; generally good performance
+		* more change here, than in M model, or prior, but still not a lot of change.
+		* all models are quite good here.
+	
+	* WDOW: 
+	
+		* Most landings in ERK, TWL, 1980, all qtrs; very good performance
+		* bigger shifts here than M model or prior, but still not a huge change.
+		* model differences are zero sum and resonable fits here.
+
+* Most MAD worrisome: CWCD, MXRK, BRNZ, BANK, BLGL * consitenti (same)
+	* CWCD:
+		
+		* MRO, HKL (some TWL), all years, spring; Overfitting: mostly 0s and interval contains 0
+		* we can see SP is a bit better here. 
+		* this is the only model change to budge CWCD.
+
+	* MXRF:
+                
+		* BRG, TWL, 1980, Winter/Spring
+		* Here we see a few more examples where SP helps.
+		
+	* Not a magic bullet, but incremental changes across many species: BLGL, BLCK, LCOD, ect.
+	* without a ton of side effects in other spp.
 
 \clearpage
 
@@ -484,19 +514,234 @@ fontsize: 14pt
 
 * M4, M4SG, **M4SP**
 
+* Least MAD worrisome: WDOW, BCAC, CLPR, CNRY, BANK * consistent (same)
+
+	* BCAC:
+		* TWL; predictions are relatively good
+		* Almost no difference; good performance
+        
+	* CLPR:
+		* TWL
+		* Almost no difference; good performance
+
+* Most MAD worrisome: DBRK, CWCD, YTRK, BLGL, SNOS * consistent
+
+	* CWCD:
+		* OSF/MRO, TWL, 1978/1981, winter/summer; mostly zeros  
+		* Zero sum, although it doing something
+
+       
+	* DBRK:
+		* OSF/MNT, TWL, 1980, summer
+		* Fixes a lot of the Underfitting
+			* a definite incremental improvement
+		* DBRK here liked M6, U4 before
+
 \clearpage
 
 # INTERACTION MODEL: 269
 
 * M4, M4SG, M4SP
 
+* Few species, some spp show on best and worst
+* Least MAD worrisome: again YTRK, BCAC, CLPR, CNRY
+
+	* CNRY:
+		
+		* CRS, TWL, 1982, spring
+		* interactions push it deeper into overfitting
+        
+	* YTRK:
+                
+		* CRS/MRO, TWL, 1982, spring
+		* no effect 
+		* moved inresponse to prior, and realetively small sample size, so this is probably mostly prior. 
+
+* Most MAD worrisome: WDOW, DBRK, POP (same set)
+
+	* BCAC:
+		* ERK/MNT, TWL, 1982, Fall/Summer
+		* again Overfitting
+		* again almost no budgeing.
+
+	* WDOW:
+		* BDG, TWL, 1982, spring
+		* still underfitting
+		* slight preference for SP prior 
+		* It still wants a more complex model, but SP and SG not good enough
+
 \clearpage
 
+# Landings
 
+* again Aggregate across MCATs 250, 253, 269 by year and year:gear for each spp.
+	* new model runs against calcom in black
 
+* Only show select species realevant for management
 
+* **WDOW**
+	* More sensativivity here
+	* SG just going in the wrong direction
 
+* **BCAC**
+	* Incremental sensativeity 
+	* still driven by TWL
+	* again SG seemingly drives the wrong overfitting changes
 
+* **CLPR**
+	* incremental sensativity
+	* still driven by TWL (very similar)
+	* (S:G) does solve our issues that we saw in the other requests, but it almost seems to be driving the the other species off target. 
+
+* **DBRK & CWCD**
+	* more sensativity
+	* still lots of variance estimated but basically similar
+	* DBRK SP alone achieves what SG would have
+	* CWCD SP more well behaves than SG
+
+* **MXRK**
+	* still suuuper skewed distributions although SG seems to be doing so with larger variance
+		* maybe slightly less skew in SG and instead more variance.	 
+        
+	* its a wash between M4 and M4SP
+
+\clearpage
+
+# Summary
+* SP helps incrementally
+* SG helps less
+* SG and SP together is often worse than SP alone.
+* maybe three way interaction SPG
+* anyother ideas? Keep one model across all MCAT
+
+# Request: Time Blocks
+
+* Model M4
+* IG prior
+* early time block extended to 83, 84, 85
+* MCATs 250, 253 and 269
+* w/o Southern California
+
+\clearpage
+
+# TIME BLOCK: 250
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, DBRK (big improvements)
+	* BCAC:
+		
+		* again Most of landings in TWL, in later years, in all qtrs; largest landings in BRG; generally good performance
+		* Fit starts good and does not move much.
+		* if anything the fit get a tad better.
+		* seems to do about as much as other model tweeks, if not more, to improve fit. 
+		
+	* WDOW: 
+	
+		* Most landings in ERK, TWL, 1980, all qtrs; very good performance
+		* Fit gets better with more data
+		* does almost as much as SP to improve fit.
+
+* Most MAD worrisome: CWCD, MXRK, BRNZ, CMEL * new data moves thinks around (introduce CMEL, BLGL better, BANK get a loot better) 
+	* CWCD:
+		
+		* MRO, HKL (some TWL), all years, spring; Overfitting: mostly 0s and interval contains 0
+		* does not really effect fit
+
+	* MXRF:
+                
+		* BRG, TWL, 1980, Winter/Spring
+		* Gets wors and worse, until 85 (likely new date arrives at 85)
+
+* honorable mentions: DBRK, BLGL, BANK
+
+\clearpage
+
+# TIME BLOCK: 253
+
+* Least MAD worrisome: WDOW, BCAC, CLPR, BANK * (CNRY drops, YTRK/SNOS replace)
+
+	        
+	* CNRY:
+		* TWL, OSF/MRO, winter/spring
+		* Overfitting: Not terrible, zero sum or slightly worse on average
+	
+	* YTRK:
+		* MNT, Fall
+		* Overfitting: not a huge difference
+
+* Most MAD worrisome: DBRK, CWCD, BLGL * lots os movemnet
+
+	* BCAC:
+		* TWL; predictions are relatively good
+		* reasonable fit: Zero sum
+	
+	* WDOW:
+		* MRO/OSF, TWL, 80/81
+		* decent fit; Induces slightly more oferfitting
+
+* honorable mention: BANK
+
+\clearpage
+
+# TIME BLOCK: 269
+
+* Few species, some spp show on best and worst
+* Least MAD worrisome: again YTRK, BCAC, CLPR, CNRY * same
+
+	* CNRY:
+		
+		* CRS, TWL, 1982, spring
+		* interactions push it deeper into overfitting
+        
+	* YTRK:
+                
+		* CRS/MRO, TWL, 1982, spring
+		* Pushed toward over fitting  
+
+* Most MAD worrisome: WDOW, DBRK, POP (same set)
+
+	* BCAC:
+		* ERK/MNT, TWL, 1982, Fall/Summer
+		* again Overfitting
+		* again little no budgeing.
+
+	* WDOW:
+		* BDG, TWL, 1982, spring
+		* still underfitting
+		* pushed into slightly deeper under fitting
+
+\clearpage
+
+# Landings
+
+* again Aggregate across MCATs 250, 253, 269 by year and year:gear for each spp.
+	* new model runs against calcom in black
+
+* Only show select species realevant for management
+
+* **WDOW**
+	* very slight sensativivity here
+	* similar but extended
+
+* **BCAC**
+	* Incremental sensativeity 
+	* still driven by TWL
+	* maybe slightly better with more data, not really worse.
+
+* **CLPR**
+	* not sensative
+	* still driven by TWL (very similar)
+	* mostly just an extension 
+
+* **DBRK & CWCD**
+	* more sensativity
+	* upward shift
+	* Increases variance
+	
+* **MXRK**
+	* still suuuper skewed distributions although larger variance
+		* model tried differnet stuff 	 
+
+\clearpage
 
 
 
