@@ -80,7 +80,12 @@ copyRun 25019781982M4IGSG
 #modRun /media/nick/extraBig/25019781982M4IGSP/
 #modRun 25019781982M4IGSP
 copyRun 25019781982M4IGSP
-##modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/
+#modRun /run/media/nickg/data/25019781982M4IGSPG/
+modRun /media/nick/extraBig/25019781982M4IGSPG/
+#modRun 25019781982M4IGSPG
+copyRun 25019781982M4IGSPG
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4IGSPSG/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4IGSPSGSPG/
 
 #250 time blocks
 #modRun /media/nick/extraBig/25019781983M4/
@@ -93,6 +98,10 @@ copyRun 25019781982M4IGSP
 #modRun 25019781985M4
 #copyRun 25019781985M4
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982345M4/
+
+#250 SoCal Play
+modRun /media/nick/extraBig/25019781982M4SO/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25019781982M4NOSO/
 
 #253 time models
 #modRun /run/media/nickg/data/25319781982M1/
@@ -143,6 +152,7 @@ copyRun 25019781982M4IGSP
 #modRun 25319781982M4IGSP
 #copyRun 25319781982M4IGSP
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25319781982M4IGSPSG/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/25319781982M4IGSPSGSPG/
 
 #253 time blocks
 #modRun /media/nick/extraBig/25319781983M4/
@@ -205,6 +215,8 @@ copyRun 25019781982M4IGSP
 #modRun 26919781982M4IGSP
 #copyRun 26919781982M4IGSP
 #modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/26919781982M4IGSPSG/
+modRun ~/Documents/sppComp/writting/sppComp/try1/postSSC/26919781982M4IGSPSGSPG/
+
 
 #269 time blocks
 #modRun /run/media/nickg/data/26919781983M4/
