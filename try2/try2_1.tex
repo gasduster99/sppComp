@@ -101,7 +101,44 @@ while simultaneously making the most from the available data.
 	\item describe overdispersion concerns
 	\item outline model descriptions
 	\item poisson, NB, beta, beta-binomial
+	\item describe experiment
 	\end{itemize}
+\end{itemize}
+
+\subsection{Likelihood}
+
+For a particular market category, the random variable \(Y_{ijklm\nu}\) is the 
+\(i^{th}\) observation of the \(j^{th}\) species' rounded weight (in pounds), 
+in the \(k^{th}\) port, caught with the \(l^{th}\) gear, in the \(\nu^{th}\) 
+quarter, of year \(m\). The \(Y_{ijklm\nu}\) are modeled as $i.i.d.$ 
+observations from some distribution, $f$, over the whole numbers
+
+%NOTE:look at index comment from review
+\begin{equation}
+Y_{ijklm\nu} \substack{i.i.d.\\\sim} f(\theta_{ijklm\nu}, \phi).
+\end{equation}
+
+%
+Here $\theta_{ijklm\nu}$ is a linear predictor for inferring the mean weight, 
+and $\phi$ is a nusiance parameter included (when neccisary) to allow models 
+to more flexibly capture higher moments of the \(Y_{ijklm\nu}\). Of particular 
+interest, the residual variance is a key value to quantify.
+
+%
+Defining a particular form for $f$ also implies the linear predictor/mean 
+relationship as well as the structure, and scope, of residual variation. Here 
+the poisson, binomial, negative binomial, and beta-binomial distributions are 
+considered as possible forms for $f$. These distributions span the vast majority 
+of commonly used univariate whole number distributions. 
+
+\begin{itemize}
+	\item poisson -> NB
+	\item binomial -> BB
+	\item poisson -> multinomial (Ole)
+	\item overdispersed multimonial -> Dirichelette-Multinomial
+\end{itemize}
+
+\begin{itemize}
 \item Prior (discussion of sensativity analysis)
 	\begin{itemize}
 	\item basic description
