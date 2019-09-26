@@ -272,11 +272,11 @@ Y_{ijklm\nu} \substack{i.i.d.\\\sim} Poisson(\theta_{jklm\nu})
 
 %how does $n_ijklm\nu$ enter the equation
 \begin{equation}
-\mu_{ijklm\nu} = \exp(\theta_{jklm\nu}).
+\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
 \end{equation}
 
 \begin{equation}
-\sigma^2_{ijklm\nu} = \exp(\theta_{jklm\nu}).
+\sigma^2_{ijklm\nu} = \mu_{ijklm\nu}.
 \end{equation}
 
 
@@ -294,18 +294,28 @@ Y_{ijklm\nu} \substack{i.i.d.\\\sim} Binomial(\theta_{jklm\nu})
 \end{equation}
 
 %
-\color{red}{
 \begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).
+\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big).
 \end{equation}
-}
 
 %
 \subsubsection{Negative Binomial Model}
 
+%
 \begin{equation}
 Y_{ijklm\nu} \substack{i.i.d.\\\sim} NB(\theta_{jklm\nu}, \phi)
 \end{equation}
+
+%
+\begin{equation}
+\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
+\end{equation}
+
+%
+\begin{equation}
+\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1+\frac{\mu_{jklm\nu}}{\phi}\Big).
+\end{equation}
+
 
 
 
@@ -313,18 +323,17 @@ Y_{ijklm\nu} \substack{i.i.d.\\\sim} NB(\theta_{jklm\nu}, \phi)
 %
 \subsubsection{Beta-Binomial Model}
 
+%
 \begin{equation}
 Y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(Y_{ijklm\nu}|\theta_{jklm\nu}, \phi)
 \end{equation}
 
-\begin{equation}
-\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\nu}
-\end{equation}
-
+%
 \begin{equation}
 \mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
 \end{equation}
 
+%
 \begin{equation}
 \sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).
 \end{equation}
@@ -372,7 +381,11 @@ models are very difficult to fit in this setting.
 	\item variance parameters
 	\item describe sensativeity analysis
 	\end{itemize}
-\item Linear Predictor
+\item Linear Predictor 
+%%how does $n_ijklm\nu$ enter the equation
+%\begin{equation}
+%\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+%\end{equation}
 	\begin{itemize}
 	\item basic model
 	\item describe additions
