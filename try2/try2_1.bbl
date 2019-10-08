@@ -1,0 +1,111 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+CALCOM%
+}{%
+CALCOM%
+}{%
+{\protect \APACyear {2018}}%
+}]{%
+calcom_california_2018}
+\APACinsertmetastar {%
+calcom_california_2018}%
+\begin{APACrefauthors}%
+CALCOM.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+\APACrefbtitle {California {Cooperative} {Groundfish} {Survey} {Database}:
+  {CDFG}.} {California {Cooperative} {Groundfish} {Survey} {Database}: {CDFG}.}
+\newblock
+\APACaddressPublisher{PSMFC, Belmont, CA; NMFS, Santa Cruz, CA}{}.
+\newblock
+\begin{APACrefURL} \url{http://calcomfish.ucsc.edu} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Sen%
+}{%
+Sen%
+}{%
+{\protect \APACyear {1984}}%
+}]{%
+sen_sampling_1984}
+\APACinsertmetastar {%
+sen_sampling_1984}%
+\begin{APACrefauthors}%
+Sen, A\BPBI R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1984}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Sampling commercial rockfish landings in {California}}
+  {Sampling commercial rockfish landings in {California}}.{\BBCQ}
+\newblock
+
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Sen%
+}{%
+Sen%
+}{%
+{\protect \APACyear {1986}}%
+}]{%
+sen_methodological_1986}
+\APACinsertmetastar {%
+sen_methodological_1986}%
+\begin{APACrefauthors}%
+Sen, A\BPBI R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1986}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Methodological {Problems} in {Sampling} {Commercial}
+  {Rockfish} {Landings}} {Methodological {Problems} in {Sampling} {Commercial}
+  {Rockfish} {Landings}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Fishery Bulletin}{84}{2}{}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Shelton%
+, Dick%
+, Pearson%
+, Ralston%
+\BCBL {}\ \BBA {} Mangel%
+}{%
+Shelton%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2012}}%
+}]{%
+shelton_estimating_2012}
+\APACinsertmetastar {%
+shelton_estimating_2012}%
+\begin{APACrefauthors}%
+Shelton, A\BPBI O.%
+, Dick, E\BPBI J.%
+, Pearson, D\BPBI E.%
+, Ralston, S.%
+\BCBL {}\ \BBA {} Mangel, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2012}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Estimating species composition and quantifying
+  uncertainty in multispecies fisheries: hierarchical {Bayesian} models for
+  stratified sampling protocols with missing data} {Estimating species
+  composition and quantifying uncertainty in multispecies fisheries:
+  hierarchical {Bayesian} models for stratified sampling protocols with missing
+  data}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Canadian journal of fisheries and aquatic
+  sciences}{69}{2}{231--246}.
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

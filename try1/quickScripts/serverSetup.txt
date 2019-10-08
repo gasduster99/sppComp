@@ -4,6 +4,7 @@ sudo rpm -ihv epel-release-7-11.noarch.rpm
 sudo yum install htop
 sudo yum install ImageMagick
 sudo yum install screen
+sudo yum install mysql-devel
 sudo vim /etc/yum/pluginconf.d/search-disabled-repos.conf
 	set 'notify_only=0' 
 sudo yum install R
@@ -15,4 +16,4 @@ install.packages('HDInterval')
 install.packages('doParallel')
 install.packages('foreach')
 install.packages('GA')
-
+install.packages('RMySQL')
