@@ -241,121 +241,12 @@ Defining a particular form for $f$ also implies the linear predictor-mean
 relationship as well as the structure, and scope, of residual variation. For 
 the purposes of accurately modeling not only species composition means, but 
 also higher moments of the data (e.g. variances), it is necessary to recognize 
-model limitations with respect to overdispersed data. Here the poisson, 
-binomial, negative binomial, and beta-binomial distributions are considered as 
-possible forms for $f$. These distributions span the vast majority of commonly 
-used univariate whole number distributions. 
-
-%
-Among the simplest models for count data are the Poisson and binomial models. 
-Both models are derived %Neither of these models provide enough fredom amoung their parameters spaces to allow  
-under limiting cases for $\phi$, and thus under these models $\phi$ is not an 
-infered parameter. As a result the Poisson and binomial models rely heavily on 
-their respective data generating processes to accurately represent higher 
-moments in the data. Furthermore, these models are only capable of capturing a 
-relatively rigid scope of response behavior.
-
-%
-In contrast, the negative binomial and beta-binomial models use the data to 
-estimate the $\phi$ parameter. In these models the the $\phi$ parameter is used 
-to disentangle the mean and residual variance estimates. Thus the negative 
-binomial and beta-binomial models may produce more accurate estimates of the 
-residual variance, while producing more accurate measures of center. 
-
-%
-\subsubsection{Poisson Model}
-
-%
-\begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} Poisson(\theta_{jklm\nu})
-\end{equation}
-
-%how does $n_ijklm\nu$ enter the equation
-\begin{equation}
-\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
-\end{equation}
-
-\begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{ijklm\nu}.
-\end{equation}
-
-
-%
-\subsubsection{Binomial Model}
-
-%
-\begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} Binomial(\theta_{jklm\nu})
-\end{equation}
-
-%%how does $n_ijklm\nu$ enter the equation
-\begin{equation}
-\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
-\end{equation}
-
-%
-\begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big).
-\end{equation}
-
-%
-\subsubsection{Negative Binomial Model}
-
-%
-\begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} NB(\theta_{jklm\nu}, \phi)
-\end{equation}
-
-%
-\begin{equation}
-\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
-\end{equation}
-
-%
-\begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1+\frac{\mu_{jklm\nu}}{\phi}\Big).
-\end{equation}
-
-
-
-
-
-%
-\subsubsection{Beta-Binomial Model}
-
-%
-\begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(Y_{ijklm\nu}|\theta_{jklm\nu}, \phi)
-\end{equation}
-
-%
-\begin{equation}
-\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
-\end{equation}
-
-%
-\begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).
-\end{equation}
-
-
-%REWORD
-We develop an example on a subset of data to evaluate statistical support for 
-overdispersed models, see Appendix (6.1), which we have subsequently used for the purposes of applying at an operational scale 
-%REWORD
-
-%DISCUSSION
-Admittedly the structure of these data as rounded pounds do not immediately cry 
-out for the above counting distributions. Rather one might consider modeling 
-these data as censored observations of a normal response, or possibly one might 
-be interested in modeling the multivariate structure as a multinomial 
-(\shortciteA{shelton_estimating_2012} shows that this is implied under the 
-poisson response) or dirichilet-multinomial response. I grant that indeed such 
-models would be lovely to explore, however from the pragmatic perspective these 
-models are very difficult to fit in this setting. 
-%DISCUSSION
-
-
+model limitations with respect to overdispersed data. The form of $f$ was 
+chosen empirically based upon experimentation among the poisson, binomial, 
+negative binomial, and beta-binomial distributions. Other modeling options 
+were considered for the form of $f$, but the list above was determined to be 
+the most compuationally feasible at this time and among these data. See 
+appendix \ref{likelihoodAppendix} for experimentation detail. 
 
 \begin{itemize}
 \item Likelihood
@@ -426,6 +317,25 @@ models are very difficult to fit in this setting.
 %
 
 %
+%
+\subsection{Likelihood}
+%
+%
+
+%DISCUSSION
+Admittedly the structure of these data as rounded pounds do not immediately cry 
+out for the above counting distributions. Rather one might consider modeling 
+these data as censored observations of a normal response, or possibly one might 
+be interested in modeling the multivariate structure as a multinomial 
+(\shortciteA{shelton_estimating_2012} shows that this is implied under the 
+poisson response) or dirichilet-multinomial response. I grant that indeed such 
+models would be lovely to explore, however from the pragmatic perspective these 
+models are very difficult to fit in this setting. 
+%DISCUSSION
+
+
+
+%
 \begin{itemize}
 \item motivated by calcom, not comparison
 \item Poisson (Ole) v. Beta-binomial (overdispersed model)
@@ -449,6 +359,112 @@ models are very difficult to fit in this setting.
 \section{Figures}
 %
 %
+
+%
+%
+\section{Appendix}\label{appendix}
+%
+%
+
+%
+\subsection{Appendix A: Likelihood Experiments}\label{likelihoodAppendix}
+%
+Among the simplest models for count data are the Poisson and binomial models. 
+Both models are derived %Neither of these models provide enough fredom amoung their parameters spaces to allow  
+under limiting cases for $\phi$, and thus under these models $\phi$ is not an 
+infered parameter. As a result the Poisson and binomial models rely heavily on 
+their respective data generating processes to accurately represent higher 
+moments in the data. Furthermore, these models are only capable of capturing a 
+relatively rigid scope of response behavior.
+
+%
+In contrast, the negative binomial and beta-binomial models use the data to 
+estimate the $\phi$ parameter. In these models the the $\phi$ parameter is used 
+to disentangle the mean and residual variance estimates. Thus the negative 
+binomial and beta-binomial models may produce more accurate estimates of the 
+residual variance, while producing more accurate measures of center. 
+
+%
+\subsubsection{Poisson Model}
+
+%
+\begin{equation}
+Y_{ijklm\nu} \substack{i.i.d.\\\sim} Poisson(\theta_{jklm\nu})
+\end{equation}
+
+%how does $n_ijklm\nu$ enter the equation
+\begin{equation}
+\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
+\end{equation}
+
+\begin{equation}
+\sigma^2_{ijklm\nu} = \mu_{ijklm\nu}.
+\end{equation}
+
+
+%
+\subsubsection{Binomial Model}
+
+%
+\begin{equation}
+Y_{ijklm\nu} \substack{i.i.d.\\\sim} Binomial(\theta_{jklm\nu})
+\end{equation}
+
+%%how does $n_ijklm\nu$ enter the equation
+\begin{equation}
+\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+\end{equation}
+
+%
+\begin{equation}
+\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big).
+\end{equation}
+
+%
+\subsubsection{Negative Binomial Model}
+
+%
+\begin{equation}
+Y_{ijklm\nu} \substack{i.i.d.\\\sim} NB(\theta_{jklm\nu}, \phi)
+\end{equation}
+
+%
+\begin{equation}
+\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
+\end{equation}
+
+%
+\begin{equation}
+\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1+\frac{\mu_{jklm\nu}}{\phi}\Big).
+\end{equation}
+
+%
+\subsubsection{Beta-Binomial Model}
+
+%
+\begin{equation}
+Y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(Y_{ijklm\nu}|\theta_{jklm\nu}, \phi)
+\end{equation}
+
+%
+\begin{equation}
+\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+\end{equation}
+
+%
+\begin{equation}
+\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).
+\end{equation}
+
+
+%REWORD
+We develop an example on a subset of data to evaluate statistical support for 
+overdispersed models, see Appendix (6.1), which we have subsequently used for the purposes of applying at an operational scale 
+%REWORD
+
+
+
+
 
 %
 \begin{figure}[h!]
