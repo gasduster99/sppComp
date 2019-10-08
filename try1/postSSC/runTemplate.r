@@ -58,7 +58,7 @@ sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPr
 #
 nominal = 0.68
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
-plotPerfMod(pp, col=c('black'), pch=c(19), level=nominali, save=T)
+plotPerfMod(pp, col=c('black'), pch=c(19), level=nominal, save=T)
 write.csv(pp, file='disaggregated68.csv', row.names=F)
 plotPerfMod(aggPerf(pp, c('year', 'gear', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
 write.csv(aggPerf(pp, c('year', 'gear', 'species')), file='gearYearSpp68.csv', row.names=F)
@@ -68,7 +68,7 @@ write.csv(aggPerf(pp, c('year', 'species')), file='yearGear68.csv', row.names=F)
 #
 nominal = 0.95
 pp = predPerf(D, portGold, gearGold, yearGold, qtrGold, nominal, samplePath)
-plotPerfMod(pp, col=c('black'), pch=c(19), level=nominali, save=T)
+plotPerfMod(pp, col=c('black'), pch=c(19), level=nominal, save=T)
 write.csv(pp, file='disaggregated95.csv', row.names=F)
 plotPerfMod(aggPerf(pp, c('year', 'gear', 'species')), col=c('black'), pch=c(19), level=nominal, save=T)
 write.csv(aggPerf(pp, c('year', 'gear', 'species')), file='gearYearSpp95.csv', row.names=F)
