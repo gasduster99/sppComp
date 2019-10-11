@@ -224,7 +224,7 @@ for most species.
 %
 For a particular market category, the random variable \(Y_{ijklm\nu}\) is the 
 \(i^{th}\) observation of the \(j^{th}\) species' rounded weight (in pounds), 
-in the \(k^{th}\) port, caught with the \(l^{th}\) gear, in the \(\nu^{th}\) 
+in the \(k^{th}\) port, caught with the \(l^{th}\) gear-group, in the \(\nu^{th}\) 
 quarter, of year \(m\). The \(Y_{ijklm\nu}\) are modeled as $i.i.d.$ 
 observations from some distribution, $f$, over the whole numbers
 
@@ -264,46 +264,66 @@ conientient, and accurate, approximate reproduction of the observed data.
 %
 Inserting the details for the beta-binomial model into equation 
 (\ref{generalLike}). Now for the \(i^{th}\) sample of the \(j^{th}\) species' 
-weight, in the \(k^{th}\) port, caught with the \(l^{th}\) gear, in the 
+weight, in the \(k^{th}\) port, caught with the \(l^{th}\) gear-group, in the 
 \(\nu^{th}\) quarter, of year \(m\) we get,
 
-\[y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(\mu_{ijklm\nu},~\sigma^2_{ijklm\nu}).\]
+\begin{equation}
+y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(\mu_{ijklm\nu},~\sigma^2_{ijklm\nu}).
+\end{equation}
 
 Above, \(\mu_{ijklm\nu}\) is the stratum level mean weight, and 
 \(\sigma^2_{ijklm\nu}\) is the stratum level residual variance.
 \(\mu_{ijklm\nu}\) is related to a linear predictor,
 \(\theta_{jklm\nu}\), via the mean function,
 
-\[\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.\]
+\begin{equation}
+\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+\end{equation}
 %=n~\text{expit}(\theta_{jklm\eta})=n~\text{logit}^{-1}(\theta_{jklm\eta}).\]
 
 Here \(n_{ijklm\nu}\) is the observed aggregate cluster size for each
 sample. Additionally, \(\sigma^2_{ijklm\nu}\) is related to \(\mu_{ijklm\nu}\) 
 and the overdispersion parameter, \(\phi\), via the following equation,
 
-\[\sigma^2_{ijklm\nu} = \mu_{ijklm\nu}\Big(1-\frac{\mu_{ijklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).\]
+\begin{equation}
+\sigma^2_{ijklm\nu} = \mu_{ijklm\nu}\Big(1-\frac{\mu_{ijklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).
+\end{equation}
 
-\(\phi\) is the within-cluster correlation. The situation where
-\(\phi\rightarrow1\) represents identical information content among
-replicates within a cluster, with maximal overdispersion relative to the
-binomial distribution. The situation where \(\phi\rightarrow0\)
-represents totally independent information content among replicates
-within a cluster, and the beta-binomial model approaches the binomial
-model. \(\phi\) explicitly models average overdispersion across all
-strata within a market category, while \(\mu_{ijklm\nu}\) gives the
-model flexibility at the stratum level through the \(\theta\) linear
-predictors,
+In the context of the beta-binomial distribution, \(\phi\) is the 
+within-cluster correlation. The situation where \(\phi\rightarrow1\) 
+represents identical information content among replicates within a cluster, 
+with maximal overdispersion relative to the binomial distribution. The 
+situation where \(\phi\rightarrow0\) represents totally independent information 
+content among replicates within a cluster, and the beta-binomial model 
+approaches the binomial model. \(\phi\) explicitly models average 
+overdispersion across all strata within a market category, while 
+\(\mu_{ijklm\nu}\) gives the model flexibility at the stratum level through the 
+linear predictor \(\theta_{jklm\nu}\). 
 
-\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\nu}.\]
+%
+The structure of \(\theta_{jklm\nu}\) will be developed in section (\ref{lp}), 
+but at this point it is worth pointing out that the notation itself imples that
+\(\theta_{jklm\nu}\) is a linear function of species, port, gear-group, year 
+and quarter. For the purpose of achieving an efficient, and theoretcally 
+founded, method of partial pooling amoung these strata, \(\theta_{jklm\nu}\) 
+will naturally be composed of some combination of an intercept $\beta_0$, 
+fixed effects $\beta^{(\text{fixed})}$, and random effects 
+$\beta^{(\text{random})}$. In the bayesian parlence, fixed effects amount to 
+parameters with priors that have fixed hyperparameter values, while random 
+effects amount to parameters with priors that have random hyperparameter 
+values that themselves are inferred from the data. Further discussion of prior 
+structure is developed in section (\ref{priors}).
 
-Firstly, \(\theta\) includes a reference level intercept (\(\beta_0\)).
-Secondly, \(\theta\) is factored among the many strata by additive
-offsets from \(\beta_0\) for each of the species (\(\beta^{(s)}_j\)),
-port-complexes (\(\beta^{(p)}_k\)), and gear-groups (\(\beta^{(g)}_l\)).
-Finally year and quarter parameters are indicated generally here inside
-the \(\beta^{(t)}_{m\nu}\) term. Several forms for \(\beta^{(t)}_{m\nu}\) 
-are explored each implying a different prior and partial pooling strategies 
-as described in the following section. %(\ref{riors}).
+%\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\nu}.\]
+%
+%Firstly, \(\theta\) includes a reference level intercept (\(\beta_0\)).
+%Secondly, \(\theta\) is factored among the many strata by additive
+%offsets from \(\beta_0\) for each of the species (\(\beta^{(s)}_j\)),
+%port-complexes (\(\beta^{(p)}_k\)), and gear-groups (\(\beta^{(g)}_l\)).
+%Finally year and quarter parameters are indicated generally here inside
+%the \(\beta^{(t)}_{m\nu}\) term. Several forms for \(\beta^{(t)}_{m\nu}\) 
+%are explored each implying a different prior and partial pooling strategies 
+%as described in the following section. %(\ref{riors}).
 
 %
 %
@@ -314,13 +334,23 @@ as described in the following section. %(\ref{riors}).
 %%
 %To complete the Bayesian formulation of this model, priors are expressed
 %in a largely diffuse manner.
+To complete the Bayesian formulation of the model, priors are expressed so as 
+to convey any information that the model has external to the data. In this 
+case, priors are expressed in a largely diffuse manner to represent the 
+relative lack of information external to the data.
+
+\begin{equation}
+\beta_0 \propto 1
+\end{equation}
+
+Since the \(\beta_0\) reference level is chosen arbitrarily, with no
+conception of which values it may take, no restrictions are placed on
+the value of the intercept. For any fixed effects included in the linear 
+%predictor a diffuse normal prior is placed on 
 %
-%\[\beta_0 \propto 1\]
 %\[\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)\]
 %
-%Since the \(\beta_0\) reference level is chosen arbitrarily, with no
-%conception of which values it may take, no restrictions are placed on
-%the value of the intercept. The species (\(\beta^{(s)}_j\)),
+%The species (\(\beta^{(s)}_j\)),
 %port-complex (\(\beta^{(p)}_k\)), and gear-group (\(\beta^{(g)}_l\))
 %offsets are assigned diffuse normal priors. The large fixed values of
 %the prior variance hyperparameters produce behavior similar to classical
@@ -344,7 +374,7 @@ as described in the following section. %(\ref{riors}).
 
 %
 %
-\subsection{Linear Predictor}
+\subsection{Linear Predictor}\label{lp}
 %
 %
 
