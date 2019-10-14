@@ -26,6 +26,65 @@ CALCOM.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Gelman%
+\ \protect \BOthers {.}}{%
+Gelman%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2013}}%
+}]{%
+gelman_bayesian_2013}
+\APACinsertmetastar {%
+gelman_bayesian_2013}%
+\begin{APACrefauthors}%
+Gelman, A.%
+, Carlin, J\BPBI B.%
+, Stern, H\BPBI S.%
+, Dunson, D\BPBI B.%
+, Vehtari, A.%
+\BCBL {}\ \BBA {} Rubin, D\BPBI B.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2013}.
+\newblock
+\APACrefbtitle {Bayesian {Data} {Analysis}} {Bayesian {Data} {Analysis}}.
+\newblock
+\APACaddressPublisher{}{Chapman and Hall/CRC}.
+\newblock
+\begin{APACrefURL}
+  [{2019-01-24}]\url{https://www.taylorfrancis.com/books/9781439898208}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1201/b16018} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Nelder%
+\ \BBA {} McCullagh%
+}{%
+Nelder%
+\ \BBA {} McCullagh%
+}{%
+{\protect \APACyear {1989}}%
+}]{%
+nelder_generalized_1989}
+\APACinsertmetastar {%
+nelder_generalized_1989}%
+\begin{APACrefauthors}%
+Nelder, J.%
+\BCBT {}\ \BBA {} McCullagh, P.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{1989}.
+\newblock
+\APACrefbtitle {Generalized {Linear} {Models}} {Generalized {Linear} {Models}}\
+  (\PrintOrdinal{2}\ \BEd).
+\newblock
+\APACaddressPublisher{London}{Chapman and Hall/CRC}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Sen%
 }{%
 Sen%

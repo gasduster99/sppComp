@@ -301,8 +301,8 @@ overdispersion across all strata within a market category, while
 linear predictor \(\theta_{jklm\nu}\). 
 
 %
-The structure of \(\theta_{jklm\nu}\) will be developed in section (\ref{lp}), 
-but at this point it is worth pointing out that the notation itself imples that
+The structure of \(\theta_{jklm\nu}\) will be developed in section \ref{lp}, 
+but at this point it is worth pointing out that the index notation imples that
 \(\theta_{jklm\nu}\) is a linear function of species, port, gear-group, year 
 and quarter. For the purpose of achieving an efficient, and theoretcally 
 founded, method of partial pooling amoung these strata, \(\theta_{jklm\nu}\) 
@@ -310,9 +310,13 @@ will naturally be composed of some combination of an intercept $\beta_0$,
 fixed effects $\beta^{(\text{fixed})}$, and random effects 
 $\beta^{(\text{random})}$. In the bayesian parlence, fixed effects amount to 
 parameters with priors that have fixed hyperparameter values, while random 
-effects amount to parameters with priors that have random hyperparameter 
-values that themselves are inferred from the data. Further discussion of prior 
-structure is developed in section (\ref{priors}).
+effects amount to parameters with priors that have random hyperparameters that 
+themselves are inferred from the data. Admittedly the nomenclature adopted here 
+is philosophically unpure, but I abuse the fixed/random effect terminology for 
+the pragmatic purpose of bridging philosophical divides amoung statisticians 
+and more directly communicating our inferencial goals at hand. For further 
+discussion see \cite{gelman_bayesian_2013, nelder_generalized_1989}. Further discussion 
+of prior structure is developed in section \ref{priors}.
 
 %\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\nu}.\]
 %
@@ -345,20 +349,108 @@ relative lack of information external to the data.
 
 Since the \(\beta_0\) reference level is chosen arbitrarily, with no
 conception of which values it may take, no restrictions are placed on
-the value of the intercept. For any fixed effects included in the linear 
-%predictor a diffuse normal prior is placed on 
-%
-%\[\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)\]
-%
-%The species (\(\beta^{(s)}_j\)),
-%port-complex (\(\beta^{(p)}_k\)), and gear-group (\(\beta^{(g)}_l\))
-%offsets are assigned diffuse normal priors. The large fixed values of
-%the prior variance hyperparameters produce behavior similar to classical
-%fixed effect models for species, port complex, and gear group
-%parameters.
+the value of the intercept. Fixed effects have a natural interpretation as 
+offsets from the reference level. Each of these offsets are assigned diffuse 
+normal priors,
 
 %
+\begin{equation}
+\beta^{(\text{fixed})} \sim N(0, 32^2).
+\end{equation}
 
+%
+In the null case it is resonable to assume that these offsets may be zero due 
+to a lack of difference from the reference level. However in the Bayesian 
+setting, parameters are random variables, and do not take any one particular 
+value, hence the distributional assumption of normality. Furthermore there is 
+no strong information external to the data in our model to promote the value 0 
+much more strongly than any other value for any fixed effect, thus the large 
+$32^2$ variance. It is this large fixed value of the prior variance 
+hyperparameter which produces behavior similar to classical fixed effect 
+model, and yet even this prior produces an extremly slight amount of posterior 
+shrinkage toward 0, so as to edge on the side of parsimony.
+
+%
+When considering random effect priors it is useful to consider how 
+overparameterized models may cause overfittingand weaken model performance 
+through the bias-variance dilemma (Ramasubramanian and Singh, 2016). Simply 
+put, the bias-variance dilemma means that model formulation is not simply a 
+bias reduction task, but rather the goal is to formulate models which reduce 
+bias, while jointly minimizing uncertainty. Janyes (2003, pg. 511) describes 
+how the inclusion of estimation bias via the Bayesian methodology may produce 
+better performing estimates, more quickly, than unbiased counterparts. Among 
+the simplest ways to see the principle is in thei structure of the MSE 
+performance metric, and how it can be explicitly written to value both 
+estimator bias and variance, as follows.
+
+%
+\begin{equation}
+\text{MSE}(\hat\theta) = \mathbb{E}\left[~(\hat\theta - \theta)^2~\right] = \overbrace{\mathbb{E}\Big[~\left(\hat\theta-\mathbb{E}(\hat\theta)\right)^2~\Big]}^{\text{Var}(\hat \theta)} + \overbrace{\Big(~\mathbb{E}(\hat\theta)-\theta~\Big)^2}^{\text{Bias}(\hat \theta, \theta)^2}
+\end{equation}
+
+%
+Furthermore a model can minimize bias, without regard for estimation 
+uncertainty, by including one model parameter to be fit to each observation. 
+These parameter estimates are totally unbiased, however such a model is also 
+predictively useless since each estimated parameter is specifically bound to 
+a particular observation, and thus such a model does not generalize. 
+
+%
+Random effects are typically groupings of usually many parameters that can be 
+pooled in someway. Often times interaction terms appear as random effects due 
+to the combinatoric explosion of the number parameters implied by the 
+interaction of different categories. In section \ref{lp} a number of random 
+effects models are considered. When framed in the bayesian context each 
+included random effect recieves the following heirarchical prior structure.
+
+%
+\begin{align}
+\beta^{(\text{random})} \sim N(0, v)\\
+v \sim IG(1,~2\times10^{3})
+\end{align}
+
+%
+Similarly to the fixed effects $\beta^{(\text{random})}$ is distributed as a 
+normal distribution with its mean at zero. However in contrast to fixed 
+effects with their large fixed variance priors, random effects (in the 
+Bayesian context) introduce a heirarchical layer to the prior structure around 
+the prior variance for $\beta^{(\text{random})}$. The parameter $v$ is 
+introduced as a parameter, to be estimated from the data, to determine the 
+extent of shrinkage the $\beta^{(\text{random})}$ should experience toward 
+zero. As the above model learns the posteriors of the hierarchical 
+variance parameter, it affects the degree of shrinkage as well as the effective
+number of parameters held within the respective hierarchies (Gelman,
+2014). To achieve this, each variance parameter must itself be assigned
+a prior to be estimated. For all of the hierarchical variance parameters
+included in the above models \(v\) is assigned a diffuse inverse gamma
+(IG) prior.
+
+
+%
+%Finally the overdispersion parameter, \(\rho\), is assigned a diffuse
+%normal prior on the logit scale, \(\text{logit}(\rho) \sim N(0, 2^2)\).
+%The \(N(0, 2^2)\) prior is indeed a symmetric, and far reaching, prior
+%when back transformed to the unit interval. To notice this, it is
+%helpful to realize that the central 95\% interval for a \(N(0, 2^2)\)
+%(i.e. \(0\pm3.91\)), includes almost the entirety of the back
+%transformed unit interval (i.e. \(0.5\pm0.48\)).
+%
+%For the purpose of motivating the time parameter structure to be used across 
+%all market categories and time periods, each of models M1-M6 are fit to data 
+%from market category 250 from 1978-1982. % in order to motivate the time parameter structure to be used across all market categories and time periods. 
+%Performing such a model selection exercise across all market categories, in 
+%each time period, would not only be impractical but would also risk overfitting 
+%models, particually in poorly sampled categories. In the early time periods, 
+%market category 250 is the most heavily sampled multi-species market category, 
+%and thus it represents an excellent data-set for testing.
+%
+
+
+
+%
+%For modeling \(\beta^{(t)}_{m\eta}\) we consider a spectrum of models
+%which span a wide range of partially pooled models with several
+%different predictive structures as seen below.
 
 \begin{itemize}
 \item Prior (discussion of sensativity analysis)
