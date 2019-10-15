@@ -17,6 +17,7 @@
 \usepackage{tikz}
 \usepackage{titlesec}
 \usepackage[]{apacite}
+\usepackage{eqnarray}
 %\usepackage[style=authoryear]{biblatex}
 %\usepackage[percent]{overpic}
 %\usepackage{wrapfig}
@@ -308,15 +309,19 @@ and quarter. For the purpose of achieving an efficient, and theoretcally
 founded, method of partial pooling amoung these strata, \(\theta_{jklm\nu}\) 
 will naturally be composed of some combination of an intercept $\beta_0$, 
 fixed effects $\beta^{(\text{fixed})}$, and random effects 
-$\beta^{(\text{random})}$. In the bayesian parlence, fixed effects amount to 
+$\beta^{(\text{random})}$. In the Bayesian parlence, fixed effects amount to 
 parameters with priors that have fixed hyperparameter values, while random 
 effects amount to parameters with priors that have random hyperparameters that 
 themselves are inferred from the data. Admittedly the nomenclature adopted here 
 is philosophically unpure, but I abuse the fixed/random effect terminology for 
-the pragmatic purpose of bridging philosophical divides amoung statisticians 
-and more directly communicating our inferencial goals at hand. For further 
-discussion see \cite{gelman_bayesian_2013, nelder_generalized_1989}. Further discussion 
-of prior structure is developed in section \ref{priors}.
+the pragmatic purpose of bridging statistical philosophies in an attempt to 
+more directly communicate the inferencial goals at hand. Of course in the 
+Bayesian paradigm all parameters are random, but still the fixed/random effect 
+terminology is a useful way to consider the different behavior of the 
+parameters included here. For further discussion of fixed and random effects 
+models see \cite{nelder_generalized_1989} and for a discussion of the Bayesian 
+framing via heirarchical models see \cite{gelman_bayesian_2013}. Further 
+discussion of prior structure is developed in section \ref{priors}.
 
 %\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\nu}.\]
 %
@@ -335,51 +340,58 @@ of prior structure is developed in section \ref{priors}.
 %
 %
 
-%%
-%To complete the Bayesian formulation of this model, priors are expressed
-%in a largely diffuse manner.
-To complete the Bayesian formulation of the model, priors are expressed so as 
-to convey any information that the model has external to the data. In this 
-case, priors are expressed in a largely diffuse manner to represent the 
-relative lack of information external to the data.
+%
+The parameters present in the beta-binomial model are the linear predictor 
+\(\theta_{jklm\nu}\) and the overdispersion parameter $\phi$. The linear 
+predictor is itself parameterizes with a reference level intercept $\beta_0$, 
+some number of fixed effects $\beta^\text{(fixed)}$, and some number of random 
+effects $\beta^{(\text{random})}$. To complete the Bayesian formulation of the 
+model, priors are expressed, over these parameters, so as to convey any 
+information that the model has external to the data. In this case, priors are 
+expressed in a largely diffuse manner to represent the relative lack of 
+information external to the data.  
 
+%
+Explaination of priors for this model begins with the prior on the intercept, 
+%
 \begin{equation}
-\beta_0 \propto 1
+\beta_0 \propto 1.
 \end{equation}
-
+%
 Since the \(\beta_0\) reference level is chosen arbitrarily, with no
 conception of which values it may take, no restrictions are placed on
-the value of the intercept. Fixed effects have a natural interpretation as 
-offsets from the reference level. Each of these offsets are assigned diffuse 
-normal priors,
+the value of the intercept.
 
+%
+In this model fixed effects have a natural interpretation as offsets from the 
+reference level. Each of these offsets are assigned a diffuse normal prior,
 %
 \begin{equation}
 \beta^{(\text{fixed})} \sim N(0, 32^2).
 \end{equation}
-
 %
 In the null case it is resonable to assume that these offsets may be zero due 
-to a lack of difference from the reference level. However in the Bayesian 
-setting, parameters are random variables, and do not take any one particular 
+to a lack of difference from the reference level. However, in the Bayesian 
+setting parameters are random variables, and do not take any one particular 
 value, hence the distributional assumption of normality. Furthermore there is 
 no strong information external to the data in our model to promote the value 0 
-much more strongly than any other value for any fixed effect, thus the large 
-$32^2$ variance. It is this large fixed value of the prior variance 
-hyperparameter which produces behavior similar to classical fixed effect 
-model, and yet even this prior produces an extremly slight amount of posterior 
-shrinkage toward 0, so as to edge on the side of parsimony.
+much more strongly than any other value. The large variance hyperparameter, 
+$32^2$, produces a normal distribution that spreads far across the parameter 
+space of fixed effects in this model. It is this large fixed value of the 
+variance hyperparameter which produces behavior similar to classical fixed 
+effect model, and yet even this prior produces an extremly slight amount of 
+posterior shrinkage toward 0, so as to edge on the side of parsimony.
 
 %
 When considering random effect priors it is useful to consider how 
-overparameterized models may cause overfittingand weaken model performance 
+overparameterized models may cause overfitting and weaken model performance 
 through the bias-variance dilemma (Ramasubramanian and Singh, 2016). Simply 
 put, the bias-variance dilemma means that model formulation is not simply a 
 bias reduction task, but rather the goal is to formulate models which reduce 
 bias, while jointly minimizing uncertainty. Janyes (2003, pg. 511) describes 
 how the inclusion of estimation bias via the Bayesian methodology may produce 
 better performing estimates, more quickly, than unbiased counterparts. Among 
-the simplest ways to see the principle is in thei structure of the MSE 
+the simplest ways to see the principle is in the structure of the MSE 
 performance metric, and how it can be explicitly written to value both 
 estimator bias and variance, as follows.
 
@@ -396,11 +408,11 @@ predictively useless since each estimated parameter is specifically bound to
 a particular observation, and thus such a model does not generalize. 
 
 %
-Random effects are typically groupings of usually many parameters that can be 
+Random effects are typically groupings of many parameters that can be 
 pooled in someway. Often times interaction terms appear as random effects due 
 to the combinatoric explosion of the number parameters implied by the 
 interaction of different categories. In section \ref{lp} a number of random 
-effects models are considered. When framed in the bayesian context each 
+effects models are considered. When framed in the Bayesian context each 
 included random effect recieves the following heirarchical prior structure.
 
 %
@@ -410,31 +422,40 @@ v \sim IG(1,~2\times10^{3})
 \end{align}
 
 %
-Similarly to the fixed effects $\beta^{(\text{random})}$ is distributed as a 
-normal distribution with its mean at zero. However in contrast to fixed 
-effects with their large fixed variance priors, random effects (in the 
-Bayesian context) introduce a heirarchical layer to the prior structure around 
-the prior variance for $\beta^{(\text{random})}$. The parameter $v$ is 
-introduced as a parameter, to be estimated from the data, to determine the 
-extent of shrinkage the $\beta^{(\text{random})}$ should experience toward 
-zero. As the above model learns the posteriors of the hierarchical 
-variance parameter, it affects the degree of shrinkage as well as the effective
-number of parameters held within the respective hierarchies (Gelman,
-2014). To achieve this, each variance parameter must itself be assigned
-a prior to be estimated. For all of the hierarchical variance parameters
-included in the above models \(v\) is assigned a diffuse inverse gamma
-(IG) prior.
-
+Similarly to fixed effects, $\beta^{(\text{random})}$ is distributed as a 
+normal distribution with zero mean. However in contrast to the large 
+fixed variance of fixed effect priors, random effects (in the Bayesian 
+context) introduce a heirarchical layer to the prior structure around the prior 
+variance for $\beta^{(\text{random})}$. The parameter $v$ is 
+introduced to model the prior variance for $\beta^{(\text{random})}$. In the 
+posterior, the data is used to determine the extent of shrinkage the 
+$\beta^{(\text{random})}$ should experience toward zero by inferring 
+relatively larger or smaller values for $v$. As the above model learns the 
+posterior of the hierarchical variance parameter, $v$, it affects 
+the degree of shrinkage, as well as the effective number of parameters held 
+within the respective hierarchies (Gelman, 2014). To achieve this, each 
+variance parameter must itself be assigned a prior to be estimated. Any 
+hierarchical variance parameters, $v$, included in the model is 
+assigned a {\color{red} diffuse inverse gamma (IG) prior. See appendix 
+\ref{priorAppendix} for further discussion about selecting appropriate priors.}
 
 %
-%Finally the overdispersion parameter, \(\rho\), is assigned a diffuse
-%normal prior on the logit scale, \(\text{logit}(\rho) \sim N(0, 2^2)\).
-%The \(N(0, 2^2)\) prior is indeed a symmetric, and far reaching, prior
-%when back transformed to the unit interval. To notice this, it is
-%helpful to realize that the central 95\% interval for a \(N(0, 2^2)\)
-%(i.e. \(0\pm3.91\)), includes almost the entirety of the back
-%transformed unit interval (i.e. \(0.5\pm0.48\)).
+Above the $\beta^{(\text{fixed})}$ and $\beta^{(\text{random})}$ are place 
+holders for a particular fixed or random effect to be included in the model. 
+Each effect to be included in the model is either included as a fixed or 
+random effect. The particular effects to be included in the linear predictor 
+are discussed later in section \ref{lp}.
+
 %
+Finally the overdispersion parameter, \(\phi\), is assigned a diffuse
+normal prior on the logit scale, \(\text{logit}(\phi) \sim N(0, 2^2)\).
+The \(N(0, 2^2)\) prior is indeed a symmetric, and far reaching, prior
+when back transformed to the unit interval. To notice this, it is
+helpful to realize that the central 95\% interval for a \(N(0, 2^2)\)
+(i.e. \(0\pm3.91\)), includes almost the entirety of the back
+transformed unit interval (i.e. \(0.5\pm0.48\)).
+
+%%
 %For the purpose of motivating the time parameter structure to be used across 
 %all market categories and time periods, each of models M1-M6 are fit to data 
 %from market category 250 from 1978-1982. % in order to motivate the time parameter structure to be used across all market categories and time periods. 
@@ -443,9 +464,6 @@ included in the above models \(v\) is assigned a diffuse inverse gamma
 %models, particually in poorly sampled categories. In the early time periods, 
 %market category 250 is the most heavily sampled multi-species market category, 
 %and thus it represents an excellent data-set for testing.
-%
-
-
 
 %
 %For modeling \(\beta^{(t)}_{m\eta}\) we consider a spectrum of models
@@ -455,19 +473,148 @@ included in the above models \(v\) is assigned a diffuse inverse gamma
 \begin{itemize}
 \item Prior (discussion of sensativity analysis)
 	\begin{itemize}
-	\item basic description
-	\item variance parameters
-	\item describe sensativeity analysis
+	\item hook to appendix to describe sensativeity analysis (prior predictive, other plots)
+	\item transition to linear predictor
 	\end{itemize}
 \end{itemize}
-
-%
-
 
 %
 %
 \subsection{Linear Predictor}\label{lp}
 %
+%
+
+%
+%while \(\mu_{jklm\eta}\) gives the
+%model flexibility at the stratum level through the \(\theta\) linear
+%predictors,
+%
+%\[\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \
+%
+%Firstly, \(\theta\) includes a reference level intercept (\(\beta_0\)).
+%Secondly, \(\theta\) is factored among the many strata by additive
+%offsets from \(\beta_0\) for each of the species (\(\beta^{(s)}_j\)),
+%port-complexes (\(\beta^{(p)}_k\)), and gear-groups (\(\beta^{(g)}_l\)).
+%Finally year and quarter parameters are indicated generally here inside
+%the \(\beta^{(t)}_{m\eta}\) term. Several forms for
+%\(\beta^{(t)}_{m\eta}\) are explored each implying a different prior and
+%partial pooling strategies as described in the following
+%section. %(\ref{riors}).
+
+
+%For modeling \(\beta^{(t)}_{m\eta}\) we consider a spectrum of models
+%which span a wide range of partially pooled models with several
+%different predictive structures as seen below.
+%
+%\subsubsection{(M1)}\label{m1}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}\]
+%\[\beta^{(y)}_{m} \sim N(0, 32^2)\]
+%\[\beta^{(q)}_{\eta} \sim N(0, 32^2)\]
+%
+%(M1) represents a fixed effects model for additive year and quarter
+%parameters. Here each year and quarter are assigned totally independent
+%and diffuse priors.
+%
+%\subsubsection{(M2)}\label{m2}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}\]
+%\[\beta^{(y)}_{m} \sim N(0, v^{(y)})\]
+%\[\beta^{(q)}_{\eta} \sim N(0, v^{(q)})\]
+%
+%(M2) estimates two hierarchical variance parameters, \(v^{(y)}\) and
+%\(v^{(q)}\). \(v^{(y)}\) has the effect of partially pooling information
+%among year parameters, while \(v^{(q)}\) partially pools information
+%among quarter parameters (i.e. treats both year and quarter as ``random
+%effects''). The actual degree of pooling among each of the years and
+%quarters is determined by the data.\\
+%Depending on the posterior distributions of \(v^{(y)}\) and \(v^{(q)}\),
+%the \(\beta^{(y)}\) and \(\beta^{(q)}\) may be shrunk back toward the
+%common mean (for small \(v\)) or allowed to take largely distinct values
+%(in the case of large estimates of the \(v\)).
+%
+%\subsubsection{(M3)}\label{m3}
+%
+%\begin{eqnarray*}
+%&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\et
+%&\beta^{(y)}_{m} \sim N(0, v^{(y)}) & \\
+%&\beta^{(q)}_{\eta} \sim N(0, v^{(q)}) & \\
+%&\beta^{(y:q)}_{m\eta} \sim N(0, v) &
+%\end{eqnarray*}
+%
+%(M3) functions similarly as (M2), in that it has hierarchical partial
+%pooling among both the \(\beta^{(y)}_{m}\) and \(\beta^{(q)}_{\eta}\)
+%parameters, except that it introduces a two-way interaction term between
+%year and quarter. This interaction term allows estimates for particular
+%quarters to differ from year to year, as opposed to the previous models
+%in which quarters within a year are assumed to be identical from year to
+%year.
+%
+%Furthermore the \(\beta^{(y:q)}_{m\eta}\) are also modeled
+%hierarchically to introduce a single variance parameter, \(v\), shared
+%among all of the \(m\eta\) time chunks. Although this interaction term
+%adds many parameters to the model, the shared \(v\) parameter functions
+%to shrink extraneous \(\beta^{(y:q)}_{m\eta}\) estimates back toward the
+%common stratum mean.
+%
+%\subsubsection{(M4)}\label{m4}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
+%\[\beta^{(y:q)}_{m\eta} \sim N(0, v)\]
+%
+%(M4) simplifies (M3) by excluding year and quarter main effects. This
+%leaves all temporal information in the data to be modeled solely by the
+%quarterly \(\beta^{(y:q)}_{m\eta}\) interaction terms. This model
+%represents more opportunity for partial pooling through time than (M3),
+%as fewer time parameters are introduced. Furthermore all of the
+%\(\beta^{(y:q)}_{m\eta}\) are hierarchically pooled back toward a single
+%common stratum mean via the single shared variance parameter, \(v\). 
+%
+%A model treating the interaction terms as fixed effects (e.g. model (M4) where 
+%$v$ is a large fixed value) was not considered. The \(\beta^{(y:q)}_{m\eta}\) 
+%interaction terms introduce a very large number of parameters, which require 
+%regularization in this setting. Furthermore, pooling \(\beta^{(y:q)}_{m\eta}\) 
+%through time introduces a formalized way to make predictions about unsampled 
+%strata.
+%
+%% with fixed \(\beta^{(y:q)}_{m\eta}\) interaction terms are
+%%considered here, as these models introduce a very large number of
+%%parameters. Due to the sparsity of these data, the models ability to
+%%pool through time is important for allowing model flexibility in time,
+%%while retaining the ability to produce predictions for unsampled time
+%%periods.
+%
+%\subsubsection{(M5)}\label{m5}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
+%\[\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)\]
+%
+%(M5) is largely the same as (M4), but it represents slightly less
+%potential partial pooling through its hierarchical prior variances,
+%\(v_\eta\), on \(\beta^{(y:q)}_{m\eta}\). Here interaction terms are
+%allowed to partially pool interactions across years, within a common
+%quarter, but since each quarter is assigned a separate variance
+%parameter no pooling is possible between quarters.
+%
+%\subsubsection{(M6)}\label{m6}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
+%\[\beta^{(y:q)}_{m\eta} \sim N(0, v_m)\]
+%
+%(M6) follows the same idea as (M5), however here interaction terms are
+%allowed to partially pool interactions within a common year, across the
+%quarters of that year, but not between years. (M6) often involves
+%fitting slightly more parameters than (M5) because, at least in this
+%setting, it is typical to model more than four years of data at once.
+%
+%For the purpose of motivating the time parameter structure to be used across 
+%all market categories and time periods, each of models M1-M6 are fit to data 
+%from market category 250 from 1978-1982. % in order to motivate the time paramete
+%Performing such a model selection exercise across all market categories, in 
+%each time period, would not only be impractical but would also risk overfitting 
+%models, particually in poorly sampled categories. In the early time periods, 
+%market category 250 is the most heavily sampled multi-species market category, 
+%and thus it represents an excellent data-set for testing.
 %
 
 
@@ -493,6 +640,77 @@ included in the above models \(v\) is assigned a diffuse inverse gamma
 
 %
 %
+\subsection{Species Composition Prediction}\label{prediction}
+%
+%
+
+%
+%Bayesian inference of the above models gives access to the full
+%posterior distribution of all of the parameters of the model given the
+%data. It is useful to emphasize that in the Bayesian setting, these
+%parameters have full distributions, and they are typically handled as a
+%large number of samples from the joint posterior distribution of the
+%parameters. Once the posterior sampling is complete, this simplifies
+%parameter mean and variance estimation; required moments are simply
+%obtained by computing the desired moments from the posterior samples.
+%Additionally, the fact that the parameters are full distributions means
+%that any functions of those parameters are themselves random variables
+%with the function representing a transformation of those parameters.
+%
+%To obtain predicted species compositions from the beta-binomial model, first 
+%consider the posterior predictive distribution of sampled weight for a 
+%particular stratum.
+%
+%\[p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}.\]
+%
+%Here BB is the data generating beta-binomial distribution for a
+%predictive observation and \(P(\mu_{jklm\eta}, \sigma^2_{jklm\eta}|y)\)
+%is the posterior distribution of the parameters given the observed data.
+%\(\mu_{jklm\eta}\) and \(\sigma^2_{jklm\eta}\) are integrated numerically via 
+%Monte Carlo integration to produce samples from the predictive distribution, 
+%\(p(y^*_{jklm\eta}|y)\), for sampled weights in the \(jklm\eta^{th}\) stratum.
+%
+%Obtaining predictive species compositions from predictive weights
+%amounts to computing the following transformation,
+%
+%\[\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.\]
+%
+%For a particular market category, \(\pi^*_{jklm\eta}\) is predicted
+%proportion of species \(j\) in the \(k^{th}\) port, caught with the
+%\(l^{th}\) gear, in the \(\eta^{th}\) quarter, of year \(m\).
+%
+%\subsection{Expansion of Landed Catch to Species}\label{expansion}
+%
+%For a particular market category, speciated landings simply amounts to
+%the multiplication of the known total landings (\(\lambda_{klm\eta}\)),
+%reported on landing receipts in the \(klm\eta^{th}\) stratum, with the
+%posterior predictive species composition, \(\pi^*_{jklm\eta}\), as follows
+%
+%\[\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}.\]
+%
+%\(\lambda^*_{jklm\eta}\) is then the posterior predictive landings for
+%species \(j\) in the \(klm\eta^{th}\) stratum of a particular market
+%category. Recall that since \(\pi^*_{jklm\eta}\) is a random variable,
+%then so is \(\lambda^*_{jklm\eta}\). Computing the variance of
+%\(\lambda^*_{jklm\eta}\) simply amounts to computing the variance of
+%random draws from the \(\lambda^*_{jklm\eta}\) distribution.
+%Furthermore, any level of aggregation of \(\lambda^*_{jklm\eta}\) is
+%easily obtained by summing \(\lambda^*_{jklm\eta}\) draws across the
+%desired indices. For example to obtain the distributions of yearly catch
+%of Bocaccio in a particular market category (i.e. aggregated across ports, 
+%gears, and quarters) one simply fixes $j$ to Bocaccio, and computes the 
+%following transformation of \(\lambda^*_{jklm\eta}\),
+%
+%\[\lambda^*_{j\cdot\cdot m\cdot} =\sum_{k}\sum_{l}\sum_{\eta}\lambda^*_{jklm\eta}\].
+%
+%Distribution summaries such as quantiles, means, or variances may be
+%computed by computing those metrics from the random draws of the
+%resulting \(\lambda^*_{j\cdot\cdot m\cdot}\) distributions.
+%
+
+
+%
+%
 \section{Results}\label{results}
 %
 %
@@ -512,13 +730,13 @@ included in the above models \(v\) is assigned a diffuse inverse gamma
 
 %
 %
-\section{Discussion}\label{}
+\section{Discussion}\label{discussion}
 %
 %
 
 %
 %
-\subsection{Likelihood}
+\subsection{Likelihood}\label{likeDiscussion}
 %
 %
 
@@ -636,16 +854,16 @@ residual variance, while producing more accurate measures of center.
 
 %
 \begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} Poisson(\theta_{jklm\nu})
+Y_{ij} \substack{i.i.d.\\\sim} Poisson(\theta_{j})
 \end{equation}
 
 %how does $n_ijklm\nu$ enter the equation
 \begin{equation}
-\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
+\mu_{ij} = {\color{red}n_{ij}} \exp(\theta_{j}).
 \end{equation}
 
 \begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{ijklm\nu}.
+\sigma^2_{ij} = \mu_{ij}.
 \end{equation}
 
 
@@ -654,17 +872,17 @@ Y_{ijklm\nu} \substack{i.i.d.\\\sim} Poisson(\theta_{jklm\nu})
 
 %
 \begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} Binomial(\theta_{jklm\nu})
+Y_{ij} \substack{i.i.d.\\\sim} Binomial(\theta_{j})
 \end{equation}
 
 %%how does $n_ijklm\nu$ enter the equation
 \begin{equation}
-\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+\mu_{ij} = n_{ij}\frac{\exp(\theta_{j})}{1+\exp(\theta_{j})}.
 \end{equation}
 
 %
 \begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big).
+\sigma^2_{ij} = \mu_{j}\Big(1-\frac{\mu_{j}}{n_{ij}}\Big).
 \end{equation}
 
 %
@@ -672,17 +890,17 @@ Y_{ijklm\nu} \substack{i.i.d.\\\sim} Binomial(\theta_{jklm\nu})
 
 %
 \begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} NB(\theta_{jklm\nu}, \phi)
+Y_{ij} \substack{i.i.d.\\\sim} NB(\theta_{j}, \phi)
 \end{equation}
 
 %
 \begin{equation}
-\mu_{ijklm\nu} = {\color{red}n_{ijklm\nu}} \exp(\theta_{jklm\nu}).
+\mu_{ij} = {\color{red}n_{ij}} \exp(\theta_{j}).
 \end{equation}
 
 %
 \begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1+\frac{\mu_{jklm\nu}}{\phi}\Big).
+\sigma^2_{ij} = \mu_{j}\Big(1+\frac{\mu_{j}}{\phi}\Big).
 \end{equation}
 
 %
@@ -690,17 +908,17 @@ Y_{ijklm\nu} \substack{i.i.d.\\\sim} NB(\theta_{jklm\nu}, \phi)
 
 %
 \begin{equation}
-Y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(Y_{ijklm\nu}|\theta_{jklm\nu}, \phi)
+Y_{ij} \substack{i.i.d.\\\sim} BB(Y_{ij}|\theta_{j}, \phi)
 \end{equation}
 
 %
 \begin{equation}
-\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+\mu_{ij} = n_{ij}\frac{\exp(\theta_{j})}{1+\exp(\theta_{j})}.
 \end{equation}
 
 %
 \begin{equation}
-\sigma^2_{ijklm\nu} = \mu_{jklm\nu}\Big(1-\frac{\mu_{jklm\nu}}{n_{ijklm\nu}}\Big)\Big(1+(n_{ijklm\nu}-1)~\phi\Big).
+\sigma^2_{ij} = \mu_{ij}\Big(1-\frac{\mu_{ij}}{n_{ij}}\Big)\Big(1+(n_{ij}-1)~\phi\Big).
 \end{equation}
 
 
@@ -719,7 +937,50 @@ overdispersed models, see Appendix (6.1), which we have subsequently used for th
 	\end{itemize}
 \end{itemize}
 
+%
+\subsection{Appendix B: Prior Experiments}\label{priorAppendix}
 
+`%
+\subsection{Appendix C: Linear Predictor Experiments}\label{lpAppendix}
+
+%
+\subsection{Appendix D: Complete Model}\label{modelAppendix}
+
+%
+\begin{equation}
+Y_{ijklm\nu} \substack{i.i.d.\\\sim} BB(Y_{ijklm\nu}|\theta_{jklm\nu}, \phi)
+\end{equation}
+
+%
+\begin{equation}
+\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\nu} + \beta^{(s:p)}_{jk}
+\end{equation}
+
+\begin{equation}
+\left\{\beta^{(s)}_j, \beta^{(p)}_k, \beta^{(g)}_l\right\} \sim N(0, 32^2)
+\end{equation}
+
+%
+\begin{alignat}{2}
+\beta^{(y:q)}_{m\nu} &\sim N(0, v^{(y:q)}) 	&~~~ \beta^{(s:p)}_{jk} &\sim N(0, v^{(s:p)}) \\
+v^{(y:q)} &\sim IG(1,~2\times10^{3}) 		&~~~ v^{(s:p)} &\sim IG(1,~2\times10^{3})
+\end{alignat}
+
+%%
+%\begin{eqnarray*}
+%\beta^{(y:q)}_{m\nu} &\sim& N(0, v^{(y:q)}) &\beta^{(s:p)}_{jk} \sim N(0, v^{(s:p)}) \\
+%v^{(y:q)} &\sim& IG(1,~2\times10^{3}) &v^{(s:p)}& \sim IG(1,~2\times10^{3})
+%\end{eqnarray*}
+
+%
+\begin{align}
+\text{logit}(\phi) \sim N(0, 2^2) 
+\end{align}
+
+
+
+%
+\section{Figures}
 
 %
 \begin{figure}[h!]
