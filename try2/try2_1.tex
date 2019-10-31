@@ -216,6 +216,16 @@ for most species.
 %	\end{itemize}
 %\end{itemize}
 
+{\color{red}
+\begin{itemize}
+\item chunking
+	\begin{itemize}
+	\item MCAT
+	\item 78-82, 83-90, 91-01
+	\end{itemize}
+\end{itemize}
+}
+
 %
 %
 \subsection{Likelihood}
@@ -280,7 +290,7 @@ Above, \(\mu_{ijklm\nu}\) is the stratum level mean weight, and
 \begin{equation}
 \mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
 \end{equation}
-%=n~\text{expit}(\theta_{jklm\eta})=n~\text{logit}^{-1}(\theta_{jklm\eta}).\]
+%=n~\text{expit}(\theta_{jklm\eta})=n~\text{logit}^{-1}(\theta_{jklm\nu}).\]
 
 Here \(n_{ijklm\nu}\) is the observed aggregate cluster size for each
 sample. Additionally, \(\sigma^2_{ijklm\nu}\) is related to \(\mu_{ijklm\nu}\) 
@@ -308,7 +318,7 @@ but at this point it is worth pointing out that the index notation imples that
 and quarter. For the purpose of achieving an efficient, and theoretcally 
 founded, method of partial pooling amoung these strata, \(\theta_{jklm\nu}\) 
 will naturally be composed of some combination of an intercept $\beta_0$, 
-fixed effects $\beta^{(\text{fixed})}$, and random effects 
+fixed effects parameters $\beta^{(\text{fixed})}$, and random effects parameters
 $\beta^{(\text{random})}$. In the Bayesian parlence, fixed effects amount to 
 parameters with priors that have fixed hyperparameter values, while random 
 effects amount to parameters with priors that have random hyperparameters that 
@@ -388,12 +398,12 @@ overparameterized models may cause overfitting and weaken model performance
 through the bias-variance dilemma (Ramasubramanian and Singh, 2016). Simply 
 put, the bias-variance dilemma means that model formulation is not simply a 
 bias reduction task, but rather the goal is to formulate models which reduce 
-bias, while jointly minimizing uncertainty. Janyes (2003, pg. 511) describes 
-how the inclusion of estimation bias via the Bayesian methodology may produce 
-better performing estimates, more quickly, than unbiased counterparts. Among 
-the simplest ways to see the principle is in the structure of the MSE 
-performance metric, and how it can be explicitly written to value both 
-estimator bias and variance, as follows.
+bias, while jointly minimizing uncertainty. Janyes \citeyear{jaynes_probability_2003} %(2003, pg. 511) 
+describes how the inclusion of even a small amount of estimation bias via the 
+Bayesian methodology may produce better performing estimates, more quickly, 
+than unbiased counterparts. Among the simplest ways to see the principle is in 
+the structure of the MSE performance metric, and how it can be explicitly 
+written to value both estimator bias and variance, as follows.
 
 %
 \begin{equation}
@@ -408,12 +418,13 @@ predictively useless since each estimated parameter is specifically bound to
 a particular observation, and thus such a model does not generalize. 
 
 %
-Random effects are typically groupings of many parameters that can be 
+Random effects typically imply groupings of many parameters that can be 
 pooled in someway. Often times interaction terms appear as random effects due 
 to the combinatoric explosion of the number parameters implied by the 
 interaction of different categories. In section \ref{lp} a number of random 
 effects models are considered. When framed in the Bayesian context each 
-included random effect recieves the following heirarchical prior structure.
+included random effect parameter recieves the following heirarchical prior 
+structure.  
 
 %
 \begin{align}
@@ -433,7 +444,7 @@ $\beta^{(\text{random})}$ should experience toward zero by inferring
 relatively larger or smaller values for $v$. As the above model learns the 
 posterior of the hierarchical variance parameter, $v$, it affects 
 the degree of shrinkage, as well as the effective number of parameters held 
-within the respective hierarchies (Gelman, 2014). To achieve this, each 
+within the respective hierarchies \cite{gelman_bayesian_2013}. To achieve this, each 
 variance parameter must itself be assigned a prior to be estimated. Any 
 hierarchical variance parameters, $v$, included in the model is 
 assigned a {\color{red} diffuse inverse gamma (IG) prior. See appendix 
@@ -441,10 +452,10 @@ assigned a {\color{red} diffuse inverse gamma (IG) prior. See appendix
 
 %
 Above the $\beta^{(\text{fixed})}$ and $\beta^{(\text{random})}$ are place 
-holders for a particular fixed or random effect to be included in the model. 
-Each effect to be included in the model is either included as a fixed or 
-random effect. The particular effects to be included in the linear predictor 
-are discussed later in section \ref{lp}.
+holders for a particular fixed or random effect parameter to be included in the 
+model. Each effect to be included in the model is either included as a fixed 
+or random effect. The particular effects to be included in the linear 
+predictor are discussed later in section \ref{lp}.
 
 %
 Finally the overdispersion parameter, \(\phi\), is assigned a diffuse
@@ -485,32 +496,62 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 
 %
-%while \(\mu_{jklm\eta}\) gives the
+The model achieves flexibility down to the stratum level through a 
+parsimonious model of the linear predictor $\theta_{jklm\nu}$. A categorical 
+handling the available predictors results in $\theta_{jklm\nu}$ taking the 
+form of a simple sum of the relevant intercept $\beta_0$, fixed effect 
+$\beta^{(\text{fixed})}$, and random effects $\beta^{(\text{random})}$ 
+coefficients in a given stratum, 
+%
+\begin{equation}
+\theta_{jklm\eta} = \beta_0 + \sum\beta^{(\text{fixed})} + \sum\beta^{(\text{random})}.
+\end{equation}
+
+%
+Firstly $\theta$ is factored among the many strata by the inclusion of 
+fixed effect parameters for each of the species $\beta^{(s)}_j$, 
+port-complexes $\beta^{(p)}_k$, and gear-groups $\beta^{(g)}_l$. Secondly 
+random effects parameters are included for species:port interactions 
+$\beta^{(s:p)}_{jk}$ and year:quarter interactions $\beta^{(y:q)}_{m\nu}$.
+Experiments about the form of the linear predictor are outlined in Appendix 
+\ref{priorAppendix}. In particular, attention is given to the inclusion, or 
+removal, of year $\beta^{(y)}_m$ and quarter $\beta^{(q)}_\nu$ fixed effect 
+parameters. As well as which two way interaction terms to include as random 
+effects. These tests result in the following parsimonious form for the linear 
+predictor,
+%
+\begin{equation}
+\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\nu} + \beta^{(s:p)}_{jk}.
+\end{equation}
+
+
+%
+%while \(\mu_{jklm\nu}\) gives the
 %model flexibility at the stratum level through the \(\theta\) linear
 %predictors,
 %
-%\[\theta_{jklm\eta} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \
+%\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \
 %
 %Firstly, \(\theta\) includes a reference level intercept (\(\beta_0\)).
 %Secondly, \(\theta\) is factored among the many strata by additive
 %offsets from \(\beta_0\) for each of the species (\(\beta^{(s)}_j\)),
 %port-complexes (\(\beta^{(p)}_k\)), and gear-groups (\(\beta^{(g)}_l\)).
 %Finally year and quarter parameters are indicated generally here inside
-%the \(\beta^{(t)}_{m\eta}\) term. Several forms for
-%\(\beta^{(t)}_{m\eta}\) are explored each implying a different prior and
+%the \(\beta^{(t)}_{m\nu}\) term. Several forms for
+%\(\beta^{(t)}_{m\nu}\) are explored each implying a different prior and
 %partial pooling strategies as described in the following
 %section. %(\ref{riors}).
 
 
-%For modeling \(\beta^{(t)}_{m\eta}\) we consider a spectrum of models
+%For modeling \(\beta^{(t)}_{m\nu}\) we consider a spectrum of models
 %which span a wide range of partially pooled models with several
 %different predictive structures as seen below.
 %
 %\subsubsection{(M1)}\label{m1}
 %
-%\[\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}\]
+%\[\beta^{(t)}_{m\nu} = \beta^{(y)}_{m} + \beta^{(q)}_{\nu}\]
 %\[\beta^{(y)}_{m} \sim N(0, 32^2)\]
-%\[\beta^{(q)}_{\eta} \sim N(0, 32^2)\]
+%\[\beta^{(q)}_{\nu} \sim N(0, 32^2)\]
 %
 %(M1) represents a fixed effects model for additive year and quarter
 %parameters. Here each year and quarter are assigned totally independent
@@ -518,9 +559,9 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 %\subsubsection{(M2)}\label{m2}
 %
-%\[\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}\]
+%\[\beta^{(t)}_{m\nu} = \beta^{(y)}_{m} + \beta^{(q)}_{\nu}\]
 %\[\beta^{(y)}_{m} \sim N(0, v^{(y)})\]
-%\[\beta^{(q)}_{\eta} \sim N(0, v^{(q)})\]
+%\[\beta^{(q)}_{\nu} \sim N(0, v^{(q)})\]
 %
 %(M2) estimates two hierarchical variance parameters, \(v^{(y)}\) and
 %\(v^{(q)}\). \(v^{(y)}\) has the effect of partially pooling information
@@ -536,48 +577,48 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %\subsubsection{(M3)}\label{m3}
 %
 %\begin{eqnarray*}
-%&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\et
+%&\beta^{(t)}_{m\nu} = \beta^{(y)}_{m} + \beta^{(q)}_{\nu} + \beta^{(y:q)}_{m\et
 %&\beta^{(y)}_{m} \sim N(0, v^{(y)}) & \\
-%&\beta^{(q)}_{\eta} \sim N(0, v^{(q)}) & \\
-%&\beta^{(y:q)}_{m\eta} \sim N(0, v) &
+%&\beta^{(q)}_{\nu} \sim N(0, v^{(q)}) & \\
+%&\beta^{(y:q)}_{m\nu} \sim N(0, v) &
 %\end{eqnarray*}
 %
 %(M3) functions similarly as (M2), in that it has hierarchical partial
-%pooling among both the \(\beta^{(y)}_{m}\) and \(\beta^{(q)}_{\eta}\)
+%pooling among both the \(\beta^{(y)}_{m}\) and \(\beta^{(q)}_{\nu}\)
 %parameters, except that it introduces a two-way interaction term between
 %year and quarter. This interaction term allows estimates for particular
 %quarters to differ from year to year, as opposed to the previous models
 %in which quarters within a year are assumed to be identical from year to
 %year.
 %
-%Furthermore the \(\beta^{(y:q)}_{m\eta}\) are also modeled
+%Furthermore the \(\beta^{(y:q)}_{m\nu}\) are also modeled
 %hierarchically to introduce a single variance parameter, \(v\), shared
-%among all of the \(m\eta\) time chunks. Although this interaction term
+%among all of the \(m\nu\) time chunks. Although this interaction term
 %adds many parameters to the model, the shared \(v\) parameter functions
-%to shrink extraneous \(\beta^{(y:q)}_{m\eta}\) estimates back toward the
+%to shrink extraneous \(\beta^{(y:q)}_{m\nu}\) estimates back toward the
 %common stratum mean.
 %
 %\subsubsection{(M4)}\label{m4}
 %
-%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
-%\[\beta^{(y:q)}_{m\eta} \sim N(0, v)\]
+%\[\beta^{(t)}_{m\nu} = \beta^{(y:q)}_{m\nu}\]
+%\[\beta^{(y:q)}_{m\nu} \sim N(0, v)\]
 %
 %(M4) simplifies (M3) by excluding year and quarter main effects. This
 %leaves all temporal information in the data to be modeled solely by the
-%quarterly \(\beta^{(y:q)}_{m\eta}\) interaction terms. This model
+%quarterly \(\beta^{(y:q)}_{m\nu}\) interaction terms. This model
 %represents more opportunity for partial pooling through time than (M3),
 %as fewer time parameters are introduced. Furthermore all of the
-%\(\beta^{(y:q)}_{m\eta}\) are hierarchically pooled back toward a single
+%\(\beta^{(y:q)}_{m\nu}\) are hierarchically pooled back toward a single
 %common stratum mean via the single shared variance parameter, \(v\). 
 %
 %A model treating the interaction terms as fixed effects (e.g. model (M4) where 
-%$v$ is a large fixed value) was not considered. The \(\beta^{(y:q)}_{m\eta}\) 
+%$v$ is a large fixed value) was not considered. The \(\beta^{(y:q)}_{m\nu}\) 
 %interaction terms introduce a very large number of parameters, which require 
-%regularization in this setting. Furthermore, pooling \(\beta^{(y:q)}_{m\eta}\) 
+%regularization in this setting. Furthermore, pooling \(\beta^{(y:q)}_{m\nu}\) 
 %through time introduces a formalized way to make predictions about unsampled 
 %strata.
 %
-%% with fixed \(\beta^{(y:q)}_{m\eta}\) interaction terms are
+%% with fixed \(\beta^{(y:q)}_{m\nu}\) interaction terms are
 %%considered here, as these models introduce a very large number of
 %%parameters. Due to the sparsity of these data, the models ability to
 %%pool through time is important for allowing model flexibility in time,
@@ -586,20 +627,20 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 %\subsubsection{(M5)}\label{m5}
 %
-%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
-%\[\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)\]
+%\[\beta^{(t)}_{m\nu} = \beta^{(y:q)}_{m\nu}\]
+%\[\beta^{(y:q)}_{m\nu} \sim N(0, v_\eta)\]
 %
 %(M5) is largely the same as (M4), but it represents slightly less
 %potential partial pooling through its hierarchical prior variances,
-%\(v_\eta\), on \(\beta^{(y:q)}_{m\eta}\). Here interaction terms are
+%\(v_\nu\), on \(\beta^{(y:q)}_{m\nu}\). Here interaction terms are
 %allowed to partially pool interactions across years, within a common
 %quarter, but since each quarter is assigned a separate variance
 %parameter no pooling is possible between quarters.
 %
 %\subsubsection{(M6)}\label{m6}
 %
-%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
-%\[\beta^{(y:q)}_{m\eta} \sim N(0, v_m)\]
+%\[\beta^{(t)}_{m\nu} = \beta^{(y:q)}_{m\nu}\]
+%\[\beta^{(y:q)}_{m\nu} \sim N(0, v_m)\]
 %
 %(M6) follows the same idea as (M5), however here interaction terms are
 %allowed to partially pool interactions within a common year, across the
@@ -618,25 +659,31 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 
 
+%\begin{itemize}
+%\item Linear Predictor 
+%%%how does $n_ijklm\nu$ enter the equation
+%%\begin{equation}
+%%\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
+%%\end{equation}
+%	\begin{itemize}
+%	\item basic model
+%	\item describe additions
+%		\begin{itemize}
+%		\item Time
+%		\item Species Gear?Port?
+%		\end{itemize}
+%	\end{itemize}
+%\end{itemize}
+
+{\color{red}
 \begin{itemize}
-\item Linear Predictor 
-%%how does $n_ijklm\nu$ enter the equation
-%\begin{equation}
-%\mu_{ijklm\nu} = n_{ijklm\nu}\frac{\exp(\theta_{jklm\nu})}{1+\exp(\theta_{jklm\nu})}.
-%\end{equation}
+\item chunking
 	\begin{itemize}
-	\item basic model
-	\item describe additions
-		\begin{itemize}
-		\item Time
-		\item Species Gear?Port?
-		\end{itemize}
-	\end{itemize}
-\item describe time chunking
-	\begin{itemize}
+	\item MCAT
 	\item 78-82, 83-90, 91-01
 	\end{itemize}
 \end{itemize}
+}
 
 %
 %
@@ -645,69 +692,76 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 
 %
-%Bayesian inference of the above models gives access to the full
-%posterior distribution of all of the parameters of the model given the
-%data. It is useful to emphasize that in the Bayesian setting, these
-%parameters have full distributions, and they are typically handled as a
-%large number of samples from the joint posterior distribution of the
-%parameters. Once the posterior sampling is complete, this simplifies
-%parameter mean and variance estimation; required moments are simply
-%obtained by computing the desired moments from the posterior samples.
-%Additionally, the fact that the parameters are full distributions means
-%that any functions of those parameters are themselves random variables
-%with the function representing a transformation of those parameters.
+Bayesian inference of the above model gives access to the full posterior 
+distribution of all of the parameters of the model, given the data. It is 
+useful to emphasize that in the Bayesian setting, these parameters have full 
+distributions, and they are typically handled as a large number of samples 
+from the joint posterior distribution of the parameters. Once the posterior 
+sampling is complete, this simplifies parameter mean and variance estimation; 
+any required moments are simply obtained by computing the desired empirical 
+moments from the posterior samples. Additionally, the fact that the 
+parameters are full distributions means that any functions of those parameters 
+are themselves random variables with the function representing a 
+transformation of those parameters.
+
 %
-%To obtain predicted species compositions from the beta-binomial model, first 
-%consider the posterior predictive distribution of sampled weight for a 
-%particular stratum.
+To obtain predicted species compositions from the beta-binomial model, first 
+consider the posterior predictive distribution of sampled weight for a 
+particular stratum,
 %
-%\[p(y^*_{jklm\eta}|y) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\eta}|\mu_{jklm\eta}, \sigma^2_{jklm\eta} \Big) P\Big(\mu_{jklm\eta}, \sigma^2_{jklm\eta} | y\Big) d\mu_{jklm\eta} d\sigma^2_{jklm\eta}.\]
+\[p(y^*_{jklm\nu}|\underline{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\nu}|\theta_{jklm\nu}, \phi \Big) P\Big(\theta_{jklm\nu}, \phi | \underline{y}\Big) d\theta_{jklm\nu} d\phi.\]
 %
-%Here BB is the data generating beta-binomial distribution for a
-%predictive observation and \(P(\mu_{jklm\eta}, \sigma^2_{jklm\eta}|y)\)
-%is the posterior distribution of the parameters given the observed data.
-%\(\mu_{jklm\eta}\) and \(\sigma^2_{jklm\eta}\) are integrated numerically via 
-%Monte Carlo integration to produce samples from the predictive distribution, 
-%\(p(y^*_{jklm\eta}|y)\), for sampled weights in the \(jklm\eta^{th}\) stratum.
+Here BB is the data generating beta-binomial distribution for a
+predictive observation and \(P(\mu_{jklm\nu}, \sigma^2_{jklm\nu}|y)\)
+is the posterior distribution of the parameters given the observed data.
+\(\mu_{jklm\nu}\) and \(\sigma^2_{jklm\nu}\) are integrated numerically via 
+Monte Carlo integration to produce samples from the posterior predictive 
+distribution, \(p(y^*_{jklm\nu}|y)\), for sampled weights in the 
+\(jklm\nu^{th}\) stratum.  
+
 %
-%Obtaining predictive species compositions from predictive weights
-%amounts to computing the following transformation,
+Obtaining predictive species compositions from predictive weights
+amounts to computing the following transformation,
 %
-%\[\pi^*_{jklm\eta} = \frac{y^*_{jklm\eta}}{\sum_j y^*_{jklm\eta}} ~~~ y^*_{klm\eta}\neq 0.\]
+\[\pi^*_{jklm\nu} = \frac{Y^*_{jklm\nu}}{\sum_j Y^*_{jklm\nu}} ~~~ \underline{Y^*_{klm\nu}}\neq \underline{0}.\]
 %
-%For a particular market category, \(\pi^*_{jklm\eta}\) is predicted
-%proportion of species \(j\) in the \(k^{th}\) port, caught with the
-%\(l^{th}\) gear, in the \(\eta^{th}\) quarter, of year \(m\).
+For a particular market category, \(\pi^*_{jklm\nu}\) is predicted
+proportion of species \(j\) in the \(k^{th}\) port, caught with the
+\(l^{th}\) gear, in the \(\nu^{th}\) quarter, of year \(m\).
+
 %
-%\subsection{Expansion of Landed Catch to Species}\label{expansion}
 %
-%For a particular market category, speciated landings simply amounts to
-%the multiplication of the known total landings (\(\lambda_{klm\eta}\)),
-%reported on landing receipts in the \(klm\eta^{th}\) stratum, with the
-%posterior predictive species composition, \(\pi^*_{jklm\eta}\), as follows
+\subsection{Expansion of Landed Catch to Species}\label{expansion}
 %
-%\[\lambda^*_{jklm\eta} = \lambda_{klm\eta}\pi^*_{jklm\eta}.\]
-%
-%\(\lambda^*_{jklm\eta}\) is then the posterior predictive landings for
-%species \(j\) in the \(klm\eta^{th}\) stratum of a particular market
-%category. Recall that since \(\pi^*_{jklm\eta}\) is a random variable,
-%then so is \(\lambda^*_{jklm\eta}\). Computing the variance of
-%\(\lambda^*_{jklm\eta}\) simply amounts to computing the variance of
-%random draws from the \(\lambda^*_{jklm\eta}\) distribution.
-%Furthermore, any level of aggregation of \(\lambda^*_{jklm\eta}\) is
-%easily obtained by summing \(\lambda^*_{jklm\eta}\) draws across the
-%desired indices. For example to obtain the distributions of yearly catch
-%of Bocaccio in a particular market category (i.e. aggregated across ports, 
-%gears, and quarters) one simply fixes $j$ to Bocaccio, and computes the 
-%following transformation of \(\lambda^*_{jklm\eta}\),
-%
-%\[\lambda^*_{j\cdot\cdot m\cdot} =\sum_{k}\sum_{l}\sum_{\eta}\lambda^*_{jklm\eta}\].
-%
-%Distribution summaries such as quantiles, means, or variances may be
-%computed by computing those metrics from the random draws of the
-%resulting \(\lambda^*_{j\cdot\cdot m\cdot}\) distributions.
 %
 
+%
+For a particular market category, speciated landings simply amounts to
+the multiplication of the known total landings (\(\lambda_{klm\nu}\)),
+reported on landing receipts in the \(klm\nu^{th}\) stratum, with the
+posterior predictive species composition, \(\pi^*_{jklm\nu}\), as follows
+%
+\[\lambda^*_{jklm\nu} = \lambda_{klm\nu}\pi^*_{jklm\nu}.\]
+
+%
+$\lambda^*_{jklm\nu}$ is then the posterior predictive landings for
+species \(j\) in the \(klm\nu^{th}\) stratum of a particular market
+category. Recall that since \(\pi^*_{jklm\nu}\) is a random variable,
+then so is \(\lambda^*_{jklm\nu}\). Computing the variance of
+\(\lambda^*_{jklm\nu}\) simply amounts to computing the variance of
+random draws from the \(\lambda^*_{jklm\nu}\) distribution.
+Furthermore, any level of aggregation of \(\lambda^*_{jklm\nu}\) is
+easily obtained by summing \(\lambda^*_{jklm\nu}\) draws across the
+desired indices. For example to obtain the distributions of yearly catch
+of Bocaccio in a particular market category (i.e. aggregated across ports, 
+gears, and quarters) one simply fixes $j$ to Bocaccio, and computes the 
+following transformation of \(\lambda^*_{jklm\nu}\),
+%
+\[\lambda^*_{j\cdot\cdot m\cdot} =\sum_{k}\sum_{l}\sum_{\nu}\lambda^*_{jklm\nu}.\]
+%
+Distribution summaries such as quantiles, means, or variances may be
+computed by computing those metrics from the random draws of the
+resulting \(\lambda^*_{j\cdot\cdot m\cdot}\) distributions.
 
 %
 %

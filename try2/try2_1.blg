@@ -14,45 +14,45 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: sppComp.bib
 apacite.bst [2013/07/21 v6.03 APA bibliography style]
 Warning--No journal in sen_sampling_1984
-You've used 6 entries,
+You've used 7 entries,
             6951 wiz_defined-function locations,
-            1303 strings with 11710 characters,
-and the built_in function-call counts, 11686 in all, are:
-= -- 1421
-> -- 98
-< -- 560
-+ -- 611
-- -- 14
-* -- 761
-:= -- 2190
-add.period$ -- 25
-call.type$ -- 6
-change.case$ -- 104
+            1309 strings with 11853 characters,
+and the built_in function-call counts, 13223 in all, are:
+= -- 1614
+> -- 108
+< -- 624
++ -- 674
+- -- 16
+* -- 844
+:= -- 2463
+add.period$ -- 29
+call.type$ -- 7
+change.case$ -- 123
 chr.to.int$ -- 0
-cite$ -- 13
-duplicate$ -- 316
-empty$ -- 464
-format.name$ -- 170
-if$ -- 2182
+cite$ -- 15
+duplicate$ -- 354
+empty$ -- 537
+format.name$ -- 184
+if$ -- 2488
 int.to.chr$ -- 0
-int.to.str$ -- 18
+int.to.str$ -- 21
 missing$ -- 0
-newline$ -- 157
-num.names$ -- 48
-pop$ -- 244
+newline$ -- 181
+num.names$ -- 56
+pop$ -- 290
 preamble$ -- 1
-purify$ -- 26
+purify$ -- 32
 quote$ -- 0
-skip$ -- 677
+skip$ -- 777
 stack$ -- 0
-substring$ -- 661
-swap$ -- 174
-text.length$ -- 15
+substring$ -- 731
+swap$ -- 192
+text.length$ -- 19
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 480
+type$ -- 560
 warning$ -- 1
-while$ -- 57
+while$ -- 64
 width$ -- 0
-write$ -- 191
+write$ -- 217
 (There was 1 warning)

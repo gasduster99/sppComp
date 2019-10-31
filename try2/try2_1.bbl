@@ -59,6 +59,31 @@ Gelman, A.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Jaynes%
+}{%
+Jaynes%
+}{%
+{\protect \APACyear {2003}}%
+}]{%
+jaynes_probability_2003}
+\APACinsertmetastar {%
+jaynes_probability_2003}%
+\begin{APACrefauthors}%
+Jaynes, E\BPBI T.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2003}.
+\newblock
+\APACrefbtitle {Probability {Theory}: {The} {Logic} of {Science}} {Probability
+  {Theory}: {The} {Logic} of {Science}}.
+\newblock
+\APACaddressPublisher{}{Cambridge University Press}.
+\newblock
+\APACrefnote{Google-Books-ID: UjsgAwAAQBAJ}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Nelder%
 \ \BBA {} McCullagh%
 }{%
