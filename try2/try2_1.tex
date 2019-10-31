@@ -495,6 +495,35 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 %
 
+{\color{red}
+%
+As previously mentioned, the linear predictor for this model is composed of a 
+linear combination of an intercept, some number of fixed effects, 
+and some number of random effects. Recall the natural stratification groups 
+outlined by \cite{sen_sampling_1984} are port-complex, gear-group, year, and 
+quarter. Additionally, the process of port sampling produces the species 
+identification as a natural covariate along side each measured weight. Within 
+a market category, these factors are the primary variables considered in 
+modeling.
+
+%
+Due to the computational difficulty of these data and long run times involved 
+with fitting models with many parameters (particularly models with many 
+heirarchical variances) the linear predictor is constructed in a bottom-up and 
+largely greedy way. That is to say, we grow our eventual linear 
+predictor starting from a linear predictor that only includes an intercept and 
+a species fixed effect. Effects are added incrementally until our eventual 
+completed form is achieved by sequentially including the next best effect, one 
+at a time. At times (particularly when considering random effects) the modeling 
+effort can operate with the oracle of some previously understood correlation 
+structure among categories. %oracle: prior conception
+
+%The process of building the linear predictor is largely bottom-up greedy 
+%approach. At times we have some prior conception of the types of parameters 
+%that may function better as a fixed or random effect, but 
+%
+}
+
 %
 The model achieves flexibility down to the stratum level through a 
 parsimonious model of the linear predictor $\theta_{jklm\nu}$. A categorical 
@@ -514,7 +543,7 @@ port-complexes $\beta^{(p)}_k$, and gear-groups $\beta^{(g)}_l$. Secondly
 random effects parameters are included for species:port interactions 
 $\beta^{(s:p)}_{jk}$ and year:quarter interactions $\beta^{(y:q)}_{m\nu}$.
 Experiments about the form of the linear predictor are outlined in Appendix 
-\ref{priorAppendix}. In particular, attention is given to the inclusion, or 
+\ref{lpAppendix}. In particular, attention is given to the inclusion, or 
 removal, of year $\beta^{(y)}_m$ and quarter $\beta^{(q)}_\nu$ fixed effect 
 parameters. As well as which two way interaction terms to include as random 
 effects. These tests result in the following parsimonious form for the linear 
@@ -524,139 +553,24 @@ predictor,
 \theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\nu} + \beta^{(s:p)}_{jk}.
 \end{equation}
 
-
+%%
+%After testing numerous iterations of model selection we arrive at the following 
+%linear predictor.
 %
-%while \(\mu_{jklm\nu}\) gives the
-%model flexibility at the stratum level through the \(\theta\) linear
-%predictors,
+%\begin{equation}
+%\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(y:q)}_{m\nu} + \beta^{(s:p)}_{jk}
+%\end{equation}
 %
-%\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \
-%
+%%
 %Firstly, \(\theta\) includes a reference level intercept (\(\beta_0\)).
-%Secondly, \(\theta\) is factored among the many strata by additive
-%offsets from \(\beta_0\) for each of the species (\(\beta^{(s)}_j\)),
-%port-complexes (\(\beta^{(p)}_k\)), and gear-groups (\(\beta^{(g)}_l\)).
-%Finally year and quarter parameters are indicated generally here inside
-%the \(\beta^{(t)}_{m\nu}\) term. Several forms for
-%\(\beta^{(t)}_{m\nu}\) are explored each implying a different prior and
-%partial pooling strategies as described in the following
-%section. %(\ref{riors}).
-
-
-%For modeling \(\beta^{(t)}_{m\nu}\) we consider a spectrum of models
-%which span a wide range of partially pooled models with several
-%different predictive structures as seen below.
-%
-%\subsubsection{(M1)}\label{m1}
-%
-%\[\beta^{(t)}_{m\nu} = \beta^{(y)}_{m} + \beta^{(q)}_{\nu}\]
-%\[\beta^{(y)}_{m} \sim N(0, 32^2)\]
-%\[\beta^{(q)}_{\nu} \sim N(0, 32^2)\]
-%
-%(M1) represents a fixed effects model for additive year and quarter
-%parameters. Here each year and quarter are assigned totally independent
-%and diffuse priors.
-%
-%\subsubsection{(M2)}\label{m2}
-%
-%\[\beta^{(t)}_{m\nu} = \beta^{(y)}_{m} + \beta^{(q)}_{\nu}\]
-%\[\beta^{(y)}_{m} \sim N(0, v^{(y)})\]
-%\[\beta^{(q)}_{\nu} \sim N(0, v^{(q)})\]
-%
-%(M2) estimates two hierarchical variance parameters, \(v^{(y)}\) and
-%\(v^{(q)}\). \(v^{(y)}\) has the effect of partially pooling information
-%among year parameters, while \(v^{(q)}\) partially pools information
-%among quarter parameters (i.e. treats both year and quarter as ``random
-%effects''). The actual degree of pooling among each of the years and
-%quarters is determined by the data.\\
-%Depending on the posterior distributions of \(v^{(y)}\) and \(v^{(q)}\),
-%the \(\beta^{(y)}\) and \(\beta^{(q)}\) may be shrunk back toward the
-%common mean (for small \(v\)) or allowed to take largely distinct values
-%(in the case of large estimates of the \(v\)).
-%
-%\subsubsection{(M3)}\label{m3}
-%
-%\begin{eqnarray*}
-%&\beta^{(t)}_{m\nu} = \beta^{(y)}_{m} + \beta^{(q)}_{\nu} + \beta^{(y:q)}_{m\et
-%&\beta^{(y)}_{m} \sim N(0, v^{(y)}) & \\
-%&\beta^{(q)}_{\nu} \sim N(0, v^{(q)}) & \\
-%&\beta^{(y:q)}_{m\nu} \sim N(0, v) &
-%\end{eqnarray*}
-%
-%(M3) functions similarly as (M2), in that it has hierarchical partial
-%pooling among both the \(\beta^{(y)}_{m}\) and \(\beta^{(q)}_{\nu}\)
-%parameters, except that it introduces a two-way interaction term between
-%year and quarter. This interaction term allows estimates for particular
-%quarters to differ from year to year, as opposed to the previous models
-%in which quarters within a year are assumed to be identical from year to
-%year.
-%
-%Furthermore the \(\beta^{(y:q)}_{m\nu}\) are also modeled
-%hierarchically to introduce a single variance parameter, \(v\), shared
-%among all of the \(m\nu\) time chunks. Although this interaction term
-%adds many parameters to the model, the shared \(v\) parameter functions
-%to shrink extraneous \(\beta^{(y:q)}_{m\nu}\) estimates back toward the
-%common stratum mean.
-%
-%\subsubsection{(M4)}\label{m4}
-%
-%\[\beta^{(t)}_{m\nu} = \beta^{(y:q)}_{m\nu}\]
-%\[\beta^{(y:q)}_{m\nu} \sim N(0, v)\]
-%
-%(M4) simplifies (M3) by excluding year and quarter main effects. This
-%leaves all temporal information in the data to be modeled solely by the
-%quarterly \(\beta^{(y:q)}_{m\nu}\) interaction terms. This model
-%represents more opportunity for partial pooling through time than (M3),
-%as fewer time parameters are introduced. Furthermore all of the
-%\(\beta^{(y:q)}_{m\nu}\) are hierarchically pooled back toward a single
-%common stratum mean via the single shared variance parameter, \(v\). 
-%
-%A model treating the interaction terms as fixed effects (e.g. model (M4) where 
-%$v$ is a large fixed value) was not considered. The \(\beta^{(y:q)}_{m\nu}\) 
-%interaction terms introduce a very large number of parameters, which require 
-%regularization in this setting. Furthermore, pooling \(\beta^{(y:q)}_{m\nu}\) 
-%through time introduces a formalized way to make predictions about unsampled 
-%strata.
-%
-%% with fixed \(\beta^{(y:q)}_{m\nu}\) interaction terms are
-%%considered here, as these models introduce a very large number of
-%%parameters. Due to the sparsity of these data, the models ability to
-%%pool through time is important for allowing model flexibility in time,
-%%while retaining the ability to produce predictions for unsampled time
-%%periods.
-%
-%\subsubsection{(M5)}\label{m5}
-%
-%\[\beta^{(t)}_{m\nu} = \beta^{(y:q)}_{m\nu}\]
-%\[\beta^{(y:q)}_{m\nu} \sim N(0, v_\eta)\]
-%
-%(M5) is largely the same as (M4), but it represents slightly less
-%potential partial pooling through its hierarchical prior variances,
-%\(v_\nu\), on \(\beta^{(y:q)}_{m\nu}\). Here interaction terms are
-%allowed to partially pool interactions across years, within a common
-%quarter, but since each quarter is assigned a separate variance
-%parameter no pooling is possible between quarters.
-%
-%\subsubsection{(M6)}\label{m6}
-%
-%\[\beta^{(t)}_{m\nu} = \beta^{(y:q)}_{m\nu}\]
-%\[\beta^{(y:q)}_{m\nu} \sim N(0, v_m)\]
-%
-%(M6) follows the same idea as (M5), however here interaction terms are
-%allowed to partially pool interactions within a common year, across the
-%quarters of that year, but not between years. (M6) often involves
-%fitting slightly more parameters than (M5) because, at least in this
-%setting, it is typical to model more than four years of data at once.
-%
-%For the purpose of motivating the time parameter structure to be used across 
-%all market categories and time periods, each of models M1-M6 are fit to data 
-%from market category 250 from 1978-1982. % in order to motivate the time paramete
-%Performing such a model selection exercise across all market categories, in 
-%each time period, would not only be impractical but would also risk overfitting 
-%models, particually in poorly sampled categories. In the early time periods, 
-%market category 250 is the most heavily sampled multi-species market category, 
-%and thus it represents an excellent data-set for testing.
-%
+%Secondly, \(\theta\) is factored broadly among the many strata by fixed 
+%effects for each of the species (\(\beta^{(s)}_j\)), port-complexes 
+%(\(\beta^{(p)}_k\)), and gear-groups (\(\beta^{(g)}_l\)). Thirdly, 
+%year:quarter ($\beta^{(y:q)}_{m\nu}$) and species:port ($\beta^{(s:p)}_{jk}$) 
+%two way interactions are included as random effects for the purpose of 
+%adaptive partial pooling across space and time. Details about tests run 
+%inorder to determine the linear predictor presented here are available in 
+%Appendix \ref{lpAppendix}. 
 
 
 %\begin{itemize}
@@ -996,6 +910,122 @@ overdispersed models, see Appendix (6.1), which we have subsequently used for th
 
 `%
 \subsection{Appendix C: Linear Predictor Experiments}\label{lpAppendix}
+
+%
+%For modeling \(\beta^{(t)}_{m\eta}\) we consider a spectrum of models
+%which span a wide range of partially pooled models with several
+%different predictive structures as seen below.
+%
+%\subsubsection{(M1)}\label{m1}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}\]
+%\[\beta^{(y)}_{m} \sim N(0, 32^2)\]
+%\[\beta^{(q)}_{\eta} \sim N(0, 32^2)\]
+%
+%(M1) represents a fixed effects model for additive year and quarter
+%parameters. Here each year and quarter are assigned totally independent
+%and diffuse priors.
+%
+%\subsubsection{(M2)}\label{m2}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta}\]
+%\[\beta^{(y)}_{m} \sim N(0, v^{(y)})\]
+%\[\beta^{(q)}_{\eta} \sim N(0, v^{(q)})\]
+%
+%(M2) estimates two hierarchical variance parameters, \(v^{(y)}\) and
+%\(v^{(q)}\). \(v^{(y)}\) has the effect of partially pooling information
+%among year parameters, while \(v^{(q)}\) partially pools information
+%among quarter parameters (i.e. treats both year and quarter as ``random
+%effects''). The actual degree of pooling among each of the years and
+%quarters is determined by the data.\\
+%Depending on the posterior distributions of \(v^{(y)}\) and \(v^{(q)}\),
+%the \(\beta^{(y)}\) and \(\beta^{(q)}\) may be shrunk back toward the
+%common mean (for small \(v\)) or allowed to take largely distinct values
+%(in the case of large estimates of the \(v\)).
+%
+%\subsubsection{(M3)}\label{m3}
+%
+%\begin{eqnarray*}
+%&\beta^{(t)}_{m\eta} = \beta^{(y)}_{m} + \beta^{(q)}_{\eta} + \beta^{(y:q)}_{m\et
+%&\beta^{(y)}_{m} \sim N(0, v^{(y)}) & \\
+%&\beta^{(q)}_{\eta} \sim N(0, v^{(q)}) & \\
+%&\beta^{(y:q)}_{m\eta} \sim N(0, v) &
+%\end{eqnarray*}
+%
+%(M3) functions similarly as (M2), in that it has hierarchical partial
+%pooling among both the \(\beta^{(y)}_{m}\) and \(\beta^{(q)}_{\eta}\)
+%parameters, except that it introduces a two-way interaction term between
+%year and quarter. This interaction term allows estimates for particular
+%quarters to differ from year to year, as opposed to the previous models
+%in which quarters within a year are assumed to be identical from year to
+%year.
+%
+%Furthermore the \(\beta^{(y:q)}_{m\eta}\) are also modeled
+%hierarchically to introduce a single variance parameter, \(v\), shared
+%among all of the \(m\eta\) time chunks. Although this interaction term
+%adds many parameters to the model, the shared \(v\) parameter functions
+%to shrink extraneous \(\beta^{(y:q)}_{m\eta}\) estimates back toward the
+%common stratum mean.
+%
+%\subsubsection{(M4)}\label{m4}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
+%\[\beta^{(y:q)}_{m\eta} \sim N(0, v)\]
+%
+%(M4) simplifies (M3) by excluding year and quarter main effects. This
+%leaves all temporal information in the data to be modeled solely by the
+%quarterly \(\beta^{(y:q)}_{m\eta}\) interaction terms. This model
+%represents more opportunity for partial pooling through time than (M3),
+%as fewer time parameters are introduced. Furthermore all of the
+%\(\beta^{(y:q)}_{m\eta}\) are hierarchically pooled back toward a single
+%common stratum mean via the single shared variance parameter, \(v\). 
+%
+%A model treating the interaction terms as fixed effects (e.g. model (M4) where 
+%$v$ is a large fixed value) was not considered. The \(\beta^{(y:q)}_{m\eta}\) 
+%interaction terms introduce a very large number of parameters, which require 
+%regularization in this setting. Furthermore, pooling \(\beta^{(y:q)}_{m\eta}\) 
+%through time introduces a formalized way to make predictions about unsampled 
+%strata.
+%
+%% with fixed \(\beta^{(y:q)}_{m\eta}\) interaction terms are
+%%considered here, as these models introduce a very large number of
+%%parameters. Due to the sparsity of these data, the models ability to
+%%pool through time is important for allowing model flexibility in time,
+%%while retaining the ability to produce predictions for unsampled time
+%%periods.
+%
+%\subsubsection{(M5)}\label{m5}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
+%\[\beta^{(y:q)}_{m\eta} \sim N(0, v_\eta)\]
+%
+%(M5) is largely the same as (M4), but it represents slightly less
+%potential partial pooling through its hierarchical prior variances,
+%\(v_\eta\), on \(\beta^{(y:q)}_{m\eta}\). Here interaction terms are
+%allowed to partially pool interactions across years, within a common
+%quarter, but since each quarter is assigned a separate variance
+%parameter no pooling is possible between quarters.
+%
+%\subsubsection{(M6)}\label{m6}
+%
+%\[\beta^{(t)}_{m\eta} = \beta^{(y:q)}_{m\eta}\]
+%\[\beta^{(y:q)}_{m\eta} \sim N(0, v_m)\]
+%
+%(M6) follows the same idea as (M5), however here interaction terms are
+%allowed to partially pool interactions within a common year, across the
+%quarters of that year, but not between years. (M6) often involves
+%fitting slightly more parameters than (M5) because, at least in this
+%setting, it is typical to model more than four years of data at once.
+%
+%For the purpose of motivating the time parameter structure to be used across 
+%all market categories and time periods, each of models M1-M6 are fit to data 
+%from market category 250 from 1978-1982. % in order to motivate the time paramete
+%Performing such a model selection exercise across all market categories, in 
+%each time period, would not only be impractical but would also risk overfitting 
+%models, particually in poorly sampled categories. In the early time periods, 
+%market category 250 is the most heavily sampled multi-species market category, 
+%and thus it represents an excellent data-set for testing.
+%
 
 %
 \subsection{Appendix D: Complete Model}\label{modelAppendix}
