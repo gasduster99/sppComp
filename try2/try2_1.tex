@@ -199,7 +199,7 @@ inappropriately, these landings are speciated as the nominal species for their
 market category. We later demonstrate that due to prioritization in sampling 
 heavily landed, or otherwise commercially relevant categories, this sample 
 size heuristic leaves relatively few landings to be speciated in a 
-statistically uninformed way (i.e.  ``nominal'' speciation). Thus nominal 
+statistically uninformed way (i.e. ``nominal'' speciation). Thus nominal 
 speciation represents a negligible component of the overall expanded landings 
 for most species.
 
@@ -234,7 +234,7 @@ for most species.
 
 %
 For a particular market category, the random variable \(Y_{ijklm\nu}\) is the 
-\(i^{th}\) observation of the \(j^{th}\) species' rounded weight (in pounds), 
+\(i^{th}\) observation of the \(j^{th}\) species' rounded weight (pounds), 
 in the \(k^{th}\) port, caught with the \(l^{th}\) gear-group, in the \(\nu^{th}\) 
 quarter, of year \(m\). The \(Y_{ijklm\nu}\) are modeled as $i.i.d.$ 
 observations from some distribution, $f$, over the whole numbers
@@ -261,10 +261,10 @@ chosen empirically based upon experimentation among the poisson, binomial,
 negative binomial, and beta-binomial distributions. Other modeling options 
 were considered for the form of $f$, but the list above was determined to be 
 the most compuationally feasible at this time and among these data. See 
-appendix \ref{likelihoodAppendix} for experimentation detail. 
+{\color{red}appendix \ref{likelihoodAppendix}} for modeling details. 
 
 % 
-As seen in appendix \ref{likelihoodAppendix} the beta-binomial model was 
+As seen in {\color{red}appendix \ref{likelihoodAppendix}} the beta-binomial model was 
 selected as the most appropriate and flexible likelihood. With the potential 
 to account for the largest amount of variance, the beta-binomial model may 
 not be the true model, but it certainly offers the most computationally 
@@ -314,24 +314,25 @@ linear predictor \(\theta_{jklm\nu}\).
 %
 The structure of \(\theta_{jklm\nu}\) will be developed in section \ref{lp}, 
 but at this point it is worth pointing out that the index notation imples that
-\(\theta_{jklm\nu}\) is a linear function of species, port, gear-group, year 
-and quarter. For the purpose of achieving an efficient, and theoretcally 
-founded, method of partial pooling amoung these strata, \(\theta_{jklm\nu}\) 
-will naturally be composed of some combination of an intercept $\beta_0$, 
-fixed effects parameters $\beta^{(\text{fixed})}$, and random effects parameters
-$\beta^{(\text{random})}$. In the Bayesian parlence, fixed effects amount to 
-parameters with priors that have fixed hyperparameter values, while random 
-effects amount to parameters with priors that have random hyperparameters that 
-themselves are inferred from the data. Admittedly the nomenclature adopted here 
-is philosophically unpure, but I abuse the fixed/random effect terminology for 
-the pragmatic purpose of bridging statistical philosophies in an attempt to 
-more directly communicate the inferencial goals at hand. Of course in the 
-Bayesian paradigm all parameters are random, but still the fixed/random effect 
-terminology is a useful way to consider the different behavior of the 
-parameters included here. For further discussion of fixed and random effects 
-models see \cite{nelder_generalized_1989} and for a discussion of the Bayesian 
-framing via heirarchical models see \cite{gelman_bayesian_2013}. Further 
-discussion of prior structure is developed in section \ref{priors}.
+the linear predictor, \(\theta_{jklm\nu}\), is a linear function of species, 
+port, gear-group, year and quarter. For the purpose of achieving an efficient, 
+and theoretcally founded, method of partial pooling amoung these strata, 
+\(\theta_{jklm\nu}\) will naturally be composed of some combination of an 
+intercept $\beta_0$, fixed effects parameters $\beta^{(\text{fixed})}$, and 
+random effects parameters $\beta^{(\text{random})}$. In the Bayesian parlence, 
+fixed effects amount to parameters with priors that have fixed hyperparameter 
+values, while random effects amount to parameters with priors that have random 
+hyperparameters that themselves are inferred from the data. Admittedly the 
+nomenclature adopted here is philosophically unpure, but I abuse the 
+fixed/random effect terminology for the pragmatic purpose of bridging 
+statistical philosophies in an attempt to more directly communicate the 
+inferencial goals at hand. Of course in the Bayesian paradigm all parameters 
+are random, but still the fixed/random effect terminology is a useful way to 
+consider the different behavior of the parameters included here. For further 
+discussion of fixed and random effects models see 
+\cite{nelder_generalized_1989} and for a discussion of the Bayesian framing 
+via heirarchical models see \cite{gelman_bayesian_2013}. Further discussion of 
+prior structure is developed in section \ref{priors}.
 
 %\[\theta_{jklm\nu} = \beta_0 + \beta^{(s)}_j + \beta^{(p)}_k + \beta^{(g)}_l + \beta^{(t)}_{m\nu}.\]
 %
@@ -419,7 +420,7 @@ a particular observation, and thus such a model does not generalize.
 
 %
 Random effects typically imply groupings of many parameters that can be 
-pooled in someway. Often times interaction terms appear as random effects due 
+pooled in someway. Oftentimes interaction terms appear as random effects due 
 to the combinatoric explosion of the number parameters implied by the 
 interaction of different categories. In section \ref{lp} a number of random 
 effects models are considered. When framed in the Bayesian context each 
@@ -447,8 +448,8 @@ the degree of shrinkage, as well as the effective number of parameters held
 within the respective hierarchies \cite{gelman_bayesian_2013}. To achieve this, each 
 variance parameter must itself be assigned a prior to be estimated. Any 
 hierarchical variance parameters, $v$, included in the model is 
-assigned a {\color{red} diffuse inverse gamma (IG) prior. See appendix 
-\ref{priorAppendix} for further discussion about selecting appropriate priors.}
+assigned a {\color{red} diffuse inverse gamma (IG) prior. See {\color{red} appendix 
+\ref{priorAppendix}} for further discussion about selecting appropriate priors.}
 
 %
 Above the $\beta^{(\text{fixed})}$ and $\beta^{(\text{random})}$ are place 
@@ -495,7 +496,6 @@ transformed unit interval (i.e. \(0.5\pm0.48\)).
 %
 %
 
-{\color{red}
 %
 As previously mentioned, the linear predictor for this model is composed of a 
 linear combination of an intercept, some number of fixed effects, 
@@ -515,21 +515,23 @@ predictor starting from a linear predictor that only includes an intercept and
 a species fixed effect. Effects are added incrementally until our eventual 
 completed form is achieved by sequentially including the next best effect, one 
 at a time. At times (particularly when considering random effects) the modeling 
-effort can operate with the oracle of some previously understood correlation 
-structure among categories. %oracle: prior conception
-
+effort can operate with the oracle of some previously understood correlation %oracle: prior conception 
+structure among categories. 
+%
+The goal is that stepping through possible modeling options for the  
+$\theta_{jklm\nu}$ in this way should produce a simultaneously parsimonious 
+and flexibile model that will preform well both for the observed strata as 
+well as provide a structure for accurately extending prediction into unobserved 
+strata. %through a parsimonious model of the linear predictor $\theta_{jklm\nu}$. 
 %The process of building the linear predictor is largely bottom-up greedy 
 %approach. At times we have some prior conception of the types of parameters 
 %that may function better as a fixed or random effect, but 
 %
-}
 
 %
-The model achieves flexibility down to the stratum level through a 
-parsimonious model of the linear predictor $\theta_{jklm\nu}$. A categorical 
-handling the available predictors results in $\theta_{jklm\nu}$ taking the 
-form of a simple sum of the relevant intercept $\beta_0$, fixed effect 
-$\beta^{(\text{fixed})}$, and random effects $\beta^{(\text{random})}$ 
+A categorical handling the available predictors results in $\theta_{jklm\nu}$ 
+taking the form of a simple sum of the relevant intercept $\beta_0$, fixed 
+effect $\beta^{(\text{fixed})}$, and random effects $\beta^{(\text{random})}$ 
 coefficients in a given stratum, 
 %
 \begin{equation}
@@ -542,7 +544,7 @@ fixed effect parameters for each of the species $\beta^{(s)}_j$,
 port-complexes $\beta^{(p)}_k$, and gear-groups $\beta^{(g)}_l$. Secondly 
 random effects parameters are included for species:port interactions 
 $\beta^{(s:p)}_{jk}$ and year:quarter interactions $\beta^{(y:q)}_{m\nu}$.
-Experiments about the form of the linear predictor are outlined in Appendix 
+Experiments about the form of the linear predictor are outlined in appendix 
 \ref{lpAppendix}. In particular, attention is given to the inclusion, or 
 removal, of year $\beta^{(y)}_m$ and quarter $\beta^{(q)}_\nu$ fixed effect 
 parameters. As well as which two way interaction terms to include as random 
@@ -626,9 +628,9 @@ particular stratum,
 \[p(y^*_{jklm\nu}|\underline{y}) = \int\!\!\!\!\int\! \text{BB}\Big( y^*_{jklm\nu}|\theta_{jklm\nu}, \phi \Big) P\Big(\theta_{jklm\nu}, \phi | \underline{y}\Big) d\theta_{jklm\nu} d\phi.\]
 %
 Here BB is the data generating beta-binomial distribution for a
-predictive observation and \(P(\mu_{jklm\nu}, \sigma^2_{jklm\nu}|y)\)
+predictive observation and \(P(\theta_{jklm\nu}, \phi_{jklm\nu}|y)\)
 is the posterior distribution of the parameters given the observed data.
-\(\mu_{jklm\nu}\) and \(\sigma^2_{jklm\nu}\) are integrated numerically via 
+\(\theta_{jklm\nu}\) and \(\phi\) are integrated numerically via 
 Monte Carlo integration to produce samples from the posterior predictive 
 distribution, \(p(y^*_{jklm\nu}|y)\), for sampled weights in the 
 \(jklm\nu^{th}\) stratum.  
@@ -637,7 +639,7 @@ distribution, \(p(y^*_{jklm\nu}|y)\), for sampled weights in the
 Obtaining predictive species compositions from predictive weights
 amounts to computing the following transformation,
 %
-\[\pi^*_{jklm\nu} = \frac{Y^*_{jklm\nu}}{\sum_j Y^*_{jklm\nu}} ~~~ \underline{Y^*_{klm\nu}}\neq \underline{0}.\]
+\[\pi^*_{jklm\nu} = \frac{Y^*_{jklm\nu}}{\sum_j Y^*_{jklm\nu}} ~~~ \underline{Y}^*_{klm\nu}\neq \underline{0}.\]
 %
 For a particular market category, \(\pi^*_{jklm\nu}\) is predicted
 proportion of species \(j\) in the \(k^{th}\) port, caught with the
@@ -769,53 +771,60 @@ but also higher moments of the data (e.g. variances), it is necessary to
 recognize model limitations with respect to overdispersed data. Among the 
 simplest models for count data are the Poisson and binomial models. Both 
 models are typically specified with a single parameter for modeling all of the 
-moments of the data, and thus they rely heavily on their respective data 
-generating processes to accurately represent higher moments in the data. 
-McCullagh and Nelder (1989, pg. 124) commiserate about the prevalence of 
-overdispersed data in cluster sampling, and explain ways in which cluster 
-sampling itself may result in overdispersion.  
+moments of the data, and thus they rely heavily on their respective assumed 
+data generating processes to accurately represent higher moments in the data. 
 
+%
+One might expect the sampling approach in this setting to produce data which 
+are theoretically similar to a multivariate multinomial model. Shelton 
+\citeyear{shelton_estimating_2012}, describes how to fit a version of that 
+model via the multinomial–Poisson transformation on these data. The 
+multinomial–Poisson transformation gives the result that fitting regression 
+parameters via conditionally $i.i.d.$ Poisson models produces the same 
+parameter inference as fitting the joint multinomial model \cite{baker1994}.
+Thus the Poisson model presented below produces the same inference as joint 
+multinomial model. 
+
+%
+Due to the theoretical restrictitions of these simple models, and the reality 
+the port sampling environment it is possible (or likely) that the actual data
+in CALCOM deviate substanatively from the platonic ideals implyed by the one 
+parameter counting distributions. In this appendix we emperically question 
+the appropriatness of the assumptions of various data generating processes, and 
+explore models that loosen these assumptions by accounting for the overdispersion 
+present in the CALCOM data. It is also interesting to note that McCullagh and Nelder 
+\citeyear{nelder_generalized_1989} %McCullagh and Nelder (1989,pg.124)
+commiserate about the prevalence of overdispersed data in cluster sampling designs. 
+They explain ways in which cluster sampling itself may result in overdispersion.
+  
 %
 Extending the Poisson and binomial models to deal with overdispersion, 
 typically involves adding additional parameters for the purpose of modeling 
-higher moments of the data. The negative binomial (NB) distribution is often 
-used as an overdispersed extension of the Poisson model, since it can be 
-expressly written as an infinite mixture of Poisson distributions. The beta-
-binomial model is used as an overdispersed extension of the binomial model.  
+higher moments of the data (in this settling we call that parameter $\phi$). 
+The negative binomial (NB) distribution is often used as an overdispersed 
+extension of the Poisson model, since it can be expressly written as an 
+infinite mixture of Poisson distributions. The beta-binomial model is used as 
+an overdispersed extension of the binomial model.  
 
-%
-The Poisson and binomial models attempt to model both the mean and residual 
-variance of the data, with a single parameter for each species. By definition 
-these models do not have additional parameters to model the variance, but 
-rather, residual variances in these models are simply transformations of their 
-mean parameters. Only estimating the mean parameters in these cases may not be 
-sufficient to produce models which predict well.
-
-%
-In contrast, the negative binomial and beta-binomial models estimate an 
-additional pa- rameter which can be used to disentangle the mean and residual 
+The Poisson and binomial models are both derived under limiting cases for 
+$\phi$, and thus under these models $\phi$ is not an infered parameter. 
+As a result, these models are only capable of capturing a relatively rigid 
+scope of response behavior. In contrast, the negative binomial and 
+beta-binomial models use the data to estimate the $\phi$ parameter. In these 
+models the $\phi$ parameter is used to disentangle the mean and residual 
 variance estimates. Thus the negative binomial and beta-binomial models may 
-produce more accurate estimates of the residual variance, while producing more 
-accurate measures of center. We develop an example on a subset of data to 
-evaluate statistical support for overdispersed models, see Appendix (6.1), which we have subsequently used for the purposes of applying at an operational scale 
+produce more accurate measures of center, by more accurately estimating
+the residual variance. %, while producing more accurate measures of center. 
 
+%EXPAND to explain experiment/INTRODUCE MODELS FOR BELOW
+We develop an example on a subset of data to evaluate statistical support for
+overdispersed models. 
+%grid of fits?
+%	space
+%	gear
+%	qtr
+% in a particular year/MCAT
 
-
-%
-Among the simplest models for count data are the Poisson and binomial models. 
-Both models are derived %Neither of these models provide enough fredom amoung their parameters spaces to allow  
-under limiting cases for $\phi$, and thus under these models $\phi$ is not an 
-infered parameter. As a result the Poisson and binomial models rely heavily on 
-their respective data generating processes to accurately represent higher 
-moments in the data. Furthermore, these models are only capable of capturing a 
-relatively rigid scope of response behavior.
-
-%
-In contrast, the negative binomial and beta-binomial models use the data to 
-estimate the $\phi$ parameter. In these models the the $\phi$ parameter is used 
-to disentangle the mean and residual variance estimates. Thus the negative 
-binomial and beta-binomial models may produce more accurate estimates of the 
-residual variance, while producing more accurate measures of center. 
 
 %
 \subsubsection{Poisson Model}
@@ -892,7 +901,7 @@ Y_{ij} \substack{i.i.d.\\\sim} BB(Y_{ij}|\theta_{j}, \phi)
 
 %REWORD
 We develop an example on a subset of data to evaluate statistical support for 
-overdispersed models, see Appendix (6.1), which we have subsequently used for the purposes of applying at an operational scale 
+overdispersed models, see appendix \ref{likelihoodAppendix}, which we have subsequently used for the purposes of applying at an operational scale 
 %REWORD
 
 \begin{itemize}
