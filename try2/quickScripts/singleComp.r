@@ -7,6 +7,10 @@ library(vioplot)
 library(parallel)
 library(HDInterval)
 library(KernSmooth)
+#
+INLA:::inla.dynload.workaround()
+
+
 
 #
 #FUNCTIONS
@@ -240,7 +244,7 @@ M = 10^4
 #poisson
 #pHype = inla.hyperpar.sample(M, pOut)
 pPost = inla.posterior.sample(M, pOut)
-fString = sprintf('Predictor:%%0%dd', nchar(max(grep('Predictor', rownames(pPost[[1]]$latent)))) ) #'Predictor:%03d'
+fString = 'Predictor:%d' #sprintf('Predictor:%%0%dd', nchar(max(grep('Predictor', rownames(pPost[[1]]$latent)))) ) #'Predictor:%03d'
 #
 pDist = matrix(NA, nrow=M, ncol=howMany)
 colnames(pDist) = who
@@ -520,8 +524,9 @@ bbMSE = getMSE(comps, bbM)
 #legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
 #dev.off()
 #
+
 #
-pdf(sprintf('compVioplotQtr%s.pdf', qtr))
+#pdf(sprintf('compVioplotQtr%s.pdf', qtr))
 vioplot(bbDist[,1], bbDist[,2], bbDist[,3], bbDist[,4], bbDist[,5], bbDist[,6],
 	names=colnames(bbDist),
 	ylim=c(0, 1.15),
@@ -537,7 +542,7 @@ title(
 	main='Beta-Binomial Posterior Predictive Species Compositions',
         ylab='Proportion'
 )
-dev.off()
+#dev.off()
 
 
 
