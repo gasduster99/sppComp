@@ -49,7 +49,8 @@ getMSE = function(data, means){
 
 #dat = read.table('1985_trwl_mcat250.csv', header=T, sep=',')
 #Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
-Dat = read.table('data1978To1982.csv', header=T, sep=',', stringsAsFactors=F)
+#Dat = read.table('data1978To1982.csv', header=T, sep=',', stringsAsFactors=F)
+Dat = read.table('data1983To1990.csv', header=T, sep=',', stringsAsFactors=F)
 #colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
 #aggregate categories
 dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gearGroup, Dat$marketCategory, Dat$live), by=list(Dat$sampleNumber, Dat$species), FUN=unique )
@@ -90,12 +91,16 @@ qtrEff  = unique(dat$gear)
 sppEff  = unique(dat$species)
 #subset data
 mct = '250'
-place = c('CRS', 'MNT', 'MRO') 
-gear = c('TWL', 'HKL') #'TWL' #
-yer = '1982'#'1990'
-#qtr = '2' #'4'
-
-pdf(sprintf('compPlot%s.pdf', paste(c(paste(place,collapse='_'), paste(gear,collapse='_')), collapse='__')), 
+place = c('BRG', 'MNT', 'MRO') 
+gear = c('TWL', 'HKL') #
+yer = '1988'#'1990'
+##
+#qtr = '4' #'4'
+#pdf(sprintf('compPlot%s.pdf', paste(c(paste(place,collapse='_'), paste(gear,collapse='_'), yer, qtr), collapse='__')), 
+#	height=12
+#)
+##
+pdf(sprintf('compPlot%s.pdf', paste(c(paste(place,collapse='_'), paste(gear,collapse='_'), yer), collapse='__')), 
 	height=12
 )
 par(mar=c(5, 4, 9, 2) + 0.1)
@@ -105,8 +110,8 @@ layout(matrix(c(rep(7,spTune),rep(1,tune),rep(2,tune),rep(3,tune),rep(8,spTune),
 par(mar=c(5, 4, 4, 2) + 0.1)
 for(ger in gear){
 	for(plc in place){
-		#zero datai
-		D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger,] # & dat$qtr==qtr,]
+		#zero data
+		D = dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger,] #dat[dat$mcat==mct & dat$year==yer & dat$portComplex==plc & dat$gear==ger & dat$qtr==qtr,] #
 		end = length(D$id)
 		for(id in unique(D$id)){
 			#
@@ -210,33 +215,33 @@ for(ger in gear){
 		#5675.25, 5840.56, -2864.01
 		pOut = inla(weight~species, data=DAT, family='poisson', num.threads=cores, 
 			control.compute=list(
-				config=T,
 				waic=T,
-				dic=T
+				#dic=T,
+				config=T
 			)
 		)
 		#1301.51, 1302.19, -688.19
 		nbOut = inla(weight~species, data=DAT, family='nbinomial', num.threads=cores, 
 			control.compute=list(
-				config=T,
 				waic=T,
-				dic=T
+				#dic=T,
+				config=T
 			)
 		)
 		#6759.86, 6939.74, -3406.01
 		bOut  = inla(weight~species, data=DAT, family='binomial', Ntrials=DAT$clustSize, num.threads=cores, 
 			control.compute=list(
-				config=T,
 				waic=T,
-				dic=T
+				#dic=T,
+				config=T
 			)
 		)
 		#1261.00, 1261.30, -650.49
 		bbOut = inla(weight~species, data=DAT, family='betabinomial', Ntrials=DAT$clustSize, num.threads=cores,
 			control.compute=list(
-				config=T,
 				waic=T,
-				dic=T
+				#dic=T,
+				config=T
 			)
 		)
 		#
@@ -458,7 +463,6 @@ for(ger in gear){
 		bMSE = getMSE(comps, bM)
 		nbMSE = getMSE(comps, nbM)
 		bbMSE = getMSE(comps, bbM)
-		
 		##
 		##PLOT COUNTS
 		##
