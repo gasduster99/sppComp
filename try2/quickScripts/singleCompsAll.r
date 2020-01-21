@@ -82,6 +82,12 @@ dat$portComplex = as.character(dat$portComplex)
 #for(cw in 1:dim(clustWeight)[1]){ dat[dat[,1]==clustWeight[cw, 1], dim(dat)[2]]=clustWeight[cw, 2] }
 #colnames(dat)[10] = 'clustSize'
 
+#
+pMSE = c()
+bMSE = c()
+nbMSE = c()
+bbMSE = c()
+nums = c()
 
 #add zeros/account for clusters
 mcatEff = unique(dat$mcat)[-3]
@@ -467,10 +473,12 @@ for(yer in yearEff){
 			bbM = rbind(bbM, bbBox[i, 'pMean'])
 		}
 		#
-		pMSE = getMSE(comps, pM)
-		bMSE = getMSE(comps, bM)
-		nbMSE = getMSE(comps, nbM)
-		bbMSE = getMSE(comps, bbM)
+		num = length(unlist(comps))
+		eval(parse( text=sprintf("pMSE = c(pMSE, '%s_%s_%s_%s'=getMSE(comps, pM)/num)", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("bMSE = c(bMSE, '%s_%s_%s_%s'=getMSE(comps, bM)/num)", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("nbMSE = c(nbMSE, '%s_%s_%s_%s'=getMSE(comps, nbM)/num)", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("bbMSE = c(bbMSE, '%s_%s_%s_%s'=getMSE(comps, bbM)/num)", mct, plc, ger, yer) )) 
+		nums = c(nums, num)
 		##
 		##PLOT COUNTS
 		##
@@ -504,51 +512,51 @@ for(yer in yearEff){
 		##legend('topright', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
 		##dev.off()
 		
-		#
-		#PLOT PROPS
-		#
+		##
+		##PLOT PROPS
+		##
 
-		#
-		#dev.new()
-		#pdf(sprintf('compPlotQtr%s.pdf', qtr))
-		pdf(sprintf('compPlot%s_%s_%s_%s.pdf', mct, plc, ger, yer))
-		plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='Proportion', xaxt='n', main=sprintf('Port:%s Gear:%s Year:%s', plc, ger, yer)) #95% Predictive HDI Model Comparison')
-		axis(1, at=1:howMany, labels=who)
-		for(i in 1:howMany){
-		       	#make spp comp
-		       	comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
-		       	points(rep(i, length(comps)), comps, pch='_', cex=4)
-			#poisson
-		        px = i-0.25
-		        #segments(px, pBox[i,'pLower'], px, pBox[i,'pUpper'], lwd=4, col='blue')
-		        for(j in 1:dim(pHDI[[who[i]]])[1]){
-				segments(px, pHDI[[who[i]]][j,'begin'], px, pHDI[[who[i]]][j,'end'], lwd=4, col='blue')
-			}
-			points(px, pBox[i, 'pMean'], pch=19, col='blue')
-			#binomial
-			bx = i-0.25+0.5/3*1
-			#segments(bx, bBox[i,'pLower'], bx, bBox[i,'pUpper'], lwd=4, col='red')
-			for(j in 1:dim(bHDI[[who[i]]])[1]){
-				segments(bx, bHDI[[who[i]]][j,'begin'], bx, bHDI[[who[i]]][j,'end'], lwd=4, col='red')
-			}
-			points(bx, bBox[i, 'pMean'], pch=19, col='red')
-			#negative binomial
-			nbx = i-0.25+0.5/3*2
-			for(j in 1:dim(nbHDI[[who[i]]])[1]){
-				segments(nbx, nbHDI[[who[i]]][j,'begin'], nbx, nbHDI[[who[i]]][j,'end'], lwd=4, col='forestgreen')
-			}
-			points(nbx, nbBox[i, 'pMean'], pch=19, col='forestgreen')
-			#beta binomial
-			bbx = i-0.25+0.5/3*3
-			for(j in 1:dim(bbHDI[[who[i]]])[1]){
-				segments(bbx, bbHDI[[who[i]]][j,'begin'], bbx, bbHDI[[who[i]]][j,'end'], lwd=4, col='darkorange')
-			}
-			points(bbx, bbBox[i, 'pMean'], pch=19, col='darkorange')
-		}
-		#legend
-		#legend(4.5, 0.75, legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
-		legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
-		dev.off()
+		##
+		##dev.new()
+		##pdf(sprintf('compPlotQtr%s.pdf', qtr))
+		#pdf(sprintf('compPlot%s_%s_%s_%s.pdf', mct, plc, ger, yer))
+		#plot(0, 0, ylim=c(0, 1.15), xlim=c(1-off, howMany+off), xlab='', ylab='Proportion', xaxt='n', main=sprintf('Port:%s Gear:%s Year:%s', plc, ger, yer)) #95% Predictive HDI Model Comparison')
+		#axis(1, at=1:howMany, labels=who)
+		#for(i in 1:howMany){
+		#       	#make spp comp
+		#       	comps = DAT$weight[DAT$species==who[i]]/DAT$clustSize[DAT$species==who[i]]
+		#       	points(rep(i, length(comps)), comps, pch='_', cex=4)
+		#	#poisson
+		#        px = i-0.25
+		#        #segments(px, pBox[i,'pLower'], px, pBox[i,'pUpper'], lwd=4, col='blue')
+		#        for(j in 1:dim(pHDI[[who[i]]])[1]){
+		#		segments(px, pHDI[[who[i]]][j,'begin'], px, pHDI[[who[i]]][j,'end'], lwd=4, col='blue')
+		#	}
+		#	points(px, pBox[i, 'pMean'], pch=19, col='blue')
+		#	#binomial
+		#	bx = i-0.25+0.5/3*1
+		#	#segments(bx, bBox[i,'pLower'], bx, bBox[i,'pUpper'], lwd=4, col='red')
+		#	for(j in 1:dim(bHDI[[who[i]]])[1]){
+		#		segments(bx, bHDI[[who[i]]][j,'begin'], bx, bHDI[[who[i]]][j,'end'], lwd=4, col='red')
+		#	}
+		#	points(bx, bBox[i, 'pMean'], pch=19, col='red')
+		#	#negative binomial
+		#	nbx = i-0.25+0.5/3*2
+		#	for(j in 1:dim(nbHDI[[who[i]]])[1]){
+		#		segments(nbx, nbHDI[[who[i]]][j,'begin'], nbx, nbHDI[[who[i]]][j,'end'], lwd=4, col='forestgreen')
+		#	}
+		#	points(nbx, nbBox[i, 'pMean'], pch=19, col='forestgreen')
+		#	#beta binomial
+		#	bbx = i-0.25+0.5/3*3
+		#	for(j in 1:dim(bbHDI[[who[i]]])[1]){
+		#		segments(bbx, bbHDI[[who[i]]][j,'begin'], bbx, bbHDI[[who[i]]][j,'end'], lwd=4, col='darkorange')
+		#	}
+		#	points(bbx, bbBox[i, 'pMean'], pch=19, col='darkorange')
+		#}
+		##legend
+		##legend(4.5, 0.75, legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), lwd=4, col=c('blue', 'red', 'forestgreen', 'darkorange'))
+		#legend('top', legend=c('Poisson', 'Binomial', 'Negative Binomial', 'Beta-Binomial'), pch=19, col=c('blue', 'red', 'forestgreen', 'darkorange'), ncol=2, lwd=4)#horiz=T, x.intersp=0.1,
+		#dev.off()
 #	}
 #}
 }}}}
