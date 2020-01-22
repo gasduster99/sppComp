@@ -49,8 +49,9 @@ getMSE = function(data, means){
 
 #dat = read.table('1985_trwl_mcat250.csv', header=T, sep=',')
 #Dat = read.table('data85to90.csv', header=F, sep=',', stringsAsFactors=F)
-Dat = read.table('data1978To1982.csv', header=T, sep=',', stringsAsFactors=F)
+#Dat = read.table('data1978To1982.csv', header=T, sep=',', stringsAsFactors=F)
 #Dat = read.table('data1983To1990.csv', header=T, sep=',', stringsAsFactors=F)
+Dat = read.table('data1978To1990.csv', header=T, sep=',', stringsAsFactors=F)
 #colnames(Dat) = c('id', 'clust', 'species', 'weight', 'year', 'qtr', 'port', 'portComplex', 'gear', 'mcat', 'total', 'isLive')
 #aggregate categories
 dat = aggregate( data.frame(Dat$year, Dat$qtr, Dat$portComplex, Dat$gearGroup, Dat$marketCategory, Dat$live), by=list(Dat$sampleNumber, Dat$species), FUN=unique )
