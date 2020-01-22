@@ -6654,7 +6654,6 @@
 "6653","198282104",1,"GSPT",16,1982,4,"BRG","BRG","TWL",250,5360,NA
 "6654","198282104",1,"WDOW",2,1982,4,"BRG","BRG","TWL",250,5360,NA
 "6655","198282104",1,"YTRK",19,1982,4,"BRG","BRG","TWL",250,5360,NA
-"","sampleNumber","clusterNumber","species","weight","year","qtr","calPort","portComplex","gearGroup","marketCategory","totalWeight","live"
 "1","198300013",1,"CNRY",9,1983,1,"MRO","MRO","HKL",959,3625,"N"
 "2","198300013",1,"COPP",25,1983,1,"MRO","MRO","HKL",959,3625,"N"
 "3","198300013",1,"VRML",155,1983,1,"MRO","MRO","HKL",959,3625,"N"
