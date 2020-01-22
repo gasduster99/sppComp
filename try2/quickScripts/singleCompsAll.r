@@ -216,7 +216,7 @@ for(yer in yearEff){
 		o = order(bp$stats[5,], decreasing=T)
 		#
 		off = 0.5
-		howMany = 5#6 #8 #7 #6
+		howMany = 3 #5#6 #8 #7 #6
 		all = bp$names[o]
 		who = head(bp$names[o], howMany)
 		#who = who[c(1,2,4,5,3,6)]
@@ -474,10 +474,10 @@ for(yer in yearEff){
 		}
 		#
 		num = length(unlist(comps))
-		eval(parse( text=sprintf("pMSE = c(pMSE, '%s_%s_%s_%s'=getMSE(comps, pM)/num)", mct, plc, ger, yer) )) 
-		eval(parse( text=sprintf("bMSE = c(bMSE, '%s_%s_%s_%s'=getMSE(comps, bM)/num)", mct, plc, ger, yer) )) 
-		eval(parse( text=sprintf("nbMSE = c(nbMSE, '%s_%s_%s_%s'=getMSE(comps, nbM)/num)", mct, plc, ger, yer) )) 
-		eval(parse( text=sprintf("bbMSE = c(bbMSE, '%s_%s_%s_%s'=getMSE(comps, bbM)/num)", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("pMSE = c(pMSE, '%s_%s_%s_%s'=getMSE(comps, pM))", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("bMSE = c(bMSE, '%s_%s_%s_%s'=getMSE(comps, bM))", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("nbMSE = c(nbMSE, '%s_%s_%s_%s'=getMSE(comps, nbM))", mct, plc, ger, yer) )) 
+		eval(parse( text=sprintf("bbMSE = c(bbMSE, '%s_%s_%s_%s'=getMSE(comps, bbM))", mct, plc, ger, yer) )) 
 		nums = c(nums, num)
 		##
 		##PLOT COUNTS
