@@ -697,4 +697,9 @@ for(yer in yearEff){
 ##}}}}
 ##}
 
+pdf("mseBox.pdf")
+mseBox = cbind(pMSE, bMSE, nbMSE, bbMSE)
+colnames(mseBox) = c('Poisson', 'Binomial', 'Negative Binomal', 'Beta-Binomial')
+boxplot(mseBox, ylab="MSE")
+dev.off()
 
