@@ -666,6 +666,51 @@ resulting \(\lambda^*_{j\cdot\cdot m\cdot}\) distributions.
 %
 
 %
+\subsection{Likelihood}
+%
+
+%
+MCAT 250, Montery, Trawl, 1982, Q2
+
+%
+
+
+%
+\begin{figure}[h!]
+\centering
+\begin{tabular}[c]{@{}lcccc@{}}
+\hline
+& Poisson & Binomial & NB & BB \\ \hline
+MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
+%\(\Delta\) DIC & 1001.41 & 1230.60 & 5.03 & 0 \\
+\(\Delta\) WAIC & 1079.95 & 1323.75 & 3.43 & 0 \\ \hline
+%\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx10^{-7}\) & \(\approx1-10^{-7}\) \\ \hline
+\end{tabular}
+\end{figure}
+
+
+%
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{./pictures/mseBoxP.pdf}
+\end{figure}
+
+%
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\textwidth]{./pictures/compVioplotQtr2.png}
+\end{figure}
+
+%
+The Poisson, Binomial, Negative Binomial, and Beta-Binomial likelihood 
+performance was evaluated independently of any other modeling decisions.  
+
+were evto separately each port gearstratum of data from 1978-1990.  
+
+
+
+
+%
 \begin{itemize}
 \item model comparison across likelihoods 
 	\begin{itemize}
@@ -800,9 +845,9 @@ multinomial model.
 
 %
 Due to the theoretical restrictitions of these simple models, and the reality 
-the port sampling environment it is possible (or likely) that the actual data
-in CALCOM deviate substanatively from the platonic ideals implyed by the one 
-parameter counting distributions. In this appendix we emperically question 
+the port sampling environment, it is possible (or even likely) that the actual 
+data in CALCOM deviate substanatively from the platonic ideals implyed by the 
+one parameter counting distributions. In this appendix we emperically question 
 the appropriatness of the assumptions of various data generating processes, and 
 explore models that loosen these assumptions by accounting for the overdispersion 
 present in the CALCOM data. It is also interesting to note that McCullagh and Nelder 
@@ -832,6 +877,9 @@ the residual variance. %, while producing more accurate measures of center.
 %EXPAND to explain experiment/INTRODUCE MODELS FOR BELOW
 We develop an example on a subset of data to evaluate statistical support for
 overdispersed models. 
+
+
+
 %grid of fits?
 %	space
 %	gear
@@ -926,6 +974,24 @@ overdispersed models, see appendix \ref{likelihoodAppendix}, which we have subse
 	\item describe experiment
 	\end{itemize}
 \end{itemize}
+
+%\begin{figure}
+%\centering
+%%\resizebox{\textwidth}{!}{
+%\begin{tabular}[c]{@{}lcccc@{}}
+%\hline
+%& Poisson & Binomial & NB & BB \\ \hline
+%%\midrule
+%%\endhead
+%MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
+%%\(\Delta\) DIC & 1001.41 & 1230.60 & 5.03 & 0 \\
+%\(\Delta\) WAIC & 1079.95 & 1323.75 & 3.43 & 0 \\ \hline
+%%\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx10^{-7}\) & \(\approx1-10^{-7}\) \\ \hline
+%%\bottomrule
+%\end{tabular}
+%%}
+%\end{figure}
+
 
 %
 \subsection{Appendix B: Prior Experiments}\label{priorAppendix}

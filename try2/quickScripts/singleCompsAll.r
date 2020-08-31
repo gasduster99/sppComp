@@ -700,6 +700,6 @@ for(yer in yearEff){
 pdf("mseBox.pdf")
 mseBox = cbind(pMSE, bMSE, nbMSE, bbMSE)
 colnames(mseBox) = c('Poisson', 'Binomial', 'Negative Binomal', 'Beta-Binomial')
-boxplot(mseBox, ylab="MSE")
+boxplot(mseBox, ylab="MSE", main="Likelihood Performance", ylim=c(0.06, 0.23))
 dev.off()
 
