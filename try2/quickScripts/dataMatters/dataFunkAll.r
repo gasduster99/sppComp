@@ -27,7 +27,7 @@ getRawDataAll = function(minYear, maxYear, save=F){
 	#driver
 	drv = JDBC('com.microsoft.sqlserver.jdbc.SQLServerDriver', './sqljdbc4.jar', identifier.quote="'");
 	#connection
-	ch = dbConnect(drv, 'jdbc:sqlserver://161.55.237.17;databaseName=grunloh_db', 'nick.grunloh', 'Nmfsswfsc!2018') #getPass('User:'), getPass('Password:'))#
+	ch = dbConnect(drv, 'jdbc:sqlserver://161.55.237.17;databaseName=COMX', 'nick.grunloh', 'Nmfsswfsc!2018') #getPass('User:'), getPass('Password:'))#
 	#port sample data query
 	raw = dbGetQuery(ch,
 	        sprintf("
