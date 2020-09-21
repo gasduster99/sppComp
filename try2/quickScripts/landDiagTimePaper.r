@@ -263,7 +263,7 @@ plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, c
 			lines(comSppYearF[comSppYearF$species==s, 'year'], blu, col=calcomCol, lwd=3)
 			points(comSppYearF[comSppYearF$species==s, 'year'], blu, col=calcomCol, pch=20, cex=2)	
 		}
-		legend('topleft', legend=legend, fill=c(cols, calcomCol))
+		legend('topright', legend=legend, fill=c(cols, calcomCol))
 		dev.off()
 	}	
 	#
@@ -599,10 +599,6 @@ writeLines('1991-2001 South Done.')
 #COMBINE SOUTH
 #
 
-##
-#summarizeDistY8390$ySummary[['1983']] = NULL
-#summarizeDistY8390$ygSummary[['1983']] = NULL
-
 #fill in holes
 summarizeDistY8390 = fillSummary(summarizeDistY8390, yearGoldF=as.character(1983:1990))
 summarizeDistY9101 = fillSummary(summarizeDistY9101, yearGoldF=as.character(1991:2001))
@@ -629,7 +625,13 @@ dirName = 'M4SPIG78to01Split/' #subRight(runPaths[1], 34)
 legend = c('North', 'South') 
 plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL) 
 
-
+#
+summarizeDistY8390$ySummary[['1983']] = NULL
+summarizeDistY8390$ygSummary[['1983']] = NULL
+#
+dirName = 'M4SPIG78to01SplitNo83/' #subRight(runPaths[1], 34)
+legend = c('North', 'South')
+plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL)
 
 
 
