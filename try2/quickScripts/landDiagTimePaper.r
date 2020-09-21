@@ -145,6 +145,42 @@ summarizeByYear = function(yearDists, yearGold){
 }
 
 #
+fillSummary = function(summarizeDist, yearGoldF=yearGold, gearGoldF=gearGold, sppListF=sppList){
+	#years given as a vector of strings
+
+	#
+	for(y in yearGoldF){
+		#
+		ySum = summarizeDist$ySummary[[y]]
+		if( !length(ySum) ){
+			#
+			fill = matrix(0, 6, length(sppListF))
+			colnames(fill) = sppNot
+			#
+			summarizeDist$ySummary[[y]] = fill
+			summarizeDist$ygSummary[[y]] = list() #NOTE: I think I need this
+			for(g in gearGoldF){ summarizeDist$ygSummary[[y]][[g]]=fill }
+			#
+			next
+		}
+		#
+		sppNot = sppListF[!sppListF%in%colnames(ySum)]
+		fill = matrix(0, nrow(ySum), length(sppNot))
+		colnames(fill) = sppNot
+		#
+		summarizeDist$ySummary[[y]] = cbind(ySum, fill)
+
+		#
+		for(g in gearGoldF){
+			#
+                        summarizeDist$ygSummary[[y]][[g]] = cbind(summarizeDist$ygSummary[[y]][[g]], fill)
+		}
+	}
+	#
+	return( summarizeDist )
+}
+
+#
 plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, comSppGearYearF=comSppGearYear, sppListF=sppList, col='blue', alpha=50, legend='', calcomCol=NULL){
 	#calcomCol:	NULL turns off calcom line; a color string changes color
 	#
@@ -157,8 +193,8 @@ plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, c
 		#
 		legend = legend[-length(legend)]
 		#
-		comSppYearF$x = 0
-		comSppGearYearF$x = 0
+		comSppYearF$x = -1000
+		comSppGearYearF$x = -1000
 	}
 	#
 	cols = col
@@ -171,14 +207,15 @@ plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, c
 			summarizeDistY = summarizeDistYs[[k]]
                         #
                         ySummary = summarizeDistY$ySummary
-                        ygSummary = summarizeDistY$ygSummary
-			toptop = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['10%',s]})
-			top = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['25%',s]})
-			med = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['50%',s]})
-			mean = sapply(as.character(yearGoldF), function(x){ySummary[[x]][6,s]})
+			#
+			yearLoop = names(ySummary)
+			toptop = unlist(sapply(yearLoop, function(x){ySummary[[x]]['10%',s]})) #print(x); print(s); print(head(ySummary[[x]])); 
+			top = unlist(sapply(yearLoop, function(x){ySummary[[x]]['25%',s]}))
+			med = unlist(sapply(yearLoop, function(x){ySummary[[x]]['50%',s]}))
+			mean = unlist(sapply(yearLoop, function(x){ySummary[[x]][6,s]}))
 			blu = comSppYearF[comSppYearF$species==s, 'x']
-			bot = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['75%',s]})
-			botbot = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['90%',s]})
+			bot = unlist(sapply(yearLoop, function(x){ySummary[[x]]['75%',s]}))
+			botbot = unlist(sapply(yearLoop, function(x){ySummary[[x]]['90%',s]}))
 			#
 			#maxer = c(maxer, toptop, top, med, mean, blu, bot, botbot)
 			maxer = c(maxer, max(toptop), max(top), max(med), max(mean), max(blu), max(bot), max(botbot))
@@ -189,35 +226,40 @@ plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, c
 			summarizeDistY = summarizeDistYs[[k]]
 			#
 			ySummary = summarizeDistY$ySummary
-			ygSummary = summarizeDistY$ygSummary		
+			#ygSummary = summarizeDistY$ygSummary	
+			#
 			##10%, 25%, 50%, 75%, 90%, mean
 			#sapply(as.character(yearGoldF), function(x){ySummary[[x]]['50%','BCAC']})
-			toptop = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['10%',s]})
-			top = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['25%',s]})
-			med = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['50%',s]})
-			mean = sapply(as.character(yearGoldF), function(x){ySummary[[x]][6,s]})
+			yearLoop = names(ySummary)
+			toptop = unlist(sapply(yearLoop, function(x){ySummary[[x]]['10%',s]}))
+			top = unlist(sapply(yearLoop, function(x){ySummary[[x]]['25%',s]}))
+			med = unlist(sapply(yearLoop, function(x){ySummary[[x]]['50%',s]}))
+			mean = unlist(sapply(yearLoop, function(x){ySummary[[x]][6,s]}))
 			blu = comSppYearF[comSppYearF$species==s, 'x']
-			bot = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['75%',s]})
-			botbot = sapply(as.character(yearGoldF), function(x){ySummary[[x]]['90%',s]})
+			bot = unlist(sapply(yearLoop, function(x){ySummary[[x]]['75%',s]}))
+			botbot = unlist(sapply(yearLoop, function(x){ySummary[[x]]['90%',s]}))
 			#
+			years = as.numeric(names(toptop))	
 			if(k==1){
 				#	
 				dir.create(sprintf('%s%s', dir, s))
 				pdf(sprintf('%s%s/year%s.pdf', dir, s, s))
-				plot(yearGoldF, mean, type='l', 
+				plot(comSppYearF[comSppYearF$species==s, 'year'], blu, 
+					type='l', 
 					ylab='Landings (mt)',
 					xlab='Year',
 					col=col, #adjustcolor(col, alpha),
 					main=s,
-					ylim=c(0, max(maxer))
+					ylim=c(0, max(maxer)),
+					xlim=c(min(yearGoldF), max(yearGoldF))
 				)
-			}
-			polygon(c(yearGoldF, rev(yearGoldF)), c(toptop, rev(botbot)), border=NA,
+			}	
+			polygon(c(years, rev(years)), c(toptop, rev(botbot)), border=NA,
 				col = rgb(col2rgb(col)[1], col2rgb(col)[2], col2rgb(col)[3], alpha=alpha, maxColorValue=255) #adjustcolor(col, alpha)
 			)
 			#polygon(c(yearGoldF, rev(yearGoldF)), c(top, rev(bot)), col='grey30', border=NA)
-			lines(yearGoldF, mean, lwd=3, col=col)
-			lines(yearGoldF, med, lty=2, lwd=3, col=col)
+			lines(years, mean, lwd=3, col=col)
+			lines(years, med, lty=2, lwd=3, col=col)
 			lines(comSppYearF[comSppYearF$species==s, 'year'], blu, col=calcomCol, lwd=3)
 			points(comSppYearF[comSppYearF$species==s, 'year'], blu, col=calcomCol, pch=20, cex=2)	
 		}
@@ -235,15 +277,17 @@ plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, c
                         ySummary = summarizeDistY$ySummary
                         ygSummary = summarizeDistY$ygSummary
 			#
-			toptop = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['10%',s]})
-			top = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['25%',s]})
-			med = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['50%',s]})
-			mean = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]][6,s]})
+			yearLoop = names(ygSummary)
+			toptop = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['10%',s]}))
+			top = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['25%',s]}))
+			med = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['50%',s]}))
+			mean = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]][6,s]}))
 			blu = comSppGearYearF[comSppGearYearF$species==s & comSppGearYearF$gear==g, 'x']
-			bot = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['75%',s]})
-			botbot = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['90%',s]})
+			bot = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['75%',s]}))
+			botbot = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['90%',s]}))
 			#
 			maxer = c(maxer, max(toptop), max(top), max(med), max(mean), max(blu), max(bot), max(botbot))
+			#print(maxer)
 		}
 		for(k in 1:K){
 			#	
@@ -252,44 +296,46 @@ plotLands = function(..., dirName, yearGoldF=yearGold, comSppYearF=comSppYear, c
 			#
 			ySummary = summarizeDistY$ySummary
 			ygSummary = summarizeDistY$ygSummary
-		
-			##10%, 25%, 50%, 75%, 90%, mean
-			#sapply(as.character(yearGoldF), function(x){ySummary[[x]]['50%','BCAC']})
-			toptop = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['10%',s]})
-			top = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['25%',s]})
-			med = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['50%',s]})
-			mean = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]][6,s]})
-			blu = comSppGearYearF[comSppGearYearF$species==s & comSppGearYearF$gear==g, 'x']
-			bot = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['75%',s]})
-			botbot = sapply(as.character(yearGoldF), function(x){ygSummary[[x]][[g]]['90%',s]})
 			#
+			yearLoop = names(ygSummary)
+			toptop = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['10%',s]}))
+			top = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['25%',s]}))
+			med = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['50%',s]}))
+			mean = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]][6,s]}))
+			blu = comSppGearYearF[comSppGearYearF$species==s & comSppGearYearF$gear==g, 'x']
+			bot = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['75%',s]}))
+			botbot = unlist(sapply(yearLoop, function(x){ygSummary[[x]][[g]]['90%',s]}))
+			#
+			years = as.numeric(names(toptop))
 			if(k==1){
 				#       
 				pdf(sprintf('%s%s/yearGear%s-%s.pdf', dir, s, s, g))
-				plot(yearGoldF, mean, type='l',
+				plot(comSppGearYearF[comSppGearYearF$species==s & comSppGearYearF$gear==g, 'year'], blu,
+					type='l',
 				        ylab='Landings (mt)',
 				        xlab='Year',
 				        col=col, #adjustcolor(col, alpha),
 					main=sprintf('%s:%s', s, g),
-				        ylim=c(0, max(maxer))
+				        ylim=c(0, max(maxer)),
+					xlim=c(min(yearGoldF), max(yearGoldF))
 				)
 			}
-			polygon(c(yearGoldF, rev(yearGoldF)), c(toptop, rev(botbot)), border=NA,
+			polygon(c(years, rev(years)), c(toptop, rev(botbot)), border=NA,
 				col = rgb(col2rgb(col)[1], col2rgb(col)[2], col2rgb(col)[3], alpha=alpha, maxColorValue=255) #adjustcolor(col, alpha)
 			)
 			#polygon(c(yearGoldF, rev(yearGoldF)), c(top, rev(bot)), col='grey30', border=NA)
-			lines(yearGoldF, mean, lwd=3, col=col)
-			lines(yearGoldF, med, lty=2, lwd=3, col=col)
+			lines(years, mean, lwd=3, col=col)
+			lines(years, med, lty=2, lwd=3, col=col)
 			lines(comSppGearYearF[comSppGearYearF$species==s & comSppGearYearF$gear==g, 'year'], blu, col=calcomCol, lwd=3)
 			points(comSppGearYearF[comSppGearYearF$species==s & comSppGearYearF$gear==g, 'year'], blu, col=calcomCol, pch=20, cex=2)
 		}
-		legend('topleft', legend=legend, fill=c(cols, calcomCol))
+		legend('topright', legend=legend, fill=c(cols, calcomCol))
 		dev.off()
 	}}
 }
 
 #
-#1978-1982
+#1978-1982 NORTH
 #
 
 #NOTE: change years and port appropriatly (?spp?)
@@ -337,13 +383,13 @@ summarizeDistY7882 = summarizeByYear(sumDistY, yearGold)
 writeLines('1978-1982 Done.')
 
 #
-#1983-1990
+#1983-1990 NORTH
 #
 
 #NOTE: change years and port appropriatly (?spp?)
 minYear = 1983
 maxYear = 1990
-portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
+portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO')#, 'OSB', 'OLA', 'OSD')
 yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
@@ -385,13 +431,13 @@ summarizeDistY8390 = summarizeByYear(sumDistY, yearGold)
 writeLines('1983-1990 Done.')
 
 #
-#1991-2001
+#1991-2001 NORTH
 #
 
 #NOTE: change years and port appropriatly (?spp?)
 minYear = 1991
 maxYear = 2001
-portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
+portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO')#, 'OSB', 'OLA', 'OSD')
 yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
@@ -433,42 +479,220 @@ summarizeDistY9101 = summarizeByYear(sumDistY, yearGold)
 writeLines('1991-2001 Done.')
 
 #
-#PLOT
+#COMBINE NORTH
 #
 
-#combine data structures
-summarizeDistY7801 = summarizeDistY9101
-summarizeDistY7801$ySummary$`1978` = summarizeDistY7882$ySummary$`1978`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1978`[[g]] = summarizeDistY7882$ygSummary$`1978`[[g]] }
-summarizeDistY7801$ySummary$`1979` = summarizeDistY7882$ySummary$`1979`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1979`[[g]] = summarizeDistY7882$ygSummary$`1979`[[g]] }
-summarizeDistY7801$ySummary$`1980` = summarizeDistY7882$ySummary$`1980`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1980`[[g]] = summarizeDistY7882$ygSummary$`1980`[[g]] }
-summarizeDistY7801$ySummary$`1981` = summarizeDistY7882$ySummary$`1981`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1981`[[g]] = summarizeDistY7882$ygSummary$`1981`[[g]] }
-summarizeDistY7801$ySummary$`1982` = summarizeDistY7882$ySummary$`1982`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1982`[[g]] = summarizeDistY7882$ygSummary$`1982`[[g]] }
-summarizeDistY7801$ySummary$`1983` = summarizeDistY8390$ySummary$`1983`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1983`[[g]] = summarizeDistY8390$ygSummary$`1983`[[g]] }
-summarizeDistY7801$ySummary$`1984` = summarizeDistY8390$ySummary$`1984`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1984`[[g]] = summarizeDistY8390$ygSummary$`1984`[[g]] }
-summarizeDistY7801$ySummary$`1985` = summarizeDistY8390$ySummary$`1985`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1985`[[g]] = summarizeDistY8390$ygSummary$`1985`[[g]] }
-summarizeDistY7801$ySummary$`1986` = summarizeDistY8390$ySummary$`1986`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1986`[[g]] = summarizeDistY8390$ygSummary$`1986`[[g]] }
-summarizeDistY7801$ySummary$`1987` = summarizeDistY8390$ySummary$`1987`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1987`[[g]] = summarizeDistY8390$ygSummary$`1987`[[g]] }
-summarizeDistY7801$ySummary$`1988` = summarizeDistY8390$ySummary$`1988`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1988`[[g]] = summarizeDistY8390$ygSummary$`1988`[[g]] }
-summarizeDistY7801$ySummary$`1989` = summarizeDistY8390$ySummary$`1989`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1989`[[g]] = summarizeDistY8390$ygSummary$`1989`[[g]] }
-summarizeDistY7801$ySummary$`1990` = summarizeDistY8390$ySummary$`1990`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1990`[[g]] = summarizeDistY8390$ygSummary$`1990`[[g]] }
-#
-dirName = 'M4SPIG78to01/' #subRight(runPaths[1], 34)
-legend = c('Landings') #cols[1:length(legend)]
-plotLands(summarizeDistY7801, dirName=dirName, yearGoldF=1978:2001, col='black', legend=legend, calcomCol=NULL) #rgb(0,0,0, max=255, alpha=0)) #comSppYearF=NULL, )
 
+summarizeDistY7801 = summarizeDistY7882
+for(x in as.character(1983:1990)){
+        #
+        summarizeDistY7801$ySummary[[x]] = summarizeDistY8390$ySummary[[x]]
+        for(g in gearGold){
+                summarizeDistY7801$ygSummary[[x]][[g]] = summarizeDistY8390$ygSummary[[x]][[g]]
+        }
+}
+for(x in as.character(yearGold)){
+        #
+        summarizeDistY7801$ySummary[[x]] = summarizeDistY9101$ySummary[[x]]
+        for(g in gearGold){
+                summarizeDistY7801$ygSummary[[x]][[g]] = summarizeDistY9101$ygSummary[[x]][[g]]
+        }
+}
+
+#
+#1983-1990 SOUTH
+#
+
+#NOTE: change years and port appropriatly (?spp?)
+minYear = 1983
+maxYear = 1990
+portGold = c('OSB', 'OLA', 'OSD')
+yearGold = minYear:maxYear
+qtrGold  = 1:4
+gearGold = c('HKL', 'TWL', 'NET')
+sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
+##NOTE: expand MCATS or remove 
+#mcats = c(250, 253, 269)
+#
+cols = brewer.pal(9, 'Set1')
+globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
+runPaths = Sys.glob(sprintf("%s%sto%s//*%s%s/", globPath, minYear, maxYear, minYear, maxYear))
+mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[[1]][2], 1, 3)}))
+
+#
 #LANDINGS
 land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
-where = land$year>=1978 & land$year<=2001  #land$live=='N' & #NOTE: remove live where 
+where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
 land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+
 #
 land = land[land$mcat%in%mcats,]
 land = land[land$gear%in%gearGold,]
 land = land[land$port%in%portGold,]
+land = land[land$year%in%yearGold,]
 land = land[land$qtr%in%qtrGold,]
 #convert landings to metric tons
 land$weight = land$weight/2204.62
+
 #
-comSppYear7801 = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
+comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
+comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+
+#
+#APPLY
+expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
+sumDistY = sumDistByYear(expDistMY, yearGold)
+summarizeDistY8390 = summarizeByYear(sumDistY, yearGold)
+
+#
+writeLines('1983-1990 South Done.')
+
+#
+#1991-2001 SOUTH
+#
+
+#NOTE: change years and port appropriatly (?spp?)
+minYear = 1991
+maxYear = 2001
+portGold = c('OSB', 'OLA', 'OSD')
+yearGold = minYear:maxYear
+qtrGold  = 1:4
+gearGold = c('HKL', 'TWL', 'NET')
+sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
+##NOTE: expand MCATS or remove 
+#mcats = c(250, 253, 269)
+#
+cols = brewer.pal(9, 'Set1')
+globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
+runPaths = Sys.glob(sprintf("%s%sto%s//*%s%s/", globPath, minYear, maxYear, minYear, maxYear))
+mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[[1]][2], 1, 3)}))
+
+#
+#LANDINGS
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
+where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
+land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+
+#
+land = land[land$mcat%in%mcats,]
+land = land[land$gear%in%gearGold,]
+land = land[land$port%in%portGold,]
+land = land[land$year%in%yearGold,]
+land = land[land$qtr%in%qtrGold,]
+#convert landings to metric tons
+land$weight = land$weight/2204.62
+
+#
+comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
+comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+
+#
+#APPLY
+expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
+sumDistY = sumDistByYear(expDistMY, yearGold)
+summarizeDistY9101 = summarizeByYear(sumDistY, yearGold)
+
+#
+writeLines('1991-2001 South Done.')
+
+#
+#COMBINE SOUTH
+#
+
+##
+#summarizeDistY8390$ySummary[['1983']] = NULL
+#summarizeDistY8390$ygSummary[['1983']] = NULL
+
+#fill in holes
+summarizeDistY8390 = fillSummary(summarizeDistY8390, yearGoldF=as.character(1983:1990))
+summarizeDistY9101 = fillSummary(summarizeDistY9101, yearGoldF=as.character(1991:2001))
+
+#
+summarizeDistY8301S = summarizeDistY8390
+
+#combine justified versions of 83-90 with 91-01
+for(x in as.character(1991:2001)){
+	#
+	summarizeDistY8301S$ySummary[[x]] = summarizeDistY9101$ySummary[[x]]
+	#
+	for(g in gearGold){ 
+		summarizeDistY8301S$ygSummary[[x]][[g]] = summarizeDistY9101$ygSummary[[x]][[g]] 
+	}
+}
+
+#
+#PLOT
+#
+
+#
+dirName = 'M4SPIG78to01Split/' #subRight(runPaths[1], 34)
+legend = c('North', 'South') 
+plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL) 
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#JUNK
+#
+
+
+##combine data structures
+#summarizeDistY7801 = summarizeDistY9101
+#summarizeDistY7801$ySummary$`1978` = summarizeDistY7882$ySummary$`1978`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1978`[[g]] = summarizeDistY7882$ygSummary$`1978`[[g]] }
+#summarizeDistY7801$ySummary$`1979` = summarizeDistY7882$ySummary$`1979`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1979`[[g]] = summarizeDistY7882$ygSummary$`1979`[[g]] }
+#summarizeDistY7801$ySummary$`1980` = summarizeDistY7882$ySummary$`1980`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1980`[[g]] = summarizeDistY7882$ygSummary$`1980`[[g]] }
+#summarizeDistY7801$ySummary$`1981` = summarizeDistY7882$ySummary$`1981`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1981`[[g]] = summarizeDistY7882$ygSummary$`1981`[[g]] }
+#summarizeDistY7801$ySummary$`1982` = summarizeDistY7882$ySummary$`1982`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1982`[[g]] = summarizeDistY7882$ygSummary$`1982`[[g]] }
+#summarizeDistY7801$ySummary$`1983` = summarizeDistY8390$ySummary$`1983`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1983`[[g]] = summarizeDistY8390$ygSummary$`1983`[[g]] }
+#summarizeDistY7801$ySummary$`1984` = summarizeDistY8390$ySummary$`1984`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1984`[[g]] = summarizeDistY8390$ygSummary$`1984`[[g]] }
+#summarizeDistY7801$ySummary$`1985` = summarizeDistY8390$ySummary$`1985`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1985`[[g]] = summarizeDistY8390$ygSummary$`1985`[[g]] }
+#summarizeDistY7801$ySummary$`1986` = summarizeDistY8390$ySummary$`1986`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1986`[[g]] = summarizeDistY8390$ygSummary$`1986`[[g]] }
+#summarizeDistY7801$ySummary$`1987` = summarizeDistY8390$ySummary$`1987`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1987`[[g]] = summarizeDistY8390$ygSummary$`1987`[[g]] }
+#summarizeDistY7801$ySummary$`1988` = summarizeDistY8390$ySummary$`1988`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1988`[[g]] = summarizeDistY8390$ygSummary$`1988`[[g]] }
+#summarizeDistY7801$ySummary$`1989` = summarizeDistY8390$ySummary$`1989`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1989`[[g]] = summarizeDistY8390$ygSummary$`1989`[[g]] }
+#summarizeDistY7801$ySummary$`1990` = summarizeDistY8390$ySummary$`1990`; for(g in gearGold){ summarizeDistY7801$ygSummary$`1990`[[g]] = summarizeDistY8390$ygSummary$`1990`[[g]] }
+
+
+
+
+
+
+	      #summarizeDistY8301S = summarizeDistY9101
+#summarizeDistY8301S$ySummary = sapply(as.character(yearGold), function(x){ summarizeDistY8301S$ySummary[[x]][,colnames(summarizeDistY8390$ySummary[["1983"]])] })
+#summarizeDistY8301S$ygSummary = sapply(as.character(yearGold), function(x){ for(g in gearGold){ summarizeDistY8301S$ygSummary[[x]][[g]][,colnames(summarizeDistY8390$ySummary[["1983"]])] } })
+#summarizeDistY8301S$ySummary$`1983` = summarizeDistY8390$ySummary$`1983`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1983`[[g]] = summarizeDistY8390$ygSummary$`1983`[[g]] }
+#summarizeDistY8301S$ySummary$`1984` = summarizeDistY8390$ySummary$`1984`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1984`[[g]] = summarizeDistY8390$ygSummary$`1984`[[g]] }
+#summarizeDistY8301S$ySummary$`1985` = summarizeDistY8390$ySummary$`1985`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1985`[[g]] = summarizeDistY8390$ygSummary$`1985`[[g]] }
+#summarizeDistY8301S$ySummary$`1986` = summarizeDistY8390$ySummary$`1986`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1986`[[g]] = summarizeDistY8390$ygSummary$`1986`[[g]] }
+#summarizeDistY8301S$ySummary$`1987` = summarizeDistY8390$ySummary$`1987`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1987`[[g]] = summarizeDistY8390$ygSummary$`1987`[[g]] }
+#summarizeDistY8301S$ySummary$`1988` = summarizeDistY8390$ySummary$`1988`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1988`[[g]] = summarizeDistY8390$ygSummary$`1988`[[g]] }
+#summarizeDistY8301S$ySummary$`1989` = summarizeDistY8390$ySummary$`1989`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1989`[[g]] = summarizeDistY8390$ygSummary$`1989`[[g]] }
+#summarizeDistY8301S$ySummary$`1990` = summarizeDistY8390$ySummary$`1990`; for(g in gearGold){ summarizeDistY8301S$ygSummary$`1990`[[g]] = summarizeDistY8390$ygSummary$`1990`[[g]] }
+
+
+
+##LANDINGS
+#land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
+#where = land$year>=1978 & land$year<=2001  #land$live=='N' & #NOTE: remove live where 
+#land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+##
+#land = land[land$mcat%in%mcats,]
+#land = land[land$gear%in%gearGold,]
+#land = land[land$port%in%portGold,]
+#land = land[land$qtr%in%qtrGold,]
+##convert landings to metric tons
+#land$weight = land$weight/2204.62
+##
+#comSppYear7801 = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
 
 
 
