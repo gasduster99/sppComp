@@ -332,7 +332,7 @@ comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$spe
 #
 legend = c()
 cols = brewer.pal(9, 'Set1')
-globPath = "/home/nick/Documents/sppComp/inla/" #"/media/nick/extraBig/"
+globPath = "/media/nick/extraBig/" #"/home/nick/Documents/sppComp/inla/" #
 
 ##
 #runPaths = Sys.glob(sprintf("%s/*%s%sM2/", globPath, minYear, maxYear))
@@ -345,7 +345,7 @@ globPath = "/home/nick/Documents/sppComp/inla/" #"/media/nick/extraBig/"
 
 #NOTE: Here
 runPaths = Sys.glob(sprintf("%s/*%s%sM4/", globPath, minYear, maxYear))
-legend = c(legend, subRight(runPaths[1], 34))
+legend = c(legend, "v~IG(1, 2000)") #subRight(runPaths[1], 34))
 print(legend)
 #
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold)
@@ -354,25 +354,25 @@ summarizeDistY0 = summarizeByYear(sumDistY, yearGold)
 
 #
 runPaths = Sys.glob(sprintf("%s/*%s%sM4HC1/", globPath, minYear, maxYear))
-legend = c(legend, subRight(runPaths[1], 34))
+legend = c(legend, "v~Half-Cauchy(10)") #subRight(runPaths[1], 34))
 print(legend)
 #
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold)
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY1 = summarizeByYear(sumDistY, yearGold)
 
-#
-runPaths = Sys.glob(sprintf("%s/*%s%sM4HC3/", globPath, minYear, maxYear))
-legend = c(legend, subRight(runPaths[1], 34))
-print(legend)
-#
-expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold)
-sumDistY = sumDistByYear(expDistMY, yearGold)
-summarizeDistY2 = summarizeByYear(sumDistY, yearGold)
+##
+#runPaths = Sys.glob(sprintf("%s/*%s%sM4HC3/", globPath, minYear, maxYear))
+#legend = c(legend, subRight(runPaths[1], 34))
+#print(legend)
+##
+#expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold)
+#sumDistY = sumDistByYear(expDistMY, yearGold)
+#summarizeDistY2 = summarizeByYear(sumDistY, yearGold)
 
 #
 runPaths = Sys.glob(sprintf("%s/*%s%sM4U4/", globPath, minYear, maxYear))
-legend = c(legend, subRight(runPaths[1], 34))
+legend = c(legend, "v~U(0, 10000)") #subRight(runPaths[1], 34))
 print(legend)
 #
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold)
@@ -383,8 +383,8 @@ summarizeDistY3 = summarizeByYear(sumDistY, yearGold)
 comSppYear$x = 0
 comSppGearYear$x = 0
 #
-dirName = 'M4IGHC1HC3U4/' #subRight(runPaths[1], 34)
-plotLands(summarizeDistY0, summarizeDistY1, summarizeDistY2, summarizeDistY3, dirName=dirName, col=cols[1:length(legend)], legend=legend, calcomCol=NULL) #rgb(0,0,0, max=255, alpha=0)) #comSppYearF=NULL, )
+dirName = 'M4IGHC1U4/' #subRight(runPaths[1], 34)
+plotLands(summarizeDistY0, summarizeDistY1, summarizeDistY3, dirName=dirName, col=cols[1:length(legend)], legend=legend, calcomCol=NULL) #rgb(0,0,0, max=255, alpha=0)) #comSppYearF=NULL, )
 
 
 

@@ -626,8 +626,8 @@ legend = c('North', 'South')
 plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL) 
 
 #
-summarizeDistY8390$ySummary[['1983']] = NULL
-summarizeDistY8390$ygSummary[['1983']] = NULL
+summarizeDistY8301S$ySummary[['1983']] = NULL
+summarizeDistY8301S$ygSummary[['1983']] = NULL
 #
 dirName = 'M4SPIG78to01SplitNo83/' #subRight(runPaths[1], 34)
 legend = c('North', 'South')
