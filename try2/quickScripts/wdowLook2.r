@@ -12,8 +12,8 @@ library(fitdistrplus)
 #
 
 #NOTE: change years and port appropriatly (?spp?)
-minYear = 1978 #1983 #
-maxYear = 1982 #1990 #
+minYear = 1983 #
+maxYear = 1990 #
 portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
 yearGold = minYear:maxYear
 qtrGold  = 1:4
