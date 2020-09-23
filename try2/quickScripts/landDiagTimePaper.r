@@ -346,8 +346,7 @@ yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
 sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
-##NOTE: expand MCATS or remove 
-#mcats = c(250, 253, 269)
+
 #
 cols = brewer.pal(9, 'Set1')
 globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
@@ -394,8 +393,7 @@ yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
 sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
-##NOTE: expand MCATS or remove 
-#mcats = c(250, 253, 269)
+
 #
 cols = brewer.pal(9, 'Set1')
 globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
@@ -442,8 +440,7 @@ yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
 sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
-##NOTE: expand MCATS or remove 
-#mcats = c(250, 253, 269)
+
 #
 cols = brewer.pal(9, 'Set1')
 globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
@@ -511,8 +508,7 @@ yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
 sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
-##NOTE: expand MCATS or remove 
-#mcats = c(250, 253, 269)
+
 #
 cols = brewer.pal(9, 'Set1')
 globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
@@ -539,6 +535,10 @@ comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species
 comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
 
 #
+tablue = aggregate(land$weight, by=list(port=land$port, gear=land$year), FUN=sum)
+print(tablue) 
+
+#
 #APPLY
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
 sumDistY = sumDistByYear(expDistMY, yearGold)
@@ -559,8 +559,7 @@ yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET')
 sppList = c('WDOW', 'BCAC', 'CLPR', 'BANK', 'YTRK', 'BLGL', 'DBRK', 'CNRY', 'SNOS', 'CWCD', 'POP', 'BRNZ', 'MXRF') #'CMEL')
-##NOTE: expand MCATS or remove 
-#mcats = c(250, 253, 269)
+
 #
 cols = brewer.pal(9, 'Set1')
 globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"

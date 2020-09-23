@@ -75,6 +75,43 @@ spaceChart = cbind(spaceLand, spaceSamW$x/spaceSamT$x)
 colnames(spaceChart) = c('Port', 'Landings (MT)', '% WDOW Sampled')
 
 #
+#SPACE/TIME
+#
+
+#
+#NOTE: change years and port appropriatly (?spp?)
+minYear = 1983
+maxYear = 1990
+portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
+yearGold = minYear:maxYear
+qtrGold  = 1:4
+gearGold = c('HKL', 'TWL', 'NET')
+
+#
+cols = brewer.pal(9, 'Set1')
+globPath = "/home/nick/Documents/sppComp/inla/hotWired" #"/media/nick/extraBig/"
+runPaths = Sys.glob(sprintf("%s%sto%s//*%s%s/", globPath, minYear, maxYear, minYear, maxYear))
+mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[[1]][2], 1, 3)}))
+
+#
+#LANDINGS
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
+where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where
+land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+
+##
+#land = land[land$mcat%in%mcats,]
+land = land[land$gear%in%gearGold,]
+land = land[land$port%in%portGold,]
+land = land[land$year%in%yearGold,]
+land = land[land$qtr%in%qtrGold,]
+#convert landings to metric tons
+land$weight = land$weight/2204.62
+
+#
+tablue = aggregate(land$weight, by=list(port=land$port, year=land$year, mcat=land$mcat), FUN=sum)
+
+#
 #CORRELATION
 #
 
