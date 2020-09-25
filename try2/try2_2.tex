@@ -669,11 +669,14 @@ resulting \(\lambda^*_{j\cdot\cdot m\cdot}\) distributions.
 \subsection{Likelihood}
 %
 
-%
-MCAT 250, Montery, Trawl, 1982, Q2
-
-%
-
+%MCAT 250, Montery, Trawl, 1982, Q2
+Among the Poisson, binomial, negative binomial, and beta-binomial models the 
+Beta-Binomial garners the most support. When considering heavily sampled 
+strata, such as market category 250's Montery trawl fishery in the winter of 
+1982 a simple comparison of the model performance metrics clearly selects 
+models which account for overdispersion and further selects the Beta-Binomial 
+likelihood as the model with the best performance characteristics, as seen in 
+table (\ref{likeTab}). 
 
 %
 \begin{figure}[h!]
@@ -686,26 +689,56 @@ MSE & 0.06412 & 0.06264 & 0.05171 & 0.04479 \\
 \(\Delta\) WAIC & 1079.95 & 1323.75 & 3.43 & 0 \\ \hline
 %\(pr(M|y)\) & \(\approx0\) & \(\approx0\) & \(\approx10^{-7}\) & \(\approx1-10^{-7}\) \\ \hline
 \end{tabular}
+\label{likeTab}
 \end{figure}
 
+%separately each port gear stratum of data from 1978-1990.
+Market category 250's Montery trawl fishery in the winter of 1982 is indeed 
+heavily sampled, but still it is one amoung many unique strata through 
+time. To address the generalizability of this result, while not imposing any 
+pooling effects from the mixed effects linear predictor we intend to fit, 
+available port sampling data in each port, gear, and market category 
+combination of each year from 1978 to 1990 are individually fit to make the 
+same likelihood comparison. The distribution of MSE performance metrics among 
+these straum are shown in figure (\ref{mseBox}).  
 
 %
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\textwidth]{./pictures/mseBoxP.pdf}
+\label{mseBox}
 \end{figure}
+
+%
+The same general trends can be seen in the MSE distributions as initially 
+displayed in table (\ref{likeTab}). Significance codes for the two-sided 
+pairwise t-tests testing each likelihood model pair against the null hypothesis 
+that the mean MSE are the same in each pairwise case are displayed above 
+the boxplots. Again, the models which account for overdispersion clearly perform 
+best. The beta-binomial model has the smallest average MSE. The p-value testing 
+the null hyopthesis that the means are the same, against the alternative 
+hypothesis that the beta-binomial model has a lower mean MSE, is highly 
+significant with a value of 0.02618.  
 
 %
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.6\textwidth]{./pictures/compVioplotQtr2.png}
+\label{violin}
 \end{figure}
 
 %
-The Poisson, Binomial, Negative Binomial, and Beta-Binomial likelihood 
-performance was evaluated independently of any other modeling decisions.  
-
-were evto separately each port gearstratum of data from 1978-1990.  
+Amoung the models considered here, the beta-binomial distribution is capable of 
+modeling the largest amount of variance. Figure (\ref{violin}) demonstrates how 
+the beta-binomial model distributes predictive density over the unit interval 
+for market category 250's Montery trawl fishery in the winter of 1982. Species 
+composition is bounded on {[}0, 1{]}, thus in the presence of large variability, 
+predictive density may aggregate around the bounds as seen here for Bocaccio 
+and, to a lesser extent, Chilipepper rockfish. This predictive behavior should not 
+be considered a flaw of any model so long as the modeled variance is appropriate 
+and predictive, of with the evidence suggested the beta-binomial predictions are. 
+%All of the evidence seen here indicates that modeling large residual variation 
+%should be considered a fundamental component of 
 
 %
 \subsection{Prior}
