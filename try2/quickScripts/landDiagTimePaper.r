@@ -355,9 +355,9 @@ mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[
 
 #
 #LANDINGS
-land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'source', 'V2'), stringsAsFactors=F)
 where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
-land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+land = land[where, c('source', 'live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
 
 #
 land = land[land$mcat%in%mcats,]
@@ -371,12 +371,35 @@ land$weight = land$weight/2204.62
 #
 comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
 comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+#
+nomLand = land[land$source%in%c('Nominal', 'NOMINAL'),]
+nomSppYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species), FUN=sum)
+nomSppGearYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species, gear=nomLand$gear), FUN=sum)
 
 #
 #APPLY
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY7882 = summarizeByYear(sumDistY, yearGold)
+
+#add nominal
+for(x in as.character(minYear:maxYear)){
+        #
+	for(s in sppList){ 
+		if( length(nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'])!=0 ){
+			summarizeDistY7882$ySummary[[x]][,s] = summarizeDistY7882$ySummary[[x]][,s] + nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'] 
+		}
+	}
+        #
+        for(g in gearGold){
+                #
+        	for(s in sppList){
+		       	if( length(nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'])!=0 ){
+                		summarizeDistY7882$ygSummary[[x]][[g]][,s] = summarizeDistY7882$ygSummary[[x]][[g]][,s] + nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'] 
+			}
+		}
+	}
+}
 
 #
 writeLines('1978-1982 Done.')
@@ -402,9 +425,9 @@ mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[
 
 #
 #LANDINGS
-land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'source', 'V2'), stringsAsFactors=F)
 where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
-land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+land = land[where, c('source', 'live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
 
 #
 land = land[land$mcat%in%mcats,]
@@ -418,12 +441,35 @@ land$weight = land$weight/2204.62
 #
 comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
 comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+#
+nomLand = land[land$source%in%c('Nominal', 'NOMINAL'),]
+nomSppYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species), FUN=sum)
+nomSppGearYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species, gear=nomLand$gear), FUN=sum)
 
 #
 #APPLY
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY8390 = summarizeByYear(sumDistY, yearGold)
+
+#add nominal
+for(x in as.character(minYear:maxYear)){
+        #
+	for(s in sppList){ 
+		if( length(nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'])!=0 ){
+			summarizeDistY8390$ySummary[[x]][,s] = summarizeDistY8390$ySummary[[x]][,s] + nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'] 
+		}
+	}
+        #
+        for(g in gearGold){
+                #
+        	for(s in sppList){
+		       	if( length(nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'])!=0 ){
+                		summarizeDistY8390$ygSummary[[x]][[g]][,s] = summarizeDistY8390$ygSummary[[x]][[g]][,s] + nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'] 
+			}
+		}
+	}
+}
 
 #
 writeLines('1983-1990 Done.')
@@ -449,9 +495,9 @@ mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[
 
 #
 #LANDINGS
-land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'source', 'V2'), stringsAsFactors=F)
 where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
-land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+land = land[where, c('source', 'live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
 
 #
 land = land[land$mcat%in%mcats,]
@@ -465,12 +511,35 @@ land$weight = land$weight/2204.62
 #
 comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
 comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+#
+nomLand = land[land$source%in%c('Nominal', 'NOMINAL'),]
+nomSppYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species), FUN=sum)
+nomSppGearYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species, gear=nomLand$gear), FUN=sum)
 
 #
 #APPLY
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY9101 = summarizeByYear(sumDistY, yearGold)
+
+#add nominal
+for(x in as.character(minYear:maxYear)){
+        #
+	for(s in sppList){ 
+		if( length(nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'])!=0 ){
+			summarizeDistY9101$ySummary[[x]][,s] = summarizeDistY9101$ySummary[[x]][,s] + nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'] 
+		}
+	}
+        #
+        for(g in gearGold){
+                #
+        	for(s in sppList){
+		       	if( length(nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'])!=0 ){
+                		summarizeDistY9101$ygSummary[[x]][[g]][,s] = summarizeDistY9101$ygSummary[[x]][[g]][,s] + nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'] 
+			}
+		}
+	}
+}
 
 #
 writeLines('1991-2001 Done.')
@@ -479,7 +548,7 @@ writeLines('1991-2001 Done.')
 #COMBINE NORTH
 #
 
-
+#
 summarizeDistY7801 = summarizeDistY7882
 for(x in as.character(1983:1990)){
         #
@@ -517,9 +586,9 @@ mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[
 
 #
 #LANDINGS
-land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
-where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
-land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'source', 'V2'), stringsAsFactors=F)
+where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where
+land = land[where, c('source', 'live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
 
 #
 land = land[land$mcat%in%mcats,]
@@ -533,16 +602,39 @@ land$weight = land$weight/2204.62
 #
 comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
 comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+#
+nomLand = land[land$source%in%c('Nominal', 'NOMINAL'),]
+nomSppYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species), FUN=sum)
+nomSppGearYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species, gear=nomLand$gear), FUN=sum)
 
 #
 tablue = aggregate(land$weight, by=list(port=land$port, gear=land$year), FUN=sum)
-print(tablue) 
+#print(tablue) 
 
 #
 #APPLY
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY8390 = summarizeByYear(sumDistY, yearGold)
+
+#add nominal
+for(x in as.character(minYear:maxYear)){
+        #
+	for(s in sppList){ 
+		if( length(nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'])!=0 ){
+			summarizeDistY8390$ySummary[[x]][,s] = summarizeDistY8390$ySummary[[x]][,s] + nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'] 
+		}
+	}
+        #
+        for(g in gearGold){
+                #
+        	for(s in sppList){
+		       	if( length(nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'])!=0 ){
+                		summarizeDistY8390$ygSummary[[x]][[g]][,s] = summarizeDistY8390$ygSummary[[x]][[g]][,s] + nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'] 
+			}
+		}
+	}
+}
 
 #
 writeLines('1983-1990 South Done.')
@@ -568,9 +660,9 @@ mcats = as.numeric(sapply(runPaths, function(run){substring(strsplit(run, '//')[
 
 #
 #LANDINGS
-land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'V1', 'V2'), stringsAsFactors=F)
-where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where 
-land = land[where, c('live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
+land = read.table('./dataMatters/comLands.csv', sep=',', col.names=c('year', 'qtr', 'live', 'mcat', 'gear', 'port', 'species', 'weight', 'source', 'V2'), stringsAsFactors=F)
+where = land$year>=minYear & land$year<=maxYear  #land$live=='N' & #NOTE: remove live where
+land = land[where, c('source', 'live', 'mcat', 'year', 'qtr', 'gear', 'port', 'species', 'weight')]
 
 #
 land = land[land$mcat%in%mcats,]
@@ -584,12 +676,36 @@ land$weight = land$weight/2204.62
 #
 comSppYear = aggregate(land$weight, by=list(year=land$year, species=land$species), FUN=sum)
 comSppGearYear = aggregate(land$weight, by=list(year=land$year, species=land$species, gear=land$gear), FUN=sum)
+#
+nomLand = land[land$source%in%c('Nominal', 'NOMINAL'),]
+nomSppYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species), FUN=sum)
+nomSppGearYear = aggregate(nomLand$weight, by=list(year=nomLand$year, species=nomLand$species, gear=nomLand$gear), FUN=sum)
 
 #
 #APPLY
 expDistMY = expandDistByMcatYear(land, runPaths, portGold, gearGold, yearGold, qtrGold, threads=16)
 sumDistY = sumDistByYear(expDistMY, yearGold)
 summarizeDistY9101 = summarizeByYear(sumDistY, yearGold)
+
+#add nominal
+for(x in as.character(minYear:maxYear)){
+        #
+	for(s in sppList){ 
+		if( length(nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'])!=0 ){
+			summarizeDistY9101$ySummary[[x]][,s] = summarizeDistY9101$ySummary[[x]][,s] + nomSppYear[nomSppYear$year==x & nomSppYear$species==s,'x'] 
+		}
+	}
+        #
+        for(g in gearGold){
+                #
+        	for(s in sppList){
+		       	if( length(nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'])!=0 ){
+                		summarizeDistY9101$ygSummary[[x]][[g]][,s] = summarizeDistY9101$ygSummary[[x]][[g]][,s] + nomSppGearYear[nomSppGearYear$year==x & nomSppGearYear$species==s & nomSppGearYear$gear==g,'x'] 
+			}
+		}
+	}
+}
+
 
 #
 writeLines('1991-2001 South Done.')
@@ -624,13 +740,13 @@ dirName = 'M4SPIG78to01Split/' #subRight(runPaths[1], 34)
 legend = c('North', 'South') 
 plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL) 
 
-#
-summarizeDistY8301S$ySummary[['1983']] = NULL
-summarizeDistY8301S$ygSummary[['1983']] = NULL
-#
-dirName = 'M4SPIG78to01SplitNo83/' #subRight(runPaths[1], 34)
-legend = c('North', 'South')
-plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL)
+##
+#summarizeDistY8301S$ySummary[['1983']] = NULL
+#summarizeDistY8301S$ygSummary[['1983']] = NULL
+##
+#dirName = 'M4SPIG78to01SplitNo83/' #subRight(runPaths[1], 34)
+#legend = c('North', 'South')
+#plotLands(summarizeDistY7801, summarizeDistY8301S, dirName=dirName, yearGoldF=1978:2001, col=cols[1:length(legend)], legend=legend, calcomCol=NULL)
 
 
 
