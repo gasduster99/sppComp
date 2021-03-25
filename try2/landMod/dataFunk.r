@@ -149,7 +149,7 @@ makeD = function(sppGold, raw){
 	#print( aggregate(D$raw.comLands, by=list(D$raw.portComplex), sum) )
 	
 	#sum weight across cluster
-	D = aggregate(raw$weight, raw[-which(colnames(raw)%in%c('clusterNumber', 'weight'))], sum)
+	D = aggregate(raw$weight, raw[-which(colnames(raw)%in%c('clusterNumber', 'weight', 'comLands'))], sum)
 	#c('species', 'year', 'qtr', 'port', 'gear', 'mcat', 'live', 'id', 'landing', 'weight')
 	colnames(D)[ncol(D)] = 'weight'
 	colnames(D)[colnames(D)=='sampleNumber'] = 'id'	
@@ -168,8 +168,8 @@ makeD = function(sppGold, raw){
 	D$gear = as.character(D$gear)
 
 	#TWL=TWL+MDT; 'HKL'; 'FPT'; 'NET'
-	D$gear[D$gear=='MDT'] = 'TWL'
-	
+	D$gear[D$gear=='MDT'] = 'TWL'	
+
 	#
 	#ADD ZEROS
 	#

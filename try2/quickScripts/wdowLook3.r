@@ -281,7 +281,7 @@ thresh = quantile(dd$lands, probs=c(2/5, 4/5))
 #thresh = quantile(dd$lands, probs=c(0.2, 1-0.2))
 nameStr = paste(round(thresh), collapse='-')
 thresh = c(0.1, thresh, max(dd$lands))
-#thresh = c(0.1, 2.821348, 16.496721, max(dd$lands))
+#thresh = c(min(dd$lands), 2.821348, 16.496721, max(dd$lands))
 png(sprintf('%s%sJointLand%s.png', minYear, maxYear, nameStr))
 for(i in 1:(length(thresh)-1)){
 	#
@@ -331,41 +331,41 @@ for(i in 1:(length(thresh)-1)){
         #leg = c(leg, sprintf("%s", levels[i]))
 }
 dev.off()
-
 #
-png(sprintf('%s%sLandDensity%s.png', minYear, maxYear, nameStr))
-#dev.new()
-plot(oneDensity[[1]],
-     col=cols[1],
-     lwd=3,
-     main='p( log(Landings) | Species Composition=1 )',
-     xlab='log(Landings)',
-     xlim=c(-2.5, 2.5),
-     ylim=c(0, max(sapply(oneDensity, function(x){x$y})))
-)
-lines(margDensity[[1]],
-        col=cols[1],
-        lwd=3,
-        xlim=c(-2.5, 2.5),
-	lty=2
-)
-for(i in 2:length(oneDensity)){
-        if(!is.null(oneDensity[[i]])){
-                lines(oneDensity[[i]],
-                        col=cols[i],
-                        lwd=3,
-                        xlim=c(-2.5, 2.5)
-                )
-		lines(margDensity[[i]],
-                        col=cols[i],
-                        lwd=3,
-                        xlim=c(-2.5, 2.5),
-			lty=2
-                )
-               
-        }                       
-}                               
-dev.off()                      
+##
+#png(sprintf('%s%sLandDensity%s.png', minYear, maxYear, nameStr))
+##dev.new()
+#plot(oneDensity[[1]],
+#     col=cols[1],
+#     lwd=3,
+#     main='p( log(Landings) | Species Composition=1 )',
+#     xlab='log(Landings)',
+#     xlim=c(-2.5, 2.5),
+#     ylim=c(0, max(sapply(oneDensity, function(x){x$y})))
+#)
+#lines(margDensity[[1]],
+#        col=cols[1],
+#        lwd=3,
+#        xlim=c(-2.5, 2.5),
+#	lty=2
+#)
+#for(i in 2:length(oneDensity)){
+#        if(!is.null(oneDensity[[i]])){
+#                lines(oneDensity[[i]],
+#                        col=cols[i],
+#                        lwd=3,
+#                        xlim=c(-2.5, 2.5)
+#                )
+#		lines(margDensity[[i]],
+#                        col=cols[i],
+#                        lwd=3,
+#                        xlim=c(-2.5, 2.5),
+#			lty=2
+#                )
+#               
+#        }                       
+#}                               
+#dev.off()                      
 
 
 

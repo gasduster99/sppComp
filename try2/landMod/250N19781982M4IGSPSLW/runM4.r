@@ -10,7 +10,7 @@ source('../modelFunk.r')
 #
 
 #
-mcat = 253 
+mcat = 250 
 minYear = 1978        
 maxYear = 1982  
 #
@@ -40,8 +40,9 @@ dd = merge(ss, tt, by=c('year', 'qtr', 'portComplex', 'gearGroup', 'marketCatego
 colnames(dd) = c('year', 'qtr', 'portComplex', 'gearGroup', 'marketCategory', 'live', 'sampleNumber', 'lands', 'species', 'sampleWeight', 'sampleTotal')
 dd$lands = dd$lands/2204.62
 #
-thresh = quantile(dd$lands, probs=c(2/5, 4/5))
-thresh = c(0.1, thresh, max(dd$lands))
+#thresh = quantile(dd$lands, probs=c(2/5, 4/5))
+#thresh = c(0.1, thresh, max(dd$lands))
+thresh = c(min(dd$lands), 2.821348, 16.496721, max(dd$lands))
 dd$landCat = rep(NA, length(dd$lands))
 for(i in 1:(length(thresh)-1)){ 
 	dd$landCat[dd$lands<thresh[i+1] & dd$lands>=thresh[i]] = i
@@ -79,9 +80,9 @@ pPriorTable = INLA:::inla.paste(c("table:", cbind(pPrior$x, y)))
 #model
 modelDef = weight~species+gear+port+f(YQ)+f(SP)+SL
 #, model='iid', hyper=list(prec=list(prior=pPriorTable)))+f(SP, model='iid', hyper=list(prec=list(prior=pPriorTable)))
-fit = runModel(modelDef, DPred, 8)
+fit = runModel(modelDef, DPred, 24)
 #sample
-sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, catGold, DPred, M=10^4, samplePath=samplePath, cores=2))
+sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, catGold, DPred, M=10^4, samplePath=samplePath, cores=1))
 metrics = t(c(fit$mlik[1], fit$waic$waic, fit$dic$dic, fit$cpu.used['Total']))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'time')
 write.csv(format(metrics, scientific=T, digits=22), file="./metrics.csv", row.names=F, quote=F)

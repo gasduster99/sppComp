@@ -205,7 +205,7 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, catGold, D, M=1
 	#make D index string
 	d = dim(D)[1]
 	nd = nchar(as.character(d))
-	dStr = sprintf('Predictor:%%0%dd', nd)
+	dStr = "Predictor:%d" #sprintf('Predictor:%%0%dd', nd)
 	#sample #NOTE: split up samples upto M is neccessary
 	postSamples = inla.posterior.sample(M, model)
 	hypeSamples = inla.hyperpar.sample(M, model)
@@ -229,7 +229,7 @@ sampler = function(model, portGold, gearGold, qtrGold, yearGold, catGold, D, M=1
 		        write.table(t(as.character(sppGold)), file=sprintf("%ssppComp.csv", path), row.names=F, col.names=F, quote=F, sep=',')
 			#
 			pgqyWhere = which(
-			       D$catLand==lc	&
+			       D$landCat==lc	&
                                D$port==p 	&
                                D$gear==g 	&
                                D$year==y 	&

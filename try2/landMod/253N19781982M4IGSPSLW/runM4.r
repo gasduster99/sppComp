@@ -10,7 +10,7 @@ source('../modelFunk.r')
 #
 
 #
-mcat = 250 
+mcat = 253 
 minYear = 1978        
 maxYear = 1982  
 #
@@ -22,20 +22,44 @@ portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO')
 yearGold = minYear:maxYear
 qtrGold  = 1:4
 gearGold = c('HKL', 'TWL', 'NET') #c('HKL', 'TWL', 'FPT', 'NET', 'MDT')
+catGold  = 1:3
 
 #
 #DATA
 #
 
+#a work around for adding in landing recipt landing size (this eventually should go inside getRawData in the sql call)
+#SAMPLE
+sam = read.table(sprintf('../data%dTo%d.csv', minYear, maxYear), sep=',', header=T, stringsAsFactors=F)
+ss = aggregate(sam$weight, by=list(species=sam$species, portComplex=sam$portComplex, year=sam$year, qtr=sam$qtr, gearGroup=sam$gearGroup, marketCategory=sam$marketCategory, live=sam$live, sampleNumber=sam$sampleNumber, totalWeight=sam$totalWeight), FUN=sum)
+colnames(ss) = c('species', 'portComplex', 'year', 'qtr', 'gearGroup', 'marketCategory', 'live', 'sampleNumber', 'totalWeight', 'weight')
+tt = aggregate(ss$weight, by=list(portComplex=ss$portComplex, year=ss$year, qtr=ss$qtr, gearGroup=ss$gearGroup, marketCategory=ss$marketCategory, live=ss$live, sampleNumber=ss$sampleNumber, totalWeight=ss$totalWeight), FUN=sum)
+colnames(tt) = c('portComplex', 'year', 'qtr', 'gearGroup', 'marketCategory', 'live', 'sampleNumber', 'totalWeight', 'weight')
+#merge in the landings and focus on WDOW
+dd = merge(ss, tt, by=c('year', 'qtr', 'portComplex', 'gearGroup', 'marketCategory', 'live', 'sampleNumber', 'totalWeight'), all.x=T)
+colnames(dd) = c('year', 'qtr', 'portComplex', 'gearGroup', 'marketCategory', 'live', 'sampleNumber', 'lands', 'species', 'sampleWeight', 'sampleTotal')
+dd$lands = dd$lands/2204.62
+#
+#thresh = quantile(dd$lands, probs=c(2/5, 4/5))
+#thresh = c(0.1, thresh, max(dd$lands))
+thresh = c(min(dd$lands), 2.821348, 16.496721, max(dd$lands))
+dd$landCat = rep(NA, length(dd$lands))
+for(i in 1:(length(thresh)-1)){ 
+	dd$landCat[dd$lands<thresh[i+1] & dd$lands>=thresh[i]] = i
+}
 #
 #Draw = getRawData(mcat, minYear, maxYear, save=T)
 Draw = read.csv(dataFile)
+#workaround for adding rptLands
+Draw = merge(Draw, dd, by=c('species', 'year', 'qtr', 'portComplex', 'gearGroup', 'marketCategory', 'live', 'sampleNumber'), all.x=T)
+Draw = Draw[,-which(colnames(Draw)%in%c('sampleWeight', 'sampleTotal', 'lands'))]
+#colnames(Draw)[which(colnames(Draw)%in%c('lands'))] = 'rptLands' 
 #now I define sppGold from the data
-sppGold  = as.character(unique(Draw$species))
+sppGold = as.character(unique(Draw$species))
 #add implied multinomial species structure
 D = makeD(sppGold, Draw)
 #add predictive structure 
-DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
+DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, catGold, D)
 
 #
 #MODEL
@@ -45,6 +69,7 @@ DPred = addPredStrat(sppGold, portGold, gearGold, yearGold, qtrGold, D)
 DPred$YQ = as.character(interaction(DPred$year, DPred$qtr))
 DPred$SP = as.character(interaction(DPred$species, DPred$port))
 DPred$SG = as.character(interaction(DPred$species, DPred$gear))
+DPred$SL = as.character(interaction(DPred$species, DPred$landCat))
 #prior
 sdPrior = abs(rcauchy(10^6, 0, 10^3))
 pPrior = log( (1/(sdPrior^2)) ) #[(1/(sdPrior^2))<10^6] )
@@ -53,11 +78,11 @@ y = pPrior$y
 y[1:which(y==max(y))]=max(y)
 pPriorTable = INLA:::inla.paste(c("table:", cbind(pPrior$x, y)))
 #model
-modelDef = weight~species+gear+port+f(YQ)+f(SP)
+modelDef = weight~species+gear+port+f(YQ)+f(SP)+SL
 #, model='iid', hyper=list(prec=list(prior=pPriorTable)))+f(SP, model='iid', hyper=list(prec=list(prior=pPriorTable)))
-fit = runModel(modelDef, DPred, 48)
+fit = runModel(modelDef, DPred, 24)
 #sample
-sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, DPred, M=10^4, samplePath=samplePath, cores=2))
+sampleTime = system.time(sampler(fit, portGold, gearGold, qtrGold, yearGold, catGold, DPred, M=10^4, samplePath=samplePath, cores=7))
 metrics = t(c(fit$mlik[1], fit$waic$waic, fit$dic$dic, fit$cpu.used['Total']))
 colnames(metrics) = c('mlik', 'waic', 'dic', 'time')
 write.csv(format(metrics, scientific=T, digits=22), file="./metrics.csv", row.names=F, quote=F)
