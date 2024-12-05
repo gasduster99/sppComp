@@ -22,6 +22,7 @@ if( !exists("MM") ){ MM=10000 }
 #make working directory. copy code for documentation. write paths as absolute with getwd().
 #In dir: data, code, tree, *.rds files
 modPath = file.path(getwd(), modID)
+modPath = file.path('./', modID)
 if( !dir.exists(modPath) ){ dir.create(modPath); }
 file.copy(c("./dataFunk.r", "./predFunk.r", "./model.r", "./main.r"), modPath)
 save.image(sprintf("%s/data%s.RData", modPath, modID))
@@ -133,8 +134,8 @@ if( file.exists(brmsMod) ){
 #
 brmsOut = brm(
         bf(
-		weight|trials(nBB)~ -1 + species + port + gear + (1|YQ),
-        	zi = 0 
+		zi = 0,
+	   	weight|trials(nBB)~ -1 + species + port + gear + (1|YQ)
 	),
         data   = D, #Pred,
         family = zero_inflated_beta_binomial(),
@@ -152,7 +153,7 @@ brmsOut = brm(
 		#While divergent transitions bias inference, a too-small maximum tree-depth only affects efficiency. 
 		#The sampler is still exploring the posterior distribution, but the exploration will be slower and 
 		#the autocorrelation higher (effective sample size lower) than if the maximum tree-depth were set higher.
-		max_treedepth = 10
+		max_treedepth = 15 #10 #7
 	),
 	file_refit = refit, #"always", #"on_change", 
 	init = ms, #0, #default is random 
@@ -162,7 +163,7 @@ brmsOut = brm(
 	warmup = floor(warmFrac*thin*MM/cores), #floor(iter*warmFrac),
         iter = ceiling( thin*MM/cores + floor(warmFrac*thin*MM/cores) ) #(thin+1)*MM/cores #ceiling((thin+1)*MM/cores) #600
 )
-
+add_criterion(fit, c("loo", "waic"))
 writeLines('')
 
 

@@ -16,8 +16,8 @@ source('predFunk.r')
 
 #
 mcat = 250 
-minYear = 1978 #1991 #1983 #
-maxYear = 1982 #2001 #1990 #
+minYear = 1978 #1983 #1978 #1991 #
+maxYear = 1982 #1990 #1982 #2001 #
 
 ##gold standards for defining strata
 #portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
@@ -38,6 +38,7 @@ regionID = sprintf("%s%s", mcat, regionID)
 #
 #dataFile = sprintf('%sdata%sTo%s_2018-06-08.csv', mcat, substring(minYear, 3, 4), substring(maxYear, 3, 4))
 raw = getRawData(mcat, minYear, maxYear, save=T, fromFile=T) #, fromFile="250CALCOMdata78To82_2024-10-28.csv") #"250data78To83_2024-11-13.csv") #T)
+raw = raw[raw$portComplex%in%portGold,]
 
 #define sppGold from the data
 spp  = unique(raw$species[raw$portComplex%in%portGold])
@@ -82,8 +83,8 @@ D$YQ = as.character(interaction(D$year, D$qtr))
 refit="on_change" # "always"
 cores = parallel::detectCores()-1
 MM = 1000 
-thin = 1
-warmFrac = 0.01 #seq(0.1, 0.9, 0.1)[5] #1/3
+thin = 2
+warmFrac = seq(0, 1, 0.05)[1+1] #1/3
 modID = sprintf("%s%sto%sSPGY:Q", regionID, minYear, maxYear)
 #
 source('model.r')

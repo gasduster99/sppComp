@@ -147,18 +147,17 @@ brmsOut = brm(
 		#https://jrnold.github.io/bayesian_notes/mcmc-diagnostics.html#hmc-nut-specific-diagnostics
 		##default 0.95, tune to divergent transitions
 		#recommend trying 0.99, 0.999, 0.9999 ... (smaller is faster and closer to 1 is more robust) 
-		adapt_delta=0.99,
+		adapt_delta = 0.995, #9,
 		#defalt is 7, tune for autocorrelation
 		#While divergent transitions bias inference, a too-small maximum tree-depth only affects efficiency. 
 		#The sampler is still exploring the posterior distribution, but the exploration will be slower and 
 		#the autocorrelation higher (effective sample size lower) than if the maximum tree-depth were set higher.
 		max_treedepth = 10
 	),
-	file_refit = refit, #"always", #"on_change", #getOption("brms.file_refit", "never"),
-	#init = 0,
-	init = ms, 
-        #silent = 0,
-        file = brmsMod, #sprintf("%s/brms%s.rds", modPath, modID),
+	file_refit = refit, #"always", #"on_change", 
+	init = ms, #0, #default is random 
+        #silent = 0, 
+        file = brmsMod, 
 	thin = thin,
 	warmup = floor(warmFrac*thin*MM/cores), #floor(iter*warmFrac),
         iter = ceiling( thin*MM/cores + floor(warmFrac*thin*MM/cores) ) #(thin+1)*MM/cores #ceiling((thin+1)*MM/cores) #600

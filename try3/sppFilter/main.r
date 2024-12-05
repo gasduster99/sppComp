@@ -16,8 +16,8 @@ source('predFunk.r')
 
 #
 mcat = 250 
-minYear = 1983 #1978 #1991 #
-maxYear = 1990 #1982 #2001 #
+minYear = 1978 #1991 #1983 #
+maxYear = 1982 #2001 #1990 #
 
 ##gold standards for defining strata
 #portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
@@ -43,7 +43,7 @@ raw = raw[raw$portComplex%in%portGold,]
 #define sppGold from the data
 spp  = unique(raw$species[raw$portComplex%in%portGold])
 #sppGold = names(sort(table(raw$species[raw$weight>0]))[floor(length(spp)*3/4):length(spp)])
-aSpp = read.csv('assSpp.csv')
+aSpp = read.csv('assSppMore.csv') #read.csv('assSpp.csv')
 flatSpp = c()
 sppKey = list()
 for(i in 1:nrow(aSpp)){
@@ -60,6 +60,7 @@ keySpp = with(stack(sppKey), split(as.character(ind), values))
 raw$species = unlist(sapply(raw$species, function(x)keySpp[[x]]))
 #
 sppGold = unique(raw$species) 
+
 #
 D = makeD(sppGold, portGold, gearGold, yearGold, qtrGold, raw)
 #interactions
@@ -82,26 +83,26 @@ D$YQ = as.character(interaction(D$year, D$qtr))
 #
 refit="on_change" # "always"
 cores = parallel::detectCores()-1
-MM = 1000 
-thin = 2
-warmFrac = seq(0, 1, 0.05)[1+1] #1/3
+MM = 10000 
+thin = 10
+warmFrac = seq(0, 1, 0.05)[1+2] #1/3
 modID = sprintf("%s%sto%sSPGY:Q", regionID, minYear, maxYear)
 #
 source('model.r')
 
+##
+##PREDICT
+##
 #
-#PREDICT
-#
-
-##
-##https://www.andrewheiss.com/blog/2021/11/10/ame-bayes-re-guide/#posterior-predictions
-##MM x #(pred strata)
-#predSam = posterior_predict(brmsOut, newdata=predD, allow_new_levels=T, sample_new_levels="uncertainty")# "gaussian")
-##
-#postSam = as_draws_df(brmsOut)
-##
-sppComps = sppCompPred(MM, brmsOut, sppGold, portGold, gearGold, yearGold, qtrGold, tree=T, place=modPath, cores=cores)
-saveRDS(sppComps, file=sprintf("%s/sppComp%s.rds", modPath, modID))
+###
+###https://www.andrewheiss.com/blog/2021/11/10/ame-bayes-re-guide/#posterior-predictions
+###MM x #(pred strata)
+##predSam = posterior_predict(brmsOut, newdata=predD, allow_new_levels=T, sample_new_levels="uncertainty")# "gaussian")
+###
+##postSam = as_draws_df(brmsOut)
+###
+#sppComps = sppCompPred(MM, brmsOut, sppGold, portGold, gearGold, yearGold, qtrGold, tree=T, place=modPath, cores=cores)
+#saveRDS(sppComps, file=sprintf("%s/sppComp%s.rds", modPath, modID))
 
 
 #
