@@ -4,7 +4,7 @@ ARRA,"ROCKFISH, AURORA",Sebastes aurora,ROCKFISH,,,
 BSKT,"SKATE, BIG",Raja binoculata                       ,ELASMOBRANCH   ,,,
 BLCK,"ROCKFISH, BLACK",Sebastes melanops,ROCKFISH,,,
 BLGL,"ROCKFISH, BLACKGILL",Sebastes melanostomus,ROCKFISH,,,
-BLUR,"ROCKFISH, BLUE",Sebastes mystinus,ROCKFISH,,BDRK,DEAC
+BDRK,"ROCKFISH, BLUE - GENERIC",Sebastes mystinus,ROCKFISH,,BLUR,DEAC
 BCAC,"ROCKFISH, BOCACCIO",Sebastes paucispinis,ROCKFISH,,,
 BRWN,"ROCKFISH, BROWN",Sebastes auriculatus,ROCKFISH,,,
 CBZN,CABEZON,Scorpaenichthys marmorat,OTHER_GF,,,

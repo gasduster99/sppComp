@@ -86,7 +86,7 @@ cores = parallel::detectCores()-1
 MM = 10000 
 thin = 10
 warmFrac = seq(0, 1, 0.05)[1+2] #1/3
-modID = sprintf("%s%sto%sSPGY:Q", regionID, minYear, maxYear)
+modID = sprintf("%s%sto%sSPGY:QMore", regionID, minYear, maxYear)
 #
 source('model.r')
 
