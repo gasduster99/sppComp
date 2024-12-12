@@ -15,7 +15,7 @@ source('predFunk.r')
 #
 
 #
-mcat = 250 
+mcat = 959 #250 
 minYear = 1978 #1991 #1983 #
 maxYear = 1982 #2001 #1990 #
 
@@ -43,7 +43,7 @@ raw = raw[raw$portComplex%in%portGold,]
 #define sppGold from the data
 spp  = unique(raw$species[raw$portComplex%in%portGold])
 #sppGold = names(sort(table(raw$species[raw$weight>0]))[floor(length(spp)*3/4):length(spp)])
-aSpp = read.csv('assSppMore.csv') #read.csv('assSpp.csv')
+aSpp = read.csv('assSppCurrent.csv') #read.csv('assSppMore.csv') #read.csv('assSpp.csv')
 flatSpp = c()
 sppKey = list()
 for(i in 1:nrow(aSpp)){
@@ -86,7 +86,7 @@ cores = parallel::detectCores()-1
 MM = 10000 
 thin = 10
 warmFrac = seq(0, 1, 0.05)[1+2] #1/3
-modID = sprintf("%s%sto%sSPGY:QMore", regionID, minYear, maxYear)
+modID = sprintf("%s%sto%sSPGY:Q_RDBD_SPKL", regionID, minYear, maxYear)
 #
 source('model.r')
 
