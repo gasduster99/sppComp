@@ -16,8 +16,8 @@ source('predFunk.r')
 
 #
 mcat = 959 #250 
-minYear = 1978 #1991 #1983 #
-maxYear = 1982 #2001 #1990 #
+minYear = 1983 #1978 #1991 #
+maxYear = 1990 #1982 #2001 #
 
 ##gold standards for defining strata
 #portGold = c('CRS', 'ERK', 'BRG', 'BDG', 'OSF', 'MNT', 'MRO', 'OSB', 'OLA', 'OSD')
@@ -37,7 +37,7 @@ regionID = sprintf("%s%s", mcat, regionID)
 
 #
 #dataFile = sprintf('%sdata%sTo%s_2018-06-08.csv', mcat, substring(minYear, 3, 4), substring(maxYear, 3, 4))
-raw = getRawData(mcat, minYear, maxYear, save=T, fromFile=T) #, fromFile="250CALCOMdata78To82_2024-10-28.csv") #"250data78To83_2024-11-13.csv") #T)
+raw = getRawData(mcat, minYear, maxYear, save=T)#, fromFile=T) #, fromFile="250CALCOMdata78To82_2024-10-28.csv") #"250data78To83_2024-11-13.csv") #T)
 raw = raw[raw$portComplex%in%portGold,]
 
 #define sppGold from the data
