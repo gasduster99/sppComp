@@ -163,7 +163,7 @@ brmsOut = brm(
 	warmup = floor(warmFrac*thin*MM/cores), #floor(iter*warmFrac),
         iter = ceiling( thin*MM/cores + floor(warmFrac*thin*MM/cores) ) #(thin+1)*MM/cores #ceiling((thin+1)*MM/cores) #600
 )
-add_criterion(fit, c("loo", "waic"))
+add_criterion(brmsOut, c("loo", "waic"))
 writeLines('')
 
 
