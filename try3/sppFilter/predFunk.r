@@ -73,3 +73,56 @@ sppCompPred = function(M, brmsOut, sppG, portG, gearG, yearG, qtrG, tree=F, plac
         return(list(nameDF=nameDF, predSppComp=predSppComp))
 }
 
+#
+sppNumPredAgg = function(M, brmsOut, sppG, portG, gearG, yearG, qtrG, tree=F, place="./", cores=1){
+	#
+	
+	#
+        stopifnot(M<summary(brmsOut)$total_ndraws)
+	
+        #
+        nameDF = expand.grid(species=sppG, port=portG, gear=gearG, year=yearG, qtr=qtrG)
+        predStrat = expand.grid(port=portG, gear=gearG, year=yearG, qtr=qtrG)
+	
+        #predSppComp = c()
+        #for(i in 1:nrow(predStrat)){
+        cl = makePSOCKcluster(cores)
+        registerDoParallel( cl )
+        predSppNum = foreach(i=1:nrow(predStrat), .combine='cbind', .inorder=T)%dopar%{ #.export=c("brmsOut")
+                #
+                p = predStrat[i,"port"]
+                g = predStrat[i,"gear"]
+                y = predStrat[i,"year"]
+                q = predStrat[i,"qtr"]
+                #
+                predD = data.frame(species=sppG, port=p, gear=g, year=y, qtr=q)
+                predD$YQ = as.character(interaction(predD[,'year'], predD[,'qtr']))
+                predD$nBB = 100
+
+                #
+                samBB = brms::posterior_predict(brmsOut, newdata=predD, allow_new_levels=T, sample_new_levels="uncertainty")
+	
+		#
+		
+		
+		#make sure we have exactly M samples for the database
+                samBB = head(rbind(samBB, samBB[sample.int(nrow(samBB), replace=T),]), M)
+		
+		#
+                #reform the predSam shape (in parrallel the order of predSppComp will not match predSam)
+                #predSppComp = cbind(predSppComp, samP)
+                return(samBB)
+        }
+        stopCluster(cl)
+
+	#return(predSppComp)
+	#
+        return(list(nameDF=nameDF, predSppComp=predSppNum))
+	
+	#
+	#samBB = brms::posterior_predict(brmsOut, newdata=predD, allow_new_levels=T, sample_new_levels="uncertainty")
+}
+
+
+
+

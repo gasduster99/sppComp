@@ -14,8 +14,8 @@ source('predFunk.r')
 #KNOBS
 #
 
-#
-mcat = 959 #250 
+#NOTE: 959(probably many other mcats) doesn't have samples in all ports.
+mcat = 250 #959 #
 minYear = 1983 #1978 #1991 #
 maxYear = 1990 #1982 #2001 #
 
