@@ -73,7 +73,8 @@ sppCompPred = function(M, brmsOut, sppG, portG, gearG, yearG, qtrG, tree=F, plac
         return(list(nameDF=nameDF, predSppComp=predSppComp))
 }
 
-#
+#NOTE: remove gold strata and only predict for observed strata.
+#D will need to be an argument
 sppNumPredAgg = function(M, brmsOut, sppG, portG, gearG, yearG, qtrG, tree=F, place="./", cores=1){
 	#
 	
