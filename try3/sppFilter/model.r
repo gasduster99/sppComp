@@ -110,7 +110,9 @@ names(ms)[grepl("species*", names(ms))] = gsub("species", "b_species", names(ms)
 names(ms)[grepl(glob2rx("*.*"), names(ms))] = sprintf("r_YQ[%s,Intercept]", names(ms[grepl(glob2rx("*.*"), names(ms))]))
 names(ms[(length(ms)-1):length(ms)]) = c("phi", "sd_YQ__Intercept")
 #
-ms["phi"] = ms["overdispersion for the betabinomial observations"]
+#ms["phi"] = ms["overdispersion for the betabinomial observations"]
+rho = inv.logit( ms["overdispersion for the betabinomial observations"] )
+ms["phi"] = (1-rho)/rho
 ms["sd_YQ__Intercept"] = sqrt(1/ms["Precision for YQ"])
 ms = ms[-c(length(ms)-2, length(ms)-3)] 
 #
